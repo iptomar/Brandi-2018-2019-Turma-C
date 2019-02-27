@@ -1,0 +1,4 @@
+MySQL
+NodeJS ou .Net
+JSON
+JavaScript+HTML5+CSS+Angular
