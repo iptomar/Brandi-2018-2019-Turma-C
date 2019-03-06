@@ -10,7 +10,7 @@
         this._id_type_user = json.id_type_user;
     }
     get full_name() {
-        return this._fullname;
+        return this._full_name;
     }
     get email() {
         return this._email;

@@ -130,7 +130,7 @@ exports.appendToExpress = function (app, _db) {
         if (u) {
             //prepara resposta para cliente
             result.error = 0;
-            result.message = "Bem-vindo " + u.fullname;
+            result.message = "Bem-vindo " + u.full_name;
             result.res = u.getJSON();
         }
         //define a resposta
