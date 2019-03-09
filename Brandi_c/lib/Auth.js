@@ -33,6 +33,28 @@ exports.validatePassword = function (password, passwordComp, salt) {
     return getHash(password, salt) === passwordComp;
 };
 
+/**
+ * Devolve lista de utilizadores no sistema
+ * @param {database.Database} db Class de ligação à base de dados
+ * @returns {JSON} {error: <se autenticado ? 0 sim : 1 nao>, users: [<lista de utilizadores(User)>]}
+ */
+exports.geUserList = async function (db) {
+    let result = { error: 1, users: [] };
+    let res = await db.doQuery(q_Auth.GET_USER_AND_TYPE_LIST, []);
+    //se nao ocorreu nenhum erro a adquirir o resultado
+    if (res.error === 0) {
+        //se existem resultados
+        if (res.res.length > 0) {
+            //por cada utilizador
+            res.res.forEach(u => {
+                result.users.push(new user.User(u));
+            });
+            result.error = 0;
+        }
+    }
+    //devolve resultado
+    return result;
+};
 
 /**
  * @param {database.Database} db Class de ligação à base de dados
@@ -51,6 +73,84 @@ exports.checkUserAndPassword = async function (db, email, password) {
             if (this.validatePassword(password, res.res[0].password, res.res[0].salt)) {
                 result.error = 0;
                 result.user = new user.User(res.res[0]);
+            }
+        }
+    }
+    //devolve resultado
+    return result;
+};
+
+/**
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id_type numero de identificação do tipo de utilizador
+ * @returns {JSON} {error: <se encontrou ? 0 sim : 1 nao>, user_type: {id, name} ou {}}
+ */
+exports.getTypeNameById = async function (db, id_type) {
+    let result = { error: 1, user_type: {} };
+    let res = await db.doQuery(q_Auth.GET_USER_TYPE_BY_ID, [id_type]);
+    //se nao ocorreu nenhum erro a adquirir o resultado
+    if (res.error === 0) {
+        //se existem resultados
+        if (res.res.length > 0) {
+            result.error = 0;
+            result.user_type = { id: res.res[0].id, name: res.res[0].type_user};
+        }
+    }
+    //devolve resultado
+    return result;
+};
+
+/**
+ * atualiza ultimo login do utilizador
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id do utilizador
+ * @returns {boolean} se foi atualizado
+ */
+exports.setNewLastLogin = async function (db, id) {
+    let result = false;
+    let res = await db.doQuery(q_Auth.SET_LAST_LOGIN_BY_ID, [id]);
+    //se nao ocorreu nenhum erro
+    if (res.error === 0) {
+        result = true;
+    }
+    //devolve resultado
+    return result;
+};
+
+
+/**
+ * 
+/**
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {string} email email de autenticação
+ * @param {string} password password de autenticação
+ * @param {string} fullname nome inteiro do utilizador
+ * @param {string} address endereço do utilizador
+ * @param {string} birthday 'ano-mes-dia' - data de nascimento do utilizador
+ * @param {string} cellphone numero de telemovel do utilizador
+ * @param {number} usertypeid id do tipo de utilizador
+ * @returns {JSON} {error: <se registado ? 0 sim : 1 nao porque ja registado, 2 se invalido>, user: <User se registado ou null se nao registado>}
+ */
+exports.addNewUser = async function (db, email, password, fullname, address, birthday, cellphone, usertypeid) {
+    let result = { error: 1, user: {} };
+    //verifica se o utilizador já existe
+    let resultDb = await db.doQuery(q_Auth.GET_USER_AND_TYPE_BY_EMAIL, [email]);
+    //se foi autenticado com sucesso e verifica se o user ja existe
+    if (!resultDb.error && resultDb.res.length === 0) {
+        result.error = 2;
+        //verifica se o tipo de utilizador existe
+        let type = await this.getTypeNameById(db, usertypeid);
+        if (!type.error) {
+            //gera o hash e o salt novo da passowrd
+            let pw = this.newHashPassword(password);
+            //cria o novo utilizador
+            resultDb = await db.doQuery(q_Auth.CREATE_USER, [email, pw.hash, pw.salt, fullname, address, birthday, cellphone, usertypeid]);
+            if (!resultDb.error) {
+                //prepara resposta para cliente
+                result.error = 0;
+                //como o tempo de guardar a nova data e de chegar ateé aqui é de uns milisegundos
+                //defimos a data de agora
+                result.user = new user.User({ id: resultDb.res.insertId, email: email, full_name: fullname, address: address, birthday: birthday, cellphone: cellphone, id_type_user: type.user_type.id, type_user: type.user_type.name, last_login: new Date()/*TODO*/ });
             }
         }
     }
@@ -94,7 +194,38 @@ exports.removeUserFromSession = function (req) {
 exports.appendToExpress = function (app, _db) {
     let thiss = this;
     let db = _db;
-    app.post('/auth', async function (req, res) {
+
+    app.post('/api/register', async function (req, res) {
+        let result = { error: 1, message: "Insira todos os campos obrigatórios", res: {} };
+        //recebe o utilizador autenticado
+        let u = thiss.getUserFromSession(req);
+        //verifica se ja existe o utilizador autenticado
+        if (u) {
+            result.message = "Utilizador já se encontra autenticado";
+            result.error = 0;
+            result.res = u.getJSON();
+            //verifica se estão todos os parametros
+        } else if (req.body.email && req.body.password && req.body.fullname && /*req.body.address && req.body.birthday && req.body.cellphone &&*/ req.body.usertypeid) {
+            //indica que nãoi foi autenticado até verificar
+            result.message = "Ocorreu um erro no registo, verifique se todos os campos săo válidos";
+            //verifica os dados de autenticação
+            let resDb = await thiss.addNewUser(db, req.body.email, req.body.password, req.body.fullname, req.body.address, req.body.birthday, req.body.cellphone, req.body.usertypeid);
+            //se foi autenticado com sucesso
+            if (!resDb.error) {
+                //guarda a session
+                thiss.setUserIntoSession(req, resDb.user);
+                //prepara resposta para cliente
+                result.error = 0;
+                result.message = "Registado com sucesso";
+                result.res = resDb.user.getJSON();
+            } else if (resDb.error === 1) {
+                result.message = "Esse email já se encontra em utilização";
+            }
+        }
+        //define a resposta
+        res.json(result);
+    });
+    app.post('/api/auth', async function (req, res) {
         let result = { error: 1, message: "Todos os campos săo obrigatórios", res: {} };
         //recebe o utilizador autenticado
         let u = thiss.getUserFromSession(req);
@@ -110,6 +241,11 @@ exports.appendToExpress = function (app, _db) {
             let resultDb = await thiss.checkUserAndPassword(db, req.body.email, req.body.password);
             //se foi autenticado com sucesso
             if (!resultDb.error) {
+                //atualiza a data de ultimo login
+                await thiss.setNewLastLogin(db, resultDb.user.id);
+                //como o tempo de guardar a nova data e de chegar ateé aqui é de uns milisegundos
+                //defimos a data de agora
+                resultDb.user.last_login = new Date();
                 //guarda a session
                 thiss.setUserIntoSession(req, resultDb.user);
                 //prepara resposta para cliente
@@ -122,7 +258,7 @@ exports.appendToExpress = function (app, _db) {
         res.json(result);
     });
 
-    app.get('/auth', async function (req, res) {
+    app.get('/api/auth', async function (req, res) {
         let result = { error: 1, message: "Por favor efectue autenticação", res: {} };
         //recebe o utilizador autenticado
         let u = thiss.getUserFromSession(req);
@@ -137,10 +273,23 @@ exports.appendToExpress = function (app, _db) {
         res.json(result);
     });
 
-    app.get('/logout', async function (req, res) {
+    app.get('/api/logout', async function (req, res) {
         //prepara resposta para cliente
         let result = { error: 0, message: "Sessão terminada com sucesso", res: {} };
         thiss.removeUserFromSession(req);
+        //define a resposta
+        res.json(result);
+    });
+
+
+    app.get('/api/userlist', async function (req, res) {
+        //prepara resposta para cliente
+        let result = { error: 0, message: "", res: { users: [] } };
+        let resultDb = await thiss.geUserList(db);
+        //por cada utilizador pede o  json deste
+        resultDb.users.forEach(u => {
+            result.res.users.push(u.getJSON());
+        });
         //define a resposta
         res.json(result);
     });

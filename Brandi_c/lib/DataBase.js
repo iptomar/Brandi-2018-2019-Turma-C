@@ -1,5 +1,5 @@
 const mariadb = require('mariadb');
-const infoDB = require('./infoDB.js');
+const infoDB = require('./InfoDB.js');
 class Database {
     /**
      * inicia pool à base de dados
