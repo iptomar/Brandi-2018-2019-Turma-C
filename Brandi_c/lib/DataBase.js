@@ -47,13 +47,16 @@ class Database {
      * faz query ao servidor de base de dados
      * @param {string} q query
      * @param {object[]} params parametros da query
-     * @returns {Object} {error: <se ocorreu erro>,res: <resultado da base de dados>}
+     * @returns {JSON} {error: <se ocorreu erro>,res: <resultado da base de dados>}
      */
     async doQuery(q, params) {
         //variavel de conecção
         let conn;
         //resultado de erro por defeito
-        let result = { error: 1, res: undefined };
+        let result = {
+            error: 1,
+            res: {}
+        };
         //tenta conectar-se e correr a query
         try {
             //pede uma conecção livre a pool

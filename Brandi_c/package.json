@@ -7,13 +7,13 @@
     "name": ""
   },
   "dependencies": {
-    "@angular/cli": "^7.3.5",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "formidable": "^1.2.1",
     "fs": "0.0.1-security",
     "mariadb": "^2.0.3",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "typescript": "^3.3.3333"
   }
 }

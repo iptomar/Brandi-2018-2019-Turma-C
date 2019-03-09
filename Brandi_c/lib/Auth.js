@@ -66,14 +66,11 @@ exports.checkUserAndPassword = async function (db, email, password) {
     let result = { error: 1, user: {} };
     let res = await db.doQuery(q_Auth.GET_USER_AND_TYPE_BY_EMAIL, [email]);
     //se nao ocorreu nenhum erro a adquirir o resultado
-    if (res.error === 0) {
-        //se existem resultados
-        if (res.res.length > 0) {
-            //verifica se a password é a correta
-            if (this.validatePassword(password, res.res[0].password, res.res[0].salt)) {
-                result.error = 0;
-                result.user = new user.User(res.res[0]);
-            }
+    if (!res.error && res.res.length > 0) {
+        //verifica se a password é a correta
+        if (this.validatePassword(password, res.res[0].password, res.res[0].salt)) {
+            result.error = 0;
+            result.user = new user.User(res.res[0]);
         }
     }
     //devolve resultado
@@ -190,12 +187,13 @@ exports.removeUserFromSession = function (req) {
  * Adição dos pedidos relativos à autenticação
  * @param {Express} app servidor express
  * @param {database.Database} _db base de dados
+ * @param {string} _prefix prefixo das rotas
  */
-exports.appendToExpress = function (app, _db) {
+exports.appendToExpress = function (app, _db,_prefix) {
     let thiss = this;
     let db = _db;
-
-    app.post('/api/register', async function (req, res) {
+    let prefix = _prefix;
+    app.post(prefix + '/register', async function (req, res) {
         let result = { error: 1, message: "Insira todos os campos obrigatórios", res: {} };
         //recebe o utilizador autenticado
         let u = thiss.getUserFromSession(req);
@@ -225,7 +223,7 @@ exports.appendToExpress = function (app, _db) {
         //define a resposta
         res.json(result);
     });
-    app.post('/api/auth', async function (req, res) {
+    app.post(prefix + '/auth', async function (req, res) {
         let result = { error: 1, message: "Todos os campos săo obrigatórios", res: {} };
         //recebe o utilizador autenticado
         let u = thiss.getUserFromSession(req);
@@ -258,7 +256,7 @@ exports.appendToExpress = function (app, _db) {
         res.json(result);
     });
 
-    app.get('/api/auth', async function (req, res) {
+    app.get(prefix + '/auth', async function (req, res) {
         let result = { error: 1, message: "Por favor efectue autenticação", res: {} };
         //recebe o utilizador autenticado
         let u = thiss.getUserFromSession(req);
@@ -282,7 +280,7 @@ exports.appendToExpress = function (app, _db) {
     });
 
 
-    app.get('/api/userlist', async function (req, res) {
+    app.get(prefix + '/userlist', async function (req, res) {
         //prepara resposta para cliente
         let result = { error: 0, message: "", res: { users: [] } };
         let resultDb = await thiss.geUserList(db);

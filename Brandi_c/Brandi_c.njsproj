@@ -44,14 +44,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="server.js" />
-    <Content Include="html\index.html" />
-    <Content Include="html\login.html" />
-    <Content Include="html\teste1.html" />
     <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="html\" />
     <Folder Include="lib\" />
     <Folder Include="lib\queries\" />
     <Folder Include="pages\" />

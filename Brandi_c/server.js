@@ -10,7 +10,8 @@ const infoDB = require('./lib/InfoDB.js');
 const database = require('./lib/DataBase.js');
 const auth = require('./lib/Auth.js');
 //porta do servidor
-const PORT = 80;
+const PORT = 8080;
+const PREFIX_ROUTE = '/api';
 //diretória de ficheiros html estáticos
 const PUBLIC_DIR = __dirname + path.sep + 'html' + path.sep;
 console.log("STATIC HTML PATH=\"" + PUBLIC_DIR + "\"");
@@ -18,7 +19,7 @@ console.log("STATIC HTML PATH=\"" + PUBLIC_DIR + "\"");
 //servidor express web
 const app = express();
 app.listen(PORT);//inicializa o servidor na porta definida
-console.log("server created");
+console.log("server created in port: " + PORT);
 //parser que permite transformar em json o que vem por os metodos
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,6 +29,7 @@ app.use(session({ secret: 'keyboard dog', resave: true, saveUninitialized: true,
 console.log("Sessions initialized");
 //inicializaçăo da pool da base de dados
 const db = new database.Database(infoDB.HOST, infoDB.PORT, infoDB.USER, infoDB.PASSWORD, infoDB.DB);
+//tenta criar todas as tabelas necessárias para a app
 console.log("Mariadb pool initialized");
 let dbCreation = db.createAllTables();
 if (dbCreation.error === 1) {
@@ -38,7 +40,7 @@ console.log("Database tables criadas");
 //console.log(auth.newHashPassword("123456"));
 
 //inclui pedidos relativos à sessão
-auth.appendToExpress(app,db);
+auth.appendToExpress(app, db, PREFIX_ROUTE);
 
 //transforma o pedido em um pedido com .html(caso ja nao contenha este)
 app.use(function (req, res, next) {
@@ -55,25 +57,6 @@ app.use(function (req, res, next) {
 });
 //chama a página estática
 app.use(express.static(PUBLIC_DIR));
-//por defeito:
-app.get('*', function (req, res) {
-    res.redirect('/');
-});
-app.post('*', function (req, res) {
-    res.redirect('/');
-});
-app.delete('*', function (req, res) {
-    res.redirect('/');
-});
-app.put('*', function (req, res) {
-    res.redirect('/');
-});
-
-
-
-
-
-
 //app.post('/login', function (req, res) {
 //    var form = new formidable.IncomingForm();
 
