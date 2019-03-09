@@ -1,0 +1,3 @@
+C:\Users\1luis\source\repos\Brandi-2018-2019-Turma-C\Brandi_c\obj\Debug\Brandi_c.njsprojAssemblyReference.cache
+C:\Users\1luis\source\repos\Brandi-2018-2019-Turma-C\Brandi_c\obj\Debug\Brandi_c.njsproj.CoreCompileInputs.cache
+C:\Users\1luis\source\repos\Brandi-2018-2019-Turma-C\Brandi_c\bin\Microsoft.NodejsTools.WebRole.dll
