@@ -1,0 +1,655 @@
+{
+	"id": "651d1e7c-8606-4e8e-a0d1-5c1be239b978",
+	"name": "PM-01-WEBSERVICES_LOGIN_17-03-2019",
+	"allTests": [],
+	"timestamp": "2019-03-18T22:15:06.865Z",
+	"collection_id": "dc79b3d6-df30-4f14-86b3-95415b0e7873",
+	"folder_id": 0,
+	"target_type": "collection",
+	"environment_id": "94fcbf32-16f5-4206-9220-87cece466959",
+	"data": [],
+	"delay": 0,
+	"count": 3,
+	"collection": {
+		"id": "dc79b3d6-df30-4f14-86b3-95415b0e7873",
+		"name": "PM-01-WEBSERVICES_LOGIN_17-03-2019",
+		"description": "Testes efetuados em:\n\nDATA: 17-03-2019\nHORA: 23:50\n\nUSER: Quintino",
+		"auth": null,
+		"events": [
+			{
+				"listen": "prerequest",
+				"script": {
+					"id": "d77c4aa9-8024-4d75-8149-806264b34434",
+					"type": "text/javascript",
+					"exec": [
+						""
+					]
+				}
+			},
+			{
+				"listen": "test",
+				"script": {
+					"id": "35e66679-5ce8-4d22-ab5f-c06f154dc330",
+					"type": "text/javascript",
+					"exec": [
+						""
+					]
+				}
+			}
+		],
+		"variables": [],
+		"order": [
+			"3f08040e-fe70-4906-b5e3-afe7c1c4f31e",
+			"5b121b8a-7415-4de1-8fe9-713953097d7d",
+			"ef29ed13-5640-4cbd-b773-af93695083da",
+			"50786bff-5be9-49ab-a531-6a2df66f5e0b",
+			"95a90b62-db3f-4113-ac3f-1ec1189a6096",
+			"057f7a7b-90b3-4fb0-950b-22be187d9aa4",
+			"a4326f61-6a28-4384-81eb-3bea7676a30d",
+			"7f58029b-484d-425e-aa48-c3f6234c7eb6",
+			"75fd3eb4-0b9f-4a21-89ac-eef42e77e83e",
+			"364c7539-4761-43e3-b0a7-67607e69540d",
+			"d75ddd68-3d64-446f-8231-9136f04706f7",
+			"b65ea9bb-d4eb-4a12-ab52-da70b2d5d7e7",
+			"a10e658c-a99b-408f-b8bf-e8f9c294b97d"
+		],
+		"folders_order": [],
+		"owner": "6806043",
+		"permissions": {},
+		"favorite": false,
+		"shared": false,
+		"type": "collection",
+		"depth": 0
+	},
+	"folder": null,
+	"environment": null,
+	"globals": [
+		{
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			},
+			"value": "testes123456@ipt.pt",
+			"key": "email",
+			"enabled": true
+		},
+		{
+			"value": "8efa7760-269f-4186-b640-c38dbe289433",
+			"key": "newToken",
+			"enabled": true
+		},
+		{
+			"value": "user-1",
+			"key": "filter",
+			"enabled": true
+		}
+	],
+	"results": [
+		{
+			"name": "Testar autenticação - Validar se login com sucesso ERROR:0",
+			"id": "3f08040e-fe70-4906-b5e3-afe7c1c4f31e",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"510",
+				"232",
+				"244"
+			],
+			"allTests": [
+				{},
+				{},
+				{}
+			],
+			"time": "244",
+			"totalRequestTime": 986,
+			"iterationResults": {}
+		},
+		{
+			"name": "Testar autenticação - Validar se login sem sucesso ERROR:1",
+			"id": "5b121b8a-7415-4de1-8fe9-713953097d7d",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"243",
+				"232",
+				"239"
+			],
+			"allTests": [
+				{},
+				{},
+				{}
+			],
+			"time": "239",
+			"totalRequestTime": 714,
+			"iterationResults": {}
+		},
+		{
+			"name": "Testar autenticação - Login com sucesso ERROR:0",
+			"id": "ef29ed13-5640-4cbd-b773-af93695083da",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"547",
+				"579",
+				"549"
+			],
+			"allTests": [
+				{},
+				{},
+				{}
+			],
+			"time": "549",
+			"totalRequestTime": 1675,
+			"iterationResults": {}
+		},
+		{
+			"name": "Testar autenticação - Login sem sucesso ERROR:1 Falta campo obrigatório",
+			"id": "50786bff-5be9-49ab-a531-6a2df66f5e0b",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"238",
+				"233",
+				"246"
+			],
+			"allTests": [
+				{},
+				{},
+				{}
+			],
+			"time": "246",
+			"totalRequestTime": 717,
+			"iterationResults": {}
+		},
+		{
+			"name": "Testar autenticação - Login sem sucesso ERROR:1 Erro em campos",
+			"id": "95a90b62-db3f-4113-ac3f-1ec1189a6096",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"235",
+				"231",
+				"234"
+			],
+			"allTests": [
+				{},
+				{},
+				{}
+			],
+			"time": "234",
+			"totalRequestTime": 700,
+			"iterationResults": {}
+		},
+		{
+			"name": "Testar autenticação - Utilizador já autenticado ERROR:0",
+			"id": "057f7a7b-90b3-4fb0-950b-22be187d9aa4",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"233",
+				"245",
+				"237"
+			],
+			"allTests": [
+				{},
+				{},
+				{}
+			],
+			"time": "237",
+			"totalRequestTime": 715,
+			"iterationResults": {}
+		},
+		{
+			"name": "Testar autenticação - Efetuar logout ERROR:0",
+			"id": "a4326f61-6a28-4384-81eb-3bea7676a30d",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"21",
+				"19",
+				"22"
+			],
+			"allTests": [
+				{},
+				{},
+				{}
+			],
+			"time": "22",
+			"totalRequestTime": 62,
+			"iterationResults": {}
+		},
+		{
+			"name": "Testar registo - Com todos campos OK ERROR:0",
+			"id": "7f58029b-484d-425e-aa48-c3f6234c7eb6",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"254",
+				"244",
+				"306"
+			],
+			"allTests": [
+				{},
+				{},
+				{}
+			],
+			"time": "306",
+			"totalRequestTime": 804,
+			"iterationResults": {}
+		},
+		{
+			"name": "Testar registo - Com falta campos obrigatorios ERROR:1",
+			"id": "75fd3eb4-0b9f-4a21-89ac-eef42e77e83e",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"243",
+				"248",
+				"261"
+			],
+			"allTests": [
+				{},
+				{},
+				{}
+			],
+			"time": "261",
+			"totalRequestTime": 752,
+			"iterationResults": {}
+		},
+		{
+			"name": "Testar registo - Com campos obrigatorios duplicado - email ERROR:1",
+			"id": "364c7539-4761-43e3-b0a7-67607e69540d",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"237",
+				"246",
+				"320"
+			],
+			"allTests": [
+				{},
+				{},
+				{}
+			],
+			"time": "320",
+			"totalRequestTime": 803,
+			"iterationResults": {}
+		},
+		{
+			"name": "Testar registo - Com campos obrigatorios invalidos ERROR:1",
+			"id": "d75ddd68-3d64-446f-8231-9136f04706f7",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"245",
+				"244",
+				"236"
+			],
+			"allTests": [
+				{},
+				{},
+				{}
+			],
+			"time": "236",
+			"totalRequestTime": 725,
+			"iterationResults": {}
+		},
+		{
+			"name": "Testar registo - Com campos obrigatorios invalidos - date ERROR:1",
+			"id": "b65ea9bb-d4eb-4a12-ab52-da70b2d5d7e7",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"239",
+				"252",
+				"303"
+			],
+			"allTests": [
+				{},
+				{},
+				{}
+			],
+			"time": "303",
+			"totalRequestTime": 794,
+			"iterationResults": {}
+		},
+		{
+			"name": "Testar registo - Listar registos efetuados ERROR:0",
+			"id": "a10e658c-a99b-408f-b8bf-e8f9c294b97d",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"37",
+				"41",
+				"43"
+			],
+			"allTests": [
+				{},
+				{},
+				{}
+			],
+			"time": "43",
+			"totalRequestTime": 121,
+			"iterationResults": {}
+		}
+	],
+	"totalPass": 0,
+	"totalFail": 0,
+	"totalTime": 9568,
+	"lifecycle": "done",
+	"requests": [
+		{
+			"name": "Testar autenticação - Validar se login com sucesso ERROR:0",
+			"id": "3f08040e-fe70-4906-b5e3-afe7c1c4f31e",
+			"url": "http://brandic.devll.eu:61080/api/auth",
+			"time": "244",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Testar autenticação - Validar se login sem sucesso ERROR:1",
+			"id": "5b121b8a-7415-4de1-8fe9-713953097d7d",
+			"url": "http://brandic.devll.eu:61080/api/auth",
+			"time": "239",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Testar autenticação - Login com sucesso ERROR:0",
+			"id": "ef29ed13-5640-4cbd-b773-af93695083da",
+			"url": "http://brandic.devll.eu:61080/api/auth",
+			"time": "549",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Testar autenticação - Login sem sucesso ERROR:1 Falta campo obrigatório",
+			"id": "50786bff-5be9-49ab-a531-6a2df66f5e0b",
+			"url": "http://brandic.devll.eu:61080/api/auth",
+			"time": "246",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Testar autenticação - Login sem sucesso ERROR:1 Erro em campos",
+			"id": "95a90b62-db3f-4113-ac3f-1ec1189a6096",
+			"url": "http://brandic.devll.eu:61080/api/auth",
+			"time": "234",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Testar autenticação - Utilizador já autenticado ERROR:0",
+			"id": "057f7a7b-90b3-4fb0-950b-22be187d9aa4",
+			"url": "http://brandic.devll.eu:61080/api/auth",
+			"time": "237",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Testar autenticação - Efetuar logout ERROR:0",
+			"id": "a4326f61-6a28-4384-81eb-3bea7676a30d",
+			"url": "http://brandic.devll.eu:61080/api/logout",
+			"time": "22",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Testar registo - Com todos campos OK ERROR:0",
+			"id": "7f58029b-484d-425e-aa48-c3f6234c7eb6",
+			"url": "http://brandic.devll.eu:61080/api/register",
+			"time": "306",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Testar registo - Com falta campos obrigatorios ERROR:1",
+			"id": "75fd3eb4-0b9f-4a21-89ac-eef42e77e83e",
+			"url": "http://brandic.devll.eu:61080/api/register",
+			"time": "261",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Testar registo - Com campos obrigatorios duplicado - email ERROR:1",
+			"id": "364c7539-4761-43e3-b0a7-67607e69540d",
+			"url": "http://brandic.devll.eu:61080/api/register",
+			"time": "320",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Testar registo - Com campos obrigatorios invalidos ERROR:1",
+			"id": "d75ddd68-3d64-446f-8231-9136f04706f7",
+			"url": "http://brandic.devll.eu:61080/api/register",
+			"time": "236",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Testar registo - Com campos obrigatorios invalidos - date ERROR:1",
+			"id": "b65ea9bb-d4eb-4a12-ab52-da70b2d5d7e7",
+			"url": "http://brandic.devll.eu:61080/api/register",
+			"time": "303",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Testar registo - Listar registos efetuados ERROR:0",
+			"id": "a10e658c-a99b-408f-b8bf-e8f9c294b97d",
+			"url": "http://brandic.devll.eu:61080/api/userlist",
+			"time": "43",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		}
+	],
+	"synced": false
+}
