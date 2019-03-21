@@ -4,7 +4,7 @@ body {
 }
 
 h1 {
-  color: white;
+
   text-align: center;
 }
 
@@ -13,8 +13,8 @@ p {
   font-size: 20px;
 }
 #loginDiv{
-
-	 display: flex;
+	
+	display: flex;
 	align-items: center;
 	justify-content:center;
 	flex-direction:column;

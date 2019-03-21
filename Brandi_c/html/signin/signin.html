@@ -6,22 +6,38 @@
 		<title>SIGNIN</title>
 	</head>
 	<body>
+		<center><h1>Sign In Page</h1></center>
 		<script src="../lib/angular.min.js"></script><!-- sempre -->
 		<script src="../js/app.js"></script><!-- sempre -->
-		<div ng-app="brandic" ng-controller="signInCtrl" id="signInDiv" >
-				<span id="mensagem">{{mensagem}}</span><br>
-				<p>Email: <input type="text" name="email" id="email" ng-model="email"><br></p>
-				<p>Password:<input type="password" name="password" id="password" ng-model="password"><br></p>
-				<p>Nome:<input type="text" name="fullname" id="fullname" ng-model="fullname"><br></p>
-				<p>Birthday:<input class="smallcamp"  type="text" name="bday" id="bday" ng-model="bday">
-							<input class="smallcamp"  type="text" name="bmonth" id="bmonth" ng-model="bmonth">
-							<input class="smallcamps"  type="text" name="byear" id="byear" ng-model="byear"><br></p>
-				<p>Cellphone:<input type="text" name="cellphone" id="cellphone" ng-model="cellphone"><br></p>
-				<p>Usertypeid:<input type="text" name="usertypeid" id="usertypeid" ng-model="usertypeid"><br></p>
-				
-				<button ng-click="signIn()"> Sign In</button><br>
-				{{email+" "+password+" "+ fullname+" "+bday+"-"+bmonth+"-"+byear+" "+ cellphone+" "+usertypeid}}
+		<div id="signDiv">
+		<form ng-app="brandic" ng-controller="signInCtrl"  onsubmit="return false;">
+			<span id="mensagem">{{mensagem}}</span><br>
+				<table>
+					<tr>
+				<th> Email:</th><th> <input type="text" name="email" id="email" ng-model="email"></th>
+					</tr>
+					<tr>
+				<th>Password:</th><th><input type="password" name="password" id="password" ng-model="password"></th>
+					</tr>
+					<tr>
+				<th>Nome:</th><th><input type="text" name="fullname" id="fullname" ng-model="fullname"></th>
+					</tr>
+					<tr>
+					<th>Birthday:</th><th><input class="smallcamp"  type="text" name="bday" id="bday" ng-model="bday">
+							<input class="smallcamp"  type="number" max="12" name="bmonth" id="bmonth" ng-model="bmonth">
+							<input class="smallcamps"  type="text" name="byear" id="byear" ng-model="byear"></th>
+					</tr>
+					<tr>
+						<th>Cellphone:</th><th><input type="number" name="cellphone" id="cellphone" ng-model="cellphone" max="999999999" min="900000000"></th>
+					</tr>
+				<tr>
+					<th>Usertypeid:</th><th><input type="text" name="usertypeid" id="usertypeid" ng-model="usertypeid"></th>
+				</tr>
+				</table>
+				<center><br><button type="submit" ng-click="signIn()"> Sign In</button></center><br><br>
+				<!--{{email+" "+password+" "+ fullname+" "+bday+"-"+bmonth+"-"+byear+" "+ cellphone+" "+usertypeid}}-->
 		  
+		</form>
 		</div>
 		<script src="js/sig.js"></script>
     </body>

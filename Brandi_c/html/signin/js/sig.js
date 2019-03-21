@@ -10,7 +10,7 @@ var app = angular.module('brandic', []);
         $scope.signIn = function() {
             //alert("Username: "+ $scope.email+" \nPassword: "+$scope.password);
 			let date=$scope.byear+"-"+$scope.bmonth+"-"+$scope.bday;
-            $http.post(HOST+"/api/register",{
+            $http.post(HOST+"/register",{
                 email: $scope.email,
                 password: $scope.password,
 				fullname: $scope.fullname,
@@ -21,11 +21,10 @@ var app = angular.module('brandic', []);
 				
             }).then(function(response){
                 console.log(response);
-                if(response.data.error==1){
-                    $scope.mensagem=response.data.message;
-                }if(response.data.error==0){
-                    $scope.mensagem=response.data.message;
-                }
+				response.data.error==1?
+					$scope.mensagem=response.data.message
+						:$scope.mensagem=response.data.message;
+                
             })
 
             
