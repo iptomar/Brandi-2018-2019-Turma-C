@@ -12,8 +12,14 @@
 		<center><h1>Login Page</h1></center>
 			<form ng-app="brandic" ng-controller="loginCtrl" id="loginDiv" onsubmit="return false;">
 				<span id="mensagem">{{mensagem}}</span><br>
-				<p>Email: <input type="text" name="email" id="email" ng-model="email"><br></p>
-				<p>Password:<input type="password" name="password" id="password" ng-model="password"><br></p>
+				<table>
+					<tr>
+						<th>Email: </th><th><input type="text" name="email" id="email" ng-model="email"></th>
+					</tr>
+					<tr>
+						<th>Password:</th><th><input type="password" name="password" id="password" ng-model="password"></th>
+					</tr>
+				</table>
 				<button ng-click="login()"> Login</button><br>
 				<!--{{email+" "+password}}-->
 		  

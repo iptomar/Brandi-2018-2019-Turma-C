@@ -1,3 +1,6 @@
+*{
+	font-family:helvetica;
+}
 body {
   background-color: lightblue;
 }
@@ -11,15 +14,24 @@ p {
   font-family: verdana;
   font-size: 20px;
 }
+table{
+	border-style:solid;
+	border-width:3px;
+	padding:5px;
+	
+}
 .smallcamp{
 	
-	width:35px;
+	width:25px;
 }
 .smallcamps{
 	
-	width:45px;
+	width:40px;
 }
-
+.noteSp{
+	font-size:10px;
+	margin-left:1px;	
+}
 #signDiv{
 	display:flex;
 	align-items: center;
