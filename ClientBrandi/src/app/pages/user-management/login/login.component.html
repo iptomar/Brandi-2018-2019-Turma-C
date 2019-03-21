@@ -22,6 +22,8 @@
             <a [routerLink]="['/register']" class="btn btn-link">Register</a>
         </div>
       <a href="#" class="forgot">Forgot your email or password?</a>
+      <p *ngIf="data?.error === 1">{{data?.message}}</p>
+
     </form>
   </div>
 </div>

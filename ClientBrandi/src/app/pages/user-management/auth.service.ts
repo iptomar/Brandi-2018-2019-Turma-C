@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Credential } from './auth.model';
-import { Defaults } from '../Includes/defaults';
+import { HOSTNAME } from '../Includes/defaults';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class AuthService {
 
   login(credential: Credential): Promise<any> {
 
-    return this._httpClient.post(Defaults.HOST_NAME + "auth", credential)
+    return this._httpClient.post(HOSTNAME + "auth", credential)
       .toPromise()
       .then(data => {
         console.log("result ", data);

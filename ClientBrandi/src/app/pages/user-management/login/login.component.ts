@@ -14,6 +14,10 @@ export class LoginComponent {
   loading = false;
   submitted = false;
   returnUrl: string;
+  data: {
+      error: number;
+      message:string;
+  } = null;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -48,7 +52,12 @@ export class LoginComponent {
         this._auth.login(this.loginForm.value)
           .then(
             data => {
-                this.router.navigate([this.returnUrl]);
+                this.loading = false;
+                console.log(data);
+                this.data = data;
+                if(data.error === 0) {
+                    this.router.navigate([this.returnUrl]);
+                }
             },
             error => {
                 this.loading = false;
