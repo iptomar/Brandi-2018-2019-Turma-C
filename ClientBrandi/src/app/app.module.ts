@@ -16,12 +16,14 @@ import { MatListModule } from '@angular/material/list';
 import { LoginComponent } from './pages/user-management/login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RegisterComponent } from './pages/user-management/register/register.component';
+import { FormComponent } from './form/form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,
