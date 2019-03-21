@@ -1,6 +1,5 @@
 body {
-	background-color: lightblue;
-	
+  background-color: lightblue;
 }
 
 h1 {
@@ -12,9 +11,16 @@ p {
   font-family: verdana;
   font-size: 20px;
 }
-#loginDiv{
-
-	 display: flex;
+.smallcamp{
+	
+	width:35px;
+}
+.smallcamps{
+	
+	width:45px;
+}
+#signDiv{
+	display:flex;
 	align-items: center;
 	justify-content:center;
 	flex-direction:column;

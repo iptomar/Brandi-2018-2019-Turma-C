@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<link rel="stylesheet" type="text/css" href="../css/app.css"><!-- sempre -->
+		<link rel="stylesheet" type="text/css" href="css/sig.css">
+		<title>SIGNIN</title>
+	</head>
+	<body>
+		<script src="../lib/angular.min.js"></script><!-- sempre -->
+		<script src="../js/app.js"></script><!-- sempre -->
+		<div ng-app="brandic" ng-controller="signInCtrl" id="signInDiv" >
+				<span id="mensagem">{{mensagem}}</span><br>
+				<p>Email: <input type="text" name="email" id="email" ng-model="email"><br></p>
+				<p>Password:<input type="password" name="password" id="password" ng-model="password"><br></p>
+				<p>Nome:<input type="text" name="fullname" id="fullname" ng-model="fullname"><br></p>
+				<p>Birthday:<input class="smallcamp"  type="text" name="bday" id="bday" ng-model="bday">
+							<input class="smallcamp"  type="text" name="bmonth" id="bmonth" ng-model="bmonth">
+							<input class="smallcamps"  type="text" name="byear" id="byear" ng-model="byear"><br></p>
+				<p>Cellphone:<input type="text" name="cellphone" id="cellphone" ng-model="cellphone"><br></p>
+				<p>Usertypeid:<input type="text" name="usertypeid" id="usertypeid" ng-model="usertypeid"><br></p>
+				
+				<button ng-click="signIn()"> Sign In</button><br>
+				{{email+" "+password+" "+ fullname+" "+bday+"-"+bmonth+"-"+byear+" "+ cellphone+" "+usertypeid}}
+		  
+		</div>
+		<script src="js/sig.js"></script>
+    </body>
+</html>
