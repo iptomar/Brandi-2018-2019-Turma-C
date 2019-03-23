@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
 	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"><!--bootstrap sacar ficheiro daqui a uns tempos e mudar de link para caminho-->
 		<link rel="stylesheet" type="text/css" href="../css/app.css"><!-- sempre -->
 		<link rel="stylesheet" type="text/css" href="css/lg.css">
 		<title>LOGIN</title>
@@ -9,8 +10,9 @@
 		<script src="../lib/angular.min.js"></script><!-- sempre -->
 		<script src="../js/app.js"></script><!-- sempre -->
 		
-		<center><h1>Login Page</h1></center>
-			<form ng-app="brandic" ng-controller="loginCtrl" id="loginDiv" onsubmit="return false;">
+			<form ng-app="brandic" ng-controller="loginCtrl" id="loginDiv" onsubmit="return false;" class="divCentrado">
+			
+				<h1>Login Page</h1>
 				<span id="mensagem">{{mensagem}}</span><br>
 				<table>
 					<tr>
@@ -24,7 +26,7 @@
 				<!--{{email+" "+password}}-->
 		  
 			</form>
-			
+		
 		<script src="js/lg.js"></script>
     </body>
 </html>

@@ -5,6 +5,12 @@ body {
 	background-color: lightblue;
 	
 }
+html,body{
+	height:100%;
+}
+.divCentrado{
+	height:100%;
+}
 
 h1 {
 

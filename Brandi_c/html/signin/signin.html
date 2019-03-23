@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-US">
 	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"><!--bootstrap sacar ficheiro daqui a uns tempos e mudar de link para caminho-->
 		<link rel="stylesheet" type="text/css" href="../css/app.css"><!-- sempre -->
 		<link rel="stylesheet" type="text/css" href="css/sig.css">
+		
 		<title>SIGNIN</title>
 	</head>
 	<body>
-		<center><h1>Sign In Page</h1></center>
 		<script src="../lib/angular.min.js"></script><!-- sempre -->
 		<script src="../js/app.js"></script><!-- sempre -->
-		<div id="signDiv">
+		<div id="signDiv" class="divCentrado">
 		<form ng-app="brandic" ng-controller="signInCtrl"  onsubmit="return false;">
+			<h1>Sign In Page</h1>
 			<span id="mensagem">{{mensagem}}</span><br>
 				<table>
 					<tr>
@@ -39,6 +41,8 @@
 		  
 		</form>
 		</div>
+		
+		
 		<script src="js/sig.js"></script>
     </body>
 </html>
