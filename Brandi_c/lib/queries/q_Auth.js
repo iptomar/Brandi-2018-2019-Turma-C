@@ -9,4 +9,8 @@ exports.CREATE_USER = "INSERT INTO " + infoDB.TBL_USERS + "(email, password, sal
 
 exports.GET_USER_TYPE_BY_ID = "SELECT id,type_user FROM " + infoDB.TBL_USER_TYPES + " WHERE id=? LIMIT 1;";
 
+exports.GET_USER_TYPE_BY_NAME = "SELECT id,type_user FROM " + infoDB.TBL_USER_TYPES + " WHERE type_user=? LIMIT 1;";
+
+exports.ADD_NEW_USER_TYPE = "INSERT INTO " + infoDB.TBL_USER_TYPES + "(type_user) VALUES(?);";
+
 exports.SET_LAST_LOGIN_BY_ID = "UPDATE " + infoDB.TBL_USERS + " SET last_login=NOW() WHERE id=?";

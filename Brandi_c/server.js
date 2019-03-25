@@ -10,7 +10,7 @@ const infoDB = require('./lib/InfoDB.js');
 const database = require('./lib/DataBase.js');
 const auth = require('./lib/Auth.js');
 //porta do servidor
-const PORT = 8080;
+const PORT = 80;
 const PREFIX_ROUTE = '/api';
 //diretória de ficheiros html estáticos
 const PUBLIC_DIR = __dirname + path.sep + 'html' + path.sep;
@@ -18,7 +18,14 @@ console.log("STATIC HTML PATH=\"" + PUBLIC_DIR + "\"");
 
 //servidor express web
 const app = express();
-app.listen(PORT);//inicializa o servidor na porta definida
+//permite cors 
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+//inicializa o servidor na porta definida
+app.listen(PORT);
 console.log("server created in port: " + PORT);
 //parser que permite transformar em json o que vem por os metodos
 app.use(bodyParser.json());
@@ -37,6 +44,8 @@ if (dbCreation.error === 1) {
     return;
 }
 console.log("Database tables criadas");
+auth.addFirstUserAndUserType(db);
+console.log("Admin user and default user types created");
 //console.log(auth.newHashPassword("123456"));
 
 //inclui pedidos relativos à sessão

@@ -28,17 +28,19 @@ class Database {
     async createAllTables() {
         //de inicio assumimos que não existem erros
         let result = { error: 0, res: {} };
+        let _this = this;
         //tentamos criar todas as tabelas
-        infoDB.CREATE_OREDER.forEach(table => {
+        infoDB.CREATE_OREDER.every(function (table, index) {
             //tentamos criar a tabela
-            let res = this.doQuery(table, []);
+            let res = _this.doQuery(table, []);
             //cano haja um erro
-            if (res.error === 1) {
+            if (res.error !== 0) {
                 result.error = 1;
                 result.res = res.res;
                 //não continuamos a criação de tabelas devido a que estas possam estar interligadas
-                throw BreakException;
+                return false;
             }
+            return true;
         });
         return result;
     }

@@ -8,6 +8,11 @@ exports.USER = "brandic";
 exports.PASSWORD = "brandic";
 //base de dados
 exports.DB = "brandi";
+//--------------------------DEFAULT USER TYPES--------------------------
+exports.ADMIN_TYPE_NAME = "Admin";
+//--------------------------DEFAULT USER--------------------------
+exports.ADMIN_EMAIL = "admin@admin.admin";
+exports.ADMIN_PW = "admin";
 //--------------------------TABELAS--------------------------
 exports.TBL_USERS = "tbl_users"; //tabela de utilizadores
 exports.TBL_USER_TYPES = "tbl_user_types"; //tabela de tipo de utilizador
