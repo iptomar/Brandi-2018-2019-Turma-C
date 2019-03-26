@@ -202,6 +202,29 @@ exports.addNewUser = async function (db, email, password, fullname, address, bir
 };
 
 /**
+ * Devolve lista de utilizadores no sistema
+ * @param {database.Database} db Class de ligação à base de dados
+ * @returns {JSON} {error: <se autenticado ? 0 sim : 1 nao>, user_types: [{id: <id do tipo>, name: <nome do tipo>}]}
+ */
+exports.getUserTypeList = async function (db) {
+    let result = { error: 1, user_types: [] };
+    let res = await db.doQuery(q_Auth.GET_USER_TYPE_LIST, []);
+    //se nao ocorreu nenhum erro a adquirir o resultado
+    if (res.error === 0) {
+        //se existem resultados
+        if (res.res.length > 0) {
+            //por cada utilizador
+            res.res.forEach(ut => {
+                result.user_types.push({id: ut.id,name: ut.type_user});
+            });
+            result.error = 0;
+        }
+    }
+    //devolve resultado
+    return result;
+};
+
+/**
  * guarda user na session
  * @param {Request} req request do express
  * @param {user.User} user utilizador autenticado
@@ -351,6 +374,25 @@ exports.appendToExpress = function (app, _db, _prefix) {
         res.json(result);
     });
 
+    app.get(prefix + '/usertypelist', async function (req, res) {
+        //prepara resposta para cliente
+        let result = { error: 1, message: "Não tem permissões para listar utilizadores", res: { user_types: [] } };
+        //carrega os dados em sessão do utilizador
+        let u = thiss.getUserFromSession(req);
+        //verifica se está autenticado
+        if (u) {
+            //verifica se este é administrador
+            if (u.type_user === infoDB.ADMIN_TYPE_NAME) {
+                let resultDb = await thiss.getUserTypeList(db);
+                result.error = 0;
+                result.message = "Lista de utilizadores";
+                result.res.user_types = resultDb.user_types;
+            }
+        }
+        //define a resposta
+        res.json(result);
+    });
+
     app.post(prefix + '/addusertype', async function (req, res) {
         //prepara resposta para cliente
         let result = { error: 2, message: "Não tem permissões para adicionar tipos de utilizadores", res: {} };
@@ -364,7 +406,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
                 result.message="Insira todos os campos obrigatórios";
                 //verifica se estão todos os campos definidos
                 if (req.body.name) {
-                    if (await thiss.addNewType(db, req.body.name)) {
+                    if (await thiss.addNewUserType(db, req.body.name)) {
                         result.error = 0;
                         result.message = "Tipo de utilizador adicionado com sucesso";
                     } else {
