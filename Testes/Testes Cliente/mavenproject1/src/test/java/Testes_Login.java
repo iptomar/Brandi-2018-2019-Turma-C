@@ -20,7 +20,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
  */
 
 //IMPORTANTE teste123456@ipt.pt PASS:123456
-public class NewSeleneseIT {
+public class Testes_Login {
     
     @Test
     public void testSimple() throws Exception {
