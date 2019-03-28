@@ -47,7 +47,7 @@ public class Testes_Login {
     
   //  @Ignore @Test
     @Test
-    public void autenticadorJáAutenticado() throws Exception{
+    public void autenticadorJaAutenticado() throws Exception{
         WebDriver driver = new ChromeDriver();
         
          driver.get("http://brandic.devll.eu:61080/login/login");
