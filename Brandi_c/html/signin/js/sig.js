@@ -1,29 +1,35 @@
-var app = angular.module('brandic', []);
-    app.controller('signInCtrl', function($scope,$http) {
+
+    app.controller('signInCtrl', async function($scope,$http) {
+		await checkAuth($http);
+		if(___user == null) {
+			window.location = "../login/login";
+		} else if(___user.type_user != ADMIN_TYPE) {
+			window.location = "../";
+		}
         $scope.email = "teste123456@ipt.pt";
         $scope.password = "123456";
-		$scope.fullname = "Antonio Oliveira Salazar";
+		$scope.fullname = "Manuel Mircolino dos Santos";
         $scope.address = "No Coracao de todo o verdadeiro portugues";
-		
-        $scope.cellphone = 666;
-        
+		$scope.dateCamp = new Date();
+        $scope.cellphone = 900000000;
+        $scope.usertypeid = 1;
+	//$scope.names=["Admin", "User"];
         $scope.signIn = function() {
-            //alert("Username: "+ $scope.email+" \nPassword: "+$scope.password);
-			let date=$scope.byear+"-"+$scope.bmonth+"-"+$scope.bday;
+           
+			let date =  new Date($scope.dateCamp);
+			let dateStr = date.getYear()+"-"+ date.getMonth()+"-"+date.getDay();
             $http.post(HOST+"/register",{
                 email: $scope.email,
                 password: $scope.password,
 				fullname: $scope.fullname,
 				address: $scope.address,
-				birthday: date,
+				birthday: dateStr,
 				cellphone: $scope.cellphone,
 				usertypeid: $scope.usertypeid
 				
             }).then(function(response){
                 console.log(response);
-				response.data.error==1?
-					$scope.mensagem=response.data.message
-						:$scope.mensagem=response.data.message;
+				$scope.mensagem=response.data.message;
                 
             })
 
