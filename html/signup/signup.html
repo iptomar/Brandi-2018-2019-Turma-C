@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">--> <!--bootstrap sacar ficheiro daqui a uns tempos e mudar de link para caminho-->
+		<link rel="stylesheet" type="text/css" href="../css/app.css"><!-- sempre -->
+		<link rel="stylesheet" type="text/css" href="css/sig.css">
+		
+		<title>SIGNUP</title>
+	</head>
+	<body>
+		<script src="../lib/angular.min.js"></script><!-- sempre -->
+		<script src="../js/app.js"></script><!-- sempre -->
+		<!--<script src="sec.js"></script>-->
+		<div id="signDiv" class="divCentrado">
+		<form ng-app="brandic" ng-controller="signUpCtrl"  onsubmit="return false;">
+			<h1>Sign In Page</h1>
+			<span id="mensagem">{{mensagem}}</span><br>
+				<table>
+					<tr>
+				<th> Email:</th><th><input  ng-model="email" required placeholder="... insira email" name="email" id="email" type="email" pattern="[a-zA-Z0-9!#$%&amp;'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*"/></th>
+					</tr>-
+					<tr>
+				<th>Password:</th><th><input placeholder="... insira password desejada" type="password" name="password" id="password" ng-model="password"></th>
+					</tr>
+					<tr>
+				<th>Nome:</th><th><input placeholder="...insira seu nome" type="text" name="fullname" id="fullname" ng-model="fullname"></th>
+					</tr>
+					<tr>
+				<th>Endereço:</th><th><input placeholder="morada" type="text" name="address" id="address" ng-model="address"></th>
+					</tr>
+					<tr>
+					<th>Birthday: </th><th><input  type="date" name="dateCamp" id="dateCamp" ng-model="dateCamp"></th>
+					</tr>
+					<tr>
+						<th>Cellphone: </th><th><input type="number" name="cellphone" placeholder="xxx xxx xxx" id="cellphone" ng-model="cellphone" max="999999999" min="0"></th>
+					</tr>
+				<tr>
+					<th>UserTypeId:</th><th><select name="usertypeid" id="usertypeid" ng-model="usertypeid" ng-options="x.tipo for x in names"/>
+						
+					</select></th>
+					<!--<input type="text" name="usertypeid" id="usertypeid" ng-model="usertypeid">-->
+				</tr>
+				</table>
+				<center><br><button type="submit" ng-click="signup()"> Sign In</button></center><br><br>
+				<!--{{email+" "+password+" "+ fullname+" "+bday+"-"+bmonth+"-"+byear+" "+ cellphone+" "+usertypeid}}-->
+		  
+		</form>
+		</div>
+		
+		
+		<script src="js/sig.js"></script>
+    </body>
+</html>
