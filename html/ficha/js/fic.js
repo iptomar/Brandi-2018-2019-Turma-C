@@ -1,5 +1,5 @@
 
-var app = angular.module('brandic', []);
+
     app.controller('submitCab1Ctrl', function($scope,$http) {
         /*$scope.designation = "objecto";
         $scope.procLCRMid = 0;
@@ -14,13 +14,13 @@ var app = angular.module('brandic', []);
         $scope.subFich = function() {
             //alert("Username: "+ $scope.email+" \nPassword: "+$scope.password);
 			let date1=new Date($scope.procLCRMdate);
-			let procLCRMdate_formated=formated(date1);
+			let procLCRMdate_formated=formatedDate(date1);
 			date1=new Date($scope.procLCRMentrydate);
-			let procLCRMentrydate_formated=formated(date1);
+			let procLCRMentrydate_formated=formatedDate(date1);
 			date1=new Date($scope.procCEARCdate);
-			let procCEARCdate_formated=formated(date1);
+			let procCEARCdate_formated=formatedDate(date1);
 			date1=new Date($scope.procCEARCentrydate);
-			let procCEARCentrydate_formated=formated(date1);
+			let procCEARCentrydate_formated=formatedDate(date1);
 			
 			
             $http.post(HOST+"/naoTaFeito",{
@@ -35,15 +35,10 @@ var app = angular.module('brandic', []);
 				
             }).then(function(response){
                 console.log(response);
-				response.data.error==1?
-					$scope.mensagem=response.data.message
-						:$scope.mensagem=response.data.message;
+				$scope.mensagem=response.data.message;
                 
             })
 
             
         };
     });
-	function formated(date){
-		return date.getDay()+"-"+date.getMonth()+"-"+date.getYear();
-	}

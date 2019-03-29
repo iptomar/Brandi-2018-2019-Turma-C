@@ -25,3 +25,6 @@ function removeUserData($scope) {
 	
 }
 
+	function formatedDate(date){
+		return date.getYear()+"-"+date.getMonth()+"-"+date.getDay();
+	}
