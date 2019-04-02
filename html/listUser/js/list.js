@@ -18,7 +18,8 @@ var lista=null;
             }).then(function(response){
 				//show message
                 console.log(response);
-				lista = response.data.res.users;
+				lista= response.data.res.users;
+				$scope.lista = lista;
                 
             });
     });

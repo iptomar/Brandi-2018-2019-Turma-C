@@ -13,42 +13,32 @@
 		<script src="js/list.js"></script>
 		
 		<div class="divCentrado">
-		<div ng-app="brandic" ng-controller="listCtrl" >
-		
-		<table class="table table-striped">
-   <thead>
-     <tr>
-       <th scope="col">id</th>
-       <th scope="col">email</th>
-       <th scope="col">address</th>
-     </tr>
-   </thead>
-   <ng-container >
-      <tbody >
-        <tr *ngFor="let x of lista;">
-          <td>{{x.id}}</td>
-          <td>{{x.email}}</td>
-          <td>{{x.address}}</td>
-        </tr>
-      </tbody>
-    </ng-container>
-  </table>
-		</table>
-		<!--<div ng-repeat="item in lista">
-			<p{{item.id}}></p>
-			<p{{item.email}}></p>
-			<p{{item.address}}></p>
-			<p{{item.birthday}}></p>
-			<p{{item.cellphone}}></p>
-			<p{{item.type_user}}></p>
-			<p{{item.id_type_user}}></p>
-			<p{{item.last_login}}></p>
-			
-			</div>-->
-		</div>
-		</div>
-		
-		
-		<script src="js/list.js"></script>
+			<div ng-app="brandic" ng-controller="listCtrl" >
+				
+			<table>
+				<tr>
+					<th>ID</th>
+					<th>Full Name</th>
+					<th>email</th>
+					<th>endereco</th>
+					<th>birthday</th>
+					<th>cellphone</th>
+					<th>tipo</th>
+					<th>tipoid</th>
+					<th>last login</th>
+				</tr>
+				<tr ng-repeat="item in lista">
+					<td>{{item.id}}</td>
+					<td>{{item.full_name}}</td>
+					<td>{{item.email}}</td>
+					<td>{{item.address}}</td>
+					<td>{{item.birthday}}</td>
+					<td>{{item.cellphone}}</td>
+					<td>{{item.type_user}}</td>
+					<td>{{item.id_type_user}}</td>
+					<td>{{item.last_login}}</td>
+				</tr>
+			</table>
+			</div>
     </body>
 </html>
