@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">--> <!--bootstrap sacar ficheiro daqui a uns tempos e mudar de link para caminho-->
+		<link rel="stylesheet" type="text/css" href="../css/app.css"><!-- sempre -->
+		
+		
+		<title>SIGNUP</title>
+	</head>
+	<body>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script><!-- sempre -->
+		<script src="../js/app.js"></script><!-- sempre -->
+		<script src="js/list.js"></script>
+		
+		<div class="divCentrado">
+		<div ng-app="brandic" ng-controller="listCtrl" >
+		
+		<table class="table table-striped">
+   <thead>
+     <tr>
+       <th scope="col">id</th>
+       <th scope="col">email</th>
+       <th scope="col">address</th>
+     </tr>
+   </thead>
+   <ng-container >
+      <tbody >
+        <tr *ngFor="let x of lista;">
+          <td>{{x.id}}</td>
+          <td>{{x.email}}</td>
+          <td>{{x.address}}</td>
+        </tr>
+      </tbody>
+    </ng-container>
+  </table>
+		</table>
+		<!--<div ng-repeat="item in lista">
+			<p{{item.id}}></p>
+			<p{{item.email}}></p>
+			<p{{item.address}}></p>
+			<p{{item.birthday}}></p>
+			<p{{item.cellphone}}></p>
+			<p{{item.type_user}}></p>
+			<p{{item.id_type_user}}></p>
+			<p{{item.last_login}}></p>
+			
+			</div>-->
+		</div>
+		</div>
+		
+		
+		<script src="js/list.js"></script>
+    </body>
+</html>

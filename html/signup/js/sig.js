@@ -7,7 +7,8 @@
         $scope.address = "No Coracao de todo o verdadeiro portugues";
 		let data= new Date()
 		$scope.dateCamp = data;
-        $scope.cellphone = 900000000;
+		$scope.cellphone = "912312321";
+		
 		//select array of objects
 		$scope.names=[{tipo:"Admin", valor:1}, {tipo:"User",valor:2}];
 		
