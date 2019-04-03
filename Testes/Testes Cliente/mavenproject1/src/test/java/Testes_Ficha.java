@@ -1,4 +1,5 @@
 import static org.junit.Assert.*;
+import java.sql.Driver;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,9 +17,9 @@ public class Testes_Ficha {
     WebDriver driver = new ChromeDriver();
     driver.get("http://brandic.devll.eu:61080/login/login");
     WebElement email = driver.findElement(By.id("email"));
-    email.sendKeys("teste123456@ipt.pt");
+    email.sendKeys("admin@admin.admin");
     WebElement pass = driver.findElement(By.id("password"));
-    pass.sendKeys("123456");
+    pass.sendKeys("admin");
     driver.findElement(By.id("butLogin")).click();
   }
 
@@ -33,7 +34,10 @@ public class Testes_Ficha {
 
   @Test
   public void test() {
-    fail("Not yet implemented");
+    WebDriver driver = new ChromeDriver();
+    driver.get("http://brandic.devll.eu:61080/ficha/ficha");
+    WebElement designation = driver.findElement(By.id("designation"));
+    designation.sendKeys("a tua mãe de 4");
   }
 
 }
