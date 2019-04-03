@@ -1,5 +1,3 @@
-import static org.junit.Assert.*;
-import java.sql.Driver;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

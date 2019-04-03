@@ -1,6 +1,9 @@
 
 import static org.junit.Assert.fail;
-import org.junit.Ignore;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -22,6 +25,18 @@ import org.openqa.selenium.chrome.ChromeDriver;
 //IMPORTANTE teste123456@ipt.pt PASS:123456
 public class Testes_Login {
     
+  @BeforeClass
+  public static void setUpBeforeClass() throws Exception {}
+
+  @AfterClass
+  public static void tearDownAfterClass() throws Exception {}
+
+  @Before
+  public void setUp() throws Exception {}
+
+  @After
+  public void tearDown() throws Exception {}
+  
     @Test
     public void testSimple() throws Exception {
     
@@ -36,9 +51,6 @@ public class Testes_Login {
        String str = driver.findElement(By.id("mensagem")).getText();
         if("Autenticado com sucesso".equals(str))
            fail();
-       
-       
-        //Close the browser
         //driver.quit();
     
     
@@ -47,7 +59,7 @@ public class Testes_Login {
     
   //  @Ignore @Test
     @Test
-    public void autenticadorJáAutenticado() throws Exception{
+    public void autenticadorJaAutenticado() throws Exception{
         WebDriver driver = new ChromeDriver();
         
          driver.get("http://brandic.devll.eu:61080/login/login");
