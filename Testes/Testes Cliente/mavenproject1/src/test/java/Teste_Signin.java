@@ -17,6 +17,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
  *
  * @author LittleChinese
  */
+
+
 public class Teste_Signin {
     
     
@@ -30,9 +32,14 @@ public class Teste_Signin {
     pass.sendKeys("admin");
     driver.findElement(By.id("butLogin")).click();
     
-    driver.close();
+   // driver.close();
   }
 
+  @Test
+  public static void signUp() throws Exception{
+      WebDriver driver = new ChromeDriver();
+      driver.get("http://brandic.devll.eu:61080/index");
+  }
     
 
     
@@ -42,7 +49,7 @@ public class Teste_Signin {
 WebDriver driver = new ChromeDriver();
 
 
-        driver.get("http://brandic.devll.eu:61080/signin/signin");
+        driver.get("http://brandic.devll.eu:61080/signup/signup");
      
         /*JAVASCRIPT   
           JavascriptExecutor js = (JavascriptExecutor)driver;
@@ -53,17 +60,30 @@ WebDriver driver = new ChromeDriver();
        WebElement email = driver.findElement(By.id("email")); //.sendKeys("teste123456@ipt.pt");
      email.clear();
        email.sendKeys("teste123456@ipt.pt");
-       
-       WebElement password = driver.findElement(By.id(("password")));
-       password.clear();
-      password.sendKeys("123456");
+     
       
-        WebElement fullname = driver.findElement(By.id("fullname"));
+               WebElement fullname = driver.findElement(By.id("fullname"));
         fullname.clear();
         fullname.sendKeys("Manuel Mircolino dos Santos");
         
+       
+       WebElement password = driver.findElement(By.id(("password")));
+       password.clear();
+      password.sendKeys("WebElem");
+      
+
           WebElement data = driver.findElement(By.id("dateCamp"));
+          data.clear();
           data.sendKeys("10102000");
+          
+          WebElement address = driver.findElement(By.id("address"));
+          address.clear();
+          address.sendKeys("No Coracao de todo o verdadeiro portugues");
+          
+          WebElement cellphone = driver.findElement(By.id("cellphone"));
+          cellphone.clear();
+          cellphone.sendKeys("912312321");
+          
           
           
           
