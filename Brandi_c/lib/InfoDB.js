@@ -23,7 +23,6 @@ exports.TBL_MATERIALS = "tbl_materials"; // tabela da ficha de materiais
 exports.TBL_MATERIALS_USED = "tbl_materials_used"; // tabela de materiais usados
 exports.TBL_MATERIAL_TYPES = "tbl_material_types"; // tabela de tipos de materiais
 exports.TBL_PREVIOUS_INTERVENTIONS = "tbl_previous_interventions"; // tabela de intervenções anteriores
-exports.TBL_SITES = "tbl_sites"; // tabela de localizações
 exports.TBL_SOURCES = "tbl_sources"; // tabela de origens
 exports.TBL_STYLE = "tbl_style"; // tabela de estilos
 exports.TBL_TEAM = "tbl_team"; // tabela de equipa
