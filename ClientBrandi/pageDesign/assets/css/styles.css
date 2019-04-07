@@ -1,0 +1,43 @@
+#navID {
+  background-color: rgba(75,75,75,0.74);
+  font-family: 'Open Sans', sans-serif;
+  color: rgb(255,255,255);
+  height: 29px;
+}
+
+.itemsNav {
+  color: rgba(255,255,255,0.7)!important;
+}
+
+.col.col-sm-4.label-column.colTamanho {
+}
+
+.form-row.form-group.form-row.tamRow {
+  height: 38px;
+}
+
+.alinhar {
+  text-align: right;
+}
+
+.col-form-label.negrido {
+  font-weight: bold;
+}
+
+#cont {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.dropdown.options {
+  width: 100%;
+}
+
+.linkCont {
+  font-size: 13px;
+  border-bottom: solid 1px;
+}
+
+#tit {
+}
+
