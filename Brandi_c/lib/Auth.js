@@ -414,16 +414,17 @@ exports.appendToExpress = function (app, _db, _prefix) {
     let db = _db;
     let prefix = _prefix;
     app.post(prefix + ROUTE_USER_PREFIX + '/register', async function (req, res) {
-        let result = { error: 2, message: "Não tem permissões para registar utilizadores", res: {} };
+        let result = { error: 3, message: "Não tem permissões para registar utilizadores", res: {} };
         //recebe o utilizador autenticado
         let u = thiss.getUserFromSession(req);
         //verifica se ja existe o utilizador autenticado
         if (u) {
             //verifica se este é administrador
             if (u.type_user === infoDB.ADMIN_TYPE_NAME) {
-                result.error = 1;
+                result.error = 2;
                 result.message = "Insira todos os campos obrigatórios";
                 if (req.body.email && req.body.password && req.body.fullname && req.body.address && req.body.birthday && req.body.cellphone && req.body.title && req.body.qualifications && req.body.usertypeid) {
+                    result.error = 1;
                     //indica que nãoi foi autenticado até verificar
                     result.message = "Ocorreu um erro no registo, verifique se todos os campos săo válidos";
                     //verifica os dados de autenticação
@@ -501,15 +502,16 @@ exports.appendToExpress = function (app, _db, _prefix) {
         res.json(result);
     });
     app.post(prefix + ROUTE_USER_PREFIX + "/change", async function (req, res) {
-        let result = { error: 2, message: "Não tem permissões para alterar o utilizador", res: {} };
+        let result = { error: 3, message: "Não tem permissões para alterar o utilizador", res: {} };
         //recebe o utilizador autenticado
         let u = thiss.getUserFromSession(req);
         //verifica se ja existe o utilizador autenticado
         if (u) {
             if (u.type_user === infoDB.ADMIN_TYPE_NAME || !req.body.id || req.body.id === u.id+"") {
-                result.error = 1;
+                result.error = 2;
                 result.message = "Insira todos os campos obrigatórios";
                 if (req.body.fullname && req.body.address && req.body.cellphone && req.body.title && req.body.qualifications) {
+                    result.error = 1;
                     //indica que nãoi foi autenticado até verificar
                     result.message = "Ocorreu um erro na alteração do utilizador, verifique se todos os campos săo válidos";
                     let id = (u.type_user === infoDB.ADMIN_TYPE_NAME ? (!req.body.id ? u.id : req.body.id) : u.id) //se for admin pode ser o id que vem do cliente ou o id do proprio utilizador, se não for, só pode ser o id do próprio utilizador
@@ -651,14 +653,14 @@ exports.appendToExpress = function (app, _db, _prefix) {
 
     app.post(prefix + ROUTE_USER_TYPE_PREFIX + '/create', async function (req, res) {
         //prepara resposta para cliente
-        let result = { error: 2, message: "Não tem permissões para adicionar tipos de utilizador", res: {} };
+        let result = { error: 3, message: "Não tem permissões para adicionar tipos de utilizador", res: {} };
         //carrega os dados em sessão do utilizador
         let u = thiss.getUserFromSession(req);
         //verifica se está autenticado
         if (u) {
             //verifica se este é administrador
             if (u.type_user === infoDB.ADMIN_TYPE_NAME) {
-                result.error = 1;
+                result.error = 2;
                 result.message="Insira todos os campos obrigatórios";
                 //verifica se estão todos os campos definidos
                 if (req.body.name) {
@@ -666,6 +668,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
                         result.error = 0;
                         result.message = "Tipo de utilizador adicionado com sucesso";
                     } else {
+                        result.error = 1;
                         result.message = "Ocorreu um erro, provavelmente esse tipo de utilizador já existe";
                     }
                 }
@@ -677,14 +680,14 @@ exports.appendToExpress = function (app, _db, _prefix) {
 
     app.post(prefix + ROUTE_USER_TYPE_PREFIX + '/change', async function (req, res) {
         //prepara resposta para cliente
-        let result = { error: 2, message: "Não tem permissões para alterar tipos de utilizador", res: {} };
+        let result = { error: 3, message: "Não tem permissões para alterar tipos de utilizador", res: {} };
         //carrega os dados em sessão do utilizador
         let u = thiss.getUserFromSession(req);
         //verifica se está autenticado
         if (u) {
             //verifica se este é administrador
             if (u.type_user === infoDB.ADMIN_TYPE_NAME) {
-                result.error = 1;
+                result.error = 2;
                 result.message="Insira todos os campos obrigatórios";
                 //verifica se estão todos os campos definidos
                 if (req.body.id && req.body.name) {
@@ -692,6 +695,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
                         result.error = 0;
                         result.message = "Tipo de utilizador alterado com sucesso";
                     } else {
+                        result.error = 1;
                         result.message = "Ocorreu um erro, provavelmente o nome dado já existe";
                     }
                 }
@@ -703,14 +707,14 @@ exports.appendToExpress = function (app, _db, _prefix) {
 
     app.post(prefix + ROUTE_USER_TYPE_PREFIX + '/delete', async function (req, res) {
         //prepara resposta para cliente
-        let result = { error: 2, message: "Não tem permissões para eliminar tipos de utilizador", res: {} };
+        let result = { error: 4, message: "Não tem permissões para eliminar tipos de utilizador", res: {} };
         //carrega os dados em sessão do utilizador
         let u = thiss.getUserFromSession(req);
         //verifica se está autenticado
         if (u) {
             //verifica se este é administrador
             if (u.type_user === infoDB.ADMIN_TYPE_NAME) {
-                result.error = 1;
+                result.error = 3;
                 result.message = "Insira todos os campos obrigatórios";
                 //verifica se estão todos os campos definidos
                 if (req.body.id) {
@@ -720,9 +724,11 @@ exports.appendToExpress = function (app, _db, _prefix) {
                             result.message = "Tipo de utilizador eliminado com sucesso";
                             break;
                         case 2:
+                            result.error = 2;
                             result.message = "Ocorreu um erro, provavelmente existem utilizadores associados a este tipo";
                             break;
                         default:
+                            result.error = 1;
                             result.message = "Esse tipo de utilizador não foi encontrado";
                     }
                 }
