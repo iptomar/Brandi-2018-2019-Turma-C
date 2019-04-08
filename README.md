@@ -12,7 +12,7 @@ Na pasta de raiz existe a pasta Testes e dentro desta está uma pasta com o nome
 ATENÇÃO:<br/>
 --> Caso estejam a trabalhar dentro do branch testes_cliente só devem mexer na pasta /Testes/Testes Cliente<br/>
 --> Caso estejam a trabalhar dentro do branch testes_servidor só devem mexer  na pasta /Testes/Testes Servidor<br/>
---> Caso estejam a trabalhar dentro do branch front_end só devem mexer na pasta /ClientBrandi<br/>
---> Caso estejam a trabalhar no branch back_end podem mexer em todas as pastas menos em: /Testes/*, /ClientBrandi<br/>
+--> Caso estejam a trabalhar dentro do branch front_end só devem mexer na pasta /Brandi_c/html<br/>
+--> Caso estejam a trabalhar no branch back_end podem mexer em todas as pastas menos em: /Testes/*, /Brandi_c/html<br/>
 
 Os webservices estão descritos na pasta Brandi_c<br/>
