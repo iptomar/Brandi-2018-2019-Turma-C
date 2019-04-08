@@ -87,7 +87,7 @@ class Database {
      */
     async doDelete(q, params) {
         //faz a query a base de dados
-        let res = await doQuery(q, params);
+        let res = await this.doQuery(q, params);
         //caso nao haja erro, devolve só o numero de linhas afetadas
         if (res.error === 0) res.res = res.res.affectedRows;
         return res;

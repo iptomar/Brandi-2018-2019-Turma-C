@@ -1,7 +1,7 @@
 ﻿//Host da base de dados
-exports.HOST = "localhost";
+exports.HOST = "brandic.devll.eu";
 //porta da base de dados
-exports.PORT = 3306;
+exports.PORT = 63306;
 //user da base de dados
 exports.USER = "brandic";
 //password da base de dados
@@ -43,7 +43,7 @@ exports.TBL_SOLUBTESTS = "tbl_solubtests"; // tabela de subcategorias
 exports.TBL_WORKSHEET = "tbl_worksheet"; // tabela de subcategorias
 //--------------------------CRIAÇÃO DAS TABELAS--------------------------
 exports.CREATE_TBL_USER_TYPES = "CREATE TABLE IF NOT EXISTS " + this.TBL_USER_TYPES + "(id INT(11) AUTO_INCREMENT, type_user VARCHAR(25) NOT NULL,PRIMARY KEY(id))";
-exports.CREATE_TBL_USERS = "CREATE TABLE IF NOT EXISTS " + this.TBL_USERS + "(id INT(11) AUTO_INCREMENT, email VARCHAR(70) NOT NULL UNIQUE, password VARCHAR(2049) NOT NULL, salt VARCHAR(256) NOT NULL, full_name VARCHAR(70), address VARCHAR(150), birthday DATE, cellphone VARCHAR(12), last_login DATETIME NOT NULL DEFAULT NOW(), register_date DATETIME NOT NULL DEFAULT NOW(), title VARCHAR (100), qualifications VARCHAR (100),id_type_user INT(11) NOT NULL, PRIMARY KEY(id), FOREIGN KEY fk_user_type_user(id_type_user) REFERENCES " + this.TBL_USER_TYPES + "(id))";
+exports.CREATE_TBL_USERS = "CREATE TABLE IF NOT EXISTS " + this.TBL_USERS + "(id INT(11) AUTO_INCREMENT, email VARCHAR(70) NOT NULL UNIQUE, password VARCHAR(2049) NOT NULL, salt VARCHAR(256) NOT NULL, full_name VARCHAR(70), address VARCHAR(150), birthday DATE, cellphone VARCHAR(12), last_login DATETIME NOT NULL, register_date DATETIME NOT NULL, title VARCHAR (100), qualifications VARCHAR (100),id_type_user INT(11) NOT NULL, deleted BIT(1) DEFAULT 0, PRIMARY KEY(id), FOREIGN KEY fk_user_type_user(id_type_user) REFERENCES " + this.TBL_USER_TYPES + "(id))";
 
 exports.CREATE_TBL_ANALYSIS = "CREATE TABLE IF NOT EXISTS " + this.TBL_ANALYSIS + "(id INT(11) NOT NULL AUTO_INCREMENT, test_id INT(11) NOT NULL, type_reference VARCHAR(150), location VARCHAR(150), objectives VARCHAR(150), technician INT(11) NOT NULL, analysis_DATE DATE, results TEXT, conclusions TEXT, PRIMARY KEY (id), FOREIGN KEY fk_analysis_test(test_id) REFERENCES " + this.TBL_TESTS + "(id), FOREIGN KEY fk_analysis_tech(technician) REFERENCES " + this.TBL_USERS  + "(id))";
 
@@ -81,7 +81,7 @@ exports.CREATE_TBL_TECHNICS_USED = "CREATE TABLE IF NOT EXISTS " + this.TBL_TECH
 
 exports.CREATE_TBL_TESTS = "CREATE TABLE IF NOT EXISTS " + this.TBL_TESTS + "(id INT(11) NOT NULL AUTO_INCREMENT, object_id INT(11) NOT NULL, Q1 BIT(1), Q2 BIT(1), Q3 BIT(1), Q4 BIT(1), Q5 BIT(1), Q6 BIT(1), results TEXT, conclusions TEXT, PRIMARY KEY (id), FOREIGN KEY fk_tests_object(object_id) REFERENCES "+ this.TBL_OBJECT + "(id))";
 
-exports.CREATE_TBL_CATEGORIES = "CREATE TABLE IF NOT EXISTS " + this.TBL_CATEGORIES + "(id INT(11) NOT NULL AUTO_INCREMENT, category VARCHAR(150) NOT NULL, supercategory INT(11) NOT NULL, PRIMARY KEY (id), FOREIGN KEY fk_super(supercategory) REFERENCES " + this.TBL_SUPERCATEGORIES + "(id)");
+exports.CREATE_TBL_CATEGORIES = "CREATE TABLE IF NOT EXISTS " + this.TBL_CATEGORIES + "(id INT(11) NOT NULL AUTO_INCREMENT, category VARCHAR(150) NOT NULL, supercategory INT(11) NOT NULL, PRIMARY KEY (id), FOREIGN KEY fk_super(supercategory) REFERENCES " + this.TBL_SUPERCATEGORIES + "(id))";
 
 exports.CREATE_TBL_SUPERCATEGORIES = "CREATE TABLE IF NOT EXISTS " + this.TBL_SUPERCATEGORIES + "(id INT(11) NOT NULL AUTO_INCREMENT, supercategory VARCHAR(150) NOT NULL, PRIMARY KEY (id))";
 

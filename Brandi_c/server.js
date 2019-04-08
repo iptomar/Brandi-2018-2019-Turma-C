@@ -10,7 +10,7 @@ const infoDB = require('./lib/InfoDB.js');
 const database = require('./lib/DataBase.js');
 const auth = require('./lib/Auth.js');
 //porta do servidor
-const PORT = 80;
+const PORT = 8080;
 const PREFIX_ROUTE = '/api';
 //diretória de ficheiros html estáticos
 const PUBLIC_DIR = __dirname + path.sep + 'html' + path.sep;
@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 console.log("body parser initialized");
 //inicializaçăo do sistema de sessőes do lado do servidor
-app.use(session({ secret: 'keyboard dog', resave: true, saveUninitialized: true, cookie: { maxAge: 60000 } }));
+app.use(session({ secret: 'keyboard dog', resave: true, saveUninitialized: true, cookie: { maxAge: 60000*60*24/*1 dia*/ } }));
 console.log("Sessions initialized");
 //inicializaçăo da pool da base de dados
 const db = new database.Database(infoDB.HOST, infoDB.PORT, infoDB.USER, infoDB.PASSWORD, infoDB.DB);

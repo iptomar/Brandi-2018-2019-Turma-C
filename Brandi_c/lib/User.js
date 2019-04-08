@@ -9,21 +9,29 @@
         this._type_user = json.type_user;
         this._id_type_user = json.id_type_user;
         this._last_login = json.last_login;
+        this._register_date = json.register_date;
+        this._title = json.title;
+        this._qualifications = json.qualifications;
     }
+    //nao podem ser alterados
     get id() {
         return this._id;
-    }
-    get full_name() {
-        return this._full_name;
     }
     get email() {
         return this._email;
     }
-    get address() {
-        return this._address;
-    }
     get birthday() {
         return this._birthday;
+    }
+    get register_date() {
+        return this._register_date;
+    }
+    //podem ser alterados
+    get full_name() {
+        return this._full_name;
+    }
+    get address() {
+        return this._address;
     }
     get cellphone() {
         return this._cellphone;
@@ -37,8 +45,36 @@
     get last_login() {
         return this._last_login;
     }
+    get title() {
+        return this._title;
+    }
+    get qualifications() {
+        return this._qualifications;
+    }
+    //podem ser alterados
     set last_login(ll) {
         this._last_login = ll;
+    }
+    set full_name(fn) {
+        this._full_name=fn;
+    }
+    set address(a) {
+        this._address=a;
+    }
+    set cellphone(cp) {
+        this._cellphone=cp;
+    }
+    set type_user(tu) {
+        this._type_user=tu;
+    }
+    set id_type_user(itu) {
+        this._id_type_user=itu;
+    }
+    set title(t) {
+        this._title=t;
+    }
+    set qualifications(q) {
+        this._qualifications=q;
     }
     //retorna objeto json de forma a poder ser enviado para o cliente ou ser armazenado nas variaveis de sessão 
     getJSON() {
@@ -51,7 +87,10 @@
             cellphone: this._cellphone,
             type_user: this._type_user,
             id_type_user: this._id_type_user,
-            last_login: this._last_login
+            last_login: this._last_login,
+            register_date: this._register_date,
+            title: this._title,
+            qualifications: this._qualifications
         };
     }
 }
