@@ -7,8 +7,13 @@ const path = require("path");
 const infoDB = require('./lib/InfoDB.js');
 
 //const person = require('./lib/Person.js');//para eliminar
+//----------------------------------- LIBS -----------------------------------
 const database = require('./lib/DataBase.js');
 const auth = require('./lib/Auth.js');
+const datasheet = require('./lib/DataSheet');
+
+
+//----------------------------------- END LIBS -----------------------------------
 //porta do servidor
 const PORT = 8080;
 const PREFIX_ROUTE = '/api';
@@ -48,9 +53,14 @@ auth.addFirstUserAndUserType(db);
 console.log("Admin user and default user types created");
 //console.log(auth.newHashPassword("123456"));
 
+//----------------------------------- LIBS APPEND ROUTES -----------------------------------
 //inclui pedidos relativos à sessão
 auth.appendToExpress(app, db, PREFIX_ROUTE);
+//inclui pedidos relativos à ficha técnica
+datasheet.appendToExpress(app, db, PREFIX_ROUTE);
 
+
+//----------------------------------- END LIBS APPEND ROUTES  -----------------------------------
 //transforma o pedido em um pedido com .html(caso ja nao contenha este)
 app.use(function (req, res, next) {
     if (req.path.indexOf('.') === -1) {
