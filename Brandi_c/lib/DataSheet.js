@@ -96,7 +96,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
             if (/**req.body.idobject && **/ req.body.designation && /**req.body.lcrmproc && req.body.lcrmprocdata && req.body.cearcprocdata && req.body.cearcentrancedata**/ req.body.cearcproc && req.body.coordinatorid && req.body.lcrmentrancedata) {
                 //define erro para o caso de algo correr mal
                 result.error = 1;
-                result.message = "Ocorreu um erro, Algum dos campos pode estar mal definido";
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
                 //todos os campos não obrigatórios ficam como null caso não estejam definidos
                 req.body.cearcprocdata = !req.body.cearcprocdata ? null : req.body.cearcprocdata;
                 req.body.cearcentrancedata = !req.body.cearcentrancedata ? null : req.body.cearcentrancedata;

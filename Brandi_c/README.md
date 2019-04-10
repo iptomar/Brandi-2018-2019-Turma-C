@@ -1,5 +1,6 @@
 
 
+
 ﻿# Brandi_c
 # WEB SERVICES:
 ## GET /api/user/info
@@ -461,4 +462,111 @@
 	   "error": 0,
 	   "message": "Tipo de utilizador alterado com sucesso",
 		"res": {}
+	}
+	
+------------
+## POST /api/datasheet/createandedit:
+> Cria ou atualiza dados da ficha técnica
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	idobject - id da ficha técnica a atualizar (distingue criação de atualização, utilizar somente quando a editar, caso a criar uma nova, este não deve ser inserido)
+	designation - designação do objeto (obrigatório)
+	cearcproc - processo CEARC (obrigatório)
+	cearcprocdata - data do processo CEARC
+	cearcentrancedata - data de entrada CEARC
+	lcrmproc - processo LCRM
+	lcrmprocdata - data do processo LCRM
+	lcrmentrancedata - data de entrada LCRM (obrigatório)
+	coordinatorid - id do coordenador (obrigatório)
+### devolve:
+##### se não tiver autenticado:
+	{
+		   "error": 3,
+		   "message": ""Por favor efectue autenticação",
+		   "res": {}
+	 }
+##### se não forem dados todos os campos obrigatórios:
+	{
+	   "error": 2,
+	   "message": "Insira todos os campos obrigatórios",
+	   "res": {}
+	}
+##### se ocorrer um erro (por exemplo a data não conter um formato válido):
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+	   "res": {}
+	}
+##### se for criado com sucesso:
+	{
+	   "error": 0,
+	   "message": "Ficha técnica criada com sucesso",
+		"res": {id: 5, type: 0}
+	}
+##### se for atualizado com sucesso:
+	{
+	   "error": 0,
+	   "message": "Ficha técnica atualizada com sucesso",
+		"res": {id: 5, type: 1}
+	}
+	
+------------
+## GET /api/datasheet/list:
+> lista fichas técnicas (A ser melhorado)
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	search - palavra utilizada na pesquisa de fichas técnicas por nome
+### devolve:
+##### se não tiver autenticado:
+	{
+		   "error": 2,
+		   "message": ""Por favor efectue autenticação",
+		   "res": {}
+	 }
+##### se ocorrer um erro:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro na aquisição da lista, por favor tente novamente",
+	   "res": {}
+	}
+##### se for listado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Lista de fichas técnicas",
+	    "res": {
+	        "datasheets": [
+	            {
+	                "object_designation": "asdfg",
+	                "CEARC_process": "teste0001",
+	                "CEARC_process_date": null,
+	                "CEARC_entry_date": null,
+	                "LCRM_process": null,
+	                "LCRM_process_date": null,
+	                "LCRM_entry_date": "2019-03-15T00:00:00.000Z",
+	                "coordinator": 4,
+	                "coordinator_name": "Virgilio Quintino",
+	                "last_modified_user": 1,
+	                "last_modified_user_name": "Luís Lopes",
+	                "last_modified_date": "2019-04-10T01:38:09.000Z",
+	                "object_created_date": "2019-04-10T00:57:19.000Z"
+	            },
+	            {
+	                "object_designation": "teste",
+	                "CEARC_process": "teste0001",
+	                "CEARC_process_date": null,
+	                "CEARC_entry_date": null,
+	                "LCRM_process": null,
+	                "LCRM_process_date": null,
+	                "LCRM_entry_date": "2019-03-05T00:00:00.000Z",
+	                "coordinator": 4,
+	                "coordinator_name": "Virgilio Quintino",
+	                "last_modified_user": 1,
+	                "last_modified_user_name": "Luís Lopes",
+	                "last_modified_date": "2019-04-10T01:04:00.000Z",
+	                "object_created_date": "2019-04-10T01:04:00.000Z"
+	            }
+	        ]
+	    }
 	}
