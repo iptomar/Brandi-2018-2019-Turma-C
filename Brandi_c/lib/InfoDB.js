@@ -16,7 +16,7 @@ exports.ADMIN_PW = "admin";
 //--------------------------TABELAS--------------------------
 exports.TBL_USERS = "tbl_users"; //tabela de utilizadores
 exports.TBL_USER_TYPES = "tbl_user_types"; //tabela de tipo de utilizador
-exports.TBL_OBJECT = "tbl_object" ; // tabela principal do objeto/peça
+exports.TBL_OBJECT = "tbl_object"; // tabela principal do objeto/peça
 exports.TBL_ANALYSIS = "tbl_analysis"; // tabela de análises
 exports.TBL_CONSERVATION = "tbl_conservation"; // tabela referente à conservação
 exports.TBL_CONTACTS = "tbl_contacts"; // tabela de contactos
@@ -81,11 +81,11 @@ exports.CREATE_TBL_TECHNICS_USED = "CREATE TABLE IF NOT EXISTS " + this.TBL_TECH
 
 exports.CREATE_TBL_TESTS = "CREATE TABLE IF NOT EXISTS " + this.TBL_TESTS + "(id INT(11) NOT NULL AUTO_INCREMENT, object_id INT(11) NOT NULL, Q1 BIT(1), Q2 BIT(1), Q3 BIT(1), Q4 BIT(1), Q5 BIT(1), Q6 BIT(1), results TEXT, conclusions TEXT, PRIMARY KEY (id), FOREIGN KEY fk_tests_object(object_id) REFERENCES "+ this.TBL_OBJECT + "(id))";
 
-exports.CREATE_TBL_CATEGORIES = "CREATE TABLE IF NOT EXISTS " + this.TBL_CATEGORIES + "(id INT(11) NOT NULL AUTO_INCREMENT, category VARCHAR(150) NOT NULL, supercategory INT(11) NOT NULL, PRIMARY KEY (id), FOREIGN KEY fk_super(supercategory) REFERENCES " + this.TBL_SUPERCATEGORIES + "(id))";
+exports.CREATE_TBL_CATEGORIES = "CREATE TABLE IF NOT EXISTS " + this.TBL_CATEGORIES + "(id INT(11) NOT NULL AUTO_INCREMENT, category VARCHAR(150) NOT NULL UNIQUE, supercategory INT(11) NOT NULL, PRIMARY KEY (id), FOREIGN KEY fk_super(supercategory) REFERENCES " + this.TBL_SUPERCATEGORIES + "(id))";
 
-exports.CREATE_TBL_SUPERCATEGORIES = "CREATE TABLE IF NOT EXISTS " + this.TBL_SUPERCATEGORIES + "(id INT(11) NOT NULL AUTO_INCREMENT, supercategory VARCHAR(150) NOT NULL, PRIMARY KEY (id))";
+exports.CREATE_TBL_SUPERCATEGORIES = "CREATE TABLE IF NOT EXISTS " + this.TBL_SUPERCATEGORIES + "(id INT(11) NOT NULL AUTO_INCREMENT, supercategory VARCHAR(150) NOT NULL UNIQUE, PRIMARY KEY (id))";
 
-exports.CREATE_TBL_SUBCATEGORIES = "CREATE TABLE IF NOT EXISTS " + this.TBL_SUBCATEGORIES + "(id INT(11) NOT NULL, subcategory INT(11), category INT(11) NOT NULL, PRIMARY KEY (id), FOREIGN KEY fk_cattop(category) REFERENCES  " + this.TBL_CATEGORIES + "(id))";
+exports.CREATE_TBL_SUBCATEGORIES = "CREATE TABLE IF NOT EXISTS " + this.TBL_SUBCATEGORIES + "(id INT(11) NOT NULL AUTO_INCREMENT, subcategory VARCHAR(150) NOT NULL UNIQUE, category INT(11) NOT NULL, PRIMARY KEY (id), FOREIGN KEY fk_cattop(category) REFERENCES  " + this.TBL_CATEGORIES + "(id))";
 
 exports.CREATE_TBL_SOLUBILITY = "CREATE TABLE  IF NOT EXISTS " + this.TBL_SOLUBILITY + "(id int(11) NOT NULL AUTO_INCREMENT, object_id int(11) NOT NULL, description varchar(100) NOT NULL, features text, technician int(11) NOT NULL, solub_date DATE , PRIMARY KEY (id), FOREIGN KEY fk_solub_object(object_id) REFERENCES "+ this.TBL_OBJECT + "(id), FOREIGN KEY fk_solub_tech(technician) REFERENCES " + this.TBL_USERS + "(id))";
 
