@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		
+    <link rel="icon" type="image/png" sizes="151x184" href="../assets/img/brandi.png">
+    
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/app.css">
+    <link rel="stylesheet" href="../assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+    <link rel="stylesheet" href="../assets/css/Navigation-with-Button.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+		<title>Dados Pessoais</title>
+	</head>
+<body ng-app="brandic" data-ng-controller="app">
+		<div>
+        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button " style="height: 55px;">
+            <div class="container">
+				<a class="navbar-brand " href="#" id="navBarLogo">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;  Brandic</a>
+				<button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
+					<span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+				</button>
+                <div 
+                    class="collapse navbar-collapse" id="navcol-1" ng-model="navcol1" name="navcol1">
+                   <span  class="navbar-text actions direita" id="butContainer"><!-- alinha isto á direita-->
+							
+							
+							
+					</span>
+				</div>
+			</div>
+		</nav>
+    </div>
+    <section class="d-flex d-md-flex align-content-center justify-content-md-center align-items-md-center" id="frontDiv">
+        <div class="container" style="padding-top: 70px;">
+            <div class="jumbotron" id="divJumbotron">
+		<div ng-controller="dadosCtrl">
+			<form  id="dados" onsubmit="return false;" class="divCentrado">
+			
+				<h1>Dados Pessoais</h1>
+				<span id="mensagem">{{mensagem}}</span><br>
+				<table>
+					<tr>
+						<th>Email: </th><th>{{email}}</th>
+					</tr>
+					<tr>
+						<th>Nome: </th><th>{{full_name}}</th>
+					</tr>
+					<tr>
+						<th>morada: </th><th>{{address}}</th>
+					</tr>
+					<tr>
+						<th>Usertype: </th><th>{{type_user}}</th>
+					</tr>
+					
+					<tr>
+						<th>Change Password:</th><th>XXXXX</th>
+					</tr>
+				</table>
+				<button ng-click="update()"> update</button><br>
+				
+		  
+			</form>
+			</div>
+		</div>
+        </div>
+    </section>
+		<script src="../lib/angular.min.js"></script><!-- sempre -->
+		<script src="../js/app.js"></script><!-- sempre -->
+		<script src="js/dp.js"></script>
+    </body>
+</html>
