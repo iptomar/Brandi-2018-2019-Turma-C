@@ -1,0 +1,3005 @@
+{
+	"info": {
+		"_postman_id": "de1f9aea-5ad8-4ec9-b368-36cdc5fa88e4",
+		"name": "Testes_Webservices 0.05",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Informação do Utilizador",
+			"item": [
+				{
+					"name": "../api/user/info  - sem autenticação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a6a67ffa-1cb1-47ad-85c2-d129fe6e5128",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "1609400d-568e-4c6a-874c-c5219194fc39",
+								"exec": [
+									"pm.test(\"Teste sem autenticação\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Por favor efectue autenticação\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/info",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"info"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 1,\n    \"message\": \"Por favor efectue autenticação\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/info - após autenticação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a98939d8-ee8f-4f89-94b4-14716114edfe",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"teste123456@ipt.pt\",\"type\":\"text\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\",\"type\":\"text\"}",
+									"        ]",
+									"    }",
+									"}, function (err, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "7d4617ac-6ab5-4631-812e-a111755768fa",
+								"exec": [
+									"pm.test(\"Teste de verificação de autenticação.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Bem-vindo Teste2 Teste\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/info",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"info"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Bem-vindo Teste2 Teste\",\n    \"res\": {\n        \"id\": 2,\n        \"full_name\": \"Teste2 Teste\",\n        \"email\": \"teste123456@ipt.pt\",\n        \"address\": \"Teste2\",\n        \"birthday\": \"02/04/1992\",\n        \"cellphone\": \"987654321\",\n        \"type_user\": \"User\",\n        \"id_type_user\": 2,\n        \"last_login\": \"2019-04-16T10:11:41.424Z\",\n        \"register_date\": null,\n        \"title\": \"dont6\",\n        \"qualifications\": \"have6\"\n    }\n}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Autenticação de Utilizadores",
+			"item": [
+				{
+					"name": "../api/user/auth - password errada",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "193b9cb0-6794-473b-8d4e-02658d0a7c72",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "8ef6b1d0-0214-4c42-8f91-a2c4359632c8",
+								"exec": [
+									"pm.test(\"Teste de tentativa de autenticação com password errada.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Ocorreu um erro na autenticaçăo, verifique se todos os campos săo válidos\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "teste123456@ipt.pt",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1234560000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/auth",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"auth"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 1,\n    \"message\": \"Ocorreu um erro na autenticaçăo, verifique se todos os campos săo válidos\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/auth - sem todos os campos",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e47fd942-29eb-484e-88e3-7fc0f3ff5313",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "018bbf2b-81bc-4ecb-8c4c-73f8759bd83a",
+								"exec": [
+									"pm.test(\"Teste de tentativa de autenticação com falta de campos obrigatórios.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Todos os campos săo obrigatórios\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": "12345",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/auth",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"auth"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 1,\n    \"message\": \"Todos os campos săo obrigatórios\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/auth - campos inválidos",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b88dacee-d058-4507-84b4-d9246445c5c7",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c6873494-68bf-420a-aef7-9a8262d02135",
+								"exec": [
+									"pm.test(\"Teste de tentativa de autenticação com campos obrigatórios inválidos.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Ocorreu um erro na autenticaçăo, verifique se todos os campos săo válidos\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "email",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/auth",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"auth"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 1,\n    \"message\": \"Ocorreu um erro na autenticaçăo, verifique se todos os campos săo válidos\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/auth - autenticação com sucesso",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "cae4f8b8-16e1-49e4-a961-cc15b60d58a8",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "2629d671-0ce5-4d79-b3ed-5460fa93c5ea",
+								"exec": [
+									"pm.test(\"Teste de autenticação com sucesso.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Autenticado com sucesso\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "teste123456@ipt.pt",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/auth",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"auth"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Autenticado com sucesso\",\n    \"res\": {\n        \"id\": 2,\n        \"full_name\": \"Teste2 Teste\",\n        \"email\": \"teste123456@ipt.pt\",\n        \"address\": \"Teste2\",\n        \"birthday\": \"02/04/1992\",\n        \"cellphone\": \"987654321\",\n        \"type_user\": \"User\",\n        \"id_type_user\": 2,\n        \"last_login\": \"2019-04-16T10:10:53.580Z\",\n        \"register_date\": null,\n        \"title\": \"dont6\",\n        \"qualifications\": \"have6\"\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/auth - repetir a atenticação já autenticado",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "be900ad2-94b1-446d-922c-aed12581a642",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"teste123456@ipt.pt\",\"type\":\"text\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\",\"type\":\"text\"}",
+									"        ]",
+									"    }",
+									"}, function (err, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d2aa11b3-9350-40d7-943c-4052354d4aae",
+								"exec": [
+									"pm.test(\"Teste de tentativa de autenticação com autenticação já efectuada anteriormente.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Utilizador já se encontra autenticado\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "teste123456@ipt.pt",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/auth",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"auth"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Utilizador já se encontra autenticado\",\n    \"res\": {\n        \"id\": 2,\n        \"full_name\": \"Teste2 Teste\",\n        \"email\": \"teste123456@ipt.pt\",\n        \"address\": \"Teste2\",\n        \"birthday\": \"02/04/1992\",\n        \"cellphone\": \"987654321\",\n        \"type_user\": \"User\",\n        \"id_type_user\": 2,\n        \"last_login\": \"2019-04-16T10:11:14.070Z\",\n        \"register_date\": null,\n        \"title\": \"dont6\",\n        \"qualifications\": \"have6\"\n    }\n}"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fac38273-3cd3-42f1-a793-7470e279ba2b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "9b24acd0-4871-49cd-995c-fd789c117c30",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Logout dos Utilizadores",
+			"item": [
+				{
+					"name": "../api/user/logout - realizar logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "92b749a5-c44d-4871-af89-599ce5ed0ee7",
+								"exec": [
+									"pm.test(\"Teste de logout.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Sessão terminada com sucesso\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "2aeb9c0c-69ab-4444-97f4-d60ba8ea1f8b",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"teste123456@ipt.pt\",\"type\":\"text\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\",\"type\":\"text\"}",
+									"        ]",
+									"    }",
+									"}, function (err, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/logout",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"logout"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Sessão terminada com sucesso\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/logout - realizar logout sem autenticação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "bdac2fff-eb8c-4863-b928-b45dfa886931",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/logout",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"logout"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Sessão terminada com sucesso\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4fcfb6d7-7929-4513-ae6b-2279c632c241",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "daf1730a-0795-4f85-8339-00195cf55709",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Listar os Utilizadores",
+			"item": [
+				{
+					"name": "../api/user/list - obter lista de utilizadores sem autenticação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6e58cf0c-ba51-4d61-a9b3-ed49f7b05c4b",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c9646bb3-1651-4641-9ac8-2332c31bf2cf",
+								"exec": [
+									"pm.test(\"Teste de obter lista de utilizadores sem autenticação.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para listar utilizadores\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/list",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"list"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 1,\n    \"message\": \"Não tem permissões para listar utilizadores\",\n    \"res\": {\n        \"users\": []\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/list - obter lista de utilizadores com autenticação com usertypeid 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"teste123456@ipt.pt\",\"type\":\"text\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\",\"type\":\"text\"}",
+									"        ]",
+									"    }",
+									"}, function (err, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste de obter lista de utilizadores com autenticação com tipo de utilizador usertypeid 2.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para listar utilizadores\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/list",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"list"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 1,\n    \"message\": \"Não tem permissões para listar utilizadores\",\n    \"res\": {\n        \"users\": []\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/list - obter lista de utilizadores com autenticação com usertypeid 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste de obter lista de utilizadores com autenticação de utilizador com usertypeid 1.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Lista de utilizadores\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/list",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"list"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Lista de utilizadores\",\n    \"res\": {\n        \"users\": [\n            {\n                \"id\": 1,\n                \"full_name\": \"Luís Lopes\",\n                \"email\": \"aluno19055@ipt.pt\",\n                \"address\": \"qwerty\",\n                \"birthday\": \"10/04/1995\",\n                \"cellphone\": \"123456780\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": \"2019-04-10T01:37:56.000Z\",\n                \"register_date\": \"2019-04-07T20:12:10.000Z\",\n                \"title\": \"dont2\",\n                \"qualifications\": \"have2\"\n            },\n            {\n                \"id\": 3,\n                \"full_name\": \"Nuno\",\n                \"email\": \"aluno20235@ipt.pt\",\n                \"address\": \"Entroncamento\",\n                \"birthday\": \"18/02/1973\",\n                \"cellphone\": \"NULL\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": \"2019-04-11T13:19:12.000Z\",\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 11,\n                \"full_name\": \"Virgilio Quintino de Testes\",\n                \"email\": \"vquintino$ipt.pt\",\n                \"address\": \"Rua Fernando Pessoa, 123\",\n                \"birthday\": \"12/12/0001\",\n                \"cellphone\": \"a1a2a3a4a5a6\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 23,\n                \"full_name\": \"Antonio Oliveira Salazar\",\n                \"email\": \"teste1234567@ipt.pt\",\n                \"address\": \"No Coracao de todo o verdadeiro portugues\",\n                \"birthday\": \"01/01/1991\",\n                \"cellphone\": \"966666666\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": \"2019-04-10T16:03:57.000Z\",\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 24,\n                \"full_name\": \"Antonio Oliveira Salazar\",\n                \"email\": \"teste12345@ipt.pt\",\n                \"address\": \"No Coracao de todo o verdadeiro portugues\",\n                \"birthday\": \"01/01/1991\",\n                \"cellphone\": \"966666666\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 25,\n                \"full_name\": \"Antonio Oliveira Salazar\",\n                \"email\": \"teste1223456@ipt.pt\",\n                \"address\": \"No Coracao de todo o verdadeiro portugues\",\n                \"birthday\": \"00/00/0000\",\n                \"cellphone\": \"900000001\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 26,\n                \"full_name\": \"Manuel Mircolino dos Santos\",\n                \"email\": \"teste1233456@ipt.pt\",\n                \"address\": \"No Coracao de todo o verdadeiro portugues\",\n                \"birthday\": \"13/03/2019\",\n                \"cellphone\": \"900000000\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 27,\n                \"full_name\": \"Manuel Mircolino dos Santos\",\n                \"email\": \"teste1232456@ipt.pt\",\n                \"address\": \"No Coracao de todo o verdadeiro portugues\",\n                \"birthday\": \"25/03/2019\",\n                \"cellphone\": \"900000000\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 28,\n                \"full_name\": \"admin@admin.admin\",\n                \"email\": \"admin@admin.admin\",\n                \"address\": \"\",\n                \"birthday\": \"00/00/0000\",\n                \"cellphone\": \"\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": \"2019-04-16T10:14:18.000Z\",\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 29,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"vquintino@ipt.pt\",\n                \"address\": \"Rua da rua, 1\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"921123123\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": \"2019-04-03T20:56:09.000Z\",\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 30,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"vquintino111@ipt.pt\",\n                \"address\": \"Rua da rua, 1\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"921123123\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 31,\n                \"full_name\": \"Manuel Mircolino dos Santos\",\n                \"email\": \"teste1253456@ipt.pt\",\n                \"address\": \"No Coracao de todo o verdadeiro portugues\",\n                \"birthday\": \"03/02/0119\",\n                \"cellphone\": \"900000000\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": \"2019-03-27T21:22:08.000Z\",\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 32,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"vquintino44@ipt.pt\",\n                \"address\": \"Rua da rua, 1\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"921123123\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 40,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"vquintino47@ipt.pt\",\n                \"address\": \"Rua da rua, 1\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"921123123\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 41,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"vquintino48@ipt.pt\",\n                \"address\": \"Rua da rua, 1\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"921123123\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 42,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"vquintino50@ipt.pt\",\n                \"address\": \"Rua da rua, 1\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"921123123\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 43,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"vquintino51@ipt.pt\",\n                \"address\": \"Rua da rua, 1\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"921123123\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 44,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"vquintino52@ipt.pt\",\n                \"address\": \"Rua da rua, 1\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"921123123\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 45,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"vquintino53@ipt.pt\",\n                \"address\": \"Rua da rua, 1\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"921123123\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 46,\n                \"full_name\": \"Manuel Mircolino dos Santos\",\n                \"email\": \"teste123456@ipt.ptf\",\n                \"address\": \"No Coracao de todo o verdadeiro portugues\",\n                \"birthday\": \"04/02/0119\",\n                \"cellphone\": \"900000000\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 47,\n                \"full_name\": \"Manuel Mircolino dos Santos\",\n                \"email\": \"teste123456@ipt.pt2121\",\n                \"address\": \"No Coracao de todo o verdadeiro portugues\",\n                \"birthday\": \"04/02/0119\",\n                \"cellphone\": \"900000000\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 49,\n                \"full_name\": \"Manuel Mircolino dos Santos\",\n                \"email\": \"testere@ipt.pt\",\n                \"address\": \"No Coracao de todo o verdadeiro portugues\",\n                \"birthday\": \"02/03/0119\",\n                \"cellphone\": \"912312321\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 50,\n                \"full_name\": \"Manuel Mircolino dos Santos\",\n                \"email\": \"teste1234256@ipt.pt\",\n                \"address\": \"No Coracao de todo o verdadeiro portugues\",\n                \"birthday\": \"02/03/0119\",\n                \"cellphone\": \"912312321\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 51,\n                \"full_name\": \"Manuel Mircolino dos Santos\",\n                \"email\": \"teste1234512@as.as\",\n                \"address\": \"No Coracao de todo o verdadeiro portugues\",\n                \"birthday\": \"03/03/0119\",\n                \"cellphone\": \"912312321\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 52,\n                \"full_name\": \"Pessoa Pessoal\",\n                \"email\": \"teste123456@ipt.p1\",\n                \"address\": \"sim\",\n                \"birthday\": \"03/03/0119\",\n                \"cellphone\": \"912312321\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 53,\n                \"full_name\": \"teste\",\n                \"email\": \"teste123@ipt.pt\",\n                \"address\": \"teste2\",\n                \"birthday\": \"14/05/1990\",\n                \"cellphone\": \"123456789\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": \"2019-04-07T20:30:59.000Z\",\n                \"register_date\": \"2019-04-07T20:30:59.000Z\",\n                \"title\": \"dont\",\n                \"qualifications\": \"have\"\n            },\n            {\n                \"id\": 54,\n                \"full_name\": \"teste\",\n                \"email\": \"teste122313@ipt.pt\",\n                \"address\": \"teste2\",\n                \"birthday\": \"14/05/1990\",\n                \"cellphone\": \"123456789\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": \"2019-04-07T20:32:06.000Z\",\n                \"register_date\": \"2019-04-07T20:32:06.000Z\",\n                \"title\": \"dont\",\n                \"qualifications\": \"have\"\n            },\n            {\n                \"id\": 71,\n                \"full_name\": \"Filipe Branco\",\n                \"email\": \"fbranco201@ipt.pt\",\n                \"address\": \"Rua dos Campeões, Nº37\",\n                \"birthday\": \"23/10/1950\",\n                \"cellphone\": \"987654321\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": \"2019-04-16T08:44:00.000Z\",\n                \"register_date\": \"2019-04-16T08:44:00.000Z\",\n                \"title\": \"titulo\",\n                \"qualifications\": \"várias\"\n            },\n            {\n                \"id\": 72,\n                \"full_name\": \"Filipe Branco\",\n                \"email\": \"fbranco202@ipt.pt\",\n                \"address\": \"Rua dos Campeões, Nº37\",\n                \"birthday\": \"23/10/1950\",\n                \"cellphone\": \"987654321\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": \"2019-04-16T08:44:40.000Z\",\n                \"register_date\": \"2019-04-16T08:44:40.000Z\",\n                \"title\": \"titulo\",\n                \"qualifications\": \"várias\"\n            },\n            {\n                \"id\": 74,\n                \"full_name\": \"Filipe Branco\",\n                \"email\": \"fbranco111@ipt.pt\",\n                \"address\": \"Rua dos Campeões, Nº37\",\n                \"birthday\": \"23/10/1950\",\n                \"cellphone\": \"987654321\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": \"2019-04-16T09:41:55.000Z\",\n                \"register_date\": \"2019-04-16T09:41:55.000Z\",\n                \"title\": \"titulo\",\n                \"qualifications\": \"várias\"\n            },\n            {\n                \"id\": 76,\n                \"full_name\": \"Filipe Branco\",\n                \"email\": \"fbranco113@ipt.pt\",\n                \"address\": \"Rua dos Campeões, Nº37\",\n                \"birthday\": \"23/10/1950\",\n                \"cellphone\": \"987654321\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": \"2019-04-16T10:03:31.000Z\",\n                \"register_date\": \"2019-04-16T10:03:31.000Z\",\n                \"title\": \"titulo\",\n                \"qualifications\": \"várias\"\n            },\n            {\n                \"id\": 2,\n                \"full_name\": \"Teste2 Teste\",\n                \"email\": \"teste123456@ipt.pt\",\n                \"address\": \"Teste2\",\n                \"birthday\": \"02/04/1992\",\n                \"cellphone\": \"987654321\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": \"2019-04-16T10:13:49.000Z\",\n                \"register_date\": null,\n                \"title\": \"dont6\",\n                \"qualifications\": \"have6\"\n            },\n            {\n                \"id\": 4,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"quintino@ipt.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"123123123\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 5,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"quintino123@ipt.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"123123123456\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 6,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"quintino12@ipt.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"00/00/0000\",\n                \"cellphone\": \"123123123456\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 7,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"quintino1@ipt.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"00/00/0000\",\n                \"cellphone\": \"123123123456\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 8,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"quintino2@ipt.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"00/00/0000\",\n                \"cellphone\": \"123123123456\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 9,\n                \"full_name\": \"Virgilio Quintino123\",\n                \"email\": \"quintino3\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"00/00/0000\",\n                \"cellphone\": \"123123123456\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 10,\n                \"full_name\": \"Virgilio Quintino123\",\n                \"email\": \"quintino5_sem_arroba.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"00/00/0000\",\n                \"cellphone\": \"aaaaaaaaaaaa\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 12,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"quintino6@ipt.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"123123123\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 13,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"quintino7@ipt.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"123123123\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 14,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"quintino8@ipt.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"123123123\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 15,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"quintino9@ipt.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"123123123\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 16,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"quintino11@ipt.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"123123123\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 17,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"quintino13@ipt.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"123123123\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 18,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"quintino14@ipt.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"123123123\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 19,\n                \"full_name\": \" Filipe Branco\",\n                \"email\": \"fbranco@ipt.pt\",\n                \"address\": \"Rua dos Campeões, Nº37\",\n                \"birthday\": \"23/10/1950\",\n                \"cellphone\": \"987654321\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 55,\n                \"full_name\": \"Manuel Mircolino dos Santos\",\n                \"email\": \"tese123456@ipt.pt\",\n                \"address\": \"No Coracao de todo o verdadeiro portugues\",\n                \"birthday\": \"01/03/0119\",\n                \"cellphone\": \"912312321\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null,\n                \"register_date\": null,\n                \"title\": null,\n                \"qualifications\": null\n            },\n            {\n                \"id\": 69,\n                \"full_name\": \"Filipe Branco\",\n                \"email\": \"fbranco100@ipt.pt\",\n                \"address\": \"Rua dos Campeões, Nº37\",\n                \"birthday\": \"23/10/1950\",\n                \"cellphone\": \"987654321\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": \"2019-04-16T04:57:20.000Z\",\n                \"register_date\": \"2019-04-16T04:57:20.000Z\",\n                \"title\": \"titulo\",\n                \"qualifications\": \"nenhumas\"\n            },\n            {\n                \"id\": 70,\n                \"full_name\": \"Filipe Branco\",\n                \"email\": \"fbranco101@ipt.pt\",\n                \"address\": \"Rua dos Campeões, Nº37\",\n                \"birthday\": \"23/10/1950\",\n                \"cellphone\": \"987654321\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": \"2019-04-16T09:41:54.000Z\",\n                \"register_date\": \"2019-04-16T08:32:28.000Z\",\n                \"title\": \"titulo\",\n                \"qualifications\": \"nenhuma\"\n            },\n            {\n                \"id\": 73,\n                \"full_name\": \"Filipe Branco\",\n                \"email\": \"fbranco110@ipt.pt\",\n                \"address\": \"Rua dos Campeões, Nº37\",\n                \"birthday\": \"23/10/1950\",\n                \"cellphone\": \"987654321\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": \"2019-04-16T09:41:53.000Z\",\n                \"register_date\": \"2019-04-16T09:41:53.000Z\",\n                \"title\": \"titulo\",\n                \"qualifications\": \"nenhuma\"\n            },\n            {\n                \"id\": 75,\n                \"full_name\": \"Filipe Branco\",\n                \"email\": \"fbranco112@ipt.pt\",\n                \"address\": \"Rua dos Campeões, Nº37\",\n                \"birthday\": \"23/10/1950\",\n                \"cellphone\": \"987654321\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": \"2019-04-16T10:03:30.000Z\",\n                \"register_date\": \"2019-04-16T10:03:30.000Z\",\n                \"title\": \"titulo\",\n                \"qualifications\": \"nenhuma\"\n            }\n        ]\n    }\n}"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "23eb7ae6-ba0b-4320-86e8-e4a1f02eaa18",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "8b808a55-9d2a-435d-87c2-4dea8b97b15b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Registar os Utilizadores",
+			"item": [
+				{
+					"name": "../api/user/register - tentativa de registar sem login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "459f2ae0-9354-4113-95b6-fb7ca2fea55b",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "6b16dc08-b716-4a2a-a84f-c1b167348a9b",
+								"exec": [
+									"pm.test(\"Teste para realizar registo de novo utilizador sem login.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(3);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para registar utilizadores\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "fbranco@ipt.pt",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "fullname",
+									"value": "Filipe Branco",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Rua dos Campeões, Nº37",
+									"type": "text"
+								},
+								{
+									"key": "birthday",
+									"value": "1950-10-23",
+									"type": "text"
+								},
+								{
+									"key": "cellphone",
+									"value": "987654321",
+									"type": "text"
+								},
+								{
+									"key": "usertypeid",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "titulo",
+									"type": "text"
+								},
+								{
+									"key": "qualifications",
+									"value": "nenhuma",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/register",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para registar utilizadores\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/register - tentativa de registar com login usertypeid 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c096d832-5569-4c11-85ec-5a226b345a40",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"teste123456@ipt.pt\",\"type\":\"text\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\",\"type\":\"text\"}",
+									"        ]",
+									"    }",
+									"}, function (err, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "5ba6af75-de8b-47f4-87a6-212553299d0c",
+								"exec": [
+									"pm.test(\"Teste para realizar registo de novo utilizador com utilizador usertypeid 2.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(3);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para registar utilizadores\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "fbranco@ipt.pt",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "fullname",
+									"value": "Filipe Branco",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Rua dos Campeões, Nº37",
+									"type": "text"
+								},
+								{
+									"key": "birthday",
+									"value": "1950-10-23",
+									"type": "text"
+								},
+								{
+									"key": "cellphone",
+									"value": "987654321",
+									"type": "text"
+								},
+								{
+									"key": "usertypeid",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "titulo",
+									"type": "text"
+								},
+								{
+									"key": "qualifications",
+									"value": "nenhuma",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/register",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para registar utilizadores\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/auth - realizar autenticação com usertypeid 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "412a1e5a-4ff7-41b7-bb75-e9fd94835867",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin@admin.admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/auth",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"auth"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Autenticado com sucesso\",\n    \"res\": {\n        \"id\": 28,\n        \"full_name\": \"admin@admin.admin\",\n        \"email\": \"admin@admin.admin\",\n        \"address\": \"\",\n        \"birthday\": \"00/00/0000\",\n        \"cellphone\": \"\",\n        \"type_user\": \"Admin\",\n        \"id_type_user\": 1,\n        \"last_login\": \"2019-04-16T10:17:16.978Z\",\n        \"register_date\": null,\n        \"title\": null,\n        \"qualifications\": null\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/register - tentativa de registar sem os campos obrigatórios",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "57d2179f-9ea4-41cf-ab68-63ebcabfd345",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "beaad83c-352a-43fd-865d-72a9aafa0542",
+								"exec": [
+									"pm.test(\"Teste para realizar registo de novo utilizador sem campos obrigatórios.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(2);",
+									"    pm.expect(jsonData.message).to.eql(\"Insira todos os campos obrigatórios\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "fullname",
+									"value": "Filipe Branco",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Rua dos Campeões, Nº37",
+									"type": "text"
+								},
+								{
+									"key": "birthday",
+									"value": "1950-10-23",
+									"type": "text"
+								},
+								{
+									"key": "cellphone",
+									"value": "987654321",
+									"type": "text"
+								},
+								{
+									"key": "usertypeid",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "titulo",
+									"type": "text"
+								},
+								{
+									"key": "qualifications",
+									"value": "nenhuma",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/register",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 2,\n    \"message\": \"Insira todos os campos obrigatórios\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/register - tentativa de registar com os campos inválidos",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e4645cb0-e482-4a59-bcfa-09d57b9f6e4d",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "naotenhoemaileagora@ipt.pt",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "fullname",
+									"value": "%/#%#%(#%",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "123645782569256296234",
+									"type": "text"
+								},
+								{
+									"key": "birthday",
+									"value": "datanascimento",
+									"type": "text"
+								},
+								{
+									"key": "cellphone",
+									"value": "naotenhotellemovel",
+									"type": "text"
+								},
+								{
+									"key": "usertypeid",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "titulo",
+									"type": "text"
+								},
+								{
+									"key": "qualifications",
+									"value": "nenhuma",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/register",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Registado com sucesso\",\n    \"res\": {\n        \"id\": 77,\n        \"full_name\": \"%/#%#%(#%\",\n        \"email\": \"naotenhoemaileagora@ipt.pt\",\n        \"address\": \"123645782569256296234\",\n        \"birthday\": \"datanascimento\",\n        \"cellphone\": \"naotenhotellemovel\",\n        \"type_user\": \"User\",\n        \"id_type_user\": 2,\n        \"last_login\": \"2019-04-16T10:19:29.001Z\",\n        \"register_date\": \"2019-04-16T10:19:29.001Z\",\n        \"title\": \"titulo\",\n        \"qualifications\": \"nenhuma\"\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/register - registar com sucesso novo utilizador",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "25891f9e-42f3-4439-be8c-33359a238d61",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "da8a3aa5-43dd-4e25-877a-87ea8e801bbb",
+								"exec": [
+									"pm.test(\"Teste para realizar registo de novo utilizador com sucesso.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Registado com sucesso\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "fbranco118@ipt.pt",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "fullname",
+									"value": "Filipe Branco",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Rua dos Campeões, Nº37",
+									"type": "text"
+								},
+								{
+									"key": "birthday",
+									"value": "1950-10-23",
+									"type": "text"
+								},
+								{
+									"key": "cellphone",
+									"value": "987654321",
+									"type": "text"
+								},
+								{
+									"key": "usertypeid",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "titulo",
+									"type": "text"
+								},
+								{
+									"key": "qualifications",
+									"value": "nenhuma",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/register",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Registado com sucesso\",\n    \"res\": {\n        \"id\": 78,\n        \"full_name\": \"Filipe Branco\",\n        \"email\": \"fbranco114@ipt.pt\",\n        \"address\": \"Rua dos Campeões, Nº37\",\n        \"birthday\": \"1950-10-23\",\n        \"cellphone\": \"987654321\",\n        \"type_user\": \"User\",\n        \"id_type_user\": 2,\n        \"last_login\": \"2019-04-16T10:20:22.402Z\",\n        \"register_date\": \"2019-04-16T10:20:22.402Z\",\n        \"title\": \"titulo\",\n        \"qualifications\": \"nenhuma\"\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/register - tentar registar novamente com o mesmo email",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "25891f9e-42f3-4439-be8c-33359a238d61",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "da8a3aa5-43dd-4e25-877a-87ea8e801bbb",
+								"exec": [
+									"pm.test(\"Teste para realizar registo de novo utilizador com email já registado.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Esse email já se encontra em utilização\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "fbranco118@ipt.pt",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "fullname",
+									"value": "Felismina Branco",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Rua das Lagartixas, Nº9",
+									"type": "text"
+								},
+								{
+									"key": "birthday",
+									"value": "1960-10-23",
+									"type": "text"
+								},
+								{
+									"key": "cellphone",
+									"value": "987654322",
+									"type": "text"
+								},
+								{
+									"key": "usertypeid",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "titulo",
+									"type": "text"
+								},
+								{
+									"key": "qualifications",
+									"value": "algumas",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/register",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 1,\n    \"message\": \"Esse email já se encontra em utilização\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/register - registar novo utilizador de level usertypeid 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "661991b3-a597-4aae-9690-8775365d7cf8",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "6ecbb34f-3f82-4bf5-a3a9-fa9cfce7fa66",
+								"exec": [
+									"pm.test(\"Teste para realizar registo de novo utilizador do tipo usertypeid 1.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Registado com sucesso\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "fbranco119@ipt.pt",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "fullname",
+									"value": "Filipe Branco",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Rua dos Campeões, Nº37",
+									"type": "text"
+								},
+								{
+									"key": "birthday",
+									"value": "1950-10-23",
+									"type": "text"
+								},
+								{
+									"key": "cellphone",
+									"value": "987654321",
+									"type": "text"
+								},
+								{
+									"key": "usertypeid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "titulo",
+									"type": "text"
+								},
+								{
+									"key": "qualifications",
+									"value": "várias",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/register",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Registado com sucesso\",\n    \"res\": {\n        \"id\": 79,\n        \"full_name\": \"Filipe Branco\",\n        \"email\": \"fbranco115@ipt.pt\",\n        \"address\": \"Rua dos Campeões, Nº37\",\n        \"birthday\": \"1950-10-23\",\n        \"cellphone\": \"987654321\",\n        \"type_user\": \"Admin\",\n        \"id_type_user\": 1,\n        \"last_login\": \"2019-04-16T10:21:53.069Z\",\n        \"register_date\": \"2019-04-16T10:21:53.069Z\",\n        \"title\": \"titulo\",\n        \"qualifications\": \"várias\"\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/register - registar novo utilizador de level usertypeid 3",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c358cfd3-4b46-4511-b8a4-585796b6cb61",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "67fac7c2-13d8-48e3-96c8-e4b9e88b906d",
+								"exec": [
+									"pm.test(\"Teste para realizar registo de novo utilizador do tipo usertypeid 3.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Ocorreu um erro no registo, verifique se todos os campos săo válidos\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "fbranco1000@ipt.pt",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "fullname",
+									"value": "Filipe Branco",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "Rua dos Campeões, Nº37",
+									"type": "text"
+								},
+								{
+									"key": "birthday",
+									"value": "1950-10-23",
+									"type": "text"
+								},
+								{
+									"key": "cellphone",
+									"value": "987654321",
+									"type": "text"
+								},
+								{
+									"key": "usertypeid",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "xpto",
+									"type": "text"
+								},
+								{
+									"key": "qualifications",
+									"value": "mestre",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/register",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 1,\n    \"message\": \"Ocorreu um erro no registo, verifique se todos os campos săo válidos\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "619875cb-5532-43d8-9b3e-847f683c84e7",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0272f799-e897-490a-b538-a2796ea903cf",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Listar Tipos de Utilizadores",
+			"item": [
+				{
+					"name": "../api/user/type/list - obter lista de tipos de utilizadores sem login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para obter lista de tipo de utilizadores sem login.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para listar tipos de utilizador\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/list",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"list"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 1,\n    \"message\": \"Não tem permissões para listar tipos de utilizador\",\n    \"res\": {\n        \"user_types\": []\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/list - obter lista de tipos de utilizadores com login usertype 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"teste123456@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para obter lista de tipo de utilizadores com login de usertypeid 2.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para listar tipos de utilizador\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/list",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"list"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 1,\n    \"message\": \"Não tem permissões para listar tipos de utilizador\",\n    \"res\": {\n        \"user_types\": []\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/list - obter lista de tipos de utilizadores com login usertype 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para obter lista de tipo de utilizadores com login de usertypeid 1.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Lista de tipos de utilizador\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/list",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"list"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Lista de tipos de utilizador\",\n    \"res\": {\n        \"user_types\": [\n            {\n                \"id\": 1,\n                \"name\": \"Admin\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"User\"\n            },\n            {\n                \"id\": 11,\n                \"name\": \"xpto\"\n            },\n            {\n                \"id\": 12,\n                \"name\": \"xpto1\"\n            },\n            {\n                \"id\": 13,\n                \"name\": \"utilizador\"\n            },\n            {\n                \"id\": 14,\n                \"name\": \"novotipo\"\n            },\n            {\n                \"id\": 15,\n                \"name\": \"novotipo2\"\n            },\n            {\n                \"id\": 16,\n                \"name\": \"novotipo4\"\n            },\n            {\n                \"id\": 17,\n                \"name\": \"novotipo5\"\n            }\n        ]\n    }\n}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Criar Tipos de Utilizadores",
+			"item": [
+				{
+					"name": "../api/user/type/create - tentativa de adicionar tipo de utilizador sem autenticação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para adicionar tipo de utilizador sem autenticação.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(3);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para adicionar tipos de utilizador\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "xpto",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"create"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para adicionar tipos de utilizador\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/create - tentativa de adicionar tipo de utilizador com usertypeid 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "cc407e6d-4018-4330-ade1-7eeb532d4aaa",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"teste123456@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "697b5730-c33a-4fe3-b217-ce4c827614d7",
+								"exec": [
+									"pm.test(\"Teste para adicionar tipo de utilizador com login de utilizxador do tipo usertypeid 2.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(3);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para adicionar tipos de utilizador\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "xpto",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"create"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para adicionar tipos de utilizador\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/create - tentativa de adicionar tipo de utilizador com usertypeid 1 sem campos obrigatórios",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "42d5ce90-41e2-447d-ad6c-d4acc6a4e34d",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b1b2782d-e74f-404e-a47e-9b384d743c0b",
+								"exec": [
+									"pm.test(\"Teste para adicionar tipo de utilizador com login de utilizador do tipo usertypeid 1 sem campos obrigatórios.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(2);",
+									"    pm.expect(jsonData.message).to.eql(\"Insira todos os campos obrigatórios\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"create"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 2,\n    \"message\": \"Insira todos os campos obrigatórios\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/create - adicionar tipo de utilizador com usertypeid 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "42d5ce90-41e2-447d-ad6c-d4acc6a4e34d",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b1b2782d-e74f-404e-a47e-9b384d743c0b",
+								"exec": [
+									"pm.test(\"Teste para adicionar tipo de utilizador com login de utilizador do tipo usertypeid 1.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Tipo de utilizador adicionado com sucesso\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "novotipo7",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"create"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Tipo de utilizador adicionado com sucesso\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/create - tentativa de adicionar tipo de utilizador com usertypeid 1 de tipo de user já existente",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "42d5ce90-41e2-447d-ad6c-d4acc6a4e34d",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b1b2782d-e74f-404e-a47e-9b384d743c0b",
+								"exec": [
+									"pm.test(\"Teste para adicionar tipo de utilizador já existente.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Ocorreu um erro, provavelmente esse tipo de utilizador já existe\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "novotipo",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"create"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 1,\n    \"message\": \"Ocorreu um erro, provavelmente esse tipo de utilizador já existe\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Eliminar utilizadores",
+			"item": [
+				{
+					"name": "../api/user/delete - tentar eliminar um utilizador sem autenticação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para eliminar um utilizador sem autenticação.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(3);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para eliminar utilizadores\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "71",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/delete",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"delete"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Lista de utilizadores\",\n    \"res\": {\n        \"user_types\": [\n            {\n                \"id\": 1,\n                \"name\": \"Admin\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"User\"\n            },\n            {\n                \"id\": 5,\n                \"name\": \"teste\"\n            },\n            {\n                \"id\": 6,\n                \"name\": \"teste5\"\n            },\n            {\n                \"id\": 7,\n                \"name\": \"xpto\"\n            },\n            {\n                \"id\": 8,\n                \"name\": \"xpto0\"\n            },\n            {\n                \"id\": 9,\n                \"name\": \"xpto1\"\n            },\n            {\n                \"id\": 10,\n                \"name\": \"utilizador\"\n            }\n        ]\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/delete - tentar eliminar um utilizador com autenticação de user usertypeid 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"teste123456@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para eliminar um utilizador com autenticação de user usertypeid 2.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(3);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para eliminar utilizadores\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "71",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/delete",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"delete"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Lista de utilizadores\",\n    \"res\": {\n        \"user_types\": [\n            {\n                \"id\": 1,\n                \"name\": \"Admin\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"User\"\n            },\n            {\n                \"id\": 5,\n                \"name\": \"teste\"\n            },\n            {\n                \"id\": 6,\n                \"name\": \"teste5\"\n            },\n            {\n                \"id\": 7,\n                \"name\": \"xpto\"\n            },\n            {\n                \"id\": 8,\n                \"name\": \"xpto0\"\n            },\n            {\n                \"id\": 9,\n                \"name\": \"xpto1\"\n            },\n            {\n                \"id\": 10,\n                \"name\": \"utilizador\"\n            }\n        ]\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/delete - tentar eliminar um utilizador com autenticação de user usertypeid 1 sem campos obrigatórios",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para eliminar um utilizador com autenticação de user usertypeid 1 sem campos obrigatórios.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(2);",
+									"    pm.expect(jsonData.message).to.eql(\"Insira todos os campos obrigatórios\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/delete",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"delete"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Lista de utilizadores\",\n    \"res\": {\n        \"user_types\": [\n            {\n                \"id\": 1,\n                \"name\": \"Admin\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"User\"\n            },\n            {\n                \"id\": 5,\n                \"name\": \"teste\"\n            },\n            {\n                \"id\": 6,\n                \"name\": \"teste5\"\n            },\n            {\n                \"id\": 7,\n                \"name\": \"xpto\"\n            },\n            {\n                \"id\": 8,\n                \"name\": \"xpto0\"\n            },\n            {\n                \"id\": 9,\n                \"name\": \"xpto1\"\n            },\n            {\n                \"id\": 10,\n                \"name\": \"utilizador\"\n            }\n        ]\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/delete - tentar eliminar um utilizador com autenticação de user usertypeid 1 de user inexistente",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para eliminar um utilizador com autenticação de user usertypeid 1 de user inexistente.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Utilizador não encontrado\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "10000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/delete",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"delete"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Lista de utilizadores\",\n    \"res\": {\n        \"user_types\": [\n            {\n                \"id\": 1,\n                \"name\": \"Admin\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"User\"\n            },\n            {\n                \"id\": 5,\n                \"name\": \"teste\"\n            },\n            {\n                \"id\": 6,\n                \"name\": \"teste5\"\n            },\n            {\n                \"id\": 7,\n                \"name\": \"xpto\"\n            },\n            {\n                \"id\": 8,\n                \"name\": \"xpto0\"\n            },\n            {\n                \"id\": 9,\n                \"name\": \"xpto1\"\n            },\n            {\n                \"id\": 10,\n                \"name\": \"utilizador\"\n            }\n        ]\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/delete - Eliminar um user com sucesso",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Eliminar um user com sucesso.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Eliminido com sucesso\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "71",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/delete",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"delete"
+							]
+						},
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Lista de utilizadores\",\n    \"res\": {\n        \"user_types\": [\n            {\n                \"id\": 1,\n                \"name\": \"Admin\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"User\"\n            },\n            {\n                \"id\": 5,\n                \"name\": \"teste\"\n            },\n            {\n                \"id\": 6,\n                \"name\": \"teste5\"\n            },\n            {\n                \"id\": 7,\n                \"name\": \"xpto\"\n            },\n            {\n                \"id\": 8,\n                \"name\": \"xpto0\"\n            },\n            {\n                \"id\": 9,\n                \"name\": \"xpto1\"\n            },\n            {\n                \"id\": 10,\n                \"name\": \"utilizador\"\n            }\n        ]\n    }\n}"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "a9f616ac-b262-4b9a-a196-9a1915711b3a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "01b66b61-e2a8-4d09-851e-f28742784dba",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
