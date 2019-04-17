@@ -4116,7 +4116,7 @@
 								"change"
 							]
 						},
-						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para adicionar tipos de utilizador\",\n    \"res\": {}\n}"
+						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para alterar tipos de utilizador\",\n    \"res\": {}\n}"
 					},
 					"response": []
 				},
@@ -4205,7 +4205,7 @@
 								"change"
 							]
 						},
-						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para adicionar tipos de utilizador\",\n    \"res\": {}\n}"
+						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para alterar tipos de utilizador\",\n    \"res\": {}\n}"
 					},
 					"response": []
 				},
@@ -4289,7 +4289,7 @@
 								"change"
 							]
 						},
-						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para adicionar tipos de utilizador\",\n    \"res\": {}\n}"
+						"description": "Devolve:\n\n{\n    \"error\": 2,\n    \"message\": \"Insira todos os campos obrigatórios\",\n    \"res\": {}\n}"
 					},
 					"response": []
 				},
@@ -4378,7 +4378,7 @@
 								"change"
 							]
 						},
-						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para adicionar tipos de utilizador\",\n    \"res\": {}\n}"
+						"description": "Devolve:\n\n{\n    \"error\": 1,\n    \"message\": \"Ocorreu um erro, provavelmente o nome dado já existe\",\n    \"res\": {}\n}"
 					},
 					"response": []
 				},
@@ -4467,7 +4467,7 @@
 								"change"
 							]
 						},
-						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para adicionar tipos de utilizador\",\n    \"res\": {}\n}"
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Tipo de utilizador alterado com sucesso\",\n    \"res\": {}\n}"
 					},
 					"response": []
 				},
@@ -4552,7 +4552,7 @@
 								"change"
 							]
 						},
-						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para adicionar tipos de utilizador\",\n    \"res\": {}\n}"
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Tipo de utilizador alterado com sucesso\",\n    \"res\": {}\n}"
 					},
 					"response": []
 				}
@@ -4649,7 +4649,7 @@
 								"delete"
 							]
 						},
-						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para adicionar tipos de utilizador\",\n    \"res\": {}\n}"
+						"description": "Devolve:\n\n{\n    \"error\": 4,\n    \"message\": \"Não tem permissões para eliminar tipos de utilizador\",\n    \"res\": {}\n}"
 					},
 					"response": []
 				},
@@ -4733,7 +4733,7 @@
 								"delete"
 							]
 						},
-						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para adicionar tipos de utilizador\",\n    \"res\": {}\n}"
+						"description": "Devolve:\n\n{\n    \"error\": 4,\n    \"message\": \"Não tem permissões para eliminar tipos de utilizador\",\n    \"res\": {}\n}"
 					},
 					"response": []
 				},
@@ -4808,7 +4808,7 @@
 								"delete"
 							]
 						},
-						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para adicionar tipos de utilizador\",\n    \"res\": {}\n}"
+						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Insira todos os campos obrigatórios\",\n    \"res\": {}\n}"
 					},
 					"response": []
 				},
@@ -4892,7 +4892,7 @@
 								"delete"
 							]
 						},
-						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para adicionar tipos de utilizador\",\n    \"res\": {}\n}"
+						"description": "Devolve:\n\n{\n    \"error\": 1,\n    \"message\": \"Esse tipo de utilizador não foi encontrado\",\n    \"res\": {}\n}"
 					},
 					"response": []
 				},
@@ -4976,7 +4976,7 @@
 								"delete"
 							]
 						},
-						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para adicionar tipos de utilizador\",\n    \"res\": {}\n}"
+						"description": "Devolve:\n\n{\n    \"error\": 2,\n    \"message\": \"Ocorreu um erro, provavelmente existem utilizadores associados a este tipo\",\n    \"res\": {}\n}"
 					},
 					"response": []
 				},
@@ -5039,7 +5039,7 @@
 							"urlencoded": [
 								{
 									"key": "id",
-									"value": "16",
+									"value": "14",
 									"type": "text"
 								}
 							]
@@ -5060,7 +5060,7 @@
 								"delete"
 							]
 						},
-						"description": "Devolve:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para adicionar tipos de utilizador\",\n    \"res\": {}\n}"
+						"description": "Devolve:\n\n{\n    \"error\": 0,\n    \"message\": \"Tipo de utilizador eliminado com sucesso\",\n    \"res\": {}\n}"
 					},
 					"response": []
 				}
