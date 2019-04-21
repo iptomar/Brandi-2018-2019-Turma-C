@@ -1,0 +1,6 @@
+{
+    "/api": {
+      "target": "http://brandic.devll.eu:61080/",
+      "secure": false
+    }
+  }

@@ -1,0 +1,37 @@
+<nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Brandi</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/pages" >Pages</a>
+      </li>
+      <li *ngIf='auth.isAdmin()' class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Admin
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/admin/user/list">Listar Utilizador</a>
+          <a class="dropdown-item" routerLink="#" >Registar Utilizador</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" routerLink="#">Categorias</a>
+        </div>
+      </li>
+    </ul>
+      <a *ngIf="!auth.isAuthenticated(); else logoutbt" class="btn btn-outline-success my-2 my-sm-0" routerLink="/login">Login</a>
+      <ng-template #logoutbt>
+        <a class="mr-1 nav-link text-muted"  routerLink="/user/details">{{auth.user_full_name}}</a>
+        <a class="btn btn-outline-success my-2 my-sm-0" (click)="logout()" href="#" >Logout</a>
+      </ng-template>
+  </div>
+</nav>
+
+<div class="container">
+  <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
+</div>
