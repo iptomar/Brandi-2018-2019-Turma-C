@@ -31,8 +31,8 @@
         <input name="birthday" type="date" class="form-control" placeholder="Data de Nascimento"/>
       </div>
       <div class="form-group">
-        <label for="cellphone">Número de télemovel</label>   
-        <input name="cellphone" type="text" class="form-control" placeholder="Número de télemovel"/>
+        <label for="cellphone">Número de telemóvel</label>   
+        <input name="cellphone" type="text" class="form-control" placeholder="Número de telemóvel"/>
       </div>
       <div class="form-group">
         <label for="qualifications">Qualificações</label>   
@@ -51,7 +51,7 @@
       <div class="row">
           <div class="form-group col-md mr-0 ml-0">
             <label for="passwordNew">Palavra-chave</label> 
-            <div class="input-group sh_password" id="sh_passwordNew">
+            <div class="input-group sh_password">
               <input name="passwordNew" type="password" class="form-control" placeholder="Palavra-chave Nova" #passwordNew />
               <div class="input-group-append">
                 <button (click)="randomPW()" class="btn btn-outline-warning" type="button"><i class="fa fa-random" aria-hidden="true"></i></button>
@@ -61,9 +61,10 @@
           </div>
           <div class="form-group col-md mr-0 ml-0">
             <label for="passwordNewConf">Confirmar Palavra-chave</label> 
-            <div class="input-group sh_password" id="sh_passwordNewConf">
-              <input name="passwordNewConf" type="password" class="form-control" placeholder="Confirmar Palavra-chave Nova" #passwordNewConf/>
+            <div class="input-group sh_password">
+              <input name="passwordNewConf" type="password" class="form-control" placeholder="Confirmar Palavra-chave Nova" #passwordNewConf />
               <div class="input-group-append">
+                <button (click)="randomPW()" class="btn btn-outline-warning" type="button"><i class="fa fa-random" aria-hidden="true"></i></button>
                 <button class="btn btn-outline-secondary sh_bt" type="button"><i class="fa fa-eye" aria-hidden="true"></i></button>
               </div>
             </div>

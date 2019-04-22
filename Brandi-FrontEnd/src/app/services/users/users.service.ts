@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { Global, ReceivedData } from 'src/app/Global';
 import { unescape } from 'querystring';
+import { DatePipe, formatDate } from '@angular/common';
 
 export interface UserType {
   id : number,
@@ -23,7 +24,7 @@ export class UsersService {
   public static USER_REGISTER = "user/register";
   public static USER_EDIT_PASSWORD = "user/changepassword";
 
-  constructor(private http : HttpClient, private auth : AuthService) { 
+  constructor(private http : HttpClient, private auth : AuthService,private datePipe : DatePipe) { 
 
   }  
 
@@ -35,7 +36,7 @@ export class UsersService {
   }
 
   public registerUser(user: User, password : string) {
-    let u = {email: user.email,birthday: user.birthday,usertypeid: user.id_type_user, password: password,fullname: user.full_name, address: user.address, cellphone: user.cellphone, title: user.title, qualifications: user.qualifications};
+    let u = {email: user.email,birthday: this.datePipe.transform(user.birthday,'yyyy-MM-dd'),usertypeid: user.id_type_user, password: password,fullname: user.full_name, address: user.address, cellphone: user.cellphone, title: user.title, qualifications: user.qualifications};
     return this.http.post<ReceivedData>(Global.HOST_PREFIX + UsersService.USER_REGISTER, u ).pipe(map((res) => {
       if(res.error == 3 && this.auth.isAdmin()) this.auth.forceLogout();
       return res;
@@ -43,7 +44,7 @@ export class UsersService {
   }
 
   public changeOwnUser(user : User) : Observable<ReceivedData> {
-    let u = {fullname: user.full_name, address: user.address,birthday: user.birthday, cellphone: user.cellphone, title: user.title, qualifications: user.qualifications};
+    let u = {fullname: user.full_name, address: user.address,birthday: this.datePipe.transform(user.birthday,'yyyy-MM-dd'), cellphone: user.cellphone, title: user.title, qualifications: user.qualifications};
     return this.http.post<ReceivedData>(Global.HOST_PREFIX + UsersService.USER_EDIT, u ).pipe(map((res) => {
       if(res.error == 3 && this.auth.isAdmin()) this.auth.forceLogout();
       return res;
@@ -51,7 +52,7 @@ export class UsersService {
   }
 
   public changeUser(user : User) : Observable<ReceivedData> {
-    let u = {id: user.id, fullname: user.full_name,birthday: user.birthday, address: user.address, cellphone: user.cellphone, usertypeid: user.id_type_user, title: user.title, qualifications: user.qualifications};
+    let u = {id: user.id, fullname: user.full_name,birthday: this.datePipe.transform(user.birthday,'yyyy-MM-dd') , address: user.address, cellphone: user.cellphone, usertypeid: user.id_type_user, title: user.title, qualifications: user.qualifications};
     return this.http.post<ReceivedData>(Global.HOST_PREFIX + UsersService.USER_EDIT, u ).pipe(map((res) => {
       if(res.error == 3 && this.auth.isAdmin()) this.auth.forceLogout();
       return res;

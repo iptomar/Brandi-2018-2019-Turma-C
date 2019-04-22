@@ -13,6 +13,7 @@ import { UserDetailsComponent } from './user-details/user-details.component';
 import { UserRegisterComponent } from './admin/user-register/user-register.component';
 import { DatasheetComponent } from './datasheet/datasheet.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
+import { DatePipe } from '@angular/common';
 
 const routes: Routes = [
   {
@@ -54,6 +55,6 @@ const routes: Routes = [
 @NgModule({
   imports: [HttpClientModule, RouterModule.forRoot(routes)],
   exports: [RouterModule]  ,
-  providers: [ Global ]
+  providers: [ Global,DatePipe ]
 })
 export class AppRoutingModule { }

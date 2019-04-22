@@ -24,10 +24,10 @@
       </div>
       <div class="form-group">
         <label for="birthday">Data de Nascimento</label>   
-        <input name="birthday" type="date" class="form-control" placeholder="Data de Nascimento" value="{{auth.user.birthday |date:'yyyy-MM-dd'}}"/>
+        <input name="birthday" type="date" class="form-control" placeholder="Data de Nascimento" value="{{auth.user.birthday | date:'yyyy-MM-dd'}}"/>
       </div>
       <div class="form-group">
-        <label for="cellphone">Número de télemovel</label>   
+        <label for="cellphone">Número de telemóvel</label>   
         <input name="cellphone" type="text" class="form-control" placeholder="Número de télemovel" value="{{auth.user.cellphone}}"/>
       </div>
       <div class="form-group">
@@ -57,9 +57,9 @@
           </button>
         </div>
         <div class="form-group">
-            <label for="passwordOld">Confirmar Palavra-chave</label> 
-            <div class="input-group sh_password" id="sh_passwordOld">
-              <input name="passwordOld" type="password" class="form-control" placeholder="Confirmar Palavra-chave Nova" />
+            <label for="passwordOld">Palavra-chave Antiga</label> 
+            <div class="input-group sh_password">
+              <input name="passwordOld" type="password" class="form-control" placeholder="Palavra-chave Antiga" />
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary sh_bt" type="button"><i class="fa fa-eye" aria-hidden="true"></i></button>
               </div>
@@ -67,19 +67,21 @@
           </div>
         <div class="row">
           <div class="form-group col-md mr-0 ml-0">
-            <label for="passwordNew">Confirmar Palavra-chave</label> 
-            <div class="input-group sh_password" id="sh_passwordNew">
-              <input name="passwordNew" type="password" class="form-control" placeholder="Confirmar Palavra-chave Nova" />
+            <label for="passwordNew">Palavra-chave Nova</label> 
+            <div class="input-group sh_password">
+              <input name="passwordNew" type="password" class="form-control" placeholder="Palavra-chave Nova" #passwordNew />
               <div class="input-group-append">
+                <button (click)="randomPW()" class="btn btn-outline-warning" type="button"><i class="fa fa-random" aria-hidden="true"></i></button>
                 <button class="btn btn-outline-secondary sh_bt" type="button"><i class="fa fa-eye" aria-hidden="true"></i></button>
               </div>
             </div>
           </div>
           <div class="form-group col-md mr-0 ml-0">
-            <label for="passwordNewConf">Confirmar Palavra-chave</label> 
-            <div class="input-group sh_password" id="sh_passwordNewConf">
-              <input name="passwordNewConf" type="password" class="form-control" placeholder="Confirmar Palavra-chave Nova" />
+            <label for="passwordNewConf">Confirmar Palavra-chave Nova</label> 
+            <div class="input-group sh_password">
+              <input name="passwordNewConf" type="password" class="form-control" placeholder="Confirmar Palavra-chave Nova" #passwordNewConf />
               <div class="input-group-append">
+                <button (click)="randomPW()" class="btn btn-outline-warning" type="button"><i class="fa fa-random" aria-hidden="true"></i></button>
                 <button class="btn btn-outline-secondary sh_bt" type="button"><i class="fa fa-eye" aria-hidden="true"></i></button>
               </div>
             </div>

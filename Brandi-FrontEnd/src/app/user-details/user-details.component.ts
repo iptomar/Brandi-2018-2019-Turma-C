@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { AuthService, User } from '../services/auth/auth.service';
 import { UsersService } from '../services/users/users.service';
 import { Global } from '../Global';
@@ -9,6 +9,9 @@ import { Global } from '../Global';
   styleUrls: ['./user-details.component.scss']
 })
 export class UserDetailsComponent implements OnInit {
+  @ViewChild('passwordNew') passwordNew : ElementRef;
+  @ViewChild('passwordNewConf') passwordNewConf : ElementRef;
+
   public messageSuccess : string;
   public messageErr : string;
   public messagePassSuccess : string;
@@ -58,6 +61,12 @@ export class UserDetailsComponent implements OnInit {
         }else this.messagePassErr=result.message;
       });
     }
+  }
+
+  public randomPW() : void {
+    let randomstring = Math.random().toString(36).slice(-8);
+    this.passwordNew.nativeElement.value=randomstring;
+    this.passwordNewConf.nativeElement.value=randomstring;
   }
 
   ngOnInit() {
