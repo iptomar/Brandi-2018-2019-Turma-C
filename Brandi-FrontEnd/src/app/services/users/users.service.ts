@@ -15,17 +15,17 @@ export interface UserType {
   providedIn: 'root'
 })
 export class UsersService {
-
   public static USER_LIST = "user/list";
 
   public static USER_TYPE_LIST = "user/type/list";
   public static USER_DELETE = "user/delete";
   public static USER_EDIT = "user/change";
+  public static USER_REGISTER = "user/register";
   public static USER_EDIT_PASSWORD = "user/changepassword";
 
   constructor(private http : HttpClient, private auth : AuthService) { 
 
-  }
+  }  
 
   public changeOwnPassword(oldPassword : string, newPassword : string) : Observable<ReceivedData> {
     return this.http.post<ReceivedData>(Global.HOST_PREFIX + UsersService.USER_EDIT_PASSWORD, {password: oldPassword, newpassword: newPassword} ).pipe(map((res) => {
@@ -34,8 +34,16 @@ export class UsersService {
     }));
   }
 
+  public registerUser(user: User, password : string) {
+    let u = {email: user.email,birthday: user.birthday,usertypeid: user.id_type_user, password: password,fullname: user.full_name, address: user.address, cellphone: user.cellphone, title: user.title, qualifications: user.qualifications};
+    return this.http.post<ReceivedData>(Global.HOST_PREFIX + UsersService.USER_REGISTER, u ).pipe(map((res) => {
+      if(res.error == 3 && this.auth.isAdmin()) this.auth.forceLogout();
+      return res;
+    }));
+  }
+
   public changeOwnUser(user : User) : Observable<ReceivedData> {
-    let u = {fullname: user.full_name, address: user.address, cellphone: user.cellphone, title: user.title, qualifications: user.qualifications};
+    let u = {fullname: user.full_name, address: user.address,birthday: user.birthday, cellphone: user.cellphone, title: user.title, qualifications: user.qualifications};
     return this.http.post<ReceivedData>(Global.HOST_PREFIX + UsersService.USER_EDIT, u ).pipe(map((res) => {
       if(res.error == 3 && this.auth.isAdmin()) this.auth.forceLogout();
       return res;
@@ -43,7 +51,7 @@ export class UsersService {
   }
 
   public changeUser(user : User) : Observable<ReceivedData> {
-    let u = {id: user.id, fullname: user.full_name, address: user.address, cellphone: user.cellphone, usertypeid: user.id_type_user, title: user.title, qualifications: user.qualifications};
+    let u = {id: user.id, fullname: user.full_name,birthday: user.birthday, address: user.address, cellphone: user.cellphone, usertypeid: user.id_type_user, title: user.title, qualifications: user.qualifications};
     return this.http.post<ReceivedData>(Global.HOST_PREFIX + UsersService.USER_EDIT, u ).pipe(map((res) => {
       if(res.error == 3 && this.auth.isAdmin()) this.auth.forceLogout();
       return res;

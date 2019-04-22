@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { AuthService, User } from '../services/auth/auth.service';
 import { UsersService } from '../services/users/users.service';
+import { Global } from '../Global';
 
 @Component({
   selector: 'app-user-details',
@@ -8,22 +9,22 @@ import { UsersService } from '../services/users/users.service';
   styleUrls: ['./user-details.component.scss']
 })
 export class UserDetailsComponent implements OnInit {
-  private messageSuccess : string;
-  private messageErr : string;
-  private messagePassSuccess : string;
-  private messagePassErr : string;
+  public messageSuccess : string;
+  public messageErr : string;
+  public messagePassSuccess : string;
+  public messagePassErr : string;
 
-  constructor(private auth : AuthService, private users : UsersService) {
+  constructor(public auth : AuthService, private users : UsersService, private elementRef : ElementRef, private renderer : Renderer2) {
     this.messageErr="";
     this.messageSuccess="";
     this.messagePassErr="";
     this.messagePassSuccess="";
   }
 
-  private editOwnUser(event) : void {
+  public editOwnUser(event) : void {
     event.preventDefault();
     let u : User = Object.assign({},this.auth.user); //clona os dados
-    u.birthday=new Date(event.target.birthday.value);
+    u.birthday=Global.stringToDate(event.target.birthday.value);
     u.full_name=event.target.full_name.value;
     u.address=event.target.address.value;
     u.cellphone=event.target.cellphone.value;
@@ -39,7 +40,7 @@ export class UserDetailsComponent implements OnInit {
     });
   }
 
-  private changePw(event) : void {
+  public changePw(event) : void {
     event.preventDefault();
     if(event.target.passwordNew.value === "" || event.target.passwordNewConf.value === "" || event.target.passwordOld.value === "") {
       this.messagePassErr = "Insira todos os campos obrigatórios";
@@ -60,6 +61,7 @@ export class UserDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    Global.enableShowPassword(this.elementRef, this.renderer);
   }
 
 }

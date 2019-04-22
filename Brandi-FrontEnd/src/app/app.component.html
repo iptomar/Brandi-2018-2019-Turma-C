@@ -9,8 +9,8 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/">Home</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/pages" >Pages</a>
+      <li *ngIf="auth.isAuthenticated()" class="nav-item">
+        <a class="nav-link" routerLink="/datasheet" >Fichas Técnicas</a>
       </li>
       <li *ngIf='auth.isAdmin()' class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -18,16 +18,16 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" routerLink="/admin/user/list">Listar Utilizador</a>
-          <a class="dropdown-item" routerLink="#" >Registar Utilizador</a>
+          <a class="dropdown-item" routerLink="/admin/user/register" >Registar Utilizador</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" routerLink="#">Categorias</a>
+          <a class="dropdown-item" routerLink="/admin/categories">Categorias</a>
         </div>
       </li>
     </ul>
-      <a *ngIf="!auth.isAuthenticated(); else logoutbt" class="btn btn-outline-success my-2 my-sm-0" routerLink="/login">Login</a>
+      <a *ngIf="!auth.isAuthenticated(); else logoutbt" class="btn btn-outline-success" routerLink="/login">Login</a>
       <ng-template #logoutbt>
-        <a class="mr-1 nav-link text-muted"  routerLink="/user/details">{{auth.user_full_name}}</a>
-        <a class="btn btn-outline-success my-2 my-sm-0" (click)="logout()" href="#" >Logout</a>
+        <a class="btn btn-outline-primary mr-lg-2"  routerLink="/user/details"> Ola, {{auth.user_full_name}}!</a>
+        <a class="btn btn-outline-success" (click)="logout()" href="#" >Logout</a>
       </ng-template>
   </div>
 </nav>

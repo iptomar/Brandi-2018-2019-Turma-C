@@ -4,13 +4,13 @@
       <h3>Editar Dados Pessoais</h3>
       <div *ngIf='messageErr !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>{{messageErr}}</strong>
-        <button type="button" class="close" aria-label="Close" (click)='message=""'>
+        <button type="button" class="close" aria-label="Close" (click)='messageErr=""'>
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div *ngIf='messageSuccess !== ""' class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>{{messageSuccess}}</strong>
-        <button type="button" class="close" aria-label="Close" (click)='message=""'>
+        <button type="button" class="close" aria-label="Close" (click)='messageSuccess=""'>
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -46,28 +46,43 @@
         <h3>Alterar Palavra-chave</h3>
         <div *ngIf='messagePassErr !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
           <strong>{{messagePassErr}}</strong>
-          <button type="button" class="close" aria-label="Close" (click)='message=""'>
+          <button type="button" class="close" aria-label="Close" (click)='messagePassErr=""'>
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div *ngIf='messagePassSuccess !== ""' class="alert alert-success alert-dismissible fade show" role="alert">
           <strong>{{messagePassSuccess}}</strong>
-          <button type="button" class="close" aria-label="Close" (click)='message=""'>
+          <button type="button" class="close" aria-label="Close" (click)='messagePassSuccess=""'>
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="form-group">
-          <label for="passwordOld">Palavra-chave Antiga</label> 
-          <input name="passwordOld" type="password" class="form-control" placeholder="Palavra-chave Antiga" />
-        </div>
-        <div class="row">
-          <div class="form-group col-md  mr-0 ml-0">
-            <label for="passwordNew">Palavra-chave Nova</label> 
-            <input name="passwordNew" type="password" class="form-control" placeholder="Palavra-chave Nova" />
+            <label for="passwordOld">Confirmar Palavra-chave</label> 
+            <div class="input-group sh_password" id="sh_passwordOld">
+              <input name="passwordOld" type="password" class="form-control" placeholder="Confirmar Palavra-chave Nova" />
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary sh_bt" type="button"><i class="fa fa-eye" aria-hidden="true"></i></button>
+              </div>
+            </div>
           </div>
-          <div class="form-group col-md  mr-0 ml-0">
-            <label for="passwordNewConf">Confirmar Palavra-chave Nova</label> 
-            <input name="passwordNewConf" type="password" class="form-control" placeholder="Confirmar Palavra-chave Nova" />
+        <div class="row">
+          <div class="form-group col-md mr-0 ml-0">
+            <label for="passwordNew">Confirmar Palavra-chave</label> 
+            <div class="input-group sh_password" id="sh_passwordNew">
+              <input name="passwordNew" type="password" class="form-control" placeholder="Confirmar Palavra-chave Nova" />
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary sh_bt" type="button"><i class="fa fa-eye" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md mr-0 ml-0">
+            <label for="passwordNewConf">Confirmar Palavra-chave</label> 
+            <div class="input-group sh_password" id="sh_passwordNewConf">
+              <input name="passwordNewConf" type="password" class="form-control" placeholder="Confirmar Palavra-chave Nova" />
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary sh_bt" type="button"><i class="fa fa-eye" aria-hidden="true"></i></button>
+              </div>
+            </div>
           </div>
         </div>
         <div class="form-group">

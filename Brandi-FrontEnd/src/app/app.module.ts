@@ -6,9 +6,11 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
-import { PagesComponent } from './pages/pages.component';
 import { UserListComponent } from './admin/user-list/user-list.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
+import { UserRegisterComponent } from './admin/user-register/user-register.component';
+import { DatasheetComponent } from './datasheet/datasheet.component';
+import { CategoriesComponent } from './admin/categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -16,9 +18,11 @@ import { UserDetailsComponent } from './user-details/user-details.component';
     LoginComponent,
     HomeComponent,
     AdminComponent,
-    PagesComponent,
     UserListComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    UserRegisterComponent,
+    DatasheetComponent,
+    CategoriesComponent
   ],
   imports: [
     BrowserModule,

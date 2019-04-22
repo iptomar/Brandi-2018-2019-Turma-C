@@ -14,16 +14,24 @@ export class UserListComponent implements OnInit {
   private _searchWord : string;
   private _onEdit : number = -1;
   private _usersTypes : Array<UserType>;
+
+  private messageEditErr : string;
+  private messageEditSuccess : string;
   constructor(private users : UsersService, private elementRef : ElementRef) {
     this._searchWord="";
     this.users.getUserTypes("").subscribe((userTypes) => {this._usersTypes=userTypes});
     this._users=[];
+    this.messageEditErr ="";
+    this.messageEditSuccess ="";
   }
 
-  private sendEditUser(event) : void {
+  public sendEditUser(event) : void {
     event.preventDefault();
+    this.messageEditErr ="";
+    this.messageEditSuccess ="";
+    window.scroll(0,0,);
     let u : User = Object.assign({},this._users[this._onEdit]); //clona os dados
-    u.birthday=new Date(event.target.birthday.value);
+    u.birthday=Global.stringToDate(event.target.birthday.value);
     u.full_name=event.target.full_name.value;
     u.address=event.target.address.value;
     u.cellphone=event.target.cellphone.value;
@@ -33,24 +41,27 @@ export class UserListComponent implements OnInit {
     u.title=event.target.title.value;
     this.users.changeUser(u).subscribe((result) => {
       if(!result.error) {
+        this.messageEditSuccess = result.message;
         this._users[this._onEdit]=u;//atualizamos os dados para o cliente
-        this.editMode(-1,true);
-      }
-      confirm(result.message);
+        setTimeout(() => {
+          this.messageEditErr ="";
+          this.messageEditSuccess ="";
+          this.editMode(-1,true);
+        }, 3 * 1000);//espera 3 segundos antes de sair da pagina de edição
+      }else this.messageEditErr = result.message;
     });
-
   }
 
-  private editMode(edit : number, alterado : boolean = false ) {
+  public editMode(edit : number, alterado : boolean = false ) {
     if(edit < 0 && !alterado) if(!confirm("Tem a certeza? todos os dados alterados serão perdidos")) return;
     this._onEdit=edit;
   }
 
-  private get isEditing() {
+  public get isEditing() {
     return this._onEdit != -1;
   }
   
-  private deleteUser(index : number) : void {
+  public deleteUser(index : number) : void {
     if(!confirm("Tem a certeza que pretende eliminar? Esta opção é permanente.")) return;
     this.users.deleteUser(this._users[index].id).subscribe((result) => {
       if(!result.error) {
@@ -60,7 +71,7 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  private searchUser(event) : void {
+  public searchUser(event) : void {
     if(event != null) {
       event.preventDefault();
       if(event.target.searchBox.value === this._searchWord) return;

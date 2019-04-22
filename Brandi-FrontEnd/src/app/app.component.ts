@@ -16,7 +16,7 @@ export class AppComponent {
     this.auth.logout().subscribe(() => {});
   }
 
-  private onRouterOutletActivate(event)  {
+  public onRouterOutletActivate(event)  {
     this.elementRef.nativeElement.querySelectorAll(".nav-link, .dropdown-item").forEach((elm : any) => elm.classList.remove("active"));
     let elm = this.elementRef.nativeElement.querySelector('[routerLink="'+this.router.url+'"');
     if(elm) {
@@ -27,5 +27,5 @@ export class AppComponent {
     }
   }
 
-  constructor(private auth: AuthService, private elementRef:ElementRef, private router : Router) {}
+  constructor(public auth: AuthService, private elementRef:ElementRef, private router : Router) {}
 }
