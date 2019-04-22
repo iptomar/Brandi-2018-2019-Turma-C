@@ -285,9 +285,10 @@ exports.addNewUser = async function (db, email, password, fullname, address, bir
  * @param {number} usertypeid id do tipo de utilizador
  * @param {string} title dont know
  * @param {string} qualifications dont know
+ * @param {string} birthday data de nascimento formato: yyyy-MM-dd
  * @returns {JSON} {error: <se alterado ? 0 sim : 1 nao porque não existe, 2 se invalido>, usertype: <se error == 0 ? {id: <id user type>,name: <nome do id type>} : senao {}>}
  */
-exports.changeUser = async function (db, id, fullname, address, cellphone, usertypeid, title, qualifications) {
+exports.changeUser = async function (db, id, fullname, address, cellphone, usertypeid, title, qualifications, birthday) {
     let result = {error: 1, usertype: {}};
     //verifica se o utilizador já existe
     let resultDb = await db.doQuery(q_Auth.GET_USER_AND_TYPE_BY_ID, [id]);
@@ -298,7 +299,7 @@ exports.changeUser = async function (db, id, fullname, address, cellphone, usert
         let type = await this.getUserTypeById(db, usertypeid);
         if (!type.error) {
             //cria o novo utilizador
-            resultDb = await db.doQuery(q_Auth.UPDATE_USER, [fullname, address, cellphone, type.user_type.id, title, qualifications, id]);
+            resultDb = await db.doQuery(q_Auth.UPDATE_USER, [fullname, address, cellphone, type.user_type.id, title, qualifications, birthday, id]);
             if (!resultDb.error) {
                 //prepara resposta para cliente
                 result.error = 0;
@@ -524,7 +525,8 @@ exports.appendToExpress = function (app, _db, _prefix) {
                         req.body.cellphone,
                         u_type,
                         req.body.title,
-                        req.body.qualifications
+                        req.body.qualifications,
+                        req.body.birthday
                     );
                     //se foi autenticado com sucesso
                     if (!resDb.error) {
@@ -541,6 +543,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
                             u.qualifications = req.body.qualifications;
                             u.id_type_user = resDb.usertype.id;
                             u.type_user = resDb.usertype.name;
+                            u.birthday = req.body.birthday;
                             thiss.setUserIntoSession(req, u);
                         }
                     } else if (resDb.error === 1) {
