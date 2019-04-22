@@ -16,9 +16,31 @@
 		<div class="container">
 		<!-- comeca aqui -->
 		
-		<h1 class="text-center" id="tituloBrandic">Brandic</h1>
-		<p class="text-center" style="font-family: 'Open Sans', sans-serif;">Projeto desenvolvido pelos alunos da turma C, de engenharia Informática, do Instituto Politécnico de Tomar.<br>2018/2019</p>
-		<p class="text-center" id="iconGit"><a href="https://github.com/iptomar/Brandi-2018-2019-Turma-C" target="_blank"><i class="fa fa-github" style="color: rgb(0,0,0);"></i></a></p>
+		<div ng-controller="dadosCtrl">
+			<form  id="dados" onsubmit="return false;" class="divCentrado">
+				<h1>Dados Pessoais</h1>
+				<span id="mensagem">{{mensagem}}</span><br>
+				<table>
+					<tr>
+						<th>Email: </th><th>{{email}}</th>
+					</tr>
+					<tr>
+						<th>Nome: </th><th>{{full_name}}</th>
+					</tr>
+					<tr>
+						<th>morada: </th><th>{{address}}</th>
+					</tr>
+					<tr>
+						<th>Usertype: </th><th>{{type_user}}</th>
+					</tr>
+					
+					<tr>
+						<th>Change Password:</th><th>XXXXX</th>
+					</tr>
+				</table>
+				<button ng-click="update()"> update</button><br>
+			</form>
+		</div>
 		
 		<!-- acaba aqui -->
 		</div>
@@ -27,6 +49,6 @@
 	<script src="/lib/jquery.min.js"></script><!-- sempre -->
 	<script src="/lib/bootstrap/js/bootstrap.min.js"></script><!-- sempre -->
 	<script src="/js/app.js"></script><!-- sempre -->
-	<script src="/js/index.js"></script>
+	<script src="js/info.js"></script>
 </body>
 </html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="brandic" ng-controller="globalController">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Brandi</title>
+    <!-- <link rel="icon" type="image/png" sizes="151x184" href="/assets/images/brandi.png"> -->
+	<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+	<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+	<div ng-include="global.defaultTemplate"></div>
+	<section class="d-flex d-md-flex align-content-center justify-content-md-center align-items-md-center">
+		<div class="container">
+		<!-- comeca aqui -->
+		
+		<div data-ng-controller="signUpCtrl">
+                <p class="text-center"><i style="font-size: 20px;"></i>{{mensagem}}</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group"><label style="font-family: 'Open Sans', sans-serif;">E-mail address</label>
+                            <input type="email" ng-model="email" id="email" name="email" required="" placeholder="something@mail.com" maxlength="34" minlength="5" class="form-control">
+                                <small class="form-text text-muted">We'll never share your email with anyone else.<br>
+                                </small>
+                            </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"><label style="font-family: 'Open Sans', sans-serif;">Password</label>
+                            <input placeholder="... insira password desejada" type="password" name="password" id="password" ng-model="password" class="form-control">
+                            <small class="form-text text-muted">We'll never share your password with anyone else.<br></small></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"><label style="font-family: 'Open Sans', sans-serif;">Nome</label>
+                            <input placeholder="...insira seu nome" type="text" name="fullname" id="fullname" ng-model="fullname" class="form-control">
+                        </div>
+                    </div><div class="col-md-6">
+                        <div class="form-group"><label style="font-family: 'Open Sans', sans-serif;">Endereco</label>
+                            <input placeholder="morada" type="text" name="address" id="address" ng-model="address" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"><label style="font-family: 'Open Sans', sans-serif;">Aniversario</label>
+                            <input  type="date" name="dateCamp" id="dateCamp" ng-model="dateCamp" class="form-control"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"><label style="font-family: 'Open Sans', sans-serif;">Telemovel</label>
+                            <input class="form-control"  name="cellphone" id="cellphone" ng-model="cellphone" type="text" placeholder="919999999" pattern="[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}' title='Phone Number (Format: +99(99)9999-9999)">
+                            </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"><label style="font-family: 'Open Sans', sans-serif;">User type</label>
+                            <select name="usertypeid" id="usertypeid" ng-model="usertypeid" ng-options="x.name for x in names" class="form-control"></select>
+                        </div>
+                    </div>
+                </div>
+                <h1 class="text-center"><button id="registar" class="btn btn-light" ng-click="signup()" type="button">Registar</button></h1>
+            </div>
+		
+		<!-- acaba aqui -->
+		</div>
+	</section>
+	<script src="/lib/angular.min.js"></script><!-- sempre -->
+	<script src="/lib/jquery.min.js"></script><!-- sempre -->
+	<script src="/lib/bootstrap/js/bootstrap.min.js"></script><!-- sempre -->
+	<script src="/js/app.js"></script><!-- sempre -->
+	<script src="js/signup.js"></script>
+</body>
+</html>

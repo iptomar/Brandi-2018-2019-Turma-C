@@ -1,0 +1,13 @@
+body {
+	background-image: url("/assets/images/background_texture.jpg");
+}
+
+.navbar {
+	margin-bottom:20px;
+}
+
+.container	{
+    padding-bottom: 16px;
+    padding-top: 32px;
+    background-color: rgba(233,236,239,0.75);
+}

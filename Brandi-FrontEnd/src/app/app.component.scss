@@ -1,0 +1,11 @@
+body {
+    background-image: url(../assets/images/background_texture.jpg);
+}
+
+#navbar {
+    position: sticky;
+    top: 0;
+    margin-bottom: 20px;
+    z-index: 1000;
+}
+
