@@ -26,6 +26,7 @@ export class UserDetailsComponent implements OnInit {
 
   public editOwnUser(event) : void {
     event.preventDefault();
+    window.scroll(0,0);
     let u : User = Object.assign({},this.auth.user); //clona os dados
     u.birthday=Global.stringToDate(event.target.birthday.value);
     u.full_name=event.target.full_name.value;
