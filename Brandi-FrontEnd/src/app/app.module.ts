@@ -11,6 +11,7 @@ import { UserDetailsComponent } from './user-details/user-details.component';
 import { UserRegisterComponent } from './admin/user-register/user-register.component';
 import { DatasheetComponent } from './datasheet/datasheet.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
+import { DatasheetCreateComponent } from './datasheet/datasheet-create/datasheet-create.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CategoriesComponent } from './admin/categories/categories.component';
     UserDetailsComponent,
     UserRegisterComponent,
     DatasheetComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    DatasheetCreateComponent
   ],
   imports: [
     BrowserModule,

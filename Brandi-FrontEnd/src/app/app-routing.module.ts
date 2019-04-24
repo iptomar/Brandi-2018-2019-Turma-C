@@ -14,6 +14,7 @@ import { UserRegisterComponent } from './admin/user-register/user-register.compo
 import { DatasheetComponent } from './datasheet/datasheet.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
 import { DatePipe } from '@angular/common';
+import { DatasheetCreateComponent } from './datasheet/datasheet-create/datasheet-create.component';
 
 const routes: Routes = [
   {
@@ -49,7 +50,12 @@ const routes: Routes = [
     path: "datasheet",
     component: DatasheetComponent,
     canActivate: [ AuthGuard ]
-  }
+  },
+  {
+    path: "datasheet/create",
+    component: DatasheetCreateComponent,
+    canActivate: [ AuthGuard ]
+  },
 ];
 
 @NgModule({
