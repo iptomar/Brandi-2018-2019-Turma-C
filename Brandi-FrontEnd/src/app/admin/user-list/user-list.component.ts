@@ -10,13 +10,13 @@ import { Global } from 'src/app/Global';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
-  private _users : Array<User>;
-  private _searchWord : string;
-  private _onEdit : number = -1;
-  private _usersTypes : Array<UserType>;
+  public _users : Array<User>;
+  public _searchWord : string;
+  public _onEdit : number = -1;
+  public _usersTypes : Array<UserType>;
+  public messageEditErr : string;
+  public messageEditSuccess : string;
 
-  private messageEditErr : string;
-  private messageEditSuccess : string;
   constructor(private users : UsersService, private elementRef : ElementRef) {
     this._searchWord="";
     this.users.getUserTypes("").subscribe((userTypes) => {this._usersTypes=userTypes});
@@ -29,7 +29,7 @@ export class UserListComponent implements OnInit {
     event.preventDefault();
     this.messageEditErr ="";
     this.messageEditSuccess ="";
-    window.scroll(0,0,);
+    window.scroll(0,0);
     let u : User = Object.assign({},this._users[this._onEdit]); //clona os dados
     u.birthday=Global.stringToDate(event.target.birthday.value);
     u.full_name=event.target.full_name.value;

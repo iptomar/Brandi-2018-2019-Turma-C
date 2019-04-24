@@ -1,7 +1,162 @@
-<div class="card">
-    <div class="card-body">
-      <p>
-      datasheet works!
-    </p>
+<div class="jumbotron">
+  <div *ngIf="!isShowing; else datashow">
+    <form (submit)="searchFichas($event)" class="table-responsive">
+      <div class="input-group mb-3 ">
+        <input type="text" name="searchBox" class="form-control" placeholder="Pesquisar por" value="{{_searchWord}}"
+          aria-label="Pesquisar por">
+        <div class="input-group-append">
+          <button class="btn btn-outline-primary" type="submit">Pesquisar</button>
+        </div>
+      </div>
+    </form>
+    <div class="card-deck">
+      <div *ngFor="let u of _datasheetlist; let i = index" class="card" style="width: 100px">
+        
+        <!-- *ngFor="let u of _dataTecnica; let i = index"  -->
+        <!-- <img src="../../assets/images/background_texture.jpg" class="card-img-top" > -->
+        <div class="card-body">
+          <h3 class="card-title">{{u.object_designation}}</h3>
+          <button class="btn btn-primary" type="button" (click)="openFicha(i)">Abrir</button>
+        </div>
+      </div>
+    </div>
   </div>
+  <ng-template #datashow>
+    <div *ngIf='!isEditing; else edit_data'>
+      <h3>Showing Ficha Técnica</h3>
+
+      <div *ngIf='messageEditErr !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{messageEditErr}}</strong>
+        <button type="button" class="close" aria-label="Close" (click)='messageEditErr=""'>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!--mensage de alerta acaba aqui-->
+
+      <div *ngIf='messageEditSuccess !== ""' class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{messageEditSuccess}}</strong>
+        <button type="button" class="close" aria-label="Close" (click)='messageEditSuccess=""'>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!--Mensagem de Sucesso acaba aqui-->
+
+      <!--Inicio de campos-->
+      <div class="form-group">
+        <label for="CEARC">Numero de Processo CEARC</label>
+        <input name="CEARC" type="text" class="form-control" placeholder="Numero de Processo CEARC"
+          value="{{_datasheetlist[_onEdit].CEARC_process}}" />
+      </div>
+      <div class="form-group">
+        <label for="CEARCdate">>Data do processo CEARC</label>
+        <input name="CEARCdate" type="date" class="form-control" placeholder="Data de processo Cearc"
+          value="{{_datasheetlist[_onEdit].CEARC_process_date|date:yyyy-MM-dd}}" />
+      </div>
+      <div class="form-group">
+        <label for="CEARCentrydate">Data de entrada do processo CEARC</label>
+        <input name="CEARCentrydate" type="date" class="form-control" placeholder="Data de Entrada do processo CEARC"
+          value="{{_datasheetlist[_onEdit].CEARC_entry_date|date:'yyyy-MM-dd'}}" />
+      </div>
+      <div class="form-group">
+        <label for="LCRM">Numero de Processo LCRM</label>
+        <input name="LCRM" type="text" class="form-control" placeholder="Numero de Processo LCRM"
+          value="{{_datasheetlist[_onEdit].LCRM_process}}" />
+      </div>
+      <div class="form-group">
+        <label for="LCRMdate">data de processo LCRM</label>
+        <input name="LCRMdate" type="date" class="form-control" placeholder="Numero de Processo LCRM"
+          value="{{_datasheetlist[_onEdit].LCRM_process_date|date:'yyyy-MM-dd'}}" />
+      </div>
+      <div class="form-group">
+        <label for="LCRMentrydate">data de entrada do processo LCRM</label>
+        <input name="LCRMentrydate" type="date" class="form-control" placeholder="Numero de Processo LCRM"
+          value="{{_datasheetlist[_onEdit].LCRM_entry_date|date:'yyyy-MM-dd'}}" />
+      </div>
+      <div class="form-group">
+        <label for="coordinator">Coordenador</label>
+        <input name="coordinator" type="number" class="form-control" placeholder="Numero de Processo LCRM"
+          value="{{_datasheetlist[_onEdit].coordinator}}" />
+      </div>
+
+      <div class="form-group">
+        <div class="row">
+          <button type="button" (click)="setShowMode(false)"
+            class="btn btn-outline-success col-md-8 mr-md-2 ml-3 mr-3 mb-2 mb-md-0">Editar</button>
+          <button type="button" (click)="openFicha(-1)"
+            class="btn btn-outline-primary col-md mr-3 ml-md-2 ml-3">Voltar</button>
+        </div>
+      </div>
+      <!--Fim de campos-->
+
+    </div>
+    <ng-template #edit_data>
+      <form (submit)="saveDatasheet($event)">
+        <h3>Editar Ficha Técnica</h3>
+
+        <div *ngIf='messageEditErr !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>{{messageEditErr}}</strong>
+          <button type="button" class="close" aria-label="Close" (click)='messageEditErr=""'>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!--mensage de alerta acaba aqui-->
+
+        <div *ngIf='messageEditSuccess !== ""' class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>{{messageEditSuccess}}</strong>
+          <button type="button" class="close" aria-label="Close" (click)='messageEditSuccess=""'>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!--Mensagem de Sucesso acaba aqui-->
+
+        <!--Inicio de campos-->
+        <div class="form-group">
+          <label for="CEARC">Numero de Processo CEARC</label>
+          <input name="CEARC" type="text" class="form-control" placeholder="Numero de Processo CEARC"
+            value="{{_datasheetlist[_onEdit].CEARC_process}}" />
+        </div>
+        <div class="form-group">
+          <label for="CEARCdate">>Data do processo CEARC</label>
+          <input name="CEARCdate" type="date" class="form-control" placeholder="Data de processo Cearc"
+            value="{{_datasheetlist[_onEdit].CEARC_process_date|date:yyyy-MM-dd}}" />
+        </div>
+        <div class="form-group">
+          <label for="CEARCentrydate">Data de entrada do processo CEARC</label>
+          <input name="CEARCentrydate" type="date" class="form-control" placeholder="Data de Entrada do processo CEARC"
+            value="{{_datasheetlist[_onEdit].CEARC_entry_date|date:'yyyy-MM-dd'}}" />
+        </div>
+        <div class="form-group">
+          <label for="LCRM">Numero de Processo LCRM</label>
+          <input name="LCRM" type="text" class="form-control" placeholder="Numero de Processo LCRM"
+            value="{{_datasheetlist[_onEdit].LCRM_process}}" />
+        </div>
+        <div class="form-group">
+          <label for="LCRMdate">data de processo LCRM</label>
+          <input name="LCRMdate" type="date" class="form-control" placeholder="Numero de Processo LCRM"
+            value="{{_datasheetlist[_onEdit].LCRM_process_date|date:'yyyy-MM-dd'}}" />
+        </div>
+        <div class="form-group">
+          <label for="LCRMentrydate">data de entrada do processo LCRM</label>
+          <input name="LCRMentrydate" type="date" class="form-control" placeholder="Numero de Processo LCRM"
+            value="{{_datasheetlist[_onEdit].LCRM_entry_date|date:'yyyy-MM-dd'}}" />
+        </div>
+        <div class="form-group">
+          <label for="coordinator">Coordenador</label>
+          <input name="coordinator" type="number" class="form-control" placeholder="Numero de Processo LCRM"
+            value="{{_datasheetlist[_onEdit].coordinator}}" />
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <button type="submit"
+              class="btn btn-outline-success col-md-8 mr-md-2 ml-3 mr-3 mb-2 mb-md-0">Guardar</button>
+            <button type="button" (click)="setShowMode(true)"
+              class="btn btn-outline-primary col-md mr-3 ml-md-2 ml-3">Voltar</button>
+          </div>
+        </div>
+        <!--Fim de campos-->
+
+      </form>
+    </ng-template>
+  </ng-template>
+
 </div>
