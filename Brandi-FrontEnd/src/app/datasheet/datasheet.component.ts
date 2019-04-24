@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DatasheetService } from '../services/datasheet/datasheet.service';
+import { DatasheetService, DatasheetEdit } from '../services/datasheet/datasheet.service';
 import { ReceivedData } from '../Global';
 
 @Component({
@@ -50,6 +50,19 @@ export class DatasheetComponent implements OnInit {
   public saveDatasheet(event) {
     event.preventDefault();
     console.log(event.target);
+    
+    let data: DatasheetEdit={  
+      idobject:event.target.CEARC.value,
+      designation: event.target.design.value,
+      cearcproc: event.target.CEARC.value,
+      cearcprocdata: event.target.CEARCdate.value,
+      cearcentrancedata: event.target.CEARCentrydate.value,
+      lcrmproc: event.target.LCRM.value,
+      lcrmprocdata:event.target.LCRMdate.value,
+      lcrmentrancedata: event.target.LCRMentrydate.value,
+      coordinatorid: event.target.coordinator.value
+    }
+    this.datasheet.submitDatasheets(data).subscribe();
   }
 
   public openFicha(edit : number) {

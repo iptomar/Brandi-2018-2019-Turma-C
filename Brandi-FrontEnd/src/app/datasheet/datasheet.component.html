@@ -61,6 +61,11 @@
       
       <!--Inicio de campos-->
       <div class="form-group">
+        <label for="design">Designação de objecto</label>
+        <input name="design" type="text" class="form-control" placeholder="Designação de objecto"
+          value="{{_datasheetlist[_onEdit].object_designation}}" [readonly]="!isEditing" />
+      </div>
+      <div class="form-group">
         <label for="CEARC">Numero de Processo CEARC</label>
         <input name="CEARC" type="text" class="form-control" placeholder="Numero de Processo CEARC"
           value="{{_datasheetlist[_onEdit].CEARC_process}}" [readonly]="!isEditing" />

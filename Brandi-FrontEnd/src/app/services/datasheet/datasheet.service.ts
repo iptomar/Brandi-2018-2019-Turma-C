@@ -20,16 +20,40 @@ export interface Datasheet{
   last_modified_date: Date,
   object_created_date: Date
 }
+export interface DatasheetEdit{
+  idobject: any,
+  designation: string,
+  cearcproc:string,
+  cearcprocdata: Date,
+  cearcentrancedata:Date,
+  lcrmproc: string,
+  lcrmprocdata:Date,
+  lcrmentrancedata: Date,
+  coordinatorid:number
+}
+export interface DatasheetCreate{
+
+  designation: string,
+  cearcproc:string,
+  cearcprocdata: Date,
+  cearcentrancedata:Date,
+  lcrmproc: string,
+  lcrmprocdata:Date,
+  lcrmentrancedata: Date,
+  coordinatorid:number
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatasheetService {
   public static DATA_LIST = "datasheet/list"; //caminho para lista de fichas tecnicas
+  public static DATA_CREATE= "datasheet/createandedit";
+  constructor(private http : HttpClient, private auth : AuthService) {
 
-  constructor(private http : HttpClient, private auth : AuthService) { }
+   }
 
-  public getDatasheets(pesquisa : string): Observable<Datasheet[]> {
+   public getDatasheets(pesquisa : string): Observable<Datasheet[]> {
     return this.http.get(
       Global.HOST_PREFIX + DatasheetService.DATA_LIST,
       {params: new HttpParams().set('search', pesquisa)}
@@ -51,5 +75,23 @@ export class DatasheetService {
         return fichas;
       }
     ));    
+  }
+  public submitDatasheets(data:any): Observable<string> {
+
+console.log(data)
+    return this.http.post(
+      Global.HOST_PREFIX + DatasheetService.DATA_CREATE,
+      data
+    ).pipe(map((cena: ReceivedData) => {
+      console.log(cena);
+         if(cena.error === 2) {
+          this.auth.forceLogout();
+        } 
+
+        return cena.message;
+      }
+    ));    
+    
+
   }
 }
