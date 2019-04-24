@@ -13,7 +13,7 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDatasheet" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Fichas Técnicas
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownDatasheet">
+        <div class="dropdown-menu" zaria-labelledby="navbarDropdownDatasheet">
           <a class="dropdown-item" routerLink="/datasheet/create" >Criar fichas técnicas</a>
           <a class="dropdown-item" routerLink="/datasheet" >Lista de fichas técnicas</a>
         </div>
@@ -31,10 +31,10 @@
         </div>
       </li>
     </ul>
-      <a *ngIf="!auth.isAuthenticated(); else logoutbt" class="btn btn-outline-success" routerLink="/login">Login</a>
+      <a *ngIf="!auth.isAuthenticated(); else logoutbt" class="btn btn-outline-success" routerLink="/login">Login <i class="fa fa-connectdevelop"></i></a>
       <ng-template #logoutbt>
         <a class="btn btn-outline-primary mr-lg-2"  routerLink="/user/details"> Ola, {{auth.user_full_name}}!</a>
-        <a class="btn btn-outline-success" (click)="logout()" href="#" >Logout</a>
+        <a class="btn btn-outline-success" (click)="logout()" href="#" >Logout <i class="fa fa-power-off"> </i></a>
       </ng-template>
   </div>
 </nav>

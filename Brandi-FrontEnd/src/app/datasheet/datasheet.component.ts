@@ -9,11 +9,18 @@ import { ReceivedData } from '../Global';
 })
 
 export class DatasheetComponent implements OnInit {
+  //variaveis do componente
+  //array com lista de datasheets
   public _datasheetlist : any;
+  //string com o valor do campo de pesquisa
   private _searchWord : string;
+  //index do datasheet a ser modificado
   private _onEdit : number = -1;
+  //boolean se esta em modo de edição ou não
   private _onShow : boolean;
+  //mensagem erro
   public messageEditErr : string;
+  //mensagem sucesso
   public messageEditSuccess : string;
 
   constructor(private datasheet : DatasheetService) { 
@@ -25,17 +32,20 @@ export class DatasheetComponent implements OnInit {
   }
 
   public get isEditing() {
+    //devolve true se poder ser editado
     return this._onEdit != -1 && !this._onShow;
   }
 
   public get isShowing() {
+    //devolve true se não estiver em modo de listagem do array
     return this._onEdit != -1;
   }
 
   public deleteDatasheet() : void {
-
+    //delete(_onEdit);
   }
-
+  
+  //muda valor de _searchword e actualiza o array para o resultado da query
   public searchFichas(event) : void {
     if(event != null) {
       event.preventDefault();
@@ -47,12 +57,13 @@ export class DatasheetComponent implements OnInit {
     });
   }
 
+  //envia dados dos inputs para a api
   public saveDatasheet(event) {
     event.preventDefault();
     console.log(event.target);
     
     let data: DatasheetEdit={  
-      idobject:event.target.CEARC.value,
+      idobject:event.target.CEARC.value,/**mudar isto para o valor do id quando for corrigido */
       designation: event.target.design.value,
       cearcproc: event.target.CEARC.value,
       cearcprocdata: event.target.CEARCdate.value,
@@ -62,15 +73,27 @@ export class DatasheetComponent implements OnInit {
       lcrmentrancedata: event.target.LCRMentrydate.value,
       coordinatorid: event.target.coordinator.value
     }
-    this.datasheet.submitDatasheets(data).subscribe();
+    this.datasheet.submitDatasheets(data).subscribe((result) => {
+      if(!result.error) {
+        this.messageEditSuccess = result.message;
+        // this._datasheetlist[this._onEdit]=u;//atualizamos os dados para o cliente
+        setTimeout(() => {
+          this.messageEditErr ="";
+          this.messageEditSuccess ="";
+          this._onEdit=-1;
+        }, 3 * 1000);//espera 3 segundos antes de sair da pagina de edição
+      }else this.messageEditErr = result.message;
+    });
   }
 
+  //muda o valor de _onEdit 
   public openFicha(edit : number) {
     this._onEdit=edit;
     if(edit > -1)this._onShow=true;
     else this._onShow=false;
   }
 
+  //muda o valor de _onShow
   public setShowMode(showMode : boolean) {
     this._onShow=showMode;
   }

@@ -10,11 +10,18 @@ import { Global } from 'src/app/Global';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
+  //variaveis de componente
+  //array de utilizadores
   public _users : Array<User>;
+  //valor do campo de pesquisa
   public _searchWord : string;
+  //index do utilizador a ser editado (-1 se nenhum)
   public _onEdit : number = -1;
+  //array de tipos de utilizadores possiveis
   public _usersTypes : Array<UserType>;
+  //mensagem de erro
   public messageEditErr : string;
+  //mensagem de sucesso
   public messageEditSuccess : string;
 
   constructor(private users : UsersService, private elementRef : ElementRef) {

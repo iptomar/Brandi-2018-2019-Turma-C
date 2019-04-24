@@ -28,9 +28,16 @@ export class DatasheetCreateComponent implements OnInit {
       lcrmentrancedata: event.target.LCRMentrydate.value,
       coordinatorid: event.target.coordinator.value
     }
-    this._datasheet.submitDatasheets(data).subscribe((cena) => {
-      console.log(cena);
-      this.messageEditSuccess=cena;
+    this._datasheet.submitDatasheets(data).subscribe((result) => {
+      if(!result.error) {
+        this.messageEditSuccess = result.message;
+        // this._datasheetlist[this._onEdit]=u;//atualizamos os dados para o cliente
+        
+      }else this.messageEditErr = result.message;
+      setTimeout(() => {
+        this.messageEditErr ="";
+        this.messageEditSuccess ="";
+      }, 2 * 1000);//espera 3 segundos antes de sair da pagina de edição
     });
     
    }

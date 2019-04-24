@@ -76,7 +76,7 @@ export class DatasheetService {
       }
     ));    
   }
-  public submitDatasheets(data:any): Observable<string> {
+  public submitDatasheets(data:any): Observable<ReceivedData> {
 
 console.log(data)
     return this.http.post(
@@ -88,7 +88,7 @@ console.log(data)
           this.auth.forceLogout();
         } 
 
-        return cena.message;
+        return cena;
       }
     ));    
     
