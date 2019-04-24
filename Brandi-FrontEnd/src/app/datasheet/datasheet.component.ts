@@ -18,10 +18,16 @@ export class DatasheetComponent implements OnInit {
   private _onEdit : number = -1;
   //boolean se esta em modo de edição ou não
   private _onShow : boolean;
+  //pagina a mostrar
+  public _pagMostrada:number=-1;
   //mensagem erro
   public messageEditErr : string;
   //mensagem sucesso
   public messageEditSuccess : string;
+  //maximo e minimo de paginas
+  private minPages:number=1;
+  private maxPages:number=3;
+
 
   constructor(private datasheet : DatasheetService) { 
      this._datasheetlist=[];
@@ -89,10 +95,30 @@ export class DatasheetComponent implements OnInit {
   //muda o valor de _onEdit 
   public openFicha(edit : number) {
     this._onEdit=edit;
-    if(edit > -1)this._onShow=true;
-    else this._onShow=false;
+    if(edit > -1)
+    {
+      this._onShow=true;
+      this._pagMostrada=1;
+    }
+    else {
+      
+      this._pagMostrada=-1;
+      this._onShow=false;
+    }
   }
-
+  //muda a pagina a ser mostrada
+  public changePage(page:number){
+    this._pagMostrada=page;
+  }
+  //incrementa/decrementa a pagina a ser mostrada
+  public incPage(page:boolean){
+    
+    if(this._pagMostrada>=this.minPages && this._pagMostrada<=this.maxPages)
+    page?this._pagMostrada++:this._pagMostrada--;  
+    if(!(this._pagMostrada>=this.minPages&&this._pagMostrada<=this.maxPages))
+      page?this._pagMostrada=this.maxPages:this._pagMostrada=this.minPages;  
+      
+  }
   //muda o valor de _onShow
   public setShowMode(showMode : boolean) {
     this._onShow=showMode;

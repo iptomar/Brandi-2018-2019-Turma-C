@@ -100,7 +100,15 @@
         <input name="coordinator" type="number" class="form-control" placeholder="Numero de Processo LCRM"
           value="{{_datasheetlist[_onEdit].coordinator}}" [readonly]="!isEditing" />
       </div>
-
+      <nav aria-label="Page select">
+        <ul class="pagination">
+          <li class="page-item"><button class="page-link" type="button" (click)="incPage(false)" >Previous</button></li>
+          <li class="page-item"><button class="page-link" type="button" (click)="changePage(1)" >1</button></li>
+          <li class="page-item"><button class="page-link" type="button" (click)="changePage(2)" >2</button></li>
+          <li class="page-item"><button class="page-link" type="button" (click)="changePage(3)" >3</button></li>
+          <li class="page-item"><button class="page-link" type="button" (click)="incPage(true)" >Next</button></li>
+        </ul>
+      </nav>
       <div class="form-group" *ngIf="!isEditing; else editbuttons">
         <div class="row">
           <button type="button" (click)="setShowMode(false)"
