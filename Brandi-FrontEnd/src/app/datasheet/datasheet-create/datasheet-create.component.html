@@ -3,6 +3,9 @@
 
     <form (submit)="submitData($event)">
       <div *ngIf='messageEditErr !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{messageEditErr}}</strong>
+        <button type="button" class="close" aria-label="Close" (click)='messageEditErr=""'>
+          <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <!--mensage de alerta acaba aqui-->
