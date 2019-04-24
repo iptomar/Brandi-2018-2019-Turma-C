@@ -32,6 +32,10 @@ export class DatasheetComponent implements OnInit {
     return this._onEdit != -1;
   }
 
+  public deleteDatasheet() : void {
+
+  }
+
   public searchFichas(event) : void {
     if(event != null) {
       event.preventDefault();
@@ -44,7 +48,8 @@ export class DatasheetComponent implements OnInit {
   }
 
   public saveDatasheet(event) {
-
+    event.preventDefault();
+    console.log(event.target);
   }
 
   public openFicha(edit : number) {

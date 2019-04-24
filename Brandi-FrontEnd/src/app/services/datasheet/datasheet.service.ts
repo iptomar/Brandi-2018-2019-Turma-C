@@ -3,6 +3,7 @@ import { HttpClient, HttpParams  } from '@angular/common/http'
 import { Global, ReceivedData } from 'src/app/Global';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AuthService } from '../auth/auth.service';
 
 export interface Datasheet{
   object_designation: string,
@@ -26,7 +27,7 @@ export interface Datasheet{
 export class DatasheetService {
   public static DATA_LIST = "datasheet/list"; //caminho para lista de fichas tecnicas
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient, private auth : AuthService) { }
 
   public getDatasheets(pesquisa : string): Observable<Datasheet[]> {
     return this.http.get(
@@ -44,6 +45,8 @@ export class DatasheetService {
             element.object_created_date=Global.stringToDate(element.object_created_date);
           });
           fichas=data.res.datasheets;
+        }else if(data.error === 2) {
+          this.auth.forceLogout();
         } 
         return fichas;
       }
