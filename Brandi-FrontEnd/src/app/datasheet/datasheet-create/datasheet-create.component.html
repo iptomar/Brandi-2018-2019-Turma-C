@@ -1,101 +1,125 @@
-<ul class="nav nav-tabs">
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
-    <a class="nav-link active" href="#">LinkActive</a>
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+      aria-selected="true">Home</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Link1</a>
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+      aria-selected="false">Profile</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Link2</a>
+    <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages"
+      aria-selected="false">Messages</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Link3</a>
+    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings"
+      aria-selected="false">Settings</a>
   </li>
 </ul>
 
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <div class="card">
+      <div class="card-body">
 
-<div class="card">
-  <div class="card-body">
+        <form (submit)="submitData($event)">
+          <div *ngIf='messageEditErr !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>{{messageEditErr}}</strong>
+            <button type="button" class="close" aria-label="Close" (click)='messageEditErr=""'>
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!--mensage de alerta acaba aqui-->
 
-    <form (submit)="submitData($event)">
-      <div *ngIf='messageEditErr !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>{{messageEditErr}}</strong>
-        <button type="button" class="close" aria-label="Close" (click)='messageEditErr=""'>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <!--mensage de alerta acaba aqui-->
-
-      <div *ngIf='messageEditSuccess !== ""' class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>{{messageEditSuccess}}</strong>
-        <button type="button" class="close" aria-label="Close" (click)='messageEditSuccess=""'>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <!--Mensagem de Sucesso acaba aqui-->
-      <!--Inicio de campos-->
+          <div *ngIf='messageEditSuccess !== ""' class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{messageEditSuccess}}</strong>
+            <button type="button" class="close" aria-label="Close" (click)='messageEditSuccess=""'>
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!--Mensagem de Sucesso acaba aqui-->
+          <!--Inicio de campos-->
 
 
-      <div class="form-group">
-        <label for="design">Designação</label>
-        <input name="design" type="text" class="form-control" placeholder="Designação de objecto" />
-      </div>
-      <div class=row>
-        <div class=col-4>
           <div class="form-group">
-            <label for="CEARC">Numero de Processo CEARC</label>
-            <input name="CEARC" type="text" class="form-control" placeholder="Numero de Processo CEARC" />
+            <label for="design">Designação</label>
+            <input name="design" type="text" class="form-control" placeholder="Designação de objecto" />
           </div>
-        </div>
-        <div class=col-4>
+          <div class=row>
+            <div class=col-4>
+              <div class="form-group">
+                <label for="CEARC">Numero de Processo CEARC</label>
+                <input name="CEARC" type="text" class="form-control" placeholder="Numero de Processo CEARC" />
+              </div>
+            </div>
+            <div class=col-4>
+              <div class="form-group">
+                <label for="CEARCdate">Data do processo CEARC</label>
+                <input name="CEARCdate" type="date" class="form-control" placeholder="Data de processo Cearc" />
+              </div>
+
+            </div>
+            <div class=col-4>
+              <div class="form-group">
+                <label for="CEARCentrydate">Data de entrada do processo CEARC</label>
+                <input name="CEARCentrydate" type="date" class="form-control"
+                  placeholder="Data de Entrada do processo CEARC" />
+              </div>
+            </div>
+          </div>
+          <div class=row>
+            <div class=col-4>
+              <div class="form-group">
+                <label for="LCRM">Numero de Processo LCRM</label>
+                <input name="LCRM" type="text" class="form-control" placeholder="Numero de Processo LCRM" />
+              </div>
+            </div>
+            <div class=col-4>
+              <div class="form-group">
+                <label for="LCRMdate">Data de processo LCRM</label>
+                <input name="LCRMdate" type="date" class="form-control" placeholder="Numero de Processo LCRM" />
+              </div>
+            </div>
+            <div class=col-4>
+              <div class="form-group">
+                <label for="LCRMentrydate">Data de entrada do processo LCRM</label>
+                <input name="LCRMentrydate" type="date" class="form-control" placeholder="Numero de Processo LCRM" />
+              </div>
+            </div>
+          </div>
           <div class="form-group">
-            <label for="CEARCdate">Data do processo CEARC</label>
-            <input name="CEARCdate" type="date" class="form-control" placeholder="Data de processo Cearc" />
+            <label for="coordinator">Coordenador</label>
+            <input name="coordinator" type="number" class="form-control" placeholder="Numero de Processo LCRM" />
           </div>
 
-        </div>
-        <div class=col-4>
           <div class="form-group">
-            <label for="CEARCentrydate">Data de entrada do processo CEARC</label>
-            <input name="CEARCentrydate" type="date" class="form-control"
-              placeholder="Data de Entrada do processo CEARC" />
+            <div class="row">
+              <div class="col text-center">
+                <button type="submit" class="btn btn-outline-success col-md-8 mr-md-2 ml-3 mr-3 mb-2 mb-md-0">Criar <i
+                    class="fa fa-file"></i></button>
+              </div>
+            </div>
           </div>
-        </div>
+          <!--Fim de campos-->
+        </form>
       </div>
-      <div class=row>
-        <div class=col-4>
-          <div class="form-group">
-            <label for="LCRM">Numero de Processo LCRM</label>
-            <input name="LCRM" type="text" class="form-control" placeholder="Numero de Processo LCRM" />
-          </div>
-        </div>
-        <div class=col-4>
-          <div class="form-group">
-            <label for="LCRMdate">Data de processo LCRM</label>
-            <input name="LCRMdate" type="date" class="form-control" placeholder="Numero de Processo LCRM" />
-          </div>
-        </div>
-        <div class=col-4>
-          <div class="form-group">
-            <label for="LCRMentrydate">Data de entrada do processo LCRM</label>
-            <input name="LCRMentrydate" type="date" class="form-control" placeholder="Numero de Processo LCRM" />
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="coordinator">Coordenador</label>
-        <input name="coordinator" type="number" class="form-control" placeholder="Numero de Processo LCRM" />
-      </div>
-
-      <div class="form-group">
-        <div class="row">
-          <div class="col text-center">
-            <button type="submit" class="btn btn-outline-success col-md-8 mr-md-2 ml-3 mr-3 mb-2 mb-md-0">Criar <i
-                class="fa fa-file"></i></button>
-          </div>
-        </div>
-      </div>
-      <!--Fim de campos-->
-    </form>
+    </div>
+  </div>
+  <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    <div class="card">
+      <div class="card-body">adafa</div>
+    </div>
+  </div>
+  <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+    <div class="card">
+      <div class="card-body">dsgdghrfth</div>
+    </div>
+  </div>
+  <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+    <div class="card">
+      <div class="card-body">gfhdfjgjjtjtgj</div>
+    </div>
   </div>
 </div>
