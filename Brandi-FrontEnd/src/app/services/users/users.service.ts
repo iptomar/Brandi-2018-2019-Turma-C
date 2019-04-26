@@ -88,7 +88,9 @@ export class UsersService {
           element.birthday = Global.stringToDate(element.birthday);
         });
         users = <Array<User>>data.res.users;
-      } else if(this.auth.isAdmin()) this.auth.forceLogout();
+      } else if(this.auth.isAdmin()){
+        this.auth.forceLogout();
+      }
       return users;
     }));
   }

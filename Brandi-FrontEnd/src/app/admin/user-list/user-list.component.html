@@ -47,8 +47,8 @@
       </div>
       <div class="form-group">
         <div class="row">
-            <button type="submit" class="btn btn-outline-success col-md-8 mr-md-2 ml-3 mr-3 mb-2 mb-md-0">Alterar</button>
-            <button type="button" (click)="editMode(-1)" class="btn btn-outline-danger col-md mr-3 ml-md-2 ml-3">Cancelar</button>
+            <button type="submit" class="btn btn-outline-success col-md-8 mr-md-2 ml-3 mr-3 mb-2 mb-md-0"><i class="fa fa-save"> Guardar</i></button>
+            <button type="button" (click)="editMode(-1)" class="btn btn-outline-danger col-md mr-3 ml-md-2 ml-3"><i class="fa fa-angle-double-left"></i> Cancelar</button>
         </div>
       </div>
     </form>
@@ -58,7 +58,7 @@
         <div class="input-group mb-3">
             <input type="text" name="searchBox" class="form-control" placeholder="Pesquisar por" value="{{_searchWord}}" aria-label="Pesquisar por">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="submit">Pesquisar</button>
+              <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i> Pesquisar</button>
             </div>
           </div>
         <div class="form-group">
@@ -80,8 +80,8 @@
                 <td>{{u.last_login | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
                 <td >
                   <div class="row" style="margin: 0;">
-                    <button (click)="editMode(i)" class="btn btn-warning form-control col-xl mr-xl-2 mr-0 mb-xl-0 mb-2">Editar</button>
-                    <button (click)="deleteUser(i)" class="btn btn-danger form-control col-xl">Eliminar</button>
+                    <button (click)="editMode(i)" class="btn btn-warning form-control col-xl mr-xl-2 mr-0 mb-xl-0 mb-2"><i class="fa fa-user"></i> Editar</button>
+                    <button (click)="deleteUser(i)" class="btn btn-danger form-control col-xl"><i class="fa fa-minus"></i> Eliminar</button>
                   </div>
                 </td>
               </tr>
