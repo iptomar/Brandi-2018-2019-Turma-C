@@ -1,3 +1,19 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">LinkActive</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link1</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link2</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link3</a>
+  </li>
+</ul>
+
+
 <div class="card">
   <div class="card-body">
 
@@ -18,34 +34,53 @@
       </div>
       <!--Mensagem de Sucesso acaba aqui-->
       <!--Inicio de campos-->
+
+
       <div class="form-group">
         <label for="design">Designação</label>
         <input name="design" type="text" class="form-control" placeholder="Designação de objecto" />
       </div>
-      <div class="form-group">
-        <label for="CEARC">Numero de Processo CEARC</label>
-        <input name="CEARC" type="text" class="form-control" placeholder="Numero de Processo CEARC" />
+      <div class=row>
+        <div class=col-4>
+          <div class="form-group">
+            <label for="CEARC">Numero de Processo CEARC</label>
+            <input name="CEARC" type="text" class="form-control" placeholder="Numero de Processo CEARC" />
+          </div>
+        </div>
+        <div class=col-4>
+          <div class="form-group">
+            <label for="CEARCdate">Data do processo CEARC</label>
+            <input name="CEARCdate" type="date" class="form-control" placeholder="Data de processo Cearc" />
+          </div>
+
+        </div>
+        <div class=col-4>
+          <div class="form-group">
+            <label for="CEARCentrydate">Data de entrada do processo CEARC</label>
+            <input name="CEARCentrydate" type="date" class="form-control"
+              placeholder="Data de Entrada do processo CEARC" />
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="CEARCdate">Data do processo CEARC</label>
-        <input name="CEARCdate" type="date" class="form-control" placeholder="Data de processo Cearc" />
-      </div>
-      <div class="form-group">
-        <label for="CEARCentrydate">Data de entrada do processo CEARC</label>
-        <input name="CEARCentrydate" type="date" class="form-control" placeholder="Data de Entrada do processo CEARC" />
-      </div>
-      <div class="form-group">
-        <label for="LCRM">Numero de Processo LCRM</label>
-        <input name="LCRM" type="text" class="form-control" placeholder="Numero de Processo LCRM"
-         />
-      </div>
-      <div class="form-group">
-        <label for="LCRMdate">data de processo LCRM</label>
-        <input name="LCRMdate" type="date" class="form-control" placeholder="Numero de Processo LCRM" />
-      </div>
-      <div class="form-group">
-        <label for="LCRMentrydate">data de entrada do processo LCRM</label>
-        <input name="LCRMentrydate" type="date" class="form-control" placeholder="Numero de Processo LCRM" />
+      <div class=row>
+        <div class=col-4>
+          <div class="form-group">
+            <label for="LCRM">Numero de Processo LCRM</label>
+            <input name="LCRM" type="text" class="form-control" placeholder="Numero de Processo LCRM" />
+          </div>
+        </div>
+        <div class=col-4>
+          <div class="form-group">
+            <label for="LCRMdate">Data de processo LCRM</label>
+            <input name="LCRMdate" type="date" class="form-control" placeholder="Numero de Processo LCRM" />
+          </div>
+        </div>
+        <div class=col-4>
+          <div class="form-group">
+            <label for="LCRMentrydate">Data de entrada do processo LCRM</label>
+            <input name="LCRMentrydate" type="date" class="form-control" placeholder="Numero de Processo LCRM" />
+          </div>
+        </div>
       </div>
       <div class="form-group">
         <label for="coordinator">Coordenador</label>
@@ -54,8 +89,10 @@
 
       <div class="form-group">
         <div class="row">
-          <button type="submit" class="btn btn-outline-success col-md-8 mr-md-2 ml-3 mr-3 mb-2 mb-md-0">Criar <i class="fa fa-file"></i></button>
-
+          <div class="col text-center">
+            <button type="submit" class="btn btn-outline-success col-md-8 mr-md-2 ml-3 mr-3 mb-2 mb-md-0">Criar <i
+                class="fa fa-file"></i></button>
+          </div>
         </div>
       </div>
       <!--Fim de campos-->
