@@ -1,4 +1,5 @@
 import { ElementRef, Renderer2 } from '@angular/core';
+import { Type } from '@angular/compiler';
 
 export interface ReceivedData {
     error : number,

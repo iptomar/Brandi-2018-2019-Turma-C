@@ -94,4 +94,9 @@ export class UsersService {
       return users;
     }));
   }
+
+  public userExists(users : User[], id : number) : boolean{
+    for(let i = 0; i < users.length; i++) if(users[i].id === id) return true;
+    return false;
+  }
 }
