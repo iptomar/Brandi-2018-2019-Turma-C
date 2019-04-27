@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Brandic</title>
+    <link rel="icon" type="image/png" sizes="151x184" href="../assets/img/brandi.png">
+    
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@bootstrapstudio/bootstrap-better-nav/dist/bootstrap-better-nav.min.css">
+    <link rel="stylesheet" href="../assets/css/Navigation-with-Button.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+
+<body ng-app="brandic" ng-controller="app">
+	
+<div>
+        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button " style="height: 55px;">
+            <div class="container">
+				<a class="navbar-brand " href="#" id="navBarLogo">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;  Brandic</a>
+				<button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
+					<span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+				</button>
+                <div 
+                    class="collapse navbar-collapse" id="navcol-1" ng-model="navcol1" name="navcol1">
+                   <span  class="navbar-text actions direita" id="butContainer"><!-- alinha isto รก direita-->
+							
+							
+							
+					</span>
+				</div>
+			</div>
+		</nav>
+    </div>
+    <section class="d-flex d-md-flex align-content-center justify-content-md-center align-items-md-center" id="frontDiv">
+        <div class="container" style="padding-top: 70px;">
+            <div class="jumbotron" id="divJumbotron" data-ng-controller="signUpCtrl">
+                <p class="text-center"><i style="font-size: 20px;"></i>{{mensagem}}</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group"><label style="font-family: 'Open Sans', sans-serif;">E-mail address</label>
+                            <input type="email" ng-model="email" id="email" name="email" required="" placeholder="something@mail.com" maxlength="34" minlength="5" class="form-control">
+                                <small class="form-text text-muted">We'll never share your email with anyone else.<br>
+                                </small>
+                            </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"><label style="font-family: 'Open Sans', sans-serif;">Password</label>
+                            <input placeholder="... insira password desejada" type="password" name="password" id="password" ng-model="password" class="form-control">
+                            <small class="form-text text-muted">We'll never share your password with anyone else.<br></small></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"><label style="font-family: 'Open Sans', sans-serif;">Nome</label>
+                            <input placeholder="...insira seu nome" type="text" name="fullname" id="fullname" ng-model="fullname" class="form-control">
+                        </div>
+                    </div><div class="col-md-6">
+                        <div class="form-group"><label style="font-family: 'Open Sans', sans-serif;">Endereco</label>
+                            <input placeholder="morada" type="text" name="address" id="address" ng-model="address" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"><label style="font-family: 'Open Sans', sans-serif;">Aniversario</label>
+                            <input  type="date" name="dateCamp" id="dateCamp" ng-model="dateCamp" class="form-control"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"><label style="font-family: 'Open Sans', sans-serif;">Telemovel</label>
+                            <input class="form-control"  name="cellphone" id="cellphone" ng-model="cellphone" type="text" placeholder="919999999" pattern="[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}' title='Phone Number (Format: +99(99)9999-9999)">
+                            </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"><label style="font-family: 'Open Sans', sans-serif;">User type</label>
+                            <select name="usertypeid" id="usertypeid" ng-model="usertypeid" ng-options="x.name for x in names" class="form-control"></select>
+                        </div>
+                    </div>
+                </div>
+                <h1 class="text-center"><button id="registar" class="btn btn-light" ng-click="signup()" type="button">Registar</button></h1>
+            </div>
+        </div>
+    </section>
+
+	<script src="../lib/angular.min.js"></script><!-- sempre -->
+	<script src="../js/app.js"></script><!-- sempre -->
+	<script src="js/sig.js"></script> <!--esta de proposito no inicio due to redirects-->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/js/bs-animation.js"></script>
+    <script src="https://unpkg.com/@bootstrapstudio/bootstrap-better-nav/dist/bootstrap-better-nav.min.js"></script>
+</body>
+
+</html>

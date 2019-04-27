@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
-import { AdminComponent } from './admin/admin.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { Global } from './Global';
@@ -14,7 +13,9 @@ import { UserRegisterComponent } from './admin/user-register/user-register.compo
 import { DatasheetComponent } from './datasheet/datasheet.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
 import { DatePipe } from '@angular/common';
+import { DatasheetCreateComponent } from './datasheet/datasheet-create/datasheet-create.component';
 
+//caminhos de routerLink e permissoes (guards) necessárias para os poder abrir
 const routes: Routes = [
   {
     path: "",
@@ -49,7 +50,12 @@ const routes: Routes = [
     path: "datasheet",
     component: DatasheetComponent,
     canActivate: [ AuthGuard ]
-  }
+  },
+  {
+    path: "datasheet/create",
+    component: DatasheetCreateComponent,
+    canActivate: [ AuthGuard ]
+  },
 ];
 
 @NgModule({

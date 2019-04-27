@@ -11,6 +11,9 @@ import { UserDetailsComponent } from './user-details/user-details.component';
 import { UserRegisterComponent } from './admin/user-register/user-register.component';
 import { DatasheetComponent } from './datasheet/datasheet.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
+import { DatasheetCreateComponent } from './datasheet/datasheet-create/datasheet-create.component';
+import { DatasheetPage1Component } from './datasheet/pages/datasheet-page1/datasheet-page1.component';
+import { DatasheetPage2Component } from './datasheet/pages/datasheet-page2/datasheet-page2.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { CategoriesComponent } from './admin/categories/categories.component';
     UserDetailsComponent,
     UserRegisterComponent,
     DatasheetComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    DatasheetCreateComponent,
+    DatasheetPage1Component,
+    DatasheetPage2Component
   ],
   imports: [
     BrowserModule,
