@@ -1,6 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { DatasheetService, DatasheetEdit } from '../services/datasheet/datasheet.service';
-import { ReceivedData } from '../Global';
+import { Component, OnInit, ViewChild, OnChanges, DoCheck, AfterViewChecked, AfterViewInit, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { DatasheetService, Datasheet } from '../services/datasheet/datasheet.service';
+import { ReceivedData, Global } from '../Global';
+import { DatasheetPage1Component } from './pages/datasheet-page1/datasheet-page1.component';
+import { DatasheetPage2Component } from './pages/datasheet-page2/datasheet-page2.component';
+
+
+export interface DatasheetPage{
+  getForm(event : any) : Datasheet;
+  _datasheet : Datasheet;
+  _isEditing : boolean;
+  datasheet(datasheet : Datasheet) : void;
+  isEditing(isEditing : boolean) : void;
+}
+
+export interface DatasheetPageSearch{
+  datasheetpage: DatasheetPage;
+   identification: number;
+}
+
+
 
 @Component({
   selector: 'app-datasheet',
@@ -8,28 +26,42 @@ import { ReceivedData } from '../Global';
   styleUrls: ['./datasheet.component.scss']
 })
 
-export class DatasheetComponent implements OnInit {
+export class DatasheetComponent implements OnInit{
+  @ViewChild(DatasheetPage1Component) datasheetPage1Component : DatasheetPage1Component;
+  @ViewChild(DatasheetPage2Component) datasheetPage2Component : DatasheetPage2Component;
+  @ViewChild("datasheetTabs") dataSheetTabs : ElementRef
+
+  private pages : DatasheetPage[] = [];
+
+  private updateDatasheetInAllPages() {
+    this.pages = [this.datasheetPage1Component, this.datasheetPage2Component];
+    //so alterar acima
+    if(this._onEdit > -1) {
+      for(let i = 0; i< this.pages.length; i++) {
+        if(this.pages[i]) {
+          this.pages[i].datasheet(this._datasheetlist[this._onEdit]);
+          this.pages[i].isEditing(this.isEditing);
+        }
+      }
+    }
+  }
+
   //variaveis do componente
   //array com lista de datasheets
-  public _datasheetlist : any;
+  public _datasheetlist : Datasheet[];
   //string com o valor do campo de pesquisa
   private _searchWord : string;
   //index do datasheet a ser modificado
   private _onEdit : number = -1;
   //boolean se esta em modo de edição ou não
   private _onShow : boolean;
-  //pagina a mostrar
-  public _pagMostrada:number=-1;
   //mensagem erro
   public messageEditErr : string;
   //mensagem sucesso
   public messageEditSuccess : string;
-  //maximo e minimo de paginas
-  private minPages:number=1;
-  private maxPages:number=3;
 
 
-  constructor(private datasheet : DatasheetService) { 
+  constructor(private datasheet : DatasheetService,private changeDetectorRef:ChangeDetectorRef) {
      this._datasheetlist=[];
      this.messageEditErr ="";
      this.messageEditSuccess ="";
@@ -50,7 +82,7 @@ export class DatasheetComponent implements OnInit {
   public deleteDatasheet() : void {
     //delete(_onEdit);
   }
-  
+
   //muda valor de _searchword e actualiza o array para o resultado da query
   public searchFichas(event) : void {
     if(event != null) {
@@ -63,23 +95,17 @@ export class DatasheetComponent implements OnInit {
     });
   }
 
+  private getComponentOpen() : DatasheetPageSearch{
+    let identification = parseInt(this.dataSheetTabs.nativeElement.querySelector('[aria-selected="true"]').getAttribute("data-id"),10);
+    return {datasheetpage: this.pages[identification], identification: identification};
+  }
+
   //envia dados dos inputs para a api
-  public saveDatasheet(event) {
+  public saveDatasheet(event : any) : void{
     event.preventDefault();
-    console.log(event.target);
-    
-    let data: DatasheetEdit={  
-      idobject:event.target.CEARC.value,/**mudar isto para o valor do id quando for corrigido */
-      designation: event.target.design.value,
-      cearcproc: event.target.CEARC.value,
-      cearcprocdata: event.target.CEARCdate.value,
-      cearcentrancedata: event.target.CEARCentrydate.value,
-      lcrmproc: event.target.LCRM.value,
-      lcrmprocdata:event.target.LCRMdate.value,
-      lcrmentrancedata: event.target.LCRMentrydate.value,
-      coordinatorid: event.target.coordinator.value
-    }
-    this.datasheet.submitDatasheets(data).subscribe((result) => {
+    let datasheetPageSearch : DatasheetPageSearch = this.getComponentOpen();
+    let datasheet : Datasheet = datasheetPageSearch.datasheetpage.getForm(event);
+    this.datasheet.submitDatasheets(datasheet,datasheetPageSearch.identification).subscribe((result) => {
       if(!result.error) {
         this.messageEditSuccess = result.message;
         // this._datasheetlist[this._onEdit]=u;//atualizamos os dados para o cliente
@@ -87,46 +113,40 @@ export class DatasheetComponent implements OnInit {
           this.messageEditErr ="";
           this.messageEditSuccess ="";
           this._onEdit=-1;
+          this._datasheetlist[this._onEdit]=datasheet;
         }, 3 * 1000);//espera 3 segundos antes de sair da pagina de edição
       }else this.messageEditErr = result.message;
     });
   }
 
-  //muda o valor de _onEdit 
+  //muda o valor de _onEdit
   public openFicha(edit : number) {
     this._onEdit=edit;
     if(edit > -1)
     {
       this._onShow=true;
-      this._pagMostrada=1;
     }
     else {
-      
-      this._pagMostrada=-1;
       this._onShow=false;
     }
-  }
-  //muda a pagina a ser mostrada
-  public changePage(page:number){
-    this._pagMostrada=page;
-  }
-  //incrementa/decrementa a pagina a ser mostrada
-  public incPage(page:boolean){
-    
-    if(this._pagMostrada>=this.minPages && this._pagMostrada<=this.maxPages)
-    page?this._pagMostrada++:this._pagMostrada--;  
-    if(!(this._pagMostrada>=this.minPages&&this._pagMostrada<=this.maxPages))
-      page?this._pagMostrada=this.maxPages:this._pagMostrada=this.minPages;  
-      
   }
   //muda o valor de _onShow
   public setShowMode(showMode : boolean) {
     this._onShow=showMode;
   }
 
+  public changeTab(event) {
+    event.preventDefault();
+  }
 
   ngOnInit() {
     this.searchFichas(null);
   }
 
+  ngAfterViewChecked(): void {
+    this.updateDatasheetInAllPages();
+
+    //sempre no final
+    this.changeDetectorRef.detectChanges();
+  }
 }

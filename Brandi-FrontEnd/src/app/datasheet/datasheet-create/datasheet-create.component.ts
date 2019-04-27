@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { DatasheetService, DatasheetCreate } from 'src/app/services/datasheet/datasheet.service';
+import { DatasheetService, Datasheet } from 'src/app/services/datasheet/datasheet.service';
+import { Global } from 'src/app/Global';
+import { User } from 'src/app/services/auth/auth.service';
+import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
   selector: 'app-datasheet-create',
@@ -10,35 +13,44 @@ export class DatasheetCreateComponent implements OnInit {
 
   public messageEditErr : string;
   public messageEditSuccess : string;
-  constructor(private _datasheet : DatasheetService) {
+  public _users : User[];
+  constructor(private _datasheet : DatasheetService, private users : UsersService) {
     
     this.messageEditErr ="";
     this.messageEditSuccess ="";
+    this.users.getUsers("").subscribe((users_list) => {
+      this._users=users_list;
+    });
    }
    public submitData(event){
      
     event.preventDefault();
-    let data: DatasheetCreate={  
-      designation: event.target.design.value,
-      cearcproc: event.target.CEARC.value,
-      cearcprocdata: event.target.CEARCdate.value,
-      cearcentrancedata: event.target.CEARCentrydate.value,
-      lcrmproc: event.target.LCRM.value,
-      lcrmprocdata:event.target.LCRMdate.value,
-      lcrmentrancedata: event.target.LCRMentrydate.value,
-      coordinatorid: event.target.coordinator.value
-    }
-    this._datasheet.submitDatasheets(data).subscribe((result) => {
-      if(!result.error) {
-        this.messageEditSuccess = result.message;
-        // this._datasheetlist[this._onEdit]=u;//atualizamos os dados para o cliente
-        
-      }else this.messageEditErr = result.message;
-      setTimeout(() => {
-        this.messageEditErr ="";
-        this.messageEditSuccess ="";
-      }, 2 * 1000);//espera 3 segundos antes de sair da pagina de edição
-    });
+    let data: Datasheet=DatasheetService.createCleanDatasheet();
+      data.object_designation= event.target.design.value;
+      data.CEARC_process= event.target.CEARC.value;
+      data.CEARC_process_date= event.target.CEARCdate.value;
+      data.CEARC_entry_date= event.target.CEARCentrydate.value;
+      data.LCRM_process= event.target.LCRM.value;
+      data.LCRM_process_date=event.target.LCRMdate.value;
+      data.LCRM_entry_date= event.target.LCRMentrydate.value;
+      data.coordinator= event.target.coordinator.value;
+      this.messageEditErr ="";
+      this.messageEditSuccess ="";
+      window.scroll(0,0);
+      this._datasheet.submitDatasheets(data,0).subscribe((result) => {
+        if(!result.error) {
+          this.messageEditSuccess = result.message;
+          // this._datasheetlist[this._onEdit]=u;//atualizamos os dados para o cliente
+          event.target.design.value="";
+          event.target.CEARC.value="";
+          event.target.CEARCdate.value="";
+          event.target.CEARCentrydate.value="";
+          event.target.LCRM.value="";
+          event.target.LCRMdate.value="";
+          event.target.LCRMentrydate.value="";
+          event.target.coordinator.value="";
+        }else this.messageEditErr = result.message;
+      });
     
    }
 
