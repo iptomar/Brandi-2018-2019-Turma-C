@@ -76,6 +76,7 @@ export class DatasheetService {
     data: Datasheet,
     idPage: number
   ): Observable<ReceivedData> {
+    
     let dados: any = {
       designation: data.object_designation,
       cearcproc: data.CEARC_process,
@@ -100,12 +101,12 @@ export class DatasheetService {
       idPage: idPage
     };
     if (data.id > -1) {
-      dados.id = data.id;
+      console.log(data);
+      dados.idobject = data.id;
     }
-    console.log(dados);
     // this.datePipe.transform(user.birthday,'yyyy-MM-dd')
     return this.http
-      .post(Global.HOST_PREFIX + DatasheetService.DATA_CREATE, data)
+      .post(Global.HOST_PREFIX + DatasheetService.DATA_CREATE, dados)
       .pipe(
         map((result: ReceivedData) => {
           if (result.error === 3) {

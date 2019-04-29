@@ -1,63 +1,54 @@
 
-    <h1>page 2 teste - alterar tudo</h1>
-
-  <!--Inicio de campos-->
-  <div class="form-group">
-    <label for="design">Designação</label>
-    <input name="design" type="text" class="form-control" placeholder="Designação de objecto"
-      [readonly]="!_isEditing" value="{{_datasheet.object_designation}}" />
+<div class="row">
+  <div class="col-lg-6 form-group">
+    <label for="SuperCathegory">Super-Categoria</label>
+    <select class="form-control"></select>
   </div>
-  <div class="row">
-    <div class="col-lg-4">
-      <div class="form-group">
-        <label for="CEARC">Numero de Processo CEARC</label>
-        <input name="CEARC" type="text" class="form-control" placeholder="Numero de Processo CEARC"
-          [readonly]="!_isEditing" value="{{_datasheet.CEARC_process}}" />
-      </div>
-    </div>
-    <div class="col-lg-4">
-      <div class="form-group">        <label for="CEARCdate">Data do processo CEARC</label>
-        <input name="CEARCdate" type="date" class="form-control" placeholder="Data de processo Cearc"
-          [readonly]="!_isEditing"
-          value="{{_datasheet.CEARC_process_date|date: 'yyyy-MM-dd'}}" />
-      </div>
-
-    </div>
-    <div class="col-lg-4">
-      <div class="form-group">
-        <label for="CEARCentrydate">Data de entrada do processo CEARC</label>
-        <input name="CEARCentrydate" type="date" class="form-control"
-          placeholder="Data de Entrada do processo CEARC" [readonly]="!_isEditing"
-          value="{{_datasheet.CEARC_entry_date|date:'yyyy-MM-dd'}}" />
-      </div>
-    </div>
+  <div class="col-lg-6 form-group">
+    <label for="Cathegory">Categoria</label>
+    <select class="form-control"></select>
   </div>
-  <div class="row">
-    <div class="col-lg-4">
-      <div class="form-group">
-        <label for="LCRM">Numero de Processo LCRM</label>
-        <input name="LCRM" type="text" class="form-control" placeholder="Numero de Processo LCRM"
-          [readonly]="!_isEditing" value="{{_datasheet.LCRM_process}}"
-          [readonly]="!_isEditing" />
-      </div>
-    </div>
-    <div class="col-lg-4">
-      <div class="form-group">
-        <label for="LCRMdate">Data de processo LCRM</label>
-        <input name="LCRMdate" type="date" class="form-control" placeholder="Numero de Processo LCRM"
-          [readonly]="!_isEditing" value="{{_datasheet.LCRM_process_date|date:'yyyy-MM-dd'}}" />
-      </div>
-    </div>
-    <div class="col-lg-4">
-      <div class="form-group">
-        <label for="LCRMentrydate">Data de entrada do processo LCRM</label>
-        <input name="LCRMentrydate" type="date" class="form-control" placeholder="Numero de Processo LCRM"
-          [readonly]="!_isEditing" value="{{_datasheet.LCRM_entry_date|date:'yyyy-MM-dd'}}" />
-      </div>
-    </div>
+</div>
+<div class="row">
+  <div class="col-lg-6 form-group">
+    <label for="subCathegory">Sub-Categoria</label>
+    <select class="form-control"></select>
   </div>
-  <div class="form-group">
-    <label for="coordinator">Coordenador</label>
-    <input name="coordinator" type="number" class="form-control" placeholder="Coordenador"
-      [readonly]="!_isEditing" value="{{_datasheet.coordinator}}" />
+</div>
+<div class="row">
+  <div class="col-lg-6 form-group">
+    <label for="Dimensions">Dimensões</label>
+    <input name="Dimensions" type="text" class="form-control" placeholder="(Comp. X Prof. X Alt.) | (Diâmetro)" />
   </div>
+  <div class="col-lg-6 form-group">
+    <label for="OtherDimensions">Outras dimensões</label>
+    <input name="OtherDimensions" type="text" class="form-control" placeholder="" />
+  </div>
+</div>
+<div class="form-group">
+  <label for="tipology">Tipologia</label>
+  <input name="tipology" type="text" class="form-control" placeholder="" />
+</div>
+<div class="form-group">
+  <label for="site">Localização</label>
+  <input name="site" type="text" class="form-control" placeholder="Localização" />
+</div>
+<hr>
+<div class="form-group">
+  <label for="owner">Proprietário</label>
+  <select class="form-control"></select>
+</div>
+<div class="form-group">
+  <label for="objectOwner">Dono da Obra</label>
+  <select class="form-control"></select>
+</div>
+<div class="row">
+  <div class=" col-lg-6 form-group">
+    <label for="patron">Mecenas</label>
+    <select class="form-control"></select>
+  </div>
+  <div class="col-lg-6 form-group">
+    <label for="patron">&nbsp;</label>
+    <button type="button" class="form-control btn btn-outline-success">Adicionar contacto <i class="fa fa-file"></i></button>
+  </div>
+</div>
