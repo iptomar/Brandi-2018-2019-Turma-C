@@ -1,39 +1,3 @@
-#editDatasheetCarousel {
-    img {
-        max-height: 250px;
-        max-width: 100%;
-        width: auto;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-      height: 50px;
-      width: 50px;
-      background-size: 100%, 100%;
-      border-radius: 50%;
-      outline: grey;
-      border: 1px solid grey;
-      background-color: white;
-      background-image: none;
-    }
-    
-
-    .carousel-control-next-icon:after
-    {
-      content: '>';
-      font-size: 27px;
-      color: red;
-    }
-    
-    .carousel-control-prev-icon:after {
-      content: '<';
-      font-size: 27px;
-      color: red;
-    }
-}
 
 .datasheetClick {
     cursor: pointer;
