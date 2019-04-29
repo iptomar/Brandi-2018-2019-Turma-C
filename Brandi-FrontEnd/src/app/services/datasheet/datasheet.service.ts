@@ -101,7 +101,6 @@ export class DatasheetService {
       idPage: idPage
     };
     if (data.id > -1) {
-      console.log(data);
       dados.idobject = data.id;
     }
     // this.datePipe.transform(user.birthday,'yyyy-MM-dd')
