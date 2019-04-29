@@ -14,7 +14,7 @@ export class DatasheetCreateComponent implements OnInit {
   public messageEditErr : string;
   public messageEditSuccess : string;
   public _users : User[];
-  constructor(private _datasheet : DatasheetService, private users : UsersService) {
+  constructor(public _datasheet : DatasheetService, private users : UsersService) {
     
     this.messageEditErr ="";
     this.messageEditSuccess ="";
