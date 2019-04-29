@@ -112,8 +112,8 @@ export class DatasheetComponent implements OnInit {
         setTimeout(() => {
           this.messageEditErr = "";
           this.messageEditSuccess = "";
-          this._onEdit = -1;
           this._datasheetlist[this._onEdit] = datasheet;
+          this._onEdit = -1;
         }, 3 * 1000); // espera 3 segundos antes de sair da pagina de edição
       } else { this.messageEditErr = result.message; }
     });
