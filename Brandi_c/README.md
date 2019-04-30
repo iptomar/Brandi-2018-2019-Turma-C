@@ -1,6 +1,4 @@
 
-
-
 ﻿# Brandi_c
 # WEB SERVICES:
 ## GET /api/user/info
@@ -15,13 +13,18 @@
 	   "error": 0,
 	   "message": "Bem-vindo Teste Teste",
 	   "res": {
-		   "full_name": "Teste Teste",
-		   "email": "teste123456@ipt.pt",
-		   "address": "Teste",
-		   "birthday": "02/04/1992",
-		   "cellphone": "910123456",
-		   "type_user": "User",
-		   "id_type_user": 2
+			"id": 2,
+			"full_name": "Teste2 Teste",
+			"email": "teste123456@ipt.pt",
+			"address": "Teste2",
+			"birthday": "02/04/1992",
+			"cellphone": "987654321",
+			"type_user": "User",
+			"id_type_user": 2,
+			"last_login": "2019-04-08T01:35:56.456Z",
+			"register_date": "2019-04-08T01:35:56.456Z",
+			"title": "dont6",
+			"qualifications": "have6"
 	   }
 	}
 ##### se sem sucesso:
@@ -483,7 +486,7 @@
 ##### se não tiver autenticado:
 	{
 		   "error": 3,
-		   "message": ""Por favor efectue autenticação",
+		   "message": "Por favor efectue autenticação",
 		   "res": {}
 	 }
 ##### se não forem dados todos os campos obrigatórios:
@@ -513,7 +516,7 @@
 	
 ------------
 ## GET /api/datasheet/list:
-> lista fichas técnicas (A ser melhorado)
+
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
@@ -522,7 +525,7 @@
 ##### se não tiver autenticado:
 	{
 		   "error": 2,
-		   "message": ""Por favor efectue autenticação",
+		   "message": "Por favor efectue autenticação",
 		   "res": {}
 	 }
 ##### se ocorrer um erro:
@@ -538,6 +541,7 @@
 	    "res": {
 	        "datasheets": [
 	            {
+		            "id": 1
 	                "object_designation": "asdfg",
 	                "CEARC_process": "teste0001",
 	                "CEARC_process_date": null,
@@ -553,6 +557,7 @@
 	                "object_created_date": "2019-04-10T00:57:19.000Z"
 	            },
 	            {
+		            "id": 2
 	                "object_designation": "teste",
 	                "CEARC_process": "teste0001",
 	                "CEARC_process_date": null,
@@ -569,4 +574,544 @@
 	            }
 	        ]
 	    }
+	}
+
+	
+------------
+## GET /api/datasheet/super_categories/list:
+
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	search - palavra utilizada na pesquisa por nome
+### devolve:
+##### se não tiver autenticado:
+	{
+		   "error": 2,
+		   "message": "Por favor efectue autenticação",
+		   "res": {}
+	 }
+##### se ocorrer um erro:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro na aquisição da lista, por favor tente novamente",
+	   "res": {}
+	}
+##### se for listado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Lista de super categorias",
+	    "res": {
+	        "super_categories": [
+	            {
+	                "id": 3,
+	                "supercategory": "Artes plásticas / Artes decorativas"
+	            },
+	            {
+	                "id": 1,
+	                "supercategory": "Bens Culturais"
+	            },
+	            {
+	                "id": 2,
+	                "supercategory": "Mobiliário Religioso"
+	            }
+	        ]
+	    }
+	}
+
+------------
+## GET /api/datasheet/categories/list:
+
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	super_category - id da super categoria
+	search - palavra utilizada na pesquisa por nome
+### devolve:
+##### se não tiver autenticado:
+	{
+		   "error": 3,
+		   "message": "Por favor efectue autenticação",
+		   "res": {}
+	 }
+##### se não for introduzido o id da super categoria:
+	{
+		   "error": 2,
+		   "message": "O id da super categoria é obrigatório",
+		   "res": {}
+	 }
+##### se ocorrer um erro:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro na aquisição da lista, por favor tente novamente",
+	   "res": {}
+	}
+##### se for listado com sucesso:
+	
+	{
+	    "error": 0,
+	    "message": "Lista de categorias",
+	    "res": {
+	        "categories": [
+	            {
+	                "id": 1,
+	                "category": "Bens Culturais Móveis",
+	                "id_super_category": 1
+	            },
+	            {
+	                "id": 4,
+	                "category": "Bens Culturais Móveis integrados",
+	                "id_super_category": 1
+	            },
+	            {
+	                "id": 7,
+	                "category": "Bens móveis",
+	                "id_super_category": 1
+	            },
+	            {
+	                "id": 8,
+	                "category": "Brinquedo",
+	                "id_super_category": 1
+	            },
+	            {
+	                "id": 9,
+	                "category": "Móvel Integrado",
+	                "id_super_category": 1
+	            }
+	        ]
+	    }
+	}
+
+------------
+## GET /api/datasheet/categories/list:
+
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	category - id da categoria
+	search - palavra utilizada na pesquisa por nome
+### devolve:
+##### se não tiver autenticado:
+	{
+		   "error": 3,
+		   "message": "Por favor efectue autenticação",
+		   "res": {}
+	 }
+##### se não for introduzido o id da super categoria:
+	{
+		   "error": 2,
+		   "message": "O id da categoria é obrigatório",
+		   "res": {}
+	 }
+##### se ocorrer um erro:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro na aquisição da lista, por favor tente novamente",
+	   "res": {}
+	}
+##### se for listado com sucesso:
+	
+	{
+	    "error": 0,
+	    "message": "Lista de sub categorias",
+	    "res": {
+	        "sub_categories": [
+	            {
+	                "id": 2,
+	                "subcategory": "Mobiliário",
+	                "id_category": 1
+	            },
+	            {
+	                "id": 4,
+	                "subcategory": "Mobiliário civil",
+	                "id_category": 1
+	            },
+	            {
+	                "id": 6,
+	                "subcategory": "Mobiliário Religioso",
+	                "id_category": 1
+	            },
+	            {
+	                "id": 7,
+	                "subcategory": "Retabulística / Escultura / Talha",
+	                "id_category": 1
+	            },
+	            {
+	                "id": 22,
+	                "subcategory": "Teste Super 867",
+	                "id_category": 1
+	            }
+	        ]
+	    }
+	}
+
+------------
+## POST/api/datasheet/super_categories/create:
+
+### Condições:
+	Tem que estar autenticado
+		Tem que ser Admin
+### recebe:
+	name - nome da super categoria
+### devolve:
+##### se não tiver autenticado:
+	{
+		   "error": 4,
+		   "message": "Não tem permissões para criar super categorias",
+		   "res": {}
+	 }
+##### se não não for introduzido todos os campos obrigatórios:
+	{
+		   "error": 3,
+		   "message": "Insira todos os campos obrigatórios",
+		   "res": {}
+	 }
+##### se não for introduzido o id da super categoria:
+	{
+		   "error": 2,
+		   "message": "Já existe uma super categoria com esse nome",
+		   "res": {}
+	 }
+##### se ocorrer um erro:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+	   "res": {}
+	}
+##### se for criado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Super categoria criada com sucesso",
+	    "res": {
+	        "id": 4
+	    }
+	}
+
+------------
+## POST/api/datasheet/categories/create:
+
+### Condições:
+	Tem que estar autenticado
+		Tem que ser Admin
+### recebe:
+	id_super_category - id da super categoria a que a categoria ira pertencer
+	name - nome da categoria
+### devolve:
+##### se não tiver autenticado:
+	{
+		   "error": 4,
+		   "message": "Não tem permissões para criar categorias",
+		   "res": {}
+	 }
+##### se não não for introduzido todos os campos obrigatórios:
+	{
+		   "error": 3,
+		   "message": "Insira todos os campos obrigatórios",
+		   "res": {}
+	 }
+##### se não for introduzido o id da super categoria:
+	{
+		   "error": 2,
+		   "message": "Já existe uma categoria com esse nome associada a super categoria indicada",
+		   "res": {}
+	 }
+##### se ocorrer um erro:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+	   "res": {}
+	}
+##### se for criado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Categoria criada com sucesso",
+	    "res": {
+	        "id": 13
+	    }
+	}
+	
+------------
+## POST/api/datasheet/sub_categories/create:
+
+### Condições:
+	Tem que estar autenticado
+		Tem que ser Admin
+### recebe:
+	id_category - id da categoria a que a sub categoria ira pertencer
+	name - nome da sub categoria
+### devolve:
+##### se não tiver autenticado:
+	{
+		   "error": 4,
+		   "message": "Não tem permissões para criar sub categorias",
+		   "res": {}
+	 }
+##### se não não for introduzido todos os campos obrigatórios:
+	{
+		   "error": 3,
+		   "message": "Insira todos os campos obrigatórios",
+		   "res": {}
+	 }
+##### se não for introduzido o id da super categoria:
+	{
+		   "error": 2,
+		   "message": "Já existe uma sub categoria com esse nome associada a categoria indicada",
+		   "res": {}
+	 }
+##### se ocorrer um erro:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+	   "res": {}
+	}
+##### se for criado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Sub categoria criada com sucesso",
+	    "res": {
+	        "id": 23
+	    }
+	}
+
+------------
+## POST/api/datasheet/super_categories/change:
+
+### Condições:
+	Tem que estar autenticado
+		Tem que ser Admin
+### recebe:
+	id_super_category - id da super categoria a editar
+	name - nome da super categoria
+### devolve:
+##### se não tiver autenticado:
+	{
+		   "error": 4,
+		   "message": "Não tem permissões para alterar super categorias",
+		   "res": {}
+	 }
+##### se não não for introduzido todos os campos obrigatórios:
+	{
+		   "error": 3,
+		   "message": "Insira todos os campos obrigatórios",
+		   "res": {}
+	 }
+##### se já existir uma super categoria com o mesmo nome:
+	{
+		   "error": 2,
+		   "message": "Já existe uma super categoria com esse nome",
+		   "res": {}
+	 }
+##### se ocorrer um erro:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+	   "res": {}
+	}
+##### se for alterado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Super Categoria alterada com sucesso",
+	    "res": {}
+	}
+	
+------------
+## POST/api/datasheet/categories/change:
+
+### Condições:
+	Tem que estar autenticado
+		Tem que ser Admin
+### recebe:
+	id_category - id da categoria a alterar
+	name - nome da categoria
+### devolve:
+##### se não tiver autenticado:
+	{
+		   "error": 4,
+		   "message": "Não tem permissões para alterar categorias",
+		   "res": {}
+	 }
+##### se não não for introduzido todos os campos obrigatórios:
+	{
+		   "error": 3,
+		   "message": "Insira todos os campos obrigatórios",
+		   "res": {}
+	 }
+##### se já existir uma categoria com o mesmo nome e com a mesma super categoria associada:
+	{
+		   "error": 2,
+		   "message": "Já existe uma categoria com esse nome associada a super categoria indicada",
+		   "res": {}
+	 }
+##### se ocorrer um erro:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+	   "res": {}
+	}
+##### se for alterado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Categoria alterada com sucesso",
+	    "res": {}
+	}
+	
+------------
+## POST/api/datasheet/sub_categories/change:
+
+### Condições:
+	Tem que estar autenticado
+		Tem que ser Admin
+### recebe:
+	id_sub_category - id da sub categoria a alterar
+	name - nome da sub categoria
+### devolve:
+##### se não tiver autenticado:
+	{
+		   "error": 4,
+		   "message": "Não tem permissões para alterar sub categorias",
+		   "res": {}
+	 }
+##### se não não for introduzido todos os campos obrigatórios:
+	{
+		   "error": 3,
+		   "message": "Insira todos os campos obrigatórios",
+		   "res": {}
+	 }
+##### se já existir uma sub categoria com o mesmo nome e com a mesma categoria associada:
+	{
+		   "error": 2,
+		   "message": "Já existe uma sub categoria com esse nome associada a categoria indicada",
+		   "res": {}
+	 }
+##### se ocorrer um erro:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+	   "res": {}
+	}
+##### se for alterado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Sub Categoria alterada com sucesso",
+	    "res": {}
+	}
+	
+------------
+## POST/api/datasheet/sub_categories/delete:
+
+### Condições:
+	Tem que estar autenticado
+		Tem que ser Admin
+### recebe:
+	id_sub_category - id da sub categoria a eliminar
+### devolve:
+##### se não tiver autenticado:
+	{
+		   "error": 4,
+		   "message": "Não tem permissões para eliminar sub categorias",
+		   "res": {}
+	 }
+##### se não não for introduzido todos os campos obrigatórios:
+	{
+		   "error": 3,
+		   "message": "Insira todos os campos obrigatórios",
+		   "res": {}
+	 }
+##### se a sub categoria estiver a ser utilizada num objeto:
+	{
+		   "error": 2,
+		   "message": "Essa sub categoria está ja em utilização, é impossivel de eliminar a mesma",
+		   "res": {}
+	 }
+##### se ocorrer um erro:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+	   "res": {}
+	}
+##### se for eliminado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Sub Categoria eliminada com sucesso",
+	    "res": {}
+	}
+	
+------------
+## POST/api/datasheet/categories/delete:
+
+### Condições:
+	Tem que estar autenticado
+		Tem que ser Admin
+### recebe:
+	id_category - id da categoria a eliminar
+### devolve:
+##### se não tiver autenticado:
+	{
+		   "error": 4,
+		   "message": "Não tem permissões para eliminar categorias",
+		   "res": {}
+	 }
+##### se não não for introduzido todos os campos obrigatórios:
+	{
+		   "error": 3,
+		   "message": "Insira todos os campos obrigatórios",
+		   "res": {}
+	 }
+##### se a sub categoria estiver a ser utilizada num objeto:
+	{
+		   "error": 2,
+		   "message": "Essa categoria está ja em utilização, é impossivel de eliminar a mesma",
+		   "res": {}
+	 }
+##### se ocorrer um erro:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+	   "res": {}
+	}
+##### se for eliminado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Categoria eliminada com sucesso",
+	    "res": {}
+	}
+	
+------------
+## POST/api/datasheet/super_categories/delete:
+
+### Condições:
+	Tem que estar autenticado
+		Tem que ser Admin
+### recebe:
+	id_super_category - id da super categoria a eliminar
+### devolve:
+##### se não tiver autenticado:
+	{
+		   "error": 4,
+		   "message": "Não tem permissões para eliminar super categorias",
+		   "res": {}
+	 }
+##### se não não for introduzido todos os campos obrigatórios:
+	{
+		   "error": 3,
+		   "message": "Insira todos os campos obrigatórios",
+		   "res": {}
+	 }
+##### se a sub categoria estiver a ser utilizada num objeto:
+	{
+		   "error": 2,
+		   "message": "Essa super categoria está ja em utilização, é impossivel de eliminar a mesma",
+		   "res": {}
+	 }
+##### se ocorrer um erro:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+	   "res": {}
+	}
+##### se for eliminado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Super Categoria eliminada com sucesso",
+	    "res": {}
 	}
