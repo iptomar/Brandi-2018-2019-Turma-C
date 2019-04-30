@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"><!--bootstrap sacar ficheiro daqui a uns tempos e mudar de link para caminho-->
+		<link rel="stylesheet" type="text/css" href="../css/app.css"><!-- sempre -->
+		<link rel="stylesheet" type="text/css" href="css/fic.css">
+		<title>Ficha Tecnica</title>
+	</head>
+	<body>
+		<script src="../lib/angular.min.js"></script><!-- sempre -->
+		<script src="../js/app.js"></script><!-- sempre -->
+		<div class="divForm">
+			<form ng-app="brandic" ng-controller="submitCab1Ctrl" id="fichaDiv" onsubmit="return false;">
+			
+				<h1>Cabecalho</h1>
+				<span id="mensagem">{{mensagem}}</span><br>
+				<span>Designação do Objecto</span>
+				<span ><input type="text" name="designation" ng-model="designation"></span>
+				<br>
+				<span >Processo LCRM nº:</span>
+				<span ><input min="0"  type="number" name="procLCRMid" ng-model="procLCRMid"></span>
+				<span >Data de abertura do Processo:</span>
+				<span ><input type="date" name="procLCRMdate" ng-model="procLCRMdate"></span>
+				<br>
+					<span >Data de entrada do Processo:</span>
+					<span ><input type="date" name="procLCRMentrydate" ng-model="procLCRMentrydate"></span>
+					<br>
+				<span >Processo CEARC nº:</span>
+				<span ><input min="0" type="number" name="procCEARCid" ng-model="procCEARCid"></span>
+				<span >Data de abertura do Processo:</span>
+				<span ><input type="date" name="procCEARCdate" ng-model="procCEARCdate"></span>
+				<br>
+					<span >Data de entrada do Processo:</span>
+					<span ><input type="date" name="procCEARCentrydate" ng-model="procCEARCentrydate"></span>
+					<br>
+						<span >Coordenação/Direcção Técnica de Intervenção:</span>
+				<span >
+					<input type="text" name="coordenador" ng-model="coordenador"></span>
+				<br>
+					
+				<button ng-click="subFich()"> Next</button><br>
+				<!--{{designation}}<br>
+				{{procLCRMid}}<br>
+				{{procLCRMdate}}<br>
+				{{procLCRMentrydate}}<br>
+				{{procCEARCid}}<br>
+				{{procCEARCdate}}<br>
+				{{procCEARCentrydate}}<br>
+				{{coordenador}}<br>-->
+			</form>
+		</div>
+		<script src="js/fic.js"></script>
+    </body>
+</html>

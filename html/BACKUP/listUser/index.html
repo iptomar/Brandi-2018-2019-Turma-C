@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">--> <!--bootstrap sacar ficheiro daqui a uns tempos e mudar de link para caminho-->
+		<link rel="stylesheet" type="text/css" href="../css/app.css"><!-- sempre -->
+		
+		
+		<title>SIGNUP</title>
+	</head>
+	<body>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script><!-- sempre -->
+		<script src="../js/app.js"></script><!-- sempre -->
+		<script src="js/list.js"></script>
+		
+		<div class="divCentrado">
+			<div ng-app="brandic" ng-controller="listCtrl" >
+				
+			<table>
+				<tr>
+					<th>ID</th>
+					<th>Full Name</th>
+					<th>email</th>
+					<th>endereco</th>
+					<th>birthday</th>
+					<th>cellphone</th>
+					<th>tipo</th>
+					<th>tipoid</th>
+					<th>last login</th>
+				</tr>
+				<tr ng-repeat="item in lista">
+					<td>{{item.id}}</td>
+					<td>{{item.full_name}}</td>
+					<td>{{item.email}}</td>
+					<td>{{item.address}}</td>
+					<td>{{item.birthday}}</td>
+					<td>{{item.cellphone}}</td>
+					<td>{{item.type_user}}</td>
+					<td>{{item.id_type_user}}</td>
+					<td>{{item.last_login}}</td>
+				</tr>
+			</table>
+			</div>
+    </body>
+</html>

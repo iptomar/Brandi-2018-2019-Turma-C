@@ -1,0 +1,2 @@
+function init($scope,$http) {
+}

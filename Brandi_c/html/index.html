@@ -1,14 +1,32 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html ng-app="brandic" ng-controller="globalController">
 <head>
-  <meta charset="utf-8">
-  <title>ClientBrandi</title>
-  <base href="/">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="stylesheet" href="styles.3ff695c00d717f2d2a11.css"></head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Brandi</title>
+    <!-- <link rel="icon" type="image/png" sizes="151x184" href="/assets/images/brandi.png"> -->
+	<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+	<link rel="stylesheet" href="/css/app.css">
+</head>
 <body>
-  <app-root></app-root>
-<script type="text/javascript" src="runtime.a5dd35324ddfd942bef1.js"></script><script type="text/javascript" src="es2015-polyfills.358ed1827c991dd2afb0.js" nomodule></script><script type="text/javascript" src="polyfills.407a467dedb63cfdd103.js"></script><script type="text/javascript" src="main.5eb920ff0f9f39e0ee08.js"></script></body>
+	<div ng-include="global.defaultTemplate"></div>
+	<section class="d-flex d-md-flex align-content-center justify-content-md-center align-items-md-center">
+		<div class="container">
+		<!-- comeca aqui -->
+		
+		<h1 class="text-center" id="tituloBrandic">Brandic</h1>
+		<p class="text-center" style="font-family: 'Open Sans', sans-serif;">Projeto desenvolvido pelos alunos da turma C, de engenharia Informática, do Instituto Politécnico de Tomar.<br>2018/2019</p>
+		<p class="text-center" id="iconGit"><a href="https://github.com/iptomar/Brandi-2018-2019-Turma-C" target="_blank"><i class="fa fa-github" style="color: rgb(0,0,0);"></i></a></p>
+		
+		<!-- acaba aqui -->
+		</div>
+	</section>
+	<script src="/lib/angular.min.js"></script><!-- sempre -->
+	<script src="/lib/jquery.min.js"></script><!-- sempre -->
+	<script src="/lib/bootstrap/js/bootstrap.min.js"></script><!-- sempre -->
+	<script src="/js/app.js"></script><!-- sempre -->
+	<script src="/js/index.js"></script>
+</body>
 </html>

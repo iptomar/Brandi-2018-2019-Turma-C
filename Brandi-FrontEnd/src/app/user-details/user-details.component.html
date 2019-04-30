@@ -1,0 +1,95 @@
+<div class="card">
+  <div class="card-body">
+    <form (submit)="editOwnUser($event)">
+      <h3>Editar Dados Pessoais</h3>
+      <div *ngIf='messageErr !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{messageErr}}</strong>
+        <button type="button" class="close" aria-label="Close" (click)='messageErr=""'>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div *ngIf='messageSuccess !== ""' class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{messageSuccess}}</strong>
+        <button type="button" class="close" aria-label="Close" (click)='messageSuccess=""'>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="form-group">    
+          <label for="full_name">Nome</label>      
+          <input name="full_name" type="text" class="form-control" placeholder="Nome" value="{{auth.user.full_name}}"/>
+      </div>
+      <div class="form-group">
+        <label for="address">Morada</label>      
+        <input name="address" type="text" class="form-control" placeholder="Morada" value="{{auth.user.address}}"/>
+      </div>
+      <div class="form-group">
+        <label for="birthday">Data de Nascimento</label>   
+        <input name="birthday" type="date" class="form-control" placeholder="Data de Nascimento" value="{{auth.user.birthday | date:'yyyy-MM-dd'}}"/>
+      </div>
+      <div class="form-group">
+        <label for="cellphone">Número de telemóvel</label>   
+        <input name="cellphone" type="text" class="form-control" placeholder="Número de telemóvel" value="{{auth.user.cellphone}}"/>
+      </div>
+      <div class="form-group">
+        <label for="qualifications">Qualificações</label>   
+        <input name="qualifications" type="text" class="form-control" placeholder="Qualificações" value="{{auth.user.qualifications}}"/>
+      </div>
+      <div class="form-group">
+        <label for="title">Título</label> 
+        <input name="title" type="text" class="form-control" placeholder="Título" value="{{auth.user.title}}"/>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-outline-success col-md">Guardar</button>
+      </div>
+    </form>
+    <form (submit)="changePw($event)">
+        <h3>Alterar Palavra-chave</h3>
+        <div *ngIf='messagePassErr !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>{{messagePassErr}}</strong>
+          <button type="button" class="close" aria-label="Close" (click)='messagePassErr=""'>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div *ngIf='messagePassSuccess !== ""' class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>{{messagePassSuccess}}</strong>
+          <button type="button" class="close" aria-label="Close" (click)='messagePassSuccess=""'>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="form-group">
+            <label for="passwordOld">Palavra-chave Antiga</label> 
+            <div class="input-group sh_password">
+              <input name="passwordOld" type="password" class="form-control" placeholder="Palavra-chave Antiga" />
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary sh_bt" type="button"><i class="fa fa-eye" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+        <div class="row">
+          <div class="form-group col-md mr-0 ml-0">
+            <label for="passwordNew">Palavra-chave Nova</label> 
+            <div class="input-group sh_password">
+              <input name="passwordNew" type="password" class="form-control" placeholder="Palavra-chave Nova" #passwordNew />
+              <div class="input-group-append">
+                <button (click)="randomPW()" class="btn btn-outline-warning" type="button"><i class="fa fa-random" aria-hidden="true"></i></button>
+                <button class="btn btn-outline-secondary sh_bt" type="button"><i class="fa fa-eye" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md mr-0 ml-0">
+            <label for="passwordNewConf">Confirmar Palavra-chave Nova</label> 
+            <div class="input-group sh_password">
+              <input name="passwordNewConf" type="password" class="form-control" placeholder="Confirmar Palavra-chave Nova" #passwordNewConf />
+              <div class="input-group-append">
+                <button (click)="randomPW()" class="btn btn-outline-warning" type="button"><i class="fa fa-random" aria-hidden="true"></i></button>
+                <button class="btn btn-outline-secondary sh_bt" type="button"><i class="fa fa-eye" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-outline-warning col-md">Mudar palavra Chave</button>
+        </div>
+    </form>
+  </div>
+</div>

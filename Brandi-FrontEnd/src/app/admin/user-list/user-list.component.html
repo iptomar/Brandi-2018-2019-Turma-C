@@ -1,0 +1,94 @@
+
+<div class="card">
+  <div class="card-body">
+    <form *ngIf="isEditing; else userlist" (submit)="sendEditUser($event)">
+      <h3>Editar Utilizador</h3>
+      <div *ngIf='messageEditErr !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{messageEditErr}}</strong>
+        <button type="button" class="close" aria-label="Close" (click)='messageEditErr=""'>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div *ngIf='messageEditSuccess !== ""' class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{messageEditSuccess}}</strong>
+        <button type="button" class="close" aria-label="Close" (click)='messageEditSuccess=""'>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="form-group">    
+          <label for="full_name">Nome</label>      
+          <input name="full_name" type="text" class="form-control" placeholder="Nome" value="{{_users[_onEdit].full_name}}"/>
+      </div>
+      <div class="form-group">
+        <label for="address">Morada</label>      
+        <input name="address" type="text" class="form-control" placeholder="Morada" value="{{_users[_onEdit].address}}"/>
+      </div>
+      <div class="form-group">
+        <label for="birthday">Data de Nascimento</label>   
+        <input name="birthday" type="date" class="form-control" placeholder="Data de Nascimento" value="{{_users[_onEdit].birthday |date:'yyyy-MM-dd'}}"/>
+      </div>
+      <div class="form-group">
+        <label for="cellphone">Número de telemóvel</label>   
+        <input name="cellphone" type="text" class="form-control" placeholder="Número de telemóvel" value="{{_users[_onEdit].cellphone}}"/>
+      </div>
+      <div class="form-group">
+        <label for="qualifications">Qualificações</label>   
+        <input name="qualifications" type="text" class="form-control" placeholder="Qualificações" value="{{_users[_onEdit].qualifications}}"/>
+      </div>
+      <div class="form-group">
+        <label for="title">Título</label> 
+        <input name="title" type="text" class="form-control" placeholder="Título" value="{{_users[_onEdit].title}}"/>
+      </div>
+      <div class="form-group">
+        <label for="id_type_user">Tipo de Utilizador</label> 
+        <select name="id_type_user" value="{{_users[_onEdit].id_type_user}}" class="form-control">
+          <option *ngFor="let ut of _usersTypes" value="{{ut.id}}">{{ut.name}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div class="row">
+            <button type="submit" class="btn btn-outline-success col-md-8 mr-md-2 ml-3 mr-3 mb-2 mb-md-0"><i class="fa fa-save"> Guardar</i></button>
+            <button type="button" (click)="editMode(-1)" class="btn btn-outline-danger col-md mr-3 ml-md-2 ml-3"><i class="fa fa-angle-double-left"></i> Cancelar</button>
+        </div>
+      </div>
+    </form>
+    <ng-template #userlist>
+        <h3>Lista de Utilizadores</h3>
+        <form (submit)="searchUser($event)" class="table-responsive">
+        <div class="input-group mb-3">
+            <input type="text" name="searchBox" class="form-control" placeholder="Pesquisar por" value="{{_searchWord}}" aria-label="Pesquisar por">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i> Pesquisar</button>
+            </div>
+          </div>
+        <div class="form-group">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Identificação</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Ultimo login</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let u of _users; let i = index">
+                <td>{{u.id}}</td>
+                <td>{{u.full_name}}</td>
+                <td>{{u.email}}</td>
+                <td>{{u.last_login | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+                <td >
+                  <div class="row" style="margin: 0;">
+                    <button (click)="editMode(i)" class="btn btn-warning form-control col-xl mr-xl-2 mr-0 mb-xl-0 mb-2"><i class="fa fa-user"></i> Editar</button>
+                    <button (click)="deleteUser(i)" class="btn btn-danger form-control col-xl"><i class="fa fa-minus"></i> Eliminar</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+    </ng-template>
+  </div>
+</div>
