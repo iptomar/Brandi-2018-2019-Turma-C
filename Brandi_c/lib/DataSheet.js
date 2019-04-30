@@ -1,5 +1,6 @@
 ﻿const database = require('./DataBase.js');
 const user = require('./User.js');
+const infoDB = require('./InfoDB.js');
 const auth = require('./Auth.js');
 const q_DataSheet = require('./queries/q_DataSheet.js');
 
@@ -102,11 +103,13 @@ async function createSuperCategory(db, name) {
 async function createCategory(db, id_super_category,name) {
     let result = -1;
     //procura super categoria se existe
-    let searchCat = await db.doQuery(q_DataSheet.GET_CATEGORY, [name]);
+    let searchCat = await db.doQuery(q_DataSheet.GET_CATEGORY, [id_super_category, name]);
+    console.log(searchCat);
     if(!searchCat.error) {
         if(searchCat.res.length === 0) {
             //criação do novo objeto
-            let resultDb = await db.doQuery(q_DataSheet.CREATE_SUPER_CATEGORY, [name,id_super_category]);
+            let resultDb = await db.doQuery(q_DataSheet.CREATE_CATEGORY, [name,id_super_category]);
+            console.log(resultDb);
             //se não ocorreu nenhum erro, devolve o id inserido
             if (!resultDb.error) {
                 result = resultDb.res.insertId;
@@ -126,11 +129,11 @@ async function createCategory(db, id_super_category,name) {
 async function createSubCategory(db, id_category,name) {
     let result = -1;
         //procura super categoria se existe
-        let searchCat = await db.doQuery(q_DataSheet.GET_SUB_CATEGORY, [name]);
+        let searchCat = await db.doQuery(q_DataSheet.GET_SUB_CATEGORY, [id_category,name]);
         if(!searchCat.error) {
             if(searchCat.res.length === 0) {
                 //criação do novo objeto
-                let resultDb = await db.doQuery(q_DataSheet.CREATE_SUPER_CATEGORY, [name,id_super_category]);
+                let resultDb = await db.doQuery(q_DataSheet.CREATE_SUB_CATEGORY, [name, id_category]);
                 //se não ocorreu nenhum erro, devolve o id inserido
                 if (!resultDb.error) {
                     result = resultDb.res.insertId;
@@ -152,7 +155,7 @@ async function changeSuperCategory(db, id, name) {
     //procura super categoria se existe
     let searchCat = await db.doQuery(q_DataSheet.GET_SUPER_CATEGORY, [name]);
     if(!searchCat.error) {
-        if(searchCat.res.length === 0 || searchCat.res[0].supercategory !== name) {
+        if(searchCat.res.length === 0 || searchCat.res[0].id !== id) {
             //criação do novo objeto
             let resultDb = await db.doQuery(q_DataSheet.UPDATE_SUPER_CATEGORY, [name,id]);
             //se não ocorreu nenhum erro, devolve o id inserido
@@ -174,15 +177,17 @@ async function changeSuperCategory(db, id, name) {
 async function changeCategory(db, id, name) {
     let result = -1;
     //procura super categoria se existe
-    let searchCat = await db.doQuery(q_DataSheet.GET_CATEGORY, [name]);
+    let searchCat = await db.doQuery(q_DataSheet.CHECK_CATEGORY_NAME_TO_CHANGE, [id,name]);
     if(!searchCat.error) {
-        if(searchCat.res.length === 0 || searchCat.res[0].category !== name) {
-            //criação do novo objeto
-            let resultDb = await db.doQuery(q_DataSheet.UPDATE_CATEGORY, [name,id]);
-            //se não ocorreu nenhum erro, devolve o id inserido
-            if (!resultDb.error) {
-                result = resultDb.res.affectedRows > 0 ? 0 : -1;
-            }
+        if(searchCat.res.length > 0 && searchCat.res[0].id + "" === id) {
+            result=0;
+        }else if(searchCat.res.length === 0) {
+                //criação do novo objeto
+                let resultDb = await db.doQuery(q_DataSheet.UPDATE_CATEGORY, [name,id]);
+                //se não ocorreu nenhum erro, devolve o id inserido
+                if (!resultDb.error) {
+                    result = resultDb.res.affectedRows > 0 ? 0 : -1;
+                }
         }else result = -2;
     }
     return result;
@@ -198,9 +203,11 @@ async function changeCategory(db, id, name) {
 async function changeSubCategory(db, id, name) {
     let result = -1;
     //procura super categoria se existe
-    let searchCat = await db.doQuery(q_DataSheet.GET_SUB_CATEGORY, [name]);
+    let searchCat = await db.doQuery(q_DataSheet.CHECK_SUB_CATEGORY_NAME_TO_CHANGE, [id,name]);
     if(!searchCat.error) {
-        if(searchCat.res.length === 0 || searchCat.res[0].sub_category !== name) {
+        if(searchCat.res.length > 0 && searchCat.res[0].id + "" === id) {
+            result=0;
+        }else if(searchCat.res.length === 0) {
             //criação do novo objeto
             let resultDb = await db.doQuery(q_DataSheet.UPDATE_SUB_CATEGORY, [name,id]);
             //se não ocorreu nenhum erro, devolve o id inserido
@@ -212,7 +219,75 @@ async function changeSubCategory(db, id, name) {
     return result;
 }
 
-//falta os deletes!!!--------------------------------------------------------------------------
+
+/**
+ * 
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da supercategoria
+ * @returns {number} 0 se nao ocorrer erro ou -1 caso ocorra erro, -2 caso esteja ser utilizado
+ */
+async function deleteSuperCategory(db, id) {
+    let result = -1;
+    //procura super categoria se esta a ser utiliozada
+    let searchCat = await db.doQuery(q_DataSheet.CHECK_IF_USED_SUPER_CATEGORY, [id]);
+    if(!searchCat.error) {
+        if(searchCat.res.length === 0) {
+            //criação do novo objeto
+            let resultDb = await db.doQuery(q_DataSheet.DELETE_SUPER_CATEGORY, [id]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.affectedRows > 0 ? 0 : -1;
+            }
+        }else result = -2;
+    }
+    return result;
+}
+
+/**
+ * 
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da categoria
+ * @returns {number} 0 se nao ocorrer erro ou -1 caso ocorra erro, -2 caso esteja ser utilizado
+ */
+async function deleteCategory(db, id) {
+    let result = -1;
+    //procura se a categoria se esta a ser utilizada
+    let searchCat = await db.doQuery(q_DataSheet.CHECK_IF_USED_CATEGORY, [id]);
+    if(!searchCat.error) {
+        if(searchCat.res.length === 0) {
+            //criação do novo objeto
+            let resultDb = await db.doQuery(q_DataSheet.DELETE_CATEGORY, [id]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.affectedRows > 0 ? 0 : -1;
+            }
+        }else result = -2;
+    }
+    return result;
+}
+
+/**
+ * 
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da sub categoria
+ * @returns {number} 0 se nao ocorrer erro ou -1 caso ocorra erro, -2 caso esteja ser utilizado
+ */
+async function deleteSubCategory(db, id) {
+    let result = -1;
+    //procura se a sub categoria se esta a ser utilizada
+    let searchCat = await db.doQuery(q_DataSheet.CHECK_IF_USED_SUB_CATEGORY, [id]);
+    if(!searchCat.error) {
+        if(searchCat.res.length === 0) {
+            //criação do novo objeto
+            let resultDb = await db.doQuery(q_DataSheet.DELETE_SUB_CATEGORY, [id]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.affectedRows > 0 ? 0 : -1;
+            }
+        }else result = -2;
+    }
+    return result;
+}
 
 
 /**
@@ -409,7 +484,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
     });
 
     app.get(prefix + ROUTE_SUPER_CATEGORIES_PREFIX + '/list', async function (req, res) {
-        let result = { error: 3, message: "Por favor efectue autenticação", res: { super_categories: [] } };
+        let result = { error: 2, message: "Por favor efectue autenticação", res: { super_categories: [] } };
         //verifica se utilizador está autenticado
         let u = auth.getUserFromSession(req);
         if (u) {
@@ -428,5 +503,264 @@ exports.appendToExpress = function (app, _db, _prefix) {
         res.json(result);
     });
 
-    //falta webservices de create, change e delete de sub categorias, categorias e super categorias
+
+    app.post(prefix + ROUTE_SUPER_CATEGORIES_PREFIX + '/create', async function (req, res) {
+        let result = { error: 4, message: "Não tem permissões para criar super categorias", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u && u.type_user === infoDB.ADMIN_TYPE_NAME) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 3;
+            result.message = "Insira todos os campos obrigatórios";
+            if ( req.body.name) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //tenta criar um novo objeto
+                let resultInsertId = await createSuperCategory(db,req.body.name);
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Super categoria criada com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId };
+                }else if(resultInsertId == -2) {
+                    result.error=2;
+                    result.message="Já existe uma super categoria com esse nome";
+                }
+            }
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_CATEGORIES_PREFIX + '/create', async function (req, res) {
+        let result = { error: 4, message: "Não tem permissões para criar categorias", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u && u.type_user === infoDB.ADMIN_TYPE_NAME) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 3;
+            result.message = "Insira todos os campos obrigatórios";
+            if ( req.body.name && req.body.id_super_category) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //tenta criar um novo objeto
+                let resultInsertId = await createCategory(db,req.body.id_super_category, req.body.name);
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Categoria criada com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId};
+                }else if(resultInsertId == -2) {
+                    result.error=2;
+                    result.message="Já existe uma categoria com esse nome associada a super categoria indicada";
+                }
+            }
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_SUB_CATEGORIES_PREFIX + '/create', async function (req, res) {
+        let result = { error: 4, message: "Não tem permissões para criar sub categorias", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u && u.type_user === infoDB.ADMIN_TYPE_NAME) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 3;
+            result.message = "Insira todos os campos obrigatórios";
+            if ( req.body.name && req.body.id_category) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //tenta criar um novo objeto
+                let resultInsertId = await createSubCategory(db,req.body.id_category, req.body.name);
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Sub categoria criada com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId};
+                }else if(resultInsertId == -2) {
+                    result.error=2;
+                    result.message="Já existe uma sub categoria com esse nome associada a categoria indicada";
+                }
+            }
+        }
+        res.json(result);
+    });
+
+
+    app.post(prefix + ROUTE_SUB_CATEGORIES_PREFIX + '/change', async function (req, res) {
+        let result = { error: 4, message: "Não tem permissões para alterar sub categorias", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u && u.type_user === infoDB.ADMIN_TYPE_NAME) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 3;
+            result.message = "Insira todos os campos obrigatórios";
+            if ( req.body.name && req.body.id_sub_category) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //tenta criar um novo objeto
+                let resultInsertId = await changeSubCategory(db,req.body.id_sub_category, req.body.name);
+                //se este foi criado
+                if (!resultInsertId) {
+                    result.error = 0;
+                    result.message = "Sub categoria alterada com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: req.body.id_sub_category};
+                }else if(resultInsertId == -2) {
+                    result.error=2;
+                    result.message="Já existe uma sub categoria com esse nome associada a categoria indicada";
+                }
+            }
+        }
+        res.json(result);
+    });
+
+
+    app.post(prefix + ROUTE_CATEGORIES_PREFIX + '/change', async function (req, res) {
+        let result = { error: 4, message: "Não tem permissões para alterar categorias", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u && u.type_user === infoDB.ADMIN_TYPE_NAME) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 3;
+            result.message = "Insira todos os campos obrigatórios";
+            if ( req.body.name && req.body.id_category) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //tenta criar um novo objeto
+                let resultInsertId = await changeCategory(db,req.body.id_category, req.body.name);
+                //se este foi criado
+                if (!resultInsertId) {
+                    result.error = 0;
+                    result.message = "Categoria alterada com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: req.body.id_category };
+                }else if(resultInsertId == -2) {
+                    result.error=2;
+                    result.message="Já existe uma Categoria com esse nome associada a super categoria indicada";
+                }
+            }
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_SUPER_CATEGORIES_PREFIX + '/change', async function (req, res) {
+        let result = { error: 4, message: "Não tem permissões para alterar super categorias", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u && u.type_user === infoDB.ADMIN_TYPE_NAME) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 3;
+            result.message = "Insira todos os campos obrigatórios";
+            if ( req.body.name && req.body.id_super_category) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //tenta criar um novo objeto
+                let resultInsertId = await changeSuperCategory(db, req.body.id_super_category, req.body.name);
+                //se este foi criado
+                if (!resultInsertId) {
+                    result.error = 0;
+                    result.message = "Super Categoria alterada com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: req.body.id_super_category };
+                }else if(resultInsertId == -2) {
+                    result.error=2;
+                    result.message="Já existe uma Super Categoria com esse nome";
+                }
+            }
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_SUPER_CATEGORIES_PREFIX + '/delete', async function (req, res) {
+        let result = { error: 4, message: "Não tem permissões para eliminar super categorias", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u && u.type_user === infoDB.ADMIN_TYPE_NAME) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 3;
+            result.message = "Insira todos os campos obrigatórios";
+            if ( req.body.id_super_category) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //tenta criar um novo objeto
+                let resultInsertId = await deleteSuperCategory(db, req.body.id_super_category);
+                //se este foi criado
+                if (!resultInsertId) {
+                    result.error = 0;
+                    result.message = "Super Categoria eliminada com sucesso";
+                }else if(resultInsertId == -2) {
+                    result.error=2;
+                    result.message="Essa super categoria está ja em utilização, é impossivel de eliminar a mesma";
+                }
+            }
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_CATEGORIES_PREFIX + '/delete', async function (req, res) {
+        let result = { error: 4, message: "Não tem permissões para eliminar categorias", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u && u.type_user === infoDB.ADMIN_TYPE_NAME) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 3;
+            result.message = "Insira todos os campos obrigatórios";
+            if ( req.body.id_category) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //tenta criar um novo objeto
+                let resultInsertId = await deleteCategory(db, req.body.id_category);
+                //se este foi criado
+                if (!resultInsertId) {
+                    result.error = 0;
+                    result.message = "Categoria eliminada com sucesso";
+                }else if(resultInsertId == -2) {
+                    result.error=2;
+                    result.message="Essa categoria está ja em utilização, é impossivel de eliminar a mesma";
+                }
+            }
+        }
+        res.json(result);
+    });
+
+    
+    app.post(prefix + ROUTE_SUB_CATEGORIES_PREFIX + '/delete', async function (req, res) {
+        let result = { error: 4, message: "Não tem permissões para eliminar sub categorias", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u && u.type_user === infoDB.ADMIN_TYPE_NAME) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 3;
+            result.message = "Insira todos os campos obrigatórios";
+            if ( req.body.id_sub_category) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //tenta criar um novo objeto
+                let resultInsertId = await deleteSubCategory(db, req.body.id_sub_category);
+                //se este foi criado
+                if (!resultInsertId) {
+                    result.error = 0;
+                    result.message = "Sub Categoria eliminada com sucesso";
+                }else if(resultInsertId == -2) {
+                    result.error=2;
+                    result.message="Essa sub categoria está ja em utilização, é impossivel de eliminar a mesma";
+                }
+            }
+        }
+        res.json(result);
+    });
+
+    //falta webservices de delete de sub categorias, categorias e super categorias
 };

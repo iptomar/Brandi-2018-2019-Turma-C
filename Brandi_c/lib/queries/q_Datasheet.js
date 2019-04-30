@@ -16,18 +16,23 @@ exports.LIST_SUB_CATEGORY = "SELECT a.id,a.subcategory,b.id as id_category FROM 
 
 
 //Query DE listagem DE SUPER CATEGORIAS
-exports.GET_SUPER_CATEGORY = "SELECT id,supercategory FROM " + infoDB.TBL_SUPERCATEGORIES + " WHERE supercategory = ? LIMIT 1";
+exports.GET_SUPER_CATEGORY = "SELECT id,supercategory FROM " + infoDB.TBL_SUPERCATEGORIES + " WHERE supercategory like ? LIMIT 1";
 //Query DE listagem DE CATEGORIAS
-exports.GET_CATEGORY = "SELECT a.id,a.category,b.id as id_super_category FROM " + infoDB.TBL_CATEGORIES + " a, " + infoDB.TBL_SUPERCATEGORIES + " b WHERE a.supercategory=b.id and b.id=? and category = ?  LIMIT 1";
+exports.GET_CATEGORY = "SELECT a.id,a.category,b.id as id_super_category FROM " + infoDB.TBL_CATEGORIES + " a, " + infoDB.TBL_SUPERCATEGORIES + " b WHERE a.supercategory=b.id and b.id=? and category like ?  LIMIT 1";
 //Query DE listagem DE SUB CATEGORIAS
-exports.GET_SUB_CATEGORY = "SELECT a.id,a.subcategory,b.id as id_category FROM " + infoDB.TBL_SUBCATEGORIES + " a, " + infoDB.TBL_CATEGORIES + " b WHERE a.category=b.id and b.id=? and subcategory = ?  LIMIT 1";
+exports.GET_SUB_CATEGORY = "SELECT a.id,a.subcategory,b.id as id_category FROM " + infoDB.TBL_SUBCATEGORIES + " a, " + infoDB.TBL_CATEGORIES + " b WHERE a.category=b.id and b.id=? and subcategory like ?  LIMIT 1";
+
+//Query de verificação se o nome de uma categoria dentro de uma super categoria existe
+exports.CHECK_CATEGORY_NAME_TO_CHANGE = "SELECT id, category, supercategory AS id_super_category FROM " + infoDB.TBL_CATEGORIES + " WHERE supercategory=(SELECT supercategory FROM " + infoDB.TBL_CATEGORIES + " WHERE id=? LIMIT 1) and category like ? LIMIT 1";
+//Query de verificação se o nome de uma sub categoria dentro de uma categoria existe
+exports.CHECK_SUB_CATEGORY_NAME_TO_CHANGE = "SELECT id, subcategory, category AS id_super_category FROM " + infoDB.TBL_SUBCATEGORIES + " WHERE category=(SELECT category FROM " + infoDB.TBL_SUBCATEGORIES + " WHERE id=? LIMIT 1) and subcategory like ? LIMIT 1";
 
 //Query DE listagem DE SUPER CATEGORIAS
-exports.CHECK_IF_USED_SUPER_CATEGORY = "SELECT id FROM " + infoDB.TBL_OBJECT + " WHERE super_category = ? LIMIT 1";
+exports.CHECK_IF_USED_SUPER_CATEGORY = "SELECT id FROM " + infoDB.TBL_OBJECT + " WHERE super_category like ? LIMIT 1";
 //Query DE listagem DE CATEGORIAS
-exports.CHECK_IF_USED_CATEGORY = "SELECT id FROM " + infoDB.TBL_OBJECT + " WHERE category = ?  LIMIT 1";
+exports.CHECK_IF_USED_CATEGORY = "SELECT id FROM " + infoDB.TBL_OBJECT + " WHERE category like ?  LIMIT 1";
 //Query DE listagem DE SUB CATEGORIAS
-exports.CHECK_IF_USED_SUB_CATEGORY = "SELECT id FROM " + infoDB.TBL_OBJECT + " WHERE sub_category = ?  LIMIT 1";
+exports.CHECK_IF_USED_SUB_CATEGORY = "SELECT id FROM " + infoDB.TBL_OBJECT + " WHERE sub_category like ?  LIMIT 1";
 
 
 //Query DE listagem DE SUPER CATEGORIAS
@@ -48,6 +53,6 @@ exports.UPDATE_SUB_CATEGORY = "UPDATE " + infoDB.TBL_SUBCATEGORIES + " SET subca
 //Query DE listagem DE SUPER CATEGORIAS
 exports.DELETE_SUPER_CATEGORY = "DELETE FROM " + infoDB.TBL_SUPERCATEGORIES + " WHERE id=?";
 //Query DE listagem DE CATEGORIAS
-exports.DELETE_UPDATE_CATEGORY = "DELETE FROM " + infoDB.TBL_CATEGORIES + " WHERE id=?";
+exports.DELETE_CATEGORY = "DELETE FROM " + infoDB.TBL_CATEGORIES + " WHERE id=?";
 //Query DE listagem DE SUB CATEGORIAS
-exports.DELETE_UPDATE_SUB_CATEGORY = "DELETE FROM " + infoDB.TBL_SUBCATEGORIES + " WHERE id=?";
+exports.DELETE_SUB_CATEGORY = "DELETE FROM " + infoDB.TBL_SUBCATEGORIES + " WHERE id=?";

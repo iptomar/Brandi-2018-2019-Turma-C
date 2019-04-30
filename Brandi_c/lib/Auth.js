@@ -231,7 +231,7 @@ exports.setNewLastLogin = async function (db, id) {
 
 exports.addFirstUserAndUserType = async function (db) {
     await this.addNewUserType(db, infoDB.ADMIN_TYPE_NAME);
-    await this.addNewUser(db, infoDB.ADMIN_EMAIL, infoDB.ADMIN_PW, infoDB.ADMIN_EMAIL, "", "", "", "", "", (await this.getUserTypeByName(db, infoDB.ADMIN_TYPE_NAME)).user_type.id);
+    await this.addNewUser(db, infoDB.ADMIN_EMAIL, infoDB.ADMIN_PW, infoDB.ADMIN_EMAIL, "", "", "", (await this.getUserTypeByName(db, infoDB.ADMIN_TYPE_NAME)).user_type.id,"Admin","Admin");
 };
 
 /**
