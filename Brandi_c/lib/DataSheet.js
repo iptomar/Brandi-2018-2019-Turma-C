@@ -2,7 +2,7 @@
 const user = require('./User.js');
 const infoDB = require('./InfoDB.js');
 const auth = require('./Auth.js');
-const q_DataSheet = require('./queries/q_DataSheet.js');
+const q_DataSheet = require('./queries/q_Datasheet.js');
 
 const ROUTE_DATASHEET_PREFIX = "/datasheet";
 const ROUTE_CATEGORIES_PREFIX = ROUTE_DATASHEET_PREFIX + "/categories";
