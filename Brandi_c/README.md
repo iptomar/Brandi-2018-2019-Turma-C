@@ -907,7 +907,7 @@
 	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
 	   "res": {}
 	}
-##### se for criado com sucesso:
+##### se for alterado com sucesso:
 	{
 	    "error": 0,
 	    "message": "Super Categoria alterada com sucesso",
@@ -948,7 +948,7 @@
 	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
 	   "res": {}
 	}
-##### se for criado com sucesso:
+##### se for alterado com sucesso:
 	{
 	    "error": 0,
 	    "message": "Categoria alterada com sucesso",
@@ -989,7 +989,7 @@
 	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
 	   "res": {}
 	}
-##### se for criado com sucesso:
+##### se for alterado com sucesso:
 	{
 	    "error": 0,
 	    "message": "Sub Categoria alterada com sucesso",
@@ -1029,7 +1029,7 @@
 	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
 	   "res": {}
 	}
-##### se for criado com sucesso:
+##### se for eliminado com sucesso:
 	{
 	    "error": 0,
 	    "message": "Sub Categoria eliminada com sucesso",
@@ -1069,7 +1069,7 @@
 	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
 	   "res": {}
 	}
-##### se for criado com sucesso:
+##### se for eliminado com sucesso:
 	{
 	    "error": 0,
 	    "message": "Categoria eliminada com sucesso",
@@ -1109,7 +1109,7 @@
 	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
 	   "res": {}
 	}
-##### se for criado com sucesso:
+##### se for eliminado com sucesso:
 	{
 	    "error": 0,
 	    "message": "Super Categoria eliminada com sucesso",
