@@ -104,12 +104,10 @@ async function createCategory(db, id_super_category,name) {
     let result = -1;
     //procura super categoria se existe
     let searchCat = await db.doQuery(q_DataSheet.GET_CATEGORY, [id_super_category, name]);
-    console.log(searchCat);
     if(!searchCat.error) {
         if(searchCat.res.length === 0) {
             //criação do novo objeto
             let resultDb = await db.doQuery(q_DataSheet.CREATE_CATEGORY, [name,id_super_category]);
-            console.log(resultDb);
             //se não ocorreu nenhum erro, devolve o id inserido
             if (!resultDb.error) {
                 result = resultDb.res.insertId;
@@ -155,7 +153,9 @@ async function changeSuperCategory(db, id, name) {
     //procura super categoria se existe
     let searchCat = await db.doQuery(q_DataSheet.GET_SUPER_CATEGORY, [name]);
     if(!searchCat.error) {
-        if(searchCat.res.length === 0 || searchCat.res[0].id !== id) {
+        if(searchCat.res.length > 0 && searchCat.res[0].id + "" === id) {
+            result=0;
+        }else if(searchCat.res.length === 0) {
             //criação do novo objeto
             let resultDb = await db.doQuery(q_DataSheet.UPDATE_SUPER_CATEGORY, [name,id]);
             //se não ocorreu nenhum erro, devolve o id inserido
@@ -762,5 +762,4 @@ exports.appendToExpress = function (app, _db, _prefix) {
         res.json(result);
     });
 
-    //falta webservices de delete de sub categorias, categorias e super categorias
 };
