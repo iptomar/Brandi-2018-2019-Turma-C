@@ -31,6 +31,11 @@
 <div class="row">
   <div class=" col-lg-6 form-group">
     <label for="patron">Mecenas</label>
+    <select name="mecenas" class="form-control" [disabled]='!_isEditing'
+    value="{{contactS.userExists(_contacts,_datasheet.ContactoId) ? _datasheet.ContactoId : ''}}">
+    <option value="" selected disabled hidden>Utilizador Eliminado</option>
+    <option *ngFor="let u of _contacts" value="{{u.id}}">{{u.full_name}}</option>
+  </select>
     <select class="form-control" [disabled]='!_isEditing'></select>
   </div>
   <div class="col-lg-6 form-group">
