@@ -34,15 +34,20 @@ public class Teste_Signin {
     
    // driver.close();
   }
-
+/*
   @Test
   public static void signUp() throws Exception{
       WebDriver driver = new ChromeDriver();
       driver.get("http://brandic.devll.eu:61080/index");
+             driver.findElement(By.id("signupBut")).click();
+ 
+     //Thread.sleep(3000);
+   
+      
   }
     
 
-    
+    */
     
       @Test
     public void testSimple() throws Exception {
@@ -85,7 +90,15 @@ WebDriver driver = new ChromeDriver();
           cellphone.sendKeys("912312321");
           
           
-          
+           
+            driver.findElement(By.id("usertypeid")).click();
+            Thread.sleep(1000);
+            data.sendKeys("a");
+            
+            driver.findElement(By.id("cellphone")).click();
+           Thread.sleep(1000);
+           
+          driver.findElement(By.id("registar")).click();
           
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
