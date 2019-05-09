@@ -1,0 +1,160 @@
+<h5 class="mt-2 mb-4">
+  Condições Ambientais do local de inserção do Bem Cultural
+</h5>
+
+<div class="form-group row">
+  <label for="envDescription" class="col-lg-2 col-form-label">Descrição do local</label>
+  <div class="col-lg-10">
+    <textarea class="form-control" id="envDescription" rows="3" [readonly]="!_isEditing"></textarea>
+  </div>
+</div>
+
+<fieldset class="border p-2">
+  <legend class="w-auto">Ciclos das Estações Climatéricas Anuais</legend>
+  <div class="row text-center">
+    <div class="col-lg-4">
+      <label></label>
+    </div>
+    <div class="col-lg-4">
+      <label>Frio/Húmido</label>
+    </div>
+    <div class="col-lg-4">
+      <label>Quente/seco</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4">
+      <label>Temperatura (Valores Médios em ºC)</label>
+    </div>
+    <div class="col-lg-4">
+      <input name="tempCold" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" />
+    </div>
+    <div class="col-lg-4">
+      <input name="tempHot" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4">
+      <label>Humidade Relativa (Valores Médios em %)</label>
+    </div>
+    <div class="col-lg-4">
+      <input name="humitityCold" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" />
+    </div>
+    <div class="col-lg-4">
+      <input name="humitityHot" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4">
+      <label>Período do Ano
+        (Início / Fim – em meses)</label>
+    </div>
+    <div class="col-lg-4">
+      <input name="monthsCold" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" />
+    </div>
+    <div class="col-lg-4">
+      <input name="monthsHot" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" />
+    </div>
+  </div>
+</fieldset>
+
+<fieldset class="border p-2">
+  <legend class="w-auto">Radiação | Iluminação</legend>
+  <div class="container o-hidden">
+    <div class="row">
+      <div class="col-6 col-lg-1">
+        <div class="rotate-lg-l-90">
+          <label class="vertical">Natural</label>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="form-group row">
+          <label for="light_type_natural" class="col-lg-3 col-form-label">Tipo</label>
+          <div class="col-lg-9">
+            <input name="light_type_natural" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="natural_lux" class="col-lg-7 col-form-label">Valor de Iluminância (lux)</label>
+          <div class="col-lg-5">
+            <input name="natural_lux" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="natural_uv" class="col-lg-7 col-form-label">Valor de U.V. Medidos (µw/cm2)</label>
+          <div class="col-lg-5">
+            <input name="natural_uv" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="natural_real_uv" class="col-lg-7 col-form-label">Valor Real de U.V. (µw/cm2)</label>
+          <div class="col-lg-5">
+            <input name="natural_real_uv" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" />
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-1">
+        <div class="rotate-lg-l-90">
+          <label class="vertical">Artificial</label>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="form-group row">
+          <label for="light_origin_artificial" class="col-lg-3 col-form-label">Tipo</label>
+          <div class="col-lg-9">
+            <input name="light_origin_artificial" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="artificial_lux" class="col-lg-7 col-form-label">Valor de Iluminância (lux)</label>
+          <div class="col-lg-5">
+            <input name="artificial_lux" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="artificial_uv" class="col-lg-7 col-form-label">Valor de U.V. Medidos (µw/cm2)</label>
+          <div class="col-lg-5">
+            <input name="artificial_uv" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="artificial_real_uv" class="col-lg-7 col-form-label">Valor Real de U.V. (µw/cm2)</label>
+          <div class="col-lg-5">
+            <input name="artificial_real_uv" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</fieldset>
+
+<fieldset class="border p-2">
+  <legend class="w-auto">Poluição</legend>
+  <div class="form-group row">
+      <label for="poluting_agents" class="col-lg-2 col-form-label">Agentes Poluidores</label>
+      <div class="col-lg-10">
+        <textarea class="form-control" id="poluting_agents" rows="3" [readonly]="!_isEditing"></textarea>
+      </div>
+    </div>
+    <div class="form-group row">
+        <label for="poluting_sources" class="col-lg-2 col-form-label">Fontes | Origem</label>
+        <div class="col-lg-10">
+          <textarea class="form-control" id="poluting_sources" rows="3" [readonly]="!_isEditing"></textarea>
+        </div>
+      </div>
+      <div class="form-group row">
+          <label for="poluting_results" class="col-lg-2 col-form-label">Resultados</label>
+          <div class="col-lg-10">
+            <textarea class="form-control" id="poluting_results" rows="3" [readonly]="!_isEditing"></textarea>
+          </div>
+        </div>
+</fieldset>
+<br />
+<div class="form-group row">
+    <label for="env_conclusions" class="col-lg-2 col-form-label">Observações | Conclusões</label>
+    <div class="col-lg-10">
+      <textarea class="form-control" id="env_conclusions" rows="3" [readonly]="!_isEditing"></textarea>
+    </div>
+  </div>
+

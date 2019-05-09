@@ -4,7 +4,7 @@ import { ReceivedData, Global } from '../Global';
 import { DatasheetPage1Component } from './pages/datasheet-page1/datasheet-page1.component';
 import { DatasheetPage2Component } from './pages/datasheet-page2/datasheet-page2.component';
 import { DatasheetPage3Component } from './pages/datasheet-page3/datasheet-page3.component';
-
+import { DatasheetPage4Component } from './pages/datasheet-page4/datasheet-page4.component';
 
 export interface DatasheetPage {
   getForm(event: any): Datasheet;
@@ -30,13 +30,14 @@ export interface DatasheetPageSearch {
 export class DatasheetComponent implements OnInit {
   @ViewChild(DatasheetPage1Component) datasheetPage1Component: DatasheetPage1Component;
   @ViewChild(DatasheetPage2Component) datasheetPage2Component: DatasheetPage2Component;
-  @ViewChild(DatasheetPage3Component) datasheetPage3Component: DatasheetPage2Component;
+  @ViewChild(DatasheetPage3Component) datasheetPage3Component: DatasheetPage3Component;
+  @ViewChild(DatasheetPage4Component) datasheetPage4Component: DatasheetPage4Component;
   @ViewChild("datasheetTabs") dataSheetTabs: ElementRef;
 
   private pages: DatasheetPage[] = [];
 
   private updateDatasheetInAllPages() {
-    this.pages = [this.datasheetPage1Component, this.datasheetPage2Component, this.datasheetPage3Component];
+    this.pages = [this.datasheetPage1Component, this.datasheetPage2Component, this.datasheetPage3Component, this.datasheetPage4Component];
     // so alterar acima
     if (this._onEdit > -1) {
       for (let i = 0; i < this.pages.length; i++) {
