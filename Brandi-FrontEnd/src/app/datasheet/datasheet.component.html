@@ -27,7 +27,7 @@
         <ul class="nav nav-tabs" id="datasheet-tabs" role="tablist" #datasheetTabs>
           <li class="nav-item">
             <a class="nav-link active" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part1" target="_self" role="tab"
-              aria-selected="true" data-id="0">Parte 1</a>
+              aria-selected="true" data-id="0">Objecto</a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part2" role="tab"
@@ -35,11 +35,11 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part3" role="tab"
-              aria-selected="false" data-id="2">Parte 3</a>
+              aria-selected="false" data-id="2">Características</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part4" role="tab"
-              aria-selected="false" data-id="3">Parte 4</a>
+              aria-selected="false" data-id="3">Local</a>
           </li>
         </ul>
         <div *ngIf='messageEditErr !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">

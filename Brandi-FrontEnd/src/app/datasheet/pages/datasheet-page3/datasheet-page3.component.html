@@ -40,7 +40,15 @@
   </div>
   <div class="form-group col-lg-4">
     <label for="period">Época</label>
-    <select class="form-control" [disabled]='!_isEditing'></select>
+    <select class="form-control" name="period" [disabled]='!_isEditing'>
+      <option selected>Seleccione</option>
+      <option value="1">Coevo</option>
+      <option value="2">Tardio</option>
+      <option value="3">Outra época</option>
+      <option value="4">Réplica</option>
+      <option value="5">Reprodução</option>
+      <option value="6">Falsificação</option>
+    </select>
   </div>
 </div>
 <div class="row">
@@ -50,7 +58,14 @@
   </div>
   <div class="form-group col-lg-4">
     <label for="quality">Qualidade</label>
-    <select class="form-control" [disabled]='!_isEditing'></select>
+    <select class="form-control" name="quality" [disabled]='!_isEditing'>
+      <option selected>Seleccione</option>
+      <option value="5">Excelente</option>
+      <option value="4">Muito Boa</option>
+      <option value="3">Boa</option>
+      <option value="2">Regular</option>
+      <option value="1">Fraca</option>
+    </select>
   </div>
 </div>
 <div class="row">
