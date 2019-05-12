@@ -5,6 +5,10 @@ import { DatasheetPage1Component } from './pages/datasheet-page1/datasheet-page1
 import { DatasheetPage2Component } from './pages/datasheet-page2/datasheet-page2.component';
 import { DatasheetPage3Component } from './pages/datasheet-page3/datasheet-page3.component';
 import { DatasheetPage4Component } from './pages/datasheet-page4/datasheet-page4.component';
+import { DatasheetPage5Component } from './pages/datasheet-page5/datasheet-page5.component';
+import { DatasheetPage6Component } from './pages/datasheet-page6/datasheet-page6.component';
+import { DatasheetPage7Component } from './pages/datasheet-page7/datasheet-page7.component';
+import { DatasheetPage8Component } from './pages/datasheet-page8/datasheet-page8.component';
 
 export interface DatasheetPage {
   getForm(event: any): Datasheet;
@@ -32,12 +36,18 @@ export class DatasheetComponent implements OnInit {
   @ViewChild(DatasheetPage2Component) datasheetPage2Component: DatasheetPage2Component;
   @ViewChild(DatasheetPage3Component) datasheetPage3Component: DatasheetPage3Component;
   @ViewChild(DatasheetPage4Component) datasheetPage4Component: DatasheetPage4Component;
+  @ViewChild(DatasheetPage5Component) datasheetPage5Component: DatasheetPage5Component;
+  @ViewChild(DatasheetPage6Component) datasheetPage6Component: DatasheetPage6Component;
+  @ViewChild(DatasheetPage7Component) datasheetPage7Component: DatasheetPage7Component;
+  @ViewChild(DatasheetPage8Component) datasheetPage8Component: DatasheetPage8Component;
   @ViewChild("datasheetTabs") dataSheetTabs: ElementRef;
 
   private pages: DatasheetPage[] = [];
 
   private updateDatasheetInAllPages() {
-    this.pages = [this.datasheetPage1Component, this.datasheetPage2Component, this.datasheetPage3Component, this.datasheetPage4Component];
+    this.pages = [this.datasheetPage1Component, this.datasheetPage2Component,
+      this.datasheetPage3Component, this.datasheetPage4Component, this.datasheetPage5Component,
+      this.datasheetPage6Component, this.datasheetPage7Component, this.datasheetPage8Component];
     // so alterar acima
     if (this._onEdit > -1) {
       for (let i = 0; i < this.pages.length; i++) {

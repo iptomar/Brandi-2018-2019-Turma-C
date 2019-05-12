@@ -16,6 +16,10 @@ import { DatasheetPage1Component } from './datasheet/pages/datasheet-page1/datas
 import { DatasheetPage2Component } from './datasheet/pages/datasheet-page2/datasheet-page2.component';
 import { DatasheetPage3Component } from './datasheet/pages/datasheet-page3/datasheet-page3.component';
 import { DatasheetPage4Component } from './datasheet/pages/datasheet-page4/datasheet-page4.component';
+import { DatasheetPage5Component } from './datasheet/pages/datasheet-page5/datasheet-page5.component';
+import { DatasheetPage6Component } from './datasheet/pages/datasheet-page6/datasheet-page6.component';
+import { DatasheetPage7Component } from './datasheet/pages/datasheet-page7/datasheet-page7.component';
+import { DatasheetPage8Component } from './datasheet/pages/datasheet-page8/datasheet-page8.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +36,11 @@ import { DatasheetPage4Component } from './datasheet/pages/datasheet-page4/datas
     DatasheetPage1Component,
     DatasheetPage2Component,
     DatasheetPage3Component,
-    DatasheetPage4Component
+    DatasheetPage4Component,
+    DatasheetPage5Component,
+    DatasheetPage6Component,
+    DatasheetPage7Component,
+    DatasheetPage8Component
   ],
   imports: [
     BrowserModule,
@@ -41,6 +49,6 @@ import { DatasheetPage4Component } from './datasheet/pages/datasheet-page4/datas
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
-  
+export class AppModule {
+
 }

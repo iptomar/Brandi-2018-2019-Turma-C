@@ -1,0 +1,57 @@
+<h5 class="mt-2 mb-4">
+  Exames e análises
+</h5>
+
+<fieldset class="border p-2">
+  <legend class="w-auto">Objectivos Gerais</legend>
+
+  <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="testsQ1" [disabled]="!_isEditing">
+    <label class="form-check-label" for="testsQ1">Identificação de materiais, técnicas e tecnologias de produção</label>
+  </div>
+  <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="testsQ2" [disabled]="!_isEditing">
+    <label class="form-check-label" for="testsQ2">Identificação de intervenções efectuadas no objecto</label>
+  </div>
+  <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="testsQ3" [disabled]="!_isEditing">
+    <label class="form-check-label" for="testsQ3">Caraterização do estado de conservação </label>
+  </div>
+  <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="testsQ4" [disabled]="!_isEditing">
+    <label class="form-check-label" for="testsQ4">Identificação de patologias e agentes de biodeterioração</label>
+  </div>
+  <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="testsQ5" [disabled]="!_isEditing">
+    <label class="form-check-label" for="testsQ5">Datação do objecto e das eventuais intervenções que tenha sido
+      alvo</label>
+  </div>
+  <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="testsQ6" [disabled]="!_isEditing">
+    <label class="form-check-label" for="testsQ6">Ensaio de produtos e materiais a empregar na intervenção</label>
+  </div>
+</fieldset>
+
+<button type="button" class="btn btn-outline-success mt-2" [disabled]='!_isEditing'>Adicionar exame/análise <i
+    class="fa fa-folder"></i>
+</button>
+
+<div>
+
+  Tabela com os exames realizados
+
+</div>
+
+
+<div class="form-group row">
+  <label for="testsResults" class="col-lg-2 col-form-label">Interpretação dos Resultados</label>
+  <div class="col-lg-10">
+    <textarea class="form-control" id="testsResults" rows="3" [readonly]="!_isEditing"></textarea>
+  </div>
+</div>
+<div class="form-group row">
+  <label for="testsConclusions" class="col-lg-2 col-form-label">Conclusões</label>
+  <div class="col-lg-10">
+    <textarea class="form-control" id="testsConclusions" rows="3" [readonly]="!_isEditing"></textarea>
+  </div>
+</div>
