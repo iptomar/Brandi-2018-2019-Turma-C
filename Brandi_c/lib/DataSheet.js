@@ -3,6 +3,7 @@ const user = require('./User.js');
 const infoDB = require('./InfoDB.js');
 const auth = require('./Auth.js');
 const q_DataSheet = require('./queries/q_Datasheet.js');
+const global = require('./Global');
 
 const ROUTE_DATASHEET_PREFIX = "/datasheet";
 const ROUTE_CATEGORIES_PREFIX = ROUTE_DATASHEET_PREFIX + "/categories";
@@ -321,13 +322,16 @@ async function listDataSheet(db, search) {
  * @param {string} lcrmprocdata data do processo LCRM
  * @param {string} lcrmentrancedata data de entrada LCRM
  * @param {number} coordinatorid id do coordenador
+ * @param {string} supercategory super categoria da ficha
+ * @param {string} category categoria da ficha
+ * @param {string} subcategory sub categoria da ficha
  * @param {number} userId id do utilizador autenticado
  * @returns {boolean} se foi atualizado alguma coisa
  */
-async function changeDataSheet(db, id, designation, cearcproc, cearcprocdata, cearcentrancedata, lcrmproc, lcrmprocdata, lcrmentrancedata, coordinatorid, userId) {
+async function changeDataSheetP1(db, id, designation, cearcproc, cearcprocdata, cearcentrancedata, lcrmproc, lcrmprocdata, lcrmentrancedata, coordinatorid, supercategory, category, subcategory, userId) {
     let result = false;
     //criação do novo objeto
-    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT, [designation, cearcproc, cearcprocdata, cearcentrancedata, lcrmproc, lcrmprocdata, lcrmentrancedata, coordinatorid, userId,id]);
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P1, [designation, cearcproc, cearcprocdata, cearcentrancedata, lcrmproc, lcrmprocdata, lcrmentrancedata, coordinatorid, userId, supercategory, category, subcategory, id]);
     //se não ocorreu nenhum erro, devolve o id inserido
     if (!resultDb.error) {
         result = resultDb.res.affectedRows > 0;
@@ -370,7 +374,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
     let thiss = this;
     let db = _db;
     let prefix = _prefix;
-    app.post(prefix + ROUTE_DATASHEET_PREFIX + '/createandedit', async function (req, res) {
+    app.post(prefix + ROUTE_DATASHEET_PREFIX + '/create', async function (req, res) {
         let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
         //verifica se utilizador está autenticado
         let u = auth.getUserFromSession(req);
@@ -388,28 +392,73 @@ exports.appendToExpress = function (app, _db, _prefix) {
                 req.body.lcrmproc = !req.body.lcrmproc ? null : req.body.lcrmproc;
                 req.body.lcrmprocdata = !req.body.lcrmprocdata ? null : req.body.lcrmprocdata;
                 //verifica se é para editar ou para criar
-                if (req.body.idobject) {//se o id estiver definido é porque é para criar
-                    //tenta altearar um objeto e se este foi alterado
-                    if (await changeDataSheet(db, req.body.idobject, req.body.designation, req.body.cearcproc, req.body.cearcprocdata, req.body.cearcentrancedata, req.body.lcrmproc, req.body.lcrmprocdata, req.body.lcrmentrancedata, req.body.coordinatorid, u.id)) {
-                        result.error = 0;
-                        result.message = "Ficha técnica atualizada com sucesso";
-                        //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
-                        result.res = { id: parseInt(req.body.idobject, 10), type: 1 };
-                    }
-                } else {
-                    //tenta criar um novo objeto
-                    let resultInsertId = await createDataSheet(db,req.body.designation, req.body.cearcproc, req.body.cearcprocdata, req.body.cearcentrancedata, req.body.lcrmproc, req.body.lcrmprocdata, req.body.lcrmentrancedata, req.body.coordinatorid, u.id);
-                    //se este foi criado
-                    if (resultInsertId !== -1) {
-                        result.error = 0;
-                        result.message = "Ficha técnica criada com sucesso";
-                        //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
-                        result.res = { id: resultInsertId, type: 0};
-                    }
+                //tenta criar um novo objeto
+                let resultInsertId = await createDataSheet(db,req.body.designation, req.body.cearcproc, req.body.cearcprocdata, req.body.cearcentrancedata, req.body.lcrmproc, req.body.lcrmprocdata, req.body.lcrmentrancedata, req.body.coordinatorid, u.id);
+                //se este foi criado
+                if (resultInsertId !== -1) {
+                    result.error = 0;
+                    result.message = "Ficha técnica criada com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId };
                 }
                 
             }
         }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_DATASHEET_PREFIX + '/edit/:id/page/:page', async function (req, res) {
+        let result = { error: 4, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        let resultDb = null;
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 3;
+            result.message = "Insira todos os campos obrigatórios";
+            switch(req.params.page) {
+                case "1":
+                    	if (req.body.designation && /**req.body.lcrmproc && req.body.lcrmprocdata && req.body.cearcprocdata && req.body.cearcentrancedata**/ req.body.cearcproc && req.body.coordinatorid && req.body.lcrmentrancedata && req.body.category && req.body.super_category && req.body.sub_category) {
+                            //define erro para o caso de algo correr mal
+                            result.error = 1;
+                            result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                            //todos os campos não obrigatórios ficam como null caso não estejam definidos
+                            req.body.cearcprocdata = global.notRequiredField(req.body.cearcprocdata);
+                            req.body.cearcentrancedata = global.notRequiredField(req.body.cearcentrancedata);
+                            req.body.lcrmproc = global.notRequiredField(req.body.lcrmproc);
+                            req.body.lcrmprocdata = global.notRequiredField(req.body.lcrmprocdata);
+                            //verifica se é para editar ou para criar
+                            //tenta altearar um objeto e se este foi alterado
+                            resultDb=await changeDataSheetP1(
+                                db,
+                                req.params.id,
+                                req.body.designation,
+                                req.body.cearcproc,
+                                req.body.cearcprocdata,
+                                req.body.cearcentrancedata,
+                                req.body.lcrmproc,
+                                req.body.lcrmprocdata,
+                                req.body.lcrmentrancedata,
+                                req.body.coordinatorid,
+                                req.body.super_category,
+                                req.body.category,
+                                req.body.sub_category,
+                                u.id
+                            );
+                        }
+                        break;
+                    default:
+                        result.error=2;
+                        result.message="Pagina não existente";
+            };
+            if (resultDb) {
+                result.error = 0;
+                result.message = "Ficha técnica atualizada com sucesso";
+                //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                result.res = { id: parseInt(req.body.idobject, 10) };
+            }
+        }
+
         res.json(result);
     });
 
