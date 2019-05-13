@@ -1,4 +1,5 @@
 
+
 ﻿# Brandi_c
 # WEB SERVICES:
 ## GET /api/user/info
@@ -65,7 +66,7 @@
 ##### se sem sucesso:
 	{
 	   "error": 1,
-	   "message": "Ocurreu um erro na autenticaçăo, verifique se todos os campos săo válidos",
+	   "message": "Ocorreu um erro na autenticaçăo, verifique se todos os campos săo válidos",
 	   "res": {}
 	}
 
@@ -468,12 +469,11 @@
 	}
 	
 ------------
-## POST /api/datasheet/createandedit:
+## POST /api/datasheet/create:
 > Cria ou atualiza dados da ficha técnica
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
-	idobject - id da ficha técnica a atualizar (distingue criação de atualização, utilizar somente quando a editar, caso a criar uma nova, este não deve ser inserido)
 	designation - designação do objeto (obrigatório)
 	cearcproc - processo CEARC (obrigatório)
 	cearcprocdata - data do processo CEARC
@@ -505,13 +505,57 @@
 	{
 	   "error": 0,
 	   "message": "Ficha técnica criada com sucesso",
-		"res": {id: 5, type: 0}
+		"res": {id: 5}
+	}
+	
+------------
+## POST /api/datasheet/edit/:id/page/:page
+> Cria ou atualiza dados da ficha técnica
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	:page = 1
+		designation - designação do objeto (obrigatório)
+		cearcproc - processo CEARC (obrigatório)
+		cearcprocdata - data do processo CEARC
+		cearcentrancedata - data de entrada CEARC
+		lcrmproc - processo LCRM
+		lcrmprocdata - data do processo LCRM
+		lcrmentrancedata - data de entrada LCRM (obrigatório)
+		coordinatorid - id do coordenador (obrigatório)
+		super_category - id da super categoria,
+		category - id da categoria(esta tem de estar associada a super categoria),
+		sub_category - id da sub categoria(esta tem de estar associada a categoria)
+### devolve:
+##### se não tiver autenticado:
+	{
+		   "error": 4,
+		   "message": "Por favor efectue autenticação",
+		   "res": {}
+	 }
+##### se não forem dados todos os campos obrigatórios:
+	{
+	   "error": 3,
+	   "message": "Insira todos os campos obrigatórios",
+	   "res": {}
+	}
+##### se a página dada for inválida:
+	{
+	   "error": 2,
+	   "message": "Pagina não existente",
+	   "res": {}
+	}
+##### se ocorrer um erro (por exemplo a data não conter um formato válido):
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+	   "res": {}
 	}
 ##### se for atualizado com sucesso:
 	{
 	   "error": 0,
 	   "message": "Ficha técnica atualizada com sucesso",
-		"res": {id: 5, type: 1}
+		"res": {id: 5}
 	}
 	
 ------------
@@ -541,36 +585,38 @@
 	    "res": {
 	        "datasheets": [
 	            {
-		            "id": 1
-	                "object_designation": "asdfg",
-	                "CEARC_process": "teste0001",
+	                "id": 1,
+	                "object_designation": "Movel",
+	                "CEARC_process": "123",
 	                "CEARC_process_date": null,
 	                "CEARC_entry_date": null,
 	                "LCRM_process": null,
 	                "LCRM_process_date": null,
-	                "LCRM_entry_date": "2019-03-15T00:00:00.000Z",
-	                "coordinator": 4,
-	                "coordinator_name": "Virgilio Quintino",
+	                "LCRM_entry_date": null,
+	                "coordinator": 1,
 	                "last_modified_user": 1,
-	                "last_modified_user_name": "Luís Lopes",
-	                "last_modified_date": "2019-04-10T01:38:09.000Z",
-	                "object_created_date": "2019-04-10T00:57:19.000Z"
+	                "last_modified_date": "2019-05-13T00:42:53.000Z",
+	                "object_created_date": "2019-04-29T23:10:58.000Z",
+	                "super_category": 1,
+	                "category": 4,
+	                "sub_category": 10
 	            },
 	            {
-		            "id": 2
-	                "object_designation": "teste",
-	                "CEARC_process": "teste0001",
-	                "CEARC_process_date": null,
-	                "CEARC_entry_date": null,
-	                "LCRM_process": null,
-	                "LCRM_process_date": null,
-	                "LCRM_entry_date": "2019-03-05T00:00:00.000Z",
-	                "coordinator": 4,
-	                "coordinator_name": "Virgilio Quintino",
+	                "id": 2,
+	                "object_designation": "sddfdfgsdf",
+	                "CEARC_process": "1234",
+	                "CEARC_process_date": "2019-02-13T00:00:00.000Z",
+	                "CEARC_entry_date": "2018-12-12T00:00:00.000Z",
+	                "LCRM_process": "455677686",
+	                "LCRM_process_date": "2019-03-31T23:00:00.000Z",
+	                "LCRM_entry_date": "2019-04-02T23:00:00.000Z",
+	                "coordinator": 1,
 	                "last_modified_user": 1,
-	                "last_modified_user_name": "Luís Lopes",
-	                "last_modified_date": "2019-04-10T01:04:00.000Z",
-	                "object_created_date": "2019-04-10T01:04:00.000Z"
+	                "last_modified_date": "2019-05-11T16:20:30.000Z",
+	                "object_created_date": "2019-04-29T23:10:58.000Z",
+	                "super_category": 1,
+	                "category": 1,
+	                "sub_category": 1
 	            }
 	        ]
 	    }
@@ -683,7 +729,7 @@
 	}
 
 ------------
-## GET /api/datasheet/categories/list:
+## GET /api/datasheet/sub_categories/list:
 
 ### Condições:
 	Tem que estar autenticado
