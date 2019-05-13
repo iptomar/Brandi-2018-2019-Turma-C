@@ -342,6 +342,75 @@ async function changeDataSheetP1(db, id, designation, cearcproc, cearcprocdata, 
 /**
  * 
  * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da ficha técnica
+ * @param {string} dimensions dimensões do objeto
+ * @param {string} other_dimensions outras dimensões
+ * @param {string} tipology tipologia do objeto
+ * @param {string} site localização
+ * @param {number} object_owner dono da obra
+ * @param {number} owner proprietário 
+ * @param {number} patron mecenas?? CONFIRMAR------------
+ * @param {number} userId id do utilizador autenticado
+ * @returns {boolean} se foi atualizado alguma coisa
+ */
+async function changeDataSheetP2(db, id, dimensions,other_dimensions,tipology,site,object_owner,owner,patron, userId) {
+    let result = false;
+    //criação do novo objeto
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P2, [dimensions,other_dimensions,tipology,site,object_owner,owner,patron, userId,id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0;
+    }
+    return result;
+}
+
+
+
+
+/**
+ * 
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da ficha técnica
+ * @param {number} object_is_a_set 
+ * @param {string} set_type tipo de conjunto do objecto
+ * @param {string} set_elements elementos do objeto
+ * @param {string} set_materials materiais do objeto
+ * @param {string} set_inscriptions inscrições no objeto
+ * @param {string} set_mount inscrições de Montagem do objeto
+ * @param {string} set_build inscrições de Construção
+ * @param {string} classification classificação do objeto
+ * @param {number} period época do objeto
+ * @param {number} quality qualidade do objeto
+ * @param {number} style estilo do objeto
+ * @param {string} small_description pequena descrição do objeto
+ * @param {string} analogies analogias 
+ * @param {string} conclusions conclusões
+ * @param {string} author autor 
+ * @param {string} dating datação
+ * @param {string} origin origem
+ * @param {number} userId id do utilizador autenticado
+ * @returns {boolean} se foi atualizado alguma coisa
+ * 
+MISSING : Materiais - Estrutura, Materiais - Superfície, Materiais - Elementos Acessórios, Técnicas - Estrutura, Técnicas - Superfície, Técnicas - Elementos Acessórios
+
+ 
+ */
+async function changeDataSheetP3(db, id,object_is_a_set,set_type,set_elements,set_materials,set_inscriptions,set_mount,set_build,classification,period,quality,style,small_description,analogies,conclusions,author,dating,origin,userId) {
+    let result = false;
+    //criação do novo objeto
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P3, [object_is_a_set,set_type,set_elements,set_materials,set_inscriptions,set_mount,set_build,classification,period,quality,style,small_description,analogies,conclusions,author,dating,origin, userId, id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0;
+    }
+    return result;
+}
+
+
+
+/**
+ * 
+ * @param {database.Database} db Class de ligação à base de dados
  * @param {string} designation designação do objeto
  * @param {string} cearcproc processo CEARC
  * @param {string} cearcprocdata data do processo CEARC
@@ -443,6 +512,81 @@ exports.appendToExpress = function (app, _db, _prefix) {
                                 req.body.super_category,
                                 req.body.category,
                                 req.body.sub_category,
+                                u.id
+                            );
+                        }
+                        break;
+                    case "2":
+						//define erro para o caso de algo correr mal
+						result.error = 1;
+						result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+						//todos os campos não obrigatórios ficam como null caso não estejam definidos
+						req.body.dimensions = global.notRequiredField(req.body.dimensions);
+						req.body.other_dimensions = global.notRequiredField(req.body.other_dimensions);
+						req.body.tipology = global.notRequiredField(req.body.tipology);
+						req.body.site = global.notRequiredField(req.body.site);
+						req.body.object_owner = global.notRequiredField(req.body.object_owner);
+						req.body.owner = global.notRequiredField(req.body.owner);
+						req.body.patron = global.notRequiredField(req.body.patron);
+						//verifica se é para editar ou para criar
+						//tenta altearar um objeto e se este foi alterado
+						resultDb=await changeDataSheetP2(
+							db,
+							req.params.id,
+							req.body.dimensions,
+							req.body.other_dimensions,
+							req.body.tipology,
+							req.body.site,
+							req.body.object_owner,
+							req.body.owner,
+							req.body.patron,
+							u.id
+						);
+                        break;
+                    case "3":
+                    	if (req.body.object_is_a_set) {
+                            //define erro para o caso de algo correr mal
+                            result.error = 1;
+                            result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                            //todos os campos não obrigatórios ficam como null caso não estejam definidos
+                            req.body.set_type = global.notRequiredField(req.body.set_type);
+                            req.body.set_elements = global.notRequiredField(req.body.set_elements);
+                            req.body.set_materials = global.notRequiredField(req.body.set_materials);
+                            req.body.set_inscriptions = global.notRequiredField(req.body.set_inscriptions);
+                            req.body.set_mount = global.notRequiredField(req.body.set_mount);
+                            req.body.set_build = global.notRequiredField(req.body.set_build);
+                            req.body.classification = global.notRequiredField(req.body.classification);
+                            req.body.period = global.notRequiredField(req.body.period);
+                            req.body.quality = global.notRequiredField(req.body.quality);
+                            req.body.style = global.notRequiredField(req.body.style);
+                            req.body.small_description = global.notRequiredField(req.body.small_description);
+                            req.body.analogies = global.notRequiredField(req.body.analogies);
+                            req.body.conclusions = global.notRequiredField(req.body.conclusions);
+                            req.body.author = global.notRequiredField(req.body.author);
+                            req.body.dating = global.notRequiredField(req.body.dating);
+                            req.body.origin = global.notRequiredField(req.body.origin);
+                            //verifica se é para editar ou para criar
+                            //tenta altearar um objeto e se este foi alterado
+                            resultDb=await changeDataSheetP3(
+                                db,
+                                req.params.id,
+                                req.body.object_is_a_set,
+                                req.body.set_type,
+                                req.body.set_elements,
+                                req.body.set_materials,
+                                req.body.set_inscriptions,
+                                req.body.set_mount,
+                                req.body.set_build,
+                                req.body.classification,
+                                req.body.period,
+                                req.body.quality,
+                                req.body.style,
+                                req.body.small_description,
+                                req.body.analogies,
+                                req.body.conclusions,
+                                req.body.author,
+                                req.body.dating,
+                                req.body.origin,
                                 u.id
                             );
                         }
