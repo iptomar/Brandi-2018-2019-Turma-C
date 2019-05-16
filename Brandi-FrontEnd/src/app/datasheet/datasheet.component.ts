@@ -9,6 +9,8 @@ import { DatasheetPage5Component } from './pages/datasheet-page5/datasheet-page5
 import { DatasheetPage6Component } from './pages/datasheet-page6/datasheet-page6.component';
 import { DatasheetPage7Component } from './pages/datasheet-page7/datasheet-page7.component';
 import { DatasheetPage8Component } from './pages/datasheet-page8/datasheet-page8.component';
+import { DatasheetPage9Component } from './pages/datasheet-page9/datasheet-page9.component';
+import { DatasheetPage10Component } from './pages/datasheet-page10/datasheet-page10.component';
 
 export interface DatasheetPage {
   getForm(event: any): Datasheet;
@@ -40,6 +42,8 @@ export class DatasheetComponent implements OnInit {
   @ViewChild(DatasheetPage6Component) datasheetPage6Component: DatasheetPage6Component;
   @ViewChild(DatasheetPage7Component) datasheetPage7Component: DatasheetPage7Component;
   @ViewChild(DatasheetPage8Component) datasheetPage8Component: DatasheetPage8Component;
+  @ViewChild(DatasheetPage9Component) datasheetPage9Component: DatasheetPage9Component;
+  @ViewChild(DatasheetPage10Component) datasheetPage10Component: DatasheetPage10Component;
   @ViewChild("datasheetTabs") dataSheetTabs: ElementRef;
 
   private pages: DatasheetPage[] = [];
@@ -47,7 +51,8 @@ export class DatasheetComponent implements OnInit {
   private updateDatasheetInAllPages() {
     this.pages = [this.datasheetPage1Component, this.datasheetPage2Component,
       this.datasheetPage3Component, this.datasheetPage4Component, this.datasheetPage5Component,
-      this.datasheetPage6Component, this.datasheetPage7Component, this.datasheetPage8Component];
+      this.datasheetPage6Component, this.datasheetPage7Component, this.datasheetPage8Component,
+      this.datasheetPage9Component, this.datasheetPage10Component];
     // so alterar acima
     if (this._onEdit > -1) {
       for (let i = 0; i < this.pages.length; i++) {

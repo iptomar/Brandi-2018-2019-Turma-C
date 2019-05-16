@@ -9,6 +9,8 @@ import { DatasheetPage5Component } from './pages/datasheet-page5/datasheet-page5
 import { DatasheetPage6Component } from './pages/datasheet-page6/datasheet-page6.component';
 import { DatasheetPage7Component } from './pages/datasheet-page7/datasheet-page7.component';
 import { DatasheetPage8Component } from './pages/datasheet-page8/datasheet-page8.component';
+import { DatasheetPage9Component } from './pages/datasheet-page9/datasheet-page9.component';
+import { DatasheetPage10Component } from './pages/datasheet-page10/datasheet-page10.component';
 
 describe('DatasheetComponent', () => {
   let component: DatasheetComponent;
@@ -19,7 +21,7 @@ describe('DatasheetComponent', () => {
       declarations: [ DatasheetComponent,  DatasheetPage1Component,
         DatasheetPage2Component, DatasheetPage3Component, DatasheetPage4Component,
         DatasheetPage5Component, DatasheetPage6Component, DatasheetPage7Component,
-        DatasheetPage8Component]
+        DatasheetPage8Component, DatasheetPage9Component, DatasheetPage10Component]
     })
     .compileComponents();
   }));

@@ -20,6 +20,8 @@ import { DatasheetPage5Component } from './datasheet/pages/datasheet-page5/datas
 import { DatasheetPage6Component } from './datasheet/pages/datasheet-page6/datasheet-page6.component';
 import { DatasheetPage7Component } from './datasheet/pages/datasheet-page7/datasheet-page7.component';
 import { DatasheetPage8Component } from './datasheet/pages/datasheet-page8/datasheet-page8.component';
+import { DatasheetPage9Component } from './datasheet/pages/datasheet-page9/datasheet-page9.component';
+import { DatasheetPage10Component } from './datasheet/pages/datasheet-page10/datasheet-page10.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { DatasheetPage8Component } from './datasheet/pages/datasheet-page8/datas
     DatasheetPage5Component,
     DatasheetPage6Component,
     DatasheetPage7Component,
-    DatasheetPage8Component
+    DatasheetPage8Component,
+    DatasheetPage9Component,
+    DatasheetPage10Component
   ],
   imports: [
     BrowserModule,

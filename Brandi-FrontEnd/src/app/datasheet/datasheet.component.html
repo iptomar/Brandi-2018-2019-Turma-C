@@ -50,13 +50,21 @@
             aria-selected="false" data-id="5">Estado</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part7" role="tab"
-              aria-selected="false" data-id="6">Intervenções Anteriores</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part8" role="tab"
-                aria-selected="false" data-id="7">Proposta</a>
-            </li>
+          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part7" role="tab"
+            aria-selected="false" data-id="6">Intervenções Anteriores</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part8" role="tab"
+            aria-selected="false" data-id="7">Proposta</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part9" role="tab"
+            aria-selected="false" data-id="8">Intervenção</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part10" role="tab"
+            aria-selected="false" data-id="9">Fontes</a>
+        </li>
       </ul>
       <div *ngIf='messageEditErr !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>{{messageEditErr}}</strong>
@@ -95,11 +103,17 @@
             <app-datasheet-page6></app-datasheet-page6>
           </div>
           <div class="tab-pane" id="datasheet_part7" role="tabpanel" aria-labelledby="settings-tab">
-              <app-datasheet-page7></app-datasheet-page7>
-            </div>
-            <div class="tab-pane" id="datasheet_part8" role="tabpanel" aria-labelledby="settings-tab">
-                <app-datasheet-page8></app-datasheet-page8>
-              </div>
+            <app-datasheet-page7></app-datasheet-page7>
+          </div>
+          <div class="tab-pane" id="datasheet_part8" role="tabpanel" aria-labelledby="settings-tab">
+            <app-datasheet-page8></app-datasheet-page8>
+          </div>
+          <div class="tab-pane" id="datasheet_part9" role="tabpanel" aria-labelledby="settings-tab">
+            <app-datasheet-page9></app-datasheet-page9>
+          </div>
+          <div class="tab-pane" id="datasheet_part10" role="tabpanel" aria-labelledby="settings-tab">
+            <app-datasheet-page10></app-datasheet-page10>
+          </div>
           <div class="form-group" *ngIf="!isEditing; else editbuttons">
             <div class="row">
               <button type="button" (click)="setShowMode(false)"

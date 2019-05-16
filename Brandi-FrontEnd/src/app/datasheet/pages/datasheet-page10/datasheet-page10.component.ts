@@ -3,17 +3,17 @@ import { DatasheetPage } from '../../datasheet.component';
 import { Datasheet, DatasheetService } from 'src/app/services/datasheet/datasheet.service';
 
 @Component({
-  selector: 'app-datasheet-page8',
-  templateUrl: './datasheet-page8.component.html',
-  styleUrls: ['./datasheet-page8.component.scss']
+  selector: 'app-datasheet-page10',
+  templateUrl: './datasheet-page10.component.html',
+  styleUrls: ['./datasheet-page10.component.scss']
 })
 
-export class DatasheetPage8Component implements OnInit, DatasheetPage {
+export class DatasheetPage10Component implements OnInit, DatasheetPage {
   _datasheet: Datasheet;
   _isEditing: boolean;
 
   getForm(event: any): Datasheet {
-    console.log('page8');
+    console.log('page10');
     return this._datasheet;
   }
 
@@ -30,5 +30,7 @@ export class DatasheetPage8Component implements OnInit, DatasheetPage {
     this._isEditing = false;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
+
 }
