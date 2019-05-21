@@ -89,7 +89,36 @@ export interface Datasheet {
    det_bio_accessory: string;
    det_bio_conclusion: string;
    //fim da tab estado
-
+   int_anteriores_struct: string;
+   int_anteriores_superficie: string;
+   int_anteriores_accessory: string;
+   int_anteriores_conclusion: string;
+   prop_owner_int_preserv: boolean;
+   prop_owner_int_conserv: boolean;
+   prop_owner_int_restore: boolean;
+   prop_owner_int_specifics: string;
+   prop_interv_preserv: boolean;
+   prop_interv_conserv: boolean;
+   prop_interv_restore: boolean;
+   prop_met_interv_struct: string;
+   prop_met_interv_resources_struct: string;
+   prop_met_interv_superficie: string;
+   prop_met_interv_resources_superficie: string;
+   prop_met_interv_accessories: string;
+   prop_met_interv_resources_accessories: string;
+   prop_met_conclusions: string;
+   prop_met_interloc_ipt: any; //substituir por tipo de dados correto
+   prop_met_interloc_client: any; //substituir por tipo de dados correto
+   prop_met_date_prop: Date; //nao esquecer de tratar com a funcao do Global para datas
+   prop_met_date_accepted: Date; //nao esquecer de tratar com a funcao do Global para datas
+   interv_struct: string;
+   interv_superficie: string;
+   interv_accessories: string;
+   interv_struct_resoures: string;
+   interv_superficie_resoures: string;
+   interv_accessories_resoures: string;
+   interv_concusions: string;
+   sources: any; //check if right type
    */
 }
 
