@@ -1,6 +1,5 @@
 <div class="card">
   <div class="card-body">
-    <div *ngIf="!isShowing; else datashow">
       <form (submit)="searchFichas($event)">
         <div class="input-group mb-3 ">
           <input type="text" name="searchBox" class="form-control" placeholder="Pesquisar por" value="{{_searchWord}}"
@@ -11,8 +10,8 @@
         </div>
       </form>
       <div class="row">
-        <div class="col-md-3 mb-4" *ngFor="let u of _datasheetlist; let i = index">
-          <div class="card datasheetClick" (click)="openFicha(i)">
+        <div class="col-md-3 mb-4" *ngFor="let u of _datasheetlist">
+          <div class="card datasheetClick" (click)="openFicha(u.id)">
             <img src="../../assets/images/background_texture.jpg" class="card-img-top">
             <div class="card-body">
               <p class="card-title">{{u.object_designation}}</p>
@@ -20,121 +19,5 @@
           </div>
         </div>
       </div>
-    </div>
-    <ng-template #datashow>
-      <button type="button" (click)="openFicha(-1)" class="btn btn-outline-primary mb-3 col-md-2">Voltar</button>
-      <!--Mensagem de Sucesso acaba aqui-->
-      <ul class="nav nav-tabs" id="datasheet-tabs" role="tablist" #datasheetTabs>
-        <li class="nav-item">
-          <a class="nav-link active" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part1"
-            target="_self" role="tab" aria-selected="true" data-id="0">Objecto</a>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part2" role="tab"
-            aria-selected="false" data-id="1">Parte 2</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part3" role="tab"
-            aria-selected="false" data-id="2">Características</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part4" role="tab"
-            aria-selected="false" data-id="3">Local</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part5" role="tab"
-            aria-selected="false" data-id="4">Exames</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part6" role="tab"
-            aria-selected="false" data-id="5">Estado</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part7" role="tab"
-            aria-selected="false" data-id="6">Intervenções Anteriores</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part8" role="tab"
-            aria-selected="false" data-id="7">Proposta</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part9" role="tab"
-            aria-selected="false" data-id="8">Intervenção</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part10" role="tab"
-            aria-selected="false" data-id="9">Fontes</a>
-        </li>
-      </ul>
-      <div *ngIf='messageEditErr !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>{{messageEditErr}}</strong>
-        <button type="button" class="close" aria-label="Close" (click)='messageEditErr=""'>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <!--mensage de alerta acaba aqui-->
-
-      <div *ngIf='messageEditSuccess !== ""' class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>{{messageEditSuccess}}</strong>
-        <button type="button" class="close" aria-label="Close" (click)='messageEditSuccess=""'>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <!--Mensagem de Sucesso acaba aqui-->
-      <!-- Tab panes -->
-      <form (submit)="saveDatasheet($event)">
-        <div class="tab-content">
-          <div class="tab-pane active pt-2" id="datasheet_part1" role="tabpanel" aria-labelledby="home-tab">
-            <app-datasheet-page1></app-datasheet-page1>
-          </div>
-          <div class="tab-pane" id="datasheet_part2" role="tabpanel" aria-labelledby="profile-tab">
-            <app-datasheet-page2></app-datasheet-page2>
-          </div>
-          <div class="tab-pane" id="datasheet_part3" role="tabpanel" aria-labelledby="messages-tab">
-            <app-datasheet-page3></app-datasheet-page3>
-          </div>
-          <div class="tab-pane" id="datasheet_part4" role="tabpanel" aria-labelledby="settings-tab">
-            <app-datasheet-page4></app-datasheet-page4>
-          </div>
-          <div class="tab-pane" id="datasheet_part5" role="tabpanel" aria-labelledby="settings-tab">
-            <app-datasheet-page5></app-datasheet-page5>
-          </div>
-          <div class="tab-pane" id="datasheet_part6" role="tabpanel" aria-labelledby="settings-tab">
-            <app-datasheet-page6></app-datasheet-page6>
-          </div>
-          <div class="tab-pane" id="datasheet_part7" role="tabpanel" aria-labelledby="settings-tab">
-            <app-datasheet-page7></app-datasheet-page7>
-          </div>
-          <div class="tab-pane" id="datasheet_part8" role="tabpanel" aria-labelledby="settings-tab">
-            <app-datasheet-page8></app-datasheet-page8>
-          </div>
-          <div class="tab-pane" id="datasheet_part9" role="tabpanel" aria-labelledby="settings-tab">
-            <app-datasheet-page9></app-datasheet-page9>
-          </div>
-          <div class="tab-pane" id="datasheet_part10" role="tabpanel" aria-labelledby="settings-tab">
-            <app-datasheet-page10></app-datasheet-page10>
-          </div>
-          <div class="form-group" *ngIf="!isEditing; else editbuttons">
-            <div class="row">
-              <button type="button" (click)="setShowMode(false)"
-                class="btn btn-outline-success col-md-8 mr-md-2 ml-3 mr-3 mb-2 mb-md-0">Editar</button>
-              <button type="button" (click)="deleteDatasheet()"
-                class="btn btn-outline-danger col-md mr-3 ml-md-2 ml-3">Eliminar</button>
-            </div>
-          </div>
-          <ng-template #editbuttons>
-            <div class="form-group">
-              <div class="row">
-                <button type="submit"
-                  class="btn btn-outline-success col-md-8 mr-md-2 ml-3 mr-3 mb-2 mb-md-0">Guardar</button>
-                <button type="button" (click)="setShowMode(true)"
-                  class="btn btn-outline-primary col-md mr-3 ml-md-2 ml-3">Cancelar</button>
-              </div>
-            </div>
-          </ng-template>
-          <!--Fim de campos-->
-        </div>
-      </form>
-    </ng-template>
   </div>
 </div>

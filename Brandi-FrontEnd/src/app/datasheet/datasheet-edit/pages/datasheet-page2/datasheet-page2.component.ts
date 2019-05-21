@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DatasheetPage } from '../../datasheet.component';
+import { DatasheetPage } from '../../datasheet-edit.component';
 import { Datasheet, DatasheetService } from 'src/app/services/datasheet/datasheet.service';
 import { ContactsService, Contacto } from 'src/app/services/datasheet/contacts.service';
 
@@ -35,8 +35,7 @@ export class DatasheetPage2Component implements OnInit,DatasheetPage {
       this._contacts=contact_list;
     });
   }
-  constructor(private contactS :ContactsService) { 
-    this._datasheet = DatasheetService.createCleanDatasheet();
+  constructor(public contactS :ContactsService) { 
     this._isEditing=false;
     this._searchWord = "";
     this._contacts=[];

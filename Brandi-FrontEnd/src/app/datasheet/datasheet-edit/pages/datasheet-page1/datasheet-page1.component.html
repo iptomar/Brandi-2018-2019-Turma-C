@@ -21,21 +21,21 @@
 <div class="form-group">
   <label for="design">Designação</label>
   <input name="design" type="text" class="form-control" placeholder="Designação de objecto" [readonly]="!_isEditing"
-    value="{{_datasheet.object_designation}}" />
+    [value]="_datasheet?.object_designation" />
 </div>
 <div class="row">
   <div class="col-lg-4">
     <div class="form-group">
       <label for="CEARC">Numero de Processo CEARC</label>
       <input name="CEARC" type="text" class="form-control" placeholder="Numero de Processo CEARC"
-        [readonly]="!_isEditing" value="{{_datasheet.CEARC_process}}" />
+        [readonly]="!_isEditing" [value]="_datasheet?.CEARC_process" />
     </div>
   </div>
   <div class="col-lg-4">
     <div class="form-group">
       <label for="CEARCdate">Data do processo CEARC</label>
       <input name="CEARCdate" type="date" class="form-control" placeholder="Data de processo Cearc"
-        [readonly]="!_isEditing" value="{{_datasheet.CEARC_process_date|date: 'yyyy-MM-dd'}}" />
+        [readonly]="!_isEditing" [value]="_datasheet?.CEARC_process_date|date: 'yyyy-MM-dd'" />
     </div>
 
   </div>
@@ -43,7 +43,7 @@
     <div class="form-group">
       <label for="CEARCentrydate">Data de entrada do processo CEARC</label>
       <input name="CEARCentrydate" type="date" class="form-control" placeholder="Data de Entrada do processo CEARC"
-        [readonly]="!_isEditing" value="{{_datasheet.CEARC_entry_date|date:'yyyy-MM-dd'}}" />
+        [readonly]="!_isEditing" [value]="_datasheet?.CEARC_entry_date|date:'yyyy-MM-dd'" />
     </div>
   </div>
 </div>
@@ -52,47 +52,57 @@
     <div class="form-group">
       <label for="LCRM">Numero de Processo LCRM</label>
       <input name="LCRM" type="text" class="form-control" placeholder="Numero de Processo LCRM" [readonly]="!_isEditing"
-        value="{{_datasheet.LCRM_process}}" />
+        [value]="_datasheet?.LCRM_process" />
     </div>
   </div>
   <div class="col-lg-4">
     <div class="form-group">
       <label for="LCRMdate">Data de processo LCRM</label>
       <input name="LCRMdate" type="date" class="form-control" placeholder="Data do Processo LCRM"
-        [readonly]="!_isEditing" value="{{_datasheet.LCRM_process_date|date:'yyyy-MM-dd'}}" />
+        [readonly]="!_isEditing" [value]="_datasheet?.LCRM_process_date|date:'yyyy-MM-dd'" />
     </div>
   </div>
   <div class="col-lg-4">
     <div class="form-group">
       <label for="LCRMentrydate">Data de entrada do processo LCRM</label>
       <input name="LCRMentrydate" type="date" class="form-control" placeholder="Numero de Processo LCRM"
-        [readonly]="!_isEditing" value="{{_datasheet.LCRM_entry_date|date:'yyyy-MM-dd'}}" />
+        [readonly]="!_isEditing" [value]="_datasheet?.LCRM_entry_date|date:'yyyy-MM-dd'" />
     </div>
   </div>
 </div>
 <div class="form-group">
   <label for="coordinator">Coordenador</label>
   <select name="coordinator" class="form-control" [disabled]='!_isEditing'
-    value="{{users.userExists(_users,_datasheet.coordinator) ? _datasheet.coordinator : ''}}">
+    [value]="global.checkIfExistsId(_users,_datasheet?.coordinator) ? _datasheet?.coordinator : ''">
     <option value="" selected disabled hidden>Utilizador Eliminado</option>
-    <option *ngFor="let u of _users" value="{{u.id}}">{{u.full_name}}</option>
+    <option *ngFor="let u of _users" [value]="u.id">{{u.full_name}}</option>
   </select>
 </div>
 
 <div class="row">
   <div class="col-lg-6 form-group">
     <label for="SuperCathegory">Super-Categoria</label>
-    <select class="form-control" [disabled]='!_isEditing'></select>
+    <select class="form-control" name="supercategory" [disabled]='!_isEditing' (change)="resetSelect();super_category.next($event.target.value)">
+        <option value="" selected disabled hidden>Escolha uma super categoria</option>
+      <option *ngFor="let sc of super_categories$ | async" [value]="sc.id" [selected]="_datasheet?.super_category === sc.id">{{sc.supercategory}}</option>
+
+    </select>
   </div>
   <div class="col-lg-6 form-group">
     <label for="Cathegory">Categoria</label>
-    <select class="form-control" [disabled]='!_isEditing'></select>
+    <select class="form-control" name="category" [disabled]='!_isEditing' (change)="resetSelectCat();category.next($event.target.value)" #categorySelect>
+        <option value="" selected disabled hidden>Escolha uma categoria</option>
+      <option *ngFor="let c of categories" [value]="c.id" [selected]="_datasheet?.category === c.id">{{c.category}}</option>
+    </select>
   </div>
 </div>
 <div class="row">
   <div class="col-lg-6 form-group">
     <label for="subCathegory">Sub-Categoria</label>
-    <select class="form-control" [disabled]='!_isEditing'></select>
+    <select class="form-control" name="subcategory" [disabled]='!_isEditing' #subcategorySelect>
+        <option value="" selected disabled hidden>Escolha uma sub categoria</option>
+      <option *ngFor="let subc of sub_categories" [value]="subc.id" [selected]="_datasheet?.sub_category === subc.id">{{subc.subcategory}}</option>
+    </select>
   </div>
 </div>
 

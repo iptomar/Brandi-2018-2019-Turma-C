@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { DatasheetPage } from '../../datasheet.component';
+import { DatasheetPage } from '../../datasheet-edit.component';
 import { Datasheet, DatasheetService } from 'src/app/services/datasheet/datasheet.service';
 
 @Component({
-  selector: 'app-datasheet-page4',
-  templateUrl: './datasheet-page4.component.html',
-  styleUrls: ['./datasheet-page4.component.scss']
+  selector: 'app-datasheet-page3',
+  templateUrl: './datasheet-page3.component.html',
+  styleUrls: ['./datasheet-page3.component.scss']
 })
-export class DatasheetPage4Component implements OnInit {
+export class DatasheetPage3Component implements OnInit, DatasheetPage {
   _datasheet: Datasheet;
   _isEditing: boolean;
 
@@ -24,11 +24,9 @@ export class DatasheetPage4Component implements OnInit {
   }
 
   constructor() {
-    this._datasheet = DatasheetService.createCleanDatasheet();
     this._isEditing = false;
-   }
+  }
 
   ngOnInit() {
   }
-
 }
