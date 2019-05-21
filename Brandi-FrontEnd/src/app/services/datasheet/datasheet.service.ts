@@ -21,6 +21,76 @@ export interface Datasheet {
   last_modified_user_name: string;
   last_modified_date: Date;
   object_created_date: Date;
+  /*
+   dimensions:string;
+   other_dimensions:string;
+   typology: string;
+   location: string;
+   owner: any; //mudar para tipo de dados certo 
+   restore_owner: any; //mudar para tipo de dados certo 
+   pay_guy: any; //mudar para tipo de dados certo 
+   group_item: boolean;
+   group_description: string;
+   group_parts:string;
+   materials: string;
+   author_brand: string;
+   assembly_brand: string;
+   construct_brand: string;
+   pat_classification: string;
+   style: string;
+   time_period: string;
+   quality: string;
+   material_struct: string;
+   material_superficie: string;
+   material_accessory: string;
+   technique_struct: string;
+   technique_superficie: string;
+   technique_accessory: string;
+   brief_descript: string;
+   analogies: string;
+   conclusions: string;
+   authorship: string;
+   datation: string; //???
+   origin_place: string;
+   place_description: string;
+   anual_fc_temp: number;
+   anual_fc_humidity: number;
+   anual_fc_per_in: number;
+   anual_fc_per_end: number;
+   anual_qs_temp: number;
+   anual_qs_humidity: number;
+   anual_qs_per_in: number;
+   anual_qs_per_end: number;
+   rad_type_nat:string;
+   rad_ilum_nat: number;
+   rad_UV_nat_med:number;
+   rad_UV_nat_real:number;
+   rad_type_art:string;
+   rad_ilum_art: number;
+   rad_UV_nat_art:number;
+   rad_UV_nat_art:number;
+   polution_agent: string;
+   polution_origin: string;
+   polution_result: string;
+   observation2: string;
+   i_m_t_t_p: boolean;
+   i_i_e_o: boolean;
+   c_e_conserv: boolean;
+   i_p_a_b:boolean;
+   d_o_e_i_t_s_a: boolean;
+   e_p_m_e_i: boolean;
+   tab_interpret_results: string;
+   tab_conclusions: string;
+   det_fis_quim_mec_struct: string;
+   det_fis_quim_mec_superficie: string;
+   det_fis_quim_mec_accessory: string;
+   det_bio_struct: string;
+   det_bio_superficie: string;
+   det_bio_accessory: string;
+   det_bio_conclusion: string;
+   //fim da tab estado
+
+   */
 }
 
 @Injectable({
