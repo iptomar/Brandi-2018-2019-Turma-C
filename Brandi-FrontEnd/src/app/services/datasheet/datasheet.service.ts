@@ -21,30 +21,137 @@ export interface Datasheet {
   last_modified_user_name: string;
   last_modified_date: Date;
   object_created_date: Date;
+  super_category: number;
+  category: number;
+  sub_category: number;
+}
+
+
+
+export interface DatasheetList {
+  id: number;
+  object_designation: string;
+}
+
+
+export interface SuperCategories {
+  id: number;
+  supercategory: string;
+}
+
+export interface Categories {
+  id: number;
+  category: string;
+  id_super_category:number;
+}
+
+export interface SubCategories {
+  id: number;
+  subcategory: string;
+  id_category:number;
 }
 
 @Injectable({
   providedIn: "root"
 })
 export class DatasheetService {
+  public static DATA = "datasheet"; // caminho para lista de fichas tecnicas
   public static DATA_LIST = "datasheet/list"; // caminho para lista de fichas tecnicas
-  public static DATA_CREATE = "datasheet/createandedit";
+  public static DATA_CREATE = "datasheet/create";
+  public static DATA_EDIT = "datasheet/edit";
+
+  
+  public static SUPER_CATEGORIES = "datasheet/super_categories/list";
+  public static CATEGORIES = "datasheet/categories/list";
+  public static SUB_CATEGORIES = "datasheet/sub_categories/list";
   constructor(
     private http: HttpClient,
     private auth: AuthService,
     private datePipe: DatePipe
   ) {}
 
-  public getDatasheets(pesquisa: string): Observable<Datasheet[]> {
+
+  public getSuperCategories(pesquisa: string): Observable<SuperCategories[]> {
+    return this.http
+      .get(Global.HOST_PREFIX + DatasheetService.SUPER_CATEGORIES, {
+        params: new HttpParams().set("search", pesquisa)
+      })
+      .pipe(
+        map((data: ReceivedData) => {
+          let fichas: SuperCategories[] = [];
+          if (!data.error) {
+            fichas = data.res.super_categories;
+          } else if (data.error === 2) {
+            this.auth.forceLogout();
+          }
+          return fichas;
+        })
+      );
+  }
+
+  public getCategories(id_super_category:number, pesquisa: string): Observable<Categories[]> {
+    return this.http
+      .get(Global.HOST_PREFIX + DatasheetService.CATEGORIES, {
+        params: new HttpParams().set("search", pesquisa).set("super_category", id_super_category+"")
+      })
+      .pipe(
+        map((data: ReceivedData) => {
+          let fichas: Categories[] = [];
+          if (!data.error) {
+            fichas = data.res.categories;
+          } else if (data.error === 3) {
+            this.auth.forceLogout();
+          }
+          return fichas;
+        })
+      );
+  }
+
+  
+  public getSubCategories(id_category:number, pesquisa: string): Observable<SubCategories[]> {
+    return this.http
+      .get(Global.HOST_PREFIX + DatasheetService.SUB_CATEGORIES, {
+        params: new HttpParams().set("search", pesquisa).set("category", id_category+"")
+      })
+      .pipe(
+        map((data: ReceivedData) => {
+          let fichas: SubCategories[] = [];
+          if (!data.error) {
+            fichas = data.res.sub_categories;
+          } else if (data.error === 3) {
+            this.auth.forceLogout();
+          }
+          return fichas;
+        })
+      );
+  }
+
+  public getDatasheets(pesquisa: string): Observable<DatasheetList[]> {
     return this.http
       .get(Global.HOST_PREFIX + DatasheetService.DATA_LIST, {
         params: new HttpParams().set("search", pesquisa)
       })
       .pipe(
         map((data: ReceivedData) => {
-          let fichas: Datasheet[] = [];
+          let fichas: DatasheetList[] = [];
           if (!data.error) {
-            data.res.datasheets.forEach(element => {
+            fichas = data.res.datasheets;
+          } else if (data.error === 2) {
+            this.auth.forceLogout();
+          }
+          return fichas;
+        })
+      );
+  }
+
+  public getDatasheet(id: number): Observable<Datasheet> {
+    return this.http
+      .get(Global.HOST_PREFIX + DatasheetService.DATA + "/" + id)
+      .pipe(
+        map((data: ReceivedData) => {
+          let ficha: Datasheet = null;
+          if (!data.error) {
+            let element = data.res.datasheet;
               element.CEARC_process_date = Global.stringToDate(
                 element.CEARC_process_date
               );
@@ -63,12 +170,11 @@ export class DatasheetService {
               element.object_created_date = Global.stringToDate(
                 element.object_created_date
               );
-            });
-            fichas = data.res.datasheets;
+            ficha = data.res.datasheet;
           } else if (data.error === 2) {
             this.auth.forceLogout();
           }
-          return fichas;
+          return ficha;
         })
       );
   }
@@ -98,22 +204,37 @@ export class DatasheetService {
         "yyyy-MM-dd"
       ),
       coordinatorid: data.coordinator,
-      idPage: idPage
+      super_category:data.super_category,
+      category:data.category,
+      sub_category:data.sub_category,
+
     };
     if (data.id > -1) {
       dados.idobject = data.id;
+      // this.datePipe.transform(user.birthday,'yyyy-MM-dd')
+      return this.http
+        .post(Global.HOST_PREFIX + DatasheetService.DATA_EDIT + "/" + data.id + "/page/" + (idPage+1), dados)
+        .pipe(
+          map((result: ReceivedData) => {
+            if (result.error === 2) {
+              this.auth.forceLogout();
+            }
+            return result;
+          })
+        );
+    }else {
+      // this.datePipe.transform(user.birthday,'yyyy-MM-dd')
+      return this.http
+        .post(Global.HOST_PREFIX + DatasheetService.DATA_CREATE, dados)
+        .pipe(
+          map((result: ReceivedData) => {
+            if (result.error === 3) {
+              this.auth.forceLogout();
+            }
+            return result;
+          })
+        );
     }
-    // this.datePipe.transform(user.birthday,'yyyy-MM-dd')
-    return this.http
-      .post(Global.HOST_PREFIX + DatasheetService.DATA_CREATE, dados)
-      .pipe(
-        map((result: ReceivedData) => {
-          if (result.error === 3) {
-            this.auth.forceLogout();
-          }
-          return result;
-        })
-      );
   }
 
   public static createCleanDatasheet(): Datasheet {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DatasheetPage } from '../../datasheet.component';
+import { DatasheetPage } from '../../datasheet-edit.component';
 import { Datasheet, DatasheetService } from 'src/app/services/datasheet/datasheet.service';
+import { ContactsService, Contacto } from 'src/app/services/datasheet/contacts.service';
 
 @Component({
   selector: 'app-datasheet-page2',
@@ -10,6 +11,8 @@ import { Datasheet, DatasheetService } from 'src/app/services/datasheet/datashee
 export class DatasheetPage2Component implements OnInit,DatasheetPage {
   _datasheet: Datasheet;
   _isEditing: boolean;
+  _searchWord: string;
+  _contacts: Contacto[];
 
   getForm(event: any): Datasheet {
     console.log("page2");
@@ -22,10 +25,20 @@ export class DatasheetPage2Component implements OnInit,DatasheetPage {
   isEditing(isEditing: boolean): void {
     this._isEditing=isEditing;
   }
-
-  constructor() { 
-    this._datasheet = DatasheetService.createCleanDatasheet();
+  public searchContact(event) : void {
+    if(event != null) {
+      event.preventDefault();
+      if(event.target.searchBox.value === this._searchWord) return;
+      this._searchWord = event.target.searchBox.value;
+    }
+    this.contactS.getContacts(this._searchWord).subscribe((contact_list) => {
+      this._contacts=contact_list;
+    });
+  }
+  constructor(public contactS :ContactsService) { 
     this._isEditing=false;
+    this._searchWord = "";
+    this._contacts=[];
   }
 
   ngOnInit() {

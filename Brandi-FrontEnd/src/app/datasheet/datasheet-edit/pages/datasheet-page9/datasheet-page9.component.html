@@ -1,0 +1,44 @@
+<h5 class="mt-2 mb-4">
+  Intervenção Realizada
+</h5>
+
+<div class="row">
+  <div class="form-group col-lg-7">
+    <label for="interv_support">Estrutura</label>
+    <textarea class="form-control" id="interv_support" rows="3" [readonly]="!_isEditing"></textarea>
+  </div>
+  <div class="form-group col-lg-5">
+    <label for="int_support_resources">Recursos (Materiais | Técnicos | Tecnológicos)
+    </label>
+    <textarea class="form-control" id="int_support_resources" rows="3" [readonly]="!_isEditing"></textarea>
+  </div>
+</div>
+<div class="row">
+  <div class="form-group col-lg-7">
+    <label for="interv_surface">Superfície</label>
+    <textarea class="form-control" id="interv_surface" rows="3" [readonly]="!_isEditing"></textarea>
+  </div>
+  <div class="form-group col-lg-5">
+    <label for="int_surface_resources">Recursos (Materiais | Técnicos | Tecnológicos)
+    </label>
+    <textarea class="form-control" id="int_surface_resources" rows="3" [readonly]="!_isEditing"></textarea>
+  </div>
+</div>
+<div class="row">
+  <div class="form-group col-lg-7">
+    <label for="interv_elements">Elementos Acessórios</label>
+    <textarea class="form-control" id="interv_elements" rows="3" [readonly]="!_isEditing"></textarea>
+  </div>
+  <div class="form-group col-lg-5">
+    <label for="int_elements_resources">Recursos (Materiais | Técnicos | Tecnológicos)
+    </label>
+    <textarea class="form-control" id="int_elements_resources" rows="3" [readonly]="!_isEditing"></textarea>
+  </div>
+</div>
+<br />
+<div class="form-group row">
+  <label for="interv_observations" class="col-lg-2 col-form-label">Observações | Conclusões</label>
+  <div class="col-lg-10">
+    <textarea class="form-control" id="interv_observations" rows="3" [readonly]="!_isEditing"></textarea>
+  </div>
+</div>

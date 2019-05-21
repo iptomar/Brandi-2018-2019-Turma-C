@@ -56,5 +56,12 @@ export class Global {
         });
     }
 
+    
+  public checkIfExistsId(data : any[], id : number) : boolean{
+      if(data == null) return false;
+    for(let i = 0; i < data.length; i++) if(data[i].id === id) return true;
+    return false;
+  }
+
     constructor(){}
 }
