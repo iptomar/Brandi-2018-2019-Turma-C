@@ -29,6 +29,25 @@ async function listSuperCategories(db, search) {
     return result;
 }
 
+/**
+ * lista super categorias
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da datasheet
+ * @returns {JSON} {error: <0 se não ocorrer erro, 1 se ocorrer erro>, datasheet:<objeto>}
+ */
+async function getDatasheet(db, id) {
+    let result = { error: 1, datasheet: null };
+    //get objeto
+    let resultDb = await db.doQuery(q_DataSheet.GET_OBJECT, [id]);
+    //se não ocorreu nenhum erro
+    if (!resultDb.error && resultDb.res.length > 0) {
+        result.error = 0;
+        //devolvemos a ficha tecnica
+        result.datasheet = resultDb.res[0];
+    }
+    return result;
+}
+
 
 /**
  * lista categorias de uma super categoria
@@ -811,4 +830,24 @@ exports.appendToExpress = function (app, _db, _prefix) {
         res.json(result);
     });
 
+
+    app.get(prefix + ROUTE_DATASHEET_PREFIX + '/:id', async function (req, res) {
+        let result = { error: 2, message: "Por favor efectue autenticação", res: { datasheet: [] } };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //caso ocorra algum tipo de erro
+            result.error = 1;
+            result.message = "Ocorreu um erro na aquisição do objeto, por favor tente novamente";
+            //lista fichas técnicas
+            let resultDb = await getDatasheet(db, req.params.id);
+            //verifica se ocorreu algum erro
+            if (!resultDb.error) {
+                result.error = 0;
+                result.message = "Objeto";
+                result.res.datasheet = resultDb.datasheet;
+            }
+        }
+        res.json(result);
+    });
 };

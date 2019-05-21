@@ -7,9 +7,11 @@ exports.UPDATE_OBJECT_P1 = "UPDATE " + infoDB.TBL_OBJECT + " SET object_designat
 
 
 
+//Query DE listagem DE OBJETOS
+exports.GET_OBJECT = "SELECT id,object_designation, CEARC_process, CEARC_process_date, CEARC_entry_date, LCRM_process, LCRM_process_date, LCRM_entry_date, coordinator, last_modified_user, last_modified_date,object_created_date, super_category, category, sub_category FROM " + infoDB.TBL_OBJECT + " WHERE id = ? limit 1";
 
 //Query DE listagem DE OBJETOS
-exports.LIST_OBJECT = "SELECT id,object_designation, CEARC_process, CEARC_process_date, CEARC_entry_date, LCRM_process, LCRM_process_date, LCRM_entry_date, coordinator, last_modified_user, last_modified_date,object_created_date, super_category, category, sub_category FROM " + infoDB.TBL_OBJECT + " WHERE object_designation like ?";
+exports.LIST_OBJECT = "SELECT id,object_designation FROM " + infoDB.TBL_OBJECT + " WHERE object_designation like ?";
 //Query DE listagem DE SUPER CATEGORIAS
 exports.LIST_SUPER_CATEGORY = "SELECT id,supercategory FROM " + infoDB.TBL_SUPERCATEGORIES + " WHERE supercategory like ?";
 //Query DE listagem DE CATEGORIAS
