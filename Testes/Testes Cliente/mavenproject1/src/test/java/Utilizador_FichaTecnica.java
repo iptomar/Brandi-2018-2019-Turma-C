@@ -57,15 +57,20 @@ public class Utilizador_FichaTecnica {
        driver.findElement(By.name("LCRM")).sendKeys("20052018");
        driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-create/div/div/form/div[3]/div[2]/div/input")).sendKeys("22052018");
       driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-create/div/div/form/div[3]/div[3]/div/input")).sendKeys("24052018");
-       driver.findElement(By.name("coordinator")).click();
-            Thread.sleep(1000);
-        Select select = new Select(driver.findElement(By.name("supercategory")));
+       
+      Select coord = new Select (driver.findElement(By.name("coordinator")));
+       coord.selectByValue("7");
+         Thread.sleep(1000);
+        
+         Select select = new Select(driver.findElement(By.name("supercategory")));
                  select.selectByValue("1"); 
                  Thread.sleep(1000);
-          Select categ = new Select(driver.findElement(By.name("category")));
+         
+                 Select categ = new Select(driver.findElement(By.name("category")));
            categ.selectByValue("8"); 
           Thread.sleep(1000);
-         Select sub = new Select(driver.findElement(By.name("subcategory")));
+         
+          Select sub = new Select(driver.findElement(By.name("subcategory")));
           sub.selectByValue("13"); 
           Thread.sleep(1000);
        driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-create/div/div/form/div[7]/button")).click();
