@@ -1,26 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-import { DatasheetService, Datasheet } from 'src/app/services/datasheet/datasheet.service';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { DatasheetService, Datasheet, Categories, SuperCategories, SubCategories } from 'src/app/services/datasheet/datasheet.service';
 import { Global } from 'src/app/Global';
 import { User } from 'src/app/services/auth/auth.service';
 import { UsersService } from 'src/app/services/users/users.service';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-datasheet-create',
   templateUrl: './datasheet-create.component.html',
   styleUrls: ['./datasheet-create.component.scss']
 })
-export class DatasheetCreateComponent implements OnInit {
-
+export class DatasheetCreateComponent implements OnInit, OnDestroy {
+  @ViewChild("categorySelect") categorySelect : ElementRef;
+  @ViewChild("subcategorySelect") subcategorySelect : ElementRef;
+  
   public messageEditErr : string;
   public messageEditSuccess : string;
   public _users : User[];
-  constructor(public _datasheet : DatasheetService, private users : UsersService) {
+  public id_super_category: BehaviorSubject<number>;
+  public id_category: BehaviorSubject<number>;
+  public super_categories$ : Observable<SuperCategories[]>;
+  public categories : Categories[];
+  public sub_categories : SubCategories[];
+  public id_sub_category$  : Subscription;
+  public id_category$  : Subscription;
+  constructor(public _datasheet : DatasheetService, private users : UsersService, private router : Router, public datasheetService : DatasheetService) {
     
     this.messageEditErr ="";
     this.messageEditSuccess ="";
     this.users.getUsers("").subscribe((users_list) => {
       this._users=users_list;
     });
+    this.id_super_category= new BehaviorSubject<number>(0);
+    this.id_category= new BehaviorSubject<number>(0);
    }
    public submitData(event){
      
@@ -34,27 +48,39 @@ export class DatasheetCreateComponent implements OnInit {
       data.LCRM_process_date=event.target.LCRMdate.value;
       data.LCRM_entry_date= event.target.LCRMentrydate.value;
       data.coordinator= event.target.coordinator.value;
+      data.super_category=event.target.supercategory.value;
+      data.category=event.target.category.value;
+      data.sub_category=event.target.subcategory.value;
       this.messageEditErr ="";
       this.messageEditSuccess ="";
       window.scroll(0,0);
       this._datasheet.submitDatasheets(data,0).subscribe((result) => {
         if(!result.error) {
           this.messageEditSuccess = result.message;
-          // this._datasheetlist[this._onEdit]=u;//atualizamos os dados para o cliente
-          event.target.design.value="";
-          event.target.CEARC.value="";
-          event.target.CEARCdate.value="";
-          event.target.CEARCentrydate.value="";
-          event.target.LCRM.value="";
-          event.target.LCRMdate.value="";
-          event.target.LCRMentrydate.value="";
-          event.target.coordinator.value="";
+          setTimeout(()=> {
+            this.router.navigate(["datasheet/edit",result.res.id]);
+          },3000);
         }else this.messageEditErr = result.message;
       });
     
    }
-
-  ngOnInit() {
+   ngOnInit() {
+    this.super_categories$ = this.datasheetService.getSuperCategories("");
+    this.id_category$ = this.id_super_category.asObservable().subscribe((id_super:number) =>  this.datasheetService.getCategories(id_super,"").subscribe((data : Categories[]) => {
+      this.categories = data;
+      this.sub_categories = [];
+      this.categorySelect.nativeElement.value="";
+      this.subcategorySelect.nativeElement.value="";
+    }, take(1)
+    ));
+    this.id_sub_category$ = this.id_category.asObservable().subscribe((id_cat:number) => this.datasheetService.getSubCategories(id_cat,"").subscribe((data : SubCategories[]) => {
+      this.sub_categories = data;
+      this.subcategorySelect.nativeElement.value="";
+    }, take(1)
+    ));
   }
-
+  ngOnDestroy(): void {
+    this.id_category$.unsubscribe();
+    this.id_sub_category$.unsubscribe();
+  }
 }

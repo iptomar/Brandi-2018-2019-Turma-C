@@ -21,129 +21,137 @@ export interface Datasheet {
   last_modified_user_name: string;
   last_modified_date: Date;
   object_created_date: Date;
-  /*
-   dimensions:string;
-   other_dimensions:string;
-   typology: string;
-   location: string;
-   owner: any; //mudar para tipo de dados certo 
-   restore_owner: any; //mudar para tipo de dados certo 
-   pay_guy: any; //mudar para tipo de dados certo 
-   group_item: boolean;
-   group_description: string;
-   group_parts:string;
-   materials: string;
-   author_brand: string;
-   assembly_brand: string;
-   construct_brand: string;
-   pat_classification: string;
-   style: string;
-   time_period: string;
-   quality: string;
-   material_struct: string;
-   material_superficie: string;
-   material_accessory: string;
-   technique_struct: string;
-   technique_superficie: string;
-   technique_accessory: string;
-   brief_descript: string;
-   analogies: string;
-   conclusions: string;
-   authorship: string;
-   datation: string; //???
-   origin_place: string;
-   place_description: string;
-   anual_fc_temp: number;
-   anual_fc_humidity: number;
-   anual_fc_per_in: number;
-   anual_fc_per_end: number;
-   anual_qs_temp: number;
-   anual_qs_humidity: number;
-   anual_qs_per_in: number;
-   anual_qs_per_end: number;
-   rad_type_nat:string;
-   rad_ilum_nat: number;
-   rad_UV_nat_med:number;
-   rad_UV_nat_real:number;
-   rad_type_art:string;
-   rad_ilum_art: number;
-   rad_UV_nat_art:number;
-   rad_UV_nat_art:number;
-   polution_agent: string;
-   polution_origin: string;
-   polution_result: string;
-   observation2: string;
-   i_m_t_t_p: boolean;
-   i_i_e_o: boolean;
-   c_e_conserv: boolean;
-   i_p_a_b:boolean;
-   d_o_e_i_t_s_a: boolean;
-   e_p_m_e_i: boolean;
-   tab_interpret_results: string;
-   tab_conclusions: string;
-   det_fis_quim_mec_struct: string;
-   det_fis_quim_mec_superficie: string;
-   det_fis_quim_mec_accessory: string;
-   det_bio_struct: string;
-   det_bio_superficie: string;
-   det_bio_accessory: string;
-   det_bio_conclusion: string;
-   //fim da tab estado
-   int_anteriores_struct: string;
-   int_anteriores_superficie: string;
-   int_anteriores_accessory: string;
-   int_anteriores_conclusion: string;
-   prop_owner_int_preserv: boolean;
-   prop_owner_int_conserv: boolean;
-   prop_owner_int_restore: boolean;
-   prop_owner_int_specifics: string;
-   prop_interv_preserv: boolean;
-   prop_interv_conserv: boolean;
-   prop_interv_restore: boolean;
-   prop_met_interv_struct: string;
-   prop_met_interv_resources_struct: string;
-   prop_met_interv_superficie: string;
-   prop_met_interv_resources_superficie: string;
-   prop_met_interv_accessories: string;
-   prop_met_interv_resources_accessories: string;
-   prop_met_conclusions: string;
-   prop_met_interloc_ipt: any; //substituir por tipo de dados correto
-   prop_met_interloc_client: any; //substituir por tipo de dados correto
-   prop_met_date_prop: Date; //nao esquecer de tratar com a funcao do Global para datas
-   prop_met_date_accepted: Date; //nao esquecer de tratar com a funcao do Global para datas
-   interv_struct: string;
-   interv_superficie: string;
-   interv_accessories: string;
-   interv_struct_resoures: string;
-   interv_superficie_resoures: string;
-   interv_accessories_resoures: string;
-   interv_concusions: string;
-   sources: any; //check if right type
-   */
+  super_category: number;
+  category: number;
+  sub_category: number;
+}
+
+
+
+export interface DatasheetList {
+  id: number;
+  object_designation: string;
+}
+
+
+export interface SuperCategories {
+  id: number;
+  supercategory: string;
+}
+
+export interface Categories {
+  id: number;
+  category: string;
+  id_super_category:number;
+}
+
+export interface SubCategories {
+  id: number;
+  subcategory: string;
+  id_category:number;
 }
 
 @Injectable({
   providedIn: "root"
 })
 export class DatasheetService {
+  public static DATA = "datasheet"; // caminho para lista de fichas tecnicas
   public static DATA_LIST = "datasheet/list"; // caminho para lista de fichas tecnicas
-  public static DATA_CREATE = "datasheet/createandedit";
+  public static DATA_CREATE = "datasheet/create";
+  public static DATA_EDIT = "datasheet/edit";
+
+
+  public static SUPER_CATEGORIES = "datasheet/super_categories/list";
+  public static CATEGORIES = "datasheet/categories/list";
+  public static SUB_CATEGORIES = "datasheet/sub_categories/list";
   constructor(
     private http: HttpClient,
     private auth: AuthService,
     private datePipe: DatePipe
   ) {}
 
-  public getDatasheets(pesquisa: string): Observable<Datasheet[]> {
+
+  public getSuperCategories(pesquisa: string): Observable<SuperCategories[]> {
+    return this.http
+      .get(Global.HOST_PREFIX + DatasheetService.SUPER_CATEGORIES, {
+        params: new HttpParams().set("search", pesquisa)
+      })
+      .pipe(
+        map((data: ReceivedData) => {
+          let fichas: SuperCategories[] = [];
+          if (!data.error) {
+            fichas = data.res.super_categories;
+          } else if (data.error === 2) {
+            this.auth.forceLogout();
+          }
+          return fichas;
+        })
+      );
+  }
+
+  public getCategories(id_super_category:number, pesquisa: string): Observable<Categories[]> {
+    return this.http
+      .get(Global.HOST_PREFIX + DatasheetService.CATEGORIES, {
+        params: new HttpParams().set("search", pesquisa).set("super_category", id_super_category+"")
+      })
+      .pipe(
+        map((data: ReceivedData) => {
+          let fichas: Categories[] = [];
+          if (!data.error) {
+            fichas = data.res.categories;
+          } else if (data.error === 3) {
+            this.auth.forceLogout();
+          }
+          return fichas;
+        })
+      );
+  }
+
+
+  public getSubCategories(id_category:number, pesquisa: string): Observable<SubCategories[]> {
+    return this.http
+      .get(Global.HOST_PREFIX + DatasheetService.SUB_CATEGORIES, {
+        params: new HttpParams().set("search", pesquisa).set("category", id_category+"")
+      })
+      .pipe(
+        map((data: ReceivedData) => {
+          let fichas: SubCategories[] = [];
+          if (!data.error) {
+            fichas = data.res.sub_categories;
+          } else if (data.error === 3) {
+            this.auth.forceLogout();
+          }
+          return fichas;
+        })
+      );
+  }
+
+  public getDatasheets(pesquisa: string): Observable<DatasheetList[]> {
     return this.http
       .get(Global.HOST_PREFIX + DatasheetService.DATA_LIST, {
         params: new HttpParams().set("search", pesquisa)
       })
       .pipe(
         map((data: ReceivedData) => {
-          let fichas: Datasheet[] = [];
+          let fichas: DatasheetList[] = [];
           if (!data.error) {
-            data.res.datasheets.forEach(element => {
+            fichas = data.res.datasheets;
+          } else if (data.error === 2) {
+            this.auth.forceLogout();
+          }
+          return fichas;
+        })
+      );
+  }
+
+  public getDatasheet(id: number): Observable<Datasheet> {
+    return this.http
+      .get(Global.HOST_PREFIX + DatasheetService.DATA + "/" + id)
+      .pipe(
+        map((data: ReceivedData) => {
+          let ficha: Datasheet = null;
+          if (!data.error) {
+            let element = data.res.datasheet;
               element.CEARC_process_date = Global.stringToDate(
                 element.CEARC_process_date
               );
@@ -162,17 +170,11 @@ export class DatasheetService {
               element.object_created_date = Global.stringToDate(
                 element.object_created_date
               );
-
-              /**
-                element.prop_met_date_prop = Global.stringToDate(element.prop_met_date_prop);
-                element.prop_met_date_accepted = Global.stringToDate(element.prop_met_date_accepted);
-               */
-            });
-            fichas = data.res.datasheets;
+            ficha = data.res.datasheet;
           } else if (data.error === 2) {
             this.auth.forceLogout();
           }
-          return fichas;
+          return ficha;
         })
       );
   }
@@ -180,7 +182,7 @@ export class DatasheetService {
     data: Datasheet,
     idPage: number
   ): Observable<ReceivedData> {
-    
+
     let dados: any = {
       designation: data.object_designation,
       cearcproc: data.CEARC_process,
@@ -210,23 +212,37 @@ export class DatasheetService {
         "yyyy-MM-dd"
       )*/,
       coordinatorid: data.coordinator,
-      idPage: idPage
-      
+      super_category:data.super_category,
+      category:data.category,
+      sub_category:data.sub_category,
+
     };
     if (data.id > -1) {
       dados.idobject = data.id;
+      // this.datePipe.transform(user.birthday,'yyyy-MM-dd')
+      return this.http
+        .post(Global.HOST_PREFIX + DatasheetService.DATA_EDIT + "/" + data.id + "/page/" + (idPage+1), dados)
+        .pipe(
+          map((result: ReceivedData) => {
+            if (result.error === 2) {
+              this.auth.forceLogout();
+            }
+            return result;
+          })
+        );
+    }else {
+      // this.datePipe.transform(user.birthday,'yyyy-MM-dd')
+      return this.http
+        .post(Global.HOST_PREFIX + DatasheetService.DATA_CREATE, dados)
+        .pipe(
+          map((result: ReceivedData) => {
+            if (result.error === 3) {
+              this.auth.forceLogout();
+            }
+            return result;
+          })
+        );
     }
-    // this.datePipe.transform(user.birthday,'yyyy-MM-dd')
-    return this.http
-      .post(Global.HOST_PREFIX + DatasheetService.DATA_CREATE, dados)
-      .pipe(
-        map((result: ReceivedData) => {
-          if (result.error === 3) {
-            this.auth.forceLogout();
-          }
-          return result;
-        })
-      );
   }
 
   public static createCleanDatasheet(): Datasheet {
@@ -251,9 +267,9 @@ export class DatasheetService {
    other_dimensions: "";
    typology: "";
    location: "";
-   owner: any;              //mudar para tipo de dados certo 
-   restore_owner: any;      //mudar para tipo de dados certo 
-   pay_guy: any;            //mudar para tipo de dados certo 
+   owner: any;              //mudar para tipo de dados certo
+   restore_owner: any;      //mudar para tipo de dados certo
+   pay_guy: any;            //mudar para tipo de dados certo
    group_item: false;
    group_description: "";
    group_parts:"";

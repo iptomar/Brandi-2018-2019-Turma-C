@@ -71,6 +71,33 @@
                 <option *ngFor="let u of _users" value="{{u.id}}">{{u.full_name}}</option>
               </select>
             </div>
+            
+<div class="row">
+    <div class="col-lg-6 form-group">
+      <label for="SuperCathegory">Super-Categoria</label>
+      <select class="form-control" name="supercategory" (change)="id_super_category.next($event.target.value)">
+        <option value="" selected disabled hidden>Escolha uma super categoria</option>
+        <option *ngFor="let sc of super_categories$ | async" [value]="sc.id">{{sc.supercategory}}</option>
+  
+      </select>
+    </div>
+    <div class="col-lg-6 form-group">
+      <label for="Cathegory">Categoria</label>
+      <select class="form-control" name="category" (change)="id_category.next($event.target.value)" #categorySelect>
+        <option value="" selected disabled hidden>Escolha uma categoria</option>
+        <option *ngFor="let c of categories" [value]="c.id">{{c.category}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 form-group">
+      <label for="subCathegory">Sub-Categoria</label>
+      <select class="form-control" name="subcategory" #subcategorySelect>
+          <option value="" selected disabled hidden>Escolha uma sub categoria</option>
+        <option *ngFor="let subc of sub_categories" [value]="subc.id">{{subc.subcategory}}</option>
+      </select>
+    </div>
+  </div>
 
           <div class="form-group">
               <button type="submit" class="btn btn-outline-success form-control">Criar <i
