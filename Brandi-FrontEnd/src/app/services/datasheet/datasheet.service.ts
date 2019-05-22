@@ -162,6 +162,11 @@ export class DatasheetService {
               element.object_created_date = Global.stringToDate(
                 element.object_created_date
               );
+
+              /**
+                element.prop_met_date_prop = Global.stringToDate(element.prop_met_date_prop);
+                element.prop_met_date_accepted = Global.stringToDate(element.prop_met_date_accepted);
+               */
             });
             fichas = data.res.datasheets;
           } else if (data.error === 2) {
@@ -195,9 +200,18 @@ export class DatasheetService {
       lcrmentrancedata: this.datePipe.transform(
         data.LCRM_entry_date,
         "yyyy-MM-dd"
+      )/*,
+      prop_met_date_prop: this.datePipe.transform(
+        data.prop_met_date_prop,
+        "yyyy-MM-dd"
       ),
+      prop_met_date_accepted: this.datePipe.transform(
+        data.prop_met_date_accepted,
+        "yyyy-MM-dd"
+      )*/,
       coordinatorid: data.coordinator,
       idPage: idPage
+      
     };
     if (data.id > -1) {
       dados.idobject = data.id;
@@ -231,6 +245,106 @@ export class DatasheetService {
       last_modified_user_name: "",
       object_created_date: new Date(),
       object_designation: ""
+      /*
+
+   dimensions:"";
+   other_dimensions: "";
+   typology: "";
+   location: "";
+   owner: any;              //mudar para tipo de dados certo 
+   restore_owner: any;      //mudar para tipo de dados certo 
+   pay_guy: any;            //mudar para tipo de dados certo 
+   group_item: false;
+   group_description: "";
+   group_parts:"";
+   materials: "";
+   author_brand: "";
+   assembly_brand: "";
+   construct_brand: "";
+   pat_classification: "";
+   style: "";
+   time_period: "";
+   quality: "";
+   material_struct: "";
+   material_superficie: "";
+   material_accessory: "";
+   technique_struct: "";
+   technique_superficie: "";
+   technique_accessory: "";
+   brief_descript: "";
+   analogies: "";
+   conclusions: "";
+   authorship: "";
+   datation: ""; //???
+   origin_place: "";
+   place_description: "";
+   anual_fc_temp: number;
+   anual_fc_humidity: number;
+   anual_fc_per_in: number;
+   anual_fc_per_end: number;
+   anual_qs_temp: number;
+   anual_qs_humidity: number;
+   anual_qs_per_in: number;
+   anual_qs_per_end: number;
+   rad_type_nat:"";
+   rad_ilum_nat: number;
+   rad_UV_nat_med:number;
+   rad_UV_nat_real:number;
+   rad_type_art:"";
+   rad_ilum_art: number;
+   rad_UV_nat_art:number;
+   rad_UV_nat_art:number;
+   polution_agent: "";
+   polution_origin: "";
+   polution_result: "";
+   observation2: "";
+   i_m_t_t_p: false;
+   i_i_e_o: false;
+   c_e_conserv: false;
+   i_p_a_b:false;
+   d_o_e_i_t_s_a: false;
+   e_p_m_e_i: false;
+   tab_interpret_results: "";
+   tab_conclusions: "";
+   det_fis_quim_mec_struct: "";
+   det_fis_quim_mec_superficie: "";
+   det_fis_quim_mec_accessory: "";
+   det_bio_struct: "";
+   det_bio_superficie: "";
+   det_bio_accessory: "";
+   det_bio_conclusion: "";
+   //fim da tab estado
+   int_anteriores_struct: "";
+   int_anteriores_superficie: "";
+   int_anteriores_accessory: "";
+   int_anteriores_conclusion: "";
+   prop_owner_int_preserv: false;
+   prop_owner_int_conserv: false;
+   prop_owner_int_restore: false;
+   prop_owner_int_specifics: "";
+   prop_interv_preserv: false;
+   prop_interv_conserv: false;
+   prop_interv_restore: false;
+   prop_met_interv_struct: "";
+   prop_met_interv_resources_struct: "";
+   prop_met_interv_superficie: "";
+   prop_met_interv_resources_superficie: "";
+   prop_met_interv_accessories: "";
+   prop_met_interv_resources_accessories: "";
+   prop_met_conclusions: "";
+   prop_met_interloc_ipt: any;          //substituir por tipo de dados correto
+   prop_met_interloc_client: any;      //substituir por tipo de dados correto
+   prop_met_date_prop: new Date();     //nao esquecer de tratar com a funcao do Global para datas
+   prop_met_date_accepted: new Date(); //nao esquecer de tratar com a funcao do Global para datas
+   interv_struct: "";
+   interv_superficie: "";
+   interv_accessories: "";
+   interv_struct_resoures: "";
+   interv_superficie_resoures: "";
+   interv_accessories_resoures: "";
+   interv_concusions: "";
+   sources: any;                      //check if right type
+   */
     };
   }
 }
