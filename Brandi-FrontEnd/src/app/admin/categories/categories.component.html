@@ -22,12 +22,13 @@
         <form class="row ml-0 mr-0" (submit)="newSuperCat($event)">
           <input class="list-group-item list-group-item-action col-md-10" name="supercat"
             placeholder="nova super categoria" [disabled]="editing" />
-          <button type="submit" class="btn btn-outline-success rounded-0 col-md-2" [disabled]="editing"><i class="fa fa-save"></i></button>
+          <button type="submit" class="btn btn-outline-success rounded-0 col-md-2" [disabled]="editing"><i
+              class="fa fa-save"></i></button>
+        </form>
+        <form class="list-group-item list-group-item-action" (submit)="searchSuperCategory($event)">
+          <input type="text" name="searchSuperCat" class="form-control" placeholder="pesquisar super categoria" [disabled]="editing" />
         </form>
         <div *ngIf="superCat.length > 0">
-          <form class="list-group-item list-group-item-action" (submit)="searchSuperCategory($event)">
-            <input type="text" name="searchSuperCat" class="form-control" placeholder="pesquisar super categoria" />
-          </form>
           <form class="row ml-0 mr-0" *ngFor="let sc of superCat; let i = index" (submit)="changeSuperCat($event, i)">
             <div *ngIf="!superCatEdit[i]; then thenSuperCat else elseSuperCat"></div>
             <ng-template #thenSuperCat>
@@ -57,14 +58,19 @@
           <ng-template #noCategories>Não exitem Categorias</ng-template>
           <ng-template #categories>Categorias</ng-template>
         </div>
-        <form class="row ml-0 mr-0" (submit)="newCat($event)">
-          <input class="list-group-item list-group-item-action col-md-10" name="cat" placeholder="nova categoria" [disabled]="editing" />
-          <button type="submit" class="btn btn-outline-success rounded-0 col-md-2" [disabled]="editing"><i class="fa fa-save"></i></button>
-        </form>
-        <div *ngIf="cat.length > 0">
-          <form class="list-group-item list-group-item-action" (submit)="searchCategory($event)">
-            <input type="text" name="searchCat" class="form-control" [value]="lastSearchCat" placeholder="pesquisar categoria" />
+        <ng-template [ngIf]="selectedSuperCat > -1">
+          <form class="row ml-0 mr-0" (submit)="newCat($event)">
+            <input class="list-group-item list-group-item-action col-md-10" name="cat" placeholder="nova categoria"
+              [disabled]="editing" />
+            <button type="submit" class="btn btn-outline-success rounded-0 col-md-2" [disabled]="editing"><i
+                class="fa fa-save"></i></button>
           </form>
+          <form class="list-group-item list-group-item-action" (submit)="searchCategory($event)">
+            <input type="text" name="searchCat" class="form-control" [value]="lastSearchCat"
+              placeholder="pesquisar categoria" [disabled]="editing" />
+          </form>
+        </ng-template>
+        <div *ngIf="cat.length > 0">
           <form class="row ml-0 mr-0" *ngFor="let c of cat; let i = index" (submit)="changeCat($event, i)">
             <div *ngIf="!catEdit[i]; then thenCat else elseCat"></div>
             <ng-template #thenCat>
@@ -93,15 +99,19 @@
           <ng-template #noSubCategories>Não exitem Sub Categorias</ng-template>
           <ng-template #subCategories>Sub Categorias</ng-template>
         </div>
-        <form class="row ml-0 mr-0" (submit)="newSubCat($event)">
-          <input class="list-group-item list-group-item-action col-md-10" name="subcat"
-            placeholder="nova sub categoria" [disabled]="editing" />
-          <button type="submit" class="btn btn-outline-success rounded-0 col-md-2" [disabled]="editing"><i class="fa fa-save"></i></button>
-        </form>
-        <div *ngIf="subCat.length > 0">
-          <form class="list-group-item list-group-item-action" (submit)="searchSubCategory($event)">
-            <input type="text" name="searchSubCat" class="form-control" [value]="lastSearchSubCat" placeholder="pesquisar sub categoria" />
+        <ng-template [ngIf]="selectedCat > -1">
+          <form class="row ml-0 mr-0" (submit)="newSubCat($event)">
+            <input class="list-group-item list-group-item-action col-md-10" name="subcat" placeholder="nova sub categoria"
+              [disabled]="editing" />
+            <button type="submit" class="btn btn-outline-success rounded-0 col-md-2" [disabled]="editing"><i
+                class="fa fa-save"></i></button>
           </form>
+          <form class="list-group-item list-group-item-action" (submit)="searchSubCategory($event)">
+            <input type="text" name="searchSubCat" class="form-control" [value]="lastSearchSubCat"
+              placeholder="pesquisar sub categoria" [disabled]="editing" />
+          </form>
+        </ng-template>
+        <div *ngIf="subCat.length > 0">
           <form class="row ml-0 mr-0" *ngFor="let sc of subCat; let i = index" (submit)="changeSubCat($event, i)">
             <div *ngIf="!subCatEdit[i]; then thenSubCat else elseSubCat"></div>
             <ng-template #thenSubCat>

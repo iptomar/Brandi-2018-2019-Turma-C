@@ -276,6 +276,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   }
 
   public deleteSuperCat(index : number) {
+    if(!confirm("Tem a certeza que pretende eliminar a super categoria?")) return;
     this.messageError = "";
     this.messageSuccess = "";
     this.categoriesService.deleteSuperCat(this.superCat[index].id).subscribe(
@@ -294,6 +295,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   }
 
   public deleteCat(index : number) {
+    if(!confirm("Tem a certeza que pretende eliminar a categoria?")) return;
     this.messageError = "";
     this.messageSuccess = "";
     this.categoriesService.deleteCat(this.cat[index].id).subscribe(
@@ -375,6 +377,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   }
 
   public deleteSubCat(index : number) {
+    if(!confirm("Tem a certeza que pretende eliminar a sub categoria?")) return;
     this.messageError = "";
     this.messageSuccess = "";
     this.categoriesService.deleteSubCat(this.subCat[index].id).subscribe(
