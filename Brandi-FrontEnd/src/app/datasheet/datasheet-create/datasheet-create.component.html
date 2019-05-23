@@ -19,13 +19,13 @@
           <!--Mensagem de Sucesso acaba aqui-->
           <!--Inicio de campos-->
           <div class="form-group">
-            <label for="design">Designação</label>
-            <input name="design" type="text" class="form-control" placeholder="Designação de objecto" />
+            <label for="design">Designação (*)</label>
+            <input name="design" type="text" required class="form-control" placeholder="Designação de objecto" />
           </div>
           <div class="row">
             <div class="col-lg-4">
               <div class="form-group">
-                <label for="CEARC">Numero de Processo CEARC</label>
+                <label for="CEARC">Número de Processo CEARC</label>
                 <input name="CEARC" type="text" class="form-control" placeholder="Numero de Processo CEARC" />
               </div>
             </div>
@@ -47,7 +47,7 @@
           <div class="row">
             <div class="col-lg-4">
               <div class="form-group">
-                <label for="LCRM">Numero de Processo LCRM</label>
+                <label for="LCRM">Número de Processo LCRM (*)</label>
                 <input name="LCRM" type="text" class="form-control" placeholder="Numero de Processo LCRM" />
               </div>
             </div>
@@ -59,7 +59,7 @@
             </div>
             <div class="col-lg-4">
               <div class="form-group">
-                <label for="LCRMentrydate">Data de entrada do processo LCRM</label>
+                <label for="LCRMentrydate">Data de entrada do processo LCRM (*)</label>
                 <input name="LCRMentrydate" type="date" class="form-control" placeholder="Numero de Processo LCRM" />
               </div>
             </div>
@@ -98,7 +98,7 @@
       </select>
     </div>
   </div>
-
+<p>(*) Campos Obrigatórios</p>
           <div class="form-group">
               <button type="submit" class="btn btn-outline-success form-control">Criar <i
                     class="fa fa-file"></i></button>
