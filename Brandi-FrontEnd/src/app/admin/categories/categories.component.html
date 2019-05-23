@@ -1,7 +1,129 @@
 <div class="card">
-    <div class="card-body">
-      <p>
-          categories works!
-    </p>
+  <div class="card-body">
+    <div *ngIf='messageSuccess !== ""' class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>{{messageSuccess}}</strong>
+      <button type="button" class="close" aria-label="Close" (click)='messageSuccess=""'>
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div *ngIf='messageError !== ""' class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>{{messageError}}</strong>
+      <button type="button" class="close" aria-label="Close" (click)='messageError=""'>
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="row">
+      <div class="list-group col-lg-4 mb-2">
+        <div class="alert alert-warning mb-0">
+          <div *ngIf="superCat.length > 0; then superCategories else noSuperCategories"></div>
+          <ng-template #noSuperCategories>Não exitem Super Categorias</ng-template>
+          <ng-template #superCategories>Super Categorias</ng-template>
+        </div>
+        <form class="row ml-0 mr-0" (submit)="newSuperCat($event)">
+          <input class="list-group-item list-group-item-action col-md-10" name="supercat"
+            placeholder="nova super categoria" [disabled]="editing" />
+          <button type="submit" class="btn btn-outline-success rounded-0 col-md-2" [disabled]="editing"><i class="fa fa-save"></i></button>
+        </form>
+        <div *ngIf="superCat.length > 0">
+          <form class="list-group-item list-group-item-action" (submit)="searchSuperCategory($event)">
+            <input type="text" name="searchSuperCat" class="form-control" placeholder="pesquisar super categoria" />
+          </form>
+          <form class="row ml-0 mr-0" *ngFor="let sc of superCat; let i = index" (submit)="changeSuperCat($event, i)">
+            <div *ngIf="!superCatEdit[i]; then thenSuperCat else elseSuperCat"></div>
+            <ng-template #thenSuperCat>
+              <button type="button" class="list-group-item list-group-item-action col-md-8" [disabled]="editing"
+                (click)="selectSuperCat($event,sc.id)">
+                {{sc.supercategory}}
+              </button>
+              <button type="submit" class="btn btn-outline-warning rounded-0 col-md-2" [disabled]="editing"><i
+                  class="fa fa-edit"></i></button>
+              <button type="button" class="btn btn-outline-danger rounded-0 col-md-2" [disabled]="editing"
+                (click)="deleteSuperCat(i)"><i class="fa fa-trash"></i></button>
+            </ng-template>
+            <ng-template #elseSuperCat>
+              <input class="list-group-item list-group-item-action col-md-8" name="supercat"
+                [value]="sc.supercategory" />
+              <button type="submit" class="btn btn-outline-success rounded-0 col-md-2"><i
+                  class="fa fa-save"></i></button>
+              <button type="button" class="btn btn-outline-danger rounded-0 col-md-2"
+                (click)="cancelSuperCatEdit($event,i)"><i class="fa fa-times"></i></button>
+            </ng-template>
+          </form>
+        </div>
+      </div>
+      <div class="list-group col-lg-4 mb-2">
+        <div class="alert alert-warning mb-0">
+          <div *ngIf="cat.length > 0; then categories else noCategories"></div>
+          <ng-template #noCategories>Não exitem Categorias</ng-template>
+          <ng-template #categories>Categorias</ng-template>
+        </div>
+        <form class="row ml-0 mr-0" (submit)="newCat($event)">
+          <input class="list-group-item list-group-item-action col-md-10" name="cat" placeholder="nova categoria" [disabled]="editing" />
+          <button type="submit" class="btn btn-outline-success rounded-0 col-md-2" [disabled]="editing"><i class="fa fa-save"></i></button>
+        </form>
+        <div *ngIf="cat.length > 0">
+          <form class="list-group-item list-group-item-action" (submit)="searchCategory($event)">
+            <input type="text" name="searchCat" class="form-control" [value]="lastSearchCat" placeholder="pesquisar categoria" />
+          </form>
+          <form class="row ml-0 mr-0" *ngFor="let c of cat; let i = index" (submit)="changeCat($event, i)">
+            <div *ngIf="!catEdit[i]; then thenCat else elseCat"></div>
+            <ng-template #thenCat>
+              <button type="button" class="list-group-item list-group-item-action col-md-8" [disabled]="editing"
+                (click)="selectCat($event,c.id)">
+                {{c.category}}
+              </button>
+              <button type="submit" class="btn btn-outline-warning rounded-0 col-md-2" [disabled]="editing"><i
+                  class="fa fa-edit"></i></button>
+              <button type="button" class="btn btn-outline-danger rounded-0 col-md-2" [disabled]="editing"
+                (click)="deleteCat(i)"><i class="fa fa-trash"></i></button>
+            </ng-template>
+            <ng-template #elseCat>
+              <input class="list-group-item list-group-item-action col-md-8" name="cat" [value]="c.category" />
+              <button type="submit" class="btn btn-outline-success rounded-0 col-md-2"><i
+                  class="fa fa-save"></i></button>
+              <button type="button" class="btn btn-outline-danger rounded-0 col-md-2"
+                (click)="cancelCatEdit($event,i)"><i class="fa fa-times"></i></button>
+            </ng-template>
+          </form>
+        </div>
+      </div>
+      <div class="list-group col-lg-4">
+        <div class="alert alert-warning mb-0">
+          <div *ngIf="cat.length > 0; then subCategories else noSubCategories"></div>
+          <ng-template #noSubCategories>Não exitem Sub Categorias</ng-template>
+          <ng-template #subCategories>Sub Categorias</ng-template>
+        </div>
+        <form class="row ml-0 mr-0" (submit)="newSubCat($event)">
+          <input class="list-group-item list-group-item-action col-md-10" name="subcat"
+            placeholder="nova sub categoria" [disabled]="editing" />
+          <button type="submit" class="btn btn-outline-success rounded-0 col-md-2" [disabled]="editing"><i class="fa fa-save"></i></button>
+        </form>
+        <div *ngIf="subCat.length > 0">
+          <form class="list-group-item list-group-item-action" (submit)="searchSubCategory($event)">
+            <input type="text" name="searchSubCat" class="form-control" [value]="lastSearchSubCat" placeholder="pesquisar sub categoria" />
+          </form>
+          <form class="row ml-0 mr-0" *ngFor="let sc of subCat; let i = index" (submit)="changeSubCat($event, i)">
+            <div *ngIf="!subCatEdit[i]; then thenSubCat else elseSubCat"></div>
+            <ng-template #thenSubCat>
+              <button type="button" class="list-group-item list-group-item-action col-md-8" [disabled]="editing"
+                (click)="selectSubCat($event,sc.id)">
+                {{sc.subcategory}}
+              </button>
+              <button type="submit" class="btn btn-outline-warning rounded-0 col-md-2" [disabled]="editing"><i
+                  class="fa fa-edit"></i></button>
+              <button type="button" class="btn btn-outline-danger rounded-0 col-md-2" [disabled]="editing"
+                (click)="deleteSubCat(i)"><i class="fa fa-trash"></i></button>
+            </ng-template>
+            <ng-template #elseSubCat>
+              <input class="list-group-item list-group-item-action col-md-8" name="subcat" [value]="sc.subcategory" />
+              <button type="submit" class="btn btn-outline-success rounded-0 col-md-2"><i
+                  class="fa fa-save"></i></button>
+              <button type="button" class="btn btn-outline-danger rounded-0 col-md-2"
+                (click)="cancelSubCatEdit($event,i)"><i class="fa fa-times"></i></button>
+            </ng-template>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

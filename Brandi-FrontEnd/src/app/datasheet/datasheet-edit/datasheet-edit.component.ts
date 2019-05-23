@@ -73,6 +73,7 @@ export class DatasheetEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    (<HTMLElement>this.dataSheetTabs.nativeElement.querySelector('#datasheet-tabs .nav-item:first-child .nav-link')).classList.add("active");
     this.datasheetService.getDatasheet(parseInt(this.route.snapshot.paramMap.get('id'),10)).subscribe((datasheet : Datasheet) => {
       this._datasheet=datasheet;
       this.updateDatasheetInAllPages();
@@ -117,11 +118,6 @@ export class DatasheetEditComponent implements OnInit {
         }, 3 * 1000); // espera 3 segundos antes de sair da pagina de edição
       } else { this.messageEditErr = result.message; }
     });
-  }
-
-  
-  public changeTab(event) {
-    event.preventDefault();
   }
 
   public cancelar() : void {
