@@ -14,7 +14,7 @@ export class DatasheetComponent implements OnInit {
   // array com lista de datasheets
   public _datasheetlist: DatasheetList[];
   // string com o valor do campo de pesquisa
-  private _searchWord: string;
+  public _searchWord: string;
 
 
   constructor(private datasheet: DatasheetService, private router: Router) {

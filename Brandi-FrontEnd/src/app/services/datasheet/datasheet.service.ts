@@ -34,23 +34,6 @@ export interface DatasheetList {
 }
 
 
-export interface SuperCategories {
-  id: number;
-  supercategory: string;
-}
-
-export interface Categories {
-  id: number;
-  category: string;
-  id_super_category:number;
-}
-
-export interface SubCategories {
-  id: number;
-  subcategory: string;
-  id_category:number;
-}
-
 @Injectable({
   providedIn: "root"
 })
@@ -61,70 +44,12 @@ export class DatasheetService {
   public static DATA_EDIT = "datasheet/edit";
 
   
-  public static SUPER_CATEGORIES = "datasheet/super_categories/list";
-  public static CATEGORIES = "datasheet/categories/list";
-  public static SUB_CATEGORIES = "datasheet/sub_categories/list";
   constructor(
     private http: HttpClient,
     private auth: AuthService,
     private datePipe: DatePipe
   ) {}
 
-
-  public getSuperCategories(pesquisa: string): Observable<SuperCategories[]> {
-    return this.http
-      .get(Global.HOST_PREFIX + DatasheetService.SUPER_CATEGORIES, {
-        params: new HttpParams().set("search", pesquisa)
-      })
-      .pipe(
-        map((data: ReceivedData) => {
-          let fichas: SuperCategories[] = [];
-          if (!data.error) {
-            fichas = data.res.super_categories;
-          } else if (data.error === 2) {
-            this.auth.forceLogout();
-          }
-          return fichas;
-        })
-      );
-  }
-
-  public getCategories(id_super_category:number, pesquisa: string): Observable<Categories[]> {
-    return this.http
-      .get(Global.HOST_PREFIX + DatasheetService.CATEGORIES, {
-        params: new HttpParams().set("search", pesquisa).set("super_category", id_super_category+"")
-      })
-      .pipe(
-        map((data: ReceivedData) => {
-          let fichas: Categories[] = [];
-          if (!data.error) {
-            fichas = data.res.categories;
-          } else if (data.error === 3) {
-            this.auth.forceLogout();
-          }
-          return fichas;
-        })
-      );
-  }
-
-  
-  public getSubCategories(id_category:number, pesquisa: string): Observable<SubCategories[]> {
-    return this.http
-      .get(Global.HOST_PREFIX + DatasheetService.SUB_CATEGORIES, {
-        params: new HttpParams().set("search", pesquisa).set("category", id_category+"")
-      })
-      .pipe(
-        map((data: ReceivedData) => {
-          let fichas: SubCategories[] = [];
-          if (!data.error) {
-            fichas = data.res.sub_categories;
-          } else if (data.error === 3) {
-            this.auth.forceLogout();
-          }
-          return fichas;
-        })
-      );
-  }
 
   public getDatasheets(pesquisa: string): Observable<DatasheetList[]> {
     return this.http
