@@ -15,7 +15,7 @@ const datasheet = require('./lib/DataSheet');
 
 //----------------------------------- END LIBS -----------------------------------
 //porta do servidor
-const PORT = 8080;
+const PORT = 8081;
 const PREFIX_ROUTE = '/api';
 //diretória de ficheiros html estáticos
 const PUBLIC_DIR = __dirname + path.sep + 'html' + path.sep;

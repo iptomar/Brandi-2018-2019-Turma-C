@@ -344,13 +344,13 @@ async function changeDataSheetP1(db, id, designation, cearcproc, cearcprocdata, 
  * @param {database.Database} db Class de ligação à base de dados
  * @param {number} id id da ficha técnica
  * @param {string} dimensions dimensões do objeto
- * @param {string} other_dimensions outras dimensões
- * @param {string} tipology tipologia do objeto
- * @param {string} site localização
- * @param {number} object_owner dono da obra
- * @param {number} owner proprietário 
- * @param {number} patron mecenas?? CONFIRMAR------------
- * @param {number} userId id do utilizador autenticado
+ * @param {string} other_dimensions - outras dimensões
+ * @param {string} tipology - tipologia do objeto
+ * @param {string} site - localização
+ * @param {number} object_owner -proprietário
+ * @param {number} owner - dono da obra
+ * @param {number} patron - mecenas 
+ * @param {number} userId - id do utilizador autenticado
  * @returns {boolean} se foi atualizado alguma coisa
  */
 async function changeDataSheetP2(db, id, dimensions,other_dimensions,tipology,site,object_owner,owner,patron, userId) {
@@ -371,35 +371,40 @@ async function changeDataSheetP2(db, id, dimensions,other_dimensions,tipology,si
  * 
  * @param {database.Database} db Class de ligação à base de dados
  * @param {number} id id da ficha técnica
- * @param {number} object_is_a_set 
- * @param {string} set_type tipo de conjunto do objecto
- * @param {string} set_elements elementos do objeto
- * @param {string} set_materials materiais do objeto
- * @param {string} set_inscriptions inscrições no objeto
- * @param {string} set_mount inscrições de Montagem do objeto
- * @param {string} set_build inscrições de Construção
- * @param {string} classification classificação do objeto
- * @param {number} period época do objeto
- * @param {number} quality qualidade do objeto
- * @param {number} style estilo do objeto
- * @param {string} small_description pequena descrição do objeto
- * @param {string} analogies analogias 
- * @param {string} conclusions conclusões
- * @param {string} author autor 
- * @param {string} dating datação
- * @param {string} origin origem
+ * @param {number} object_is_a_set - informação respetiva a se existe ou nao bem integrado em conjunto
+ * @param {string} set_type - tipo de conjunto do objecto
+ * @param {string} set_elements - elementos do objeto
+ * @param {string} set_materials - materiais do objeto
+ * @param {string} set_inscriptions - inscrições no objeto
+ * @param {string} set_mount - inscrições de Montagem do objeto
+ * @param {string} set_build - inscrições de Construção
+ * @param {string} classification - classificação do objeto
+ * @param {number} period - época do objeto
+ * @param {number} quality - qualidade do objeto
+ * @param {number} style - estilo do objeto
+ * @param {string} materials_structure - materiais da estrutura do objeto
+ * @param {string} materials_surface - materiais da superficie do objeto
+ * @param {string} materials_elementsAccessories - materiais dos elementos acessórios do objeto
+ * @param {string} techniques_structure - técnicas da estrutura do objeto
+ * @param {string} techniques_surface - técnicas da superficie do objeto
+ * @param {string} techniques_elementsAccessories - técnicas dos elementos acessórios do objeto
+ * @param {string} small_description - pequena descrição do objeto
+ * @param {string} analogies - analogias 
+ * @param {string} conclusions - conclusões
+ * @param {string} author - autor 
+ * @param {string} dating - datação
+ * @param {string} origin - origem
  * @param {number} userId id do utilizador autenticado
  * @returns {boolean} se foi atualizado alguma coisa
  * 
-MISSING : Materiais - Estrutura, Materiais - Superfície, Materiais - Elementos Acessórios, Técnicas - Estrutura, Técnicas - Superfície, Técnicas - Elementos Acessórios
-
- 
  */
-async function changeDataSheetP3(db, id,object_is_a_set,set_type,set_elements,set_materials,set_inscriptions,set_mount,set_build,classification,period,quality,style,small_description,analogies,conclusions,author,dating,origin,userId) {
+
+async function changeDataSheetP3(db, id, object_is_a_set, set_type, set_elements, set_materials, set_inscriptions, set_mount, set_build, classification, period, quality, style, materials_structure, materials_surface, materials_elementsAccessories, techniques_structure, techniques_surface, techniques_elementsAccessories,small_description,analogies,conclusions,author,dating,origin,userId) {
     let result = false;
     //criação do novo objeto
-    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P3, [object_is_a_set,set_type,set_elements,set_materials,set_inscriptions,set_mount,set_build,classification,period,quality,style,small_description,analogies,conclusions,author,dating,origin, userId, id]);
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P3, [object_is_a_set, set_type, set_elements, set_materials, set_inscriptions, set_mount, set_build, classification, period, quality, style, materials_structure, materials_surface, materials_elementsAccessories, techniques_structure, techniques_surface, techniques_elementsAccessories, small_description, analogies, conclusions, author, dating, origin, userId, id]);
     //se não ocorreu nenhum erro, devolve o id inserido
+    console.log(resultDb);
     if (!resultDb.error) {
         result = resultDb.res.affectedRows > 0;
     }
@@ -559,6 +564,12 @@ exports.appendToExpress = function (app, _db, _prefix) {
                             req.body.period = global.notRequiredField(req.body.period);
                             req.body.quality = global.notRequiredField(req.body.quality);
                             req.body.style = global.notRequiredField(req.body.style);
+                            req.body.materials_structure = global.notRequiredField(req.body.materials_structure);
+                            req.body.materials_surface = global.notRequiredField(req.body.materials_surface);
+                            req.body.materials_elementsAccessories = global.notRequiredField(req.body.materials_elementsAccessories);
+                            req.body.techniques_structure = global.notRequiredField(req.body.techniques_structure);
+                            req.body.techniques_surface = global.notRequiredField(req.body.techniques_surface);
+                            req.body.techniques_elementsAccessories = global.notRequiredField(req.body.techniques_elementsAccessories);
                             req.body.small_description = global.notRequiredField(req.body.small_description);
                             req.body.analogies = global.notRequiredField(req.body.analogies);
                             req.body.conclusions = global.notRequiredField(req.body.conclusions);
@@ -581,6 +592,12 @@ exports.appendToExpress = function (app, _db, _prefix) {
                                 req.body.period,
                                 req.body.quality,
                                 req.body.style,
+                                req.body.materials_structure,
+                                req.body.materials_surface,
+                                req.body.materials_elementsAccessories,
+                                req.body.techniques_structure,
+                                req.body.techniques_surface,
+                                req.body.techniques_elementsAccessories,
                                 req.body.small_description,
                                 req.body.analogies,
                                 req.body.conclusions,
@@ -599,7 +616,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
                 result.error = 0;
                 result.message = "Ficha técnica atualizada com sucesso";
                 //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
-                result.res = { id: parseInt(req.body.idobject, 10) };
+                result.res = { id: parseInt(req.params.id, 10) };
             }
         }
 
