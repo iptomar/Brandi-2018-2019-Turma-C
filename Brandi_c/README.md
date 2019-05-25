@@ -482,6 +482,9 @@
 	lcrmprocdata - data do processo LCRM
 	lcrmentrancedata - data de entrada LCRM (obrigatório)
 	coordinatorid - id do coordenador (obrigatório)
+	super_category - id da super categoria (obrigatório)
+	category - id da categoria (obrigatório)
+	sub_category - id da sub categoria (obrigatório)
 ### devolve:
 ##### se não tiver autenticado:
 	{
@@ -526,6 +529,42 @@
 		super_category - id da super categoria,
 		category - id da categoria(esta tem de estar associada a super categoria),
 		sub_category - id da sub categoria(esta tem de estar associada a categoria)
+:
+
+	:page = 2 (não tem campos obrigatórios)
+		dimensions - dimensões do objeto
+		other_dimensions - outras dimensões
+		tipology - tipologia do objeto
+		site - localização
+		object_owner -proprietário do objeto
+		owner - dono da obra
+		patron - mecenas
+:
+
+	:page = 3
+		object_is_a_set - informação respetiva a se existe ou nao bem integrado em conjunto (obrigatório)
+		set_type - tipo de conjunto do objecto
+		elements - elementos do objeto
+		set_materials - materiais do objeto
+		set_inscriptions - inscrições no objeto
+		set_mount - inscrições de Montagem do objeto
+		set_build - inscrições de Construção
+		classification - classificação do objeto
+	    period - época do objeto
+		quality - qualidade do objeto
+		style - estilo do objeto
+		materials_structure - materiais da estrutura do objeto
+		materials_surface - materiais da superficie do objeto
+		materials_elementsAccessories - materiais dos elementos acessórios do objeto
+		techniques_structure - técnicas da estrutura do objeto
+		techniques_surface - técnicas da superficie do objeto
+		techniques_elementsAccessories - técnicas dos elementos acessórios do objeto
+		small_description - pequena descrição do objeto
+		analogies - analogias 
+		conclusions - conclusões
+		author - autor 
+		dating - datação
+		origin - origem
 ### devolve:
 ##### se não tiver autenticado:
 	{
@@ -586,42 +625,91 @@
 	        "datasheets": [
 	            {
 	                "id": 1,
-	                "object_designation": "Movel",
-	                "CEARC_process": "123",
-	                "CEARC_process_date": null,
-	                "CEARC_entry_date": null,
-	                "LCRM_process": null,
-	                "LCRM_process_date": null,
-	                "LCRM_entry_date": null,
-	                "coordinator": 1,
-	                "last_modified_user": 1,
-	                "last_modified_date": "2019-05-13T00:42:53.000Z",
-	                "object_created_date": "2019-04-29T23:10:58.000Z",
-	                "super_category": 1,
-	                "category": 4,
-	                "sub_category": 10
+	                "object_designation": "Movel"
 	            },
 	            {
 	                "id": 2,
-	                "object_designation": "sddfdfgsdf",
-	                "CEARC_process": "1234",
-	                "CEARC_process_date": "2019-02-13T00:00:00.000Z",
-	                "CEARC_entry_date": "2018-12-12T00:00:00.000Z",
-	                "LCRM_process": "455677686",
-	                "LCRM_process_date": "2019-03-31T23:00:00.000Z",
-	                "LCRM_entry_date": "2019-04-02T23:00:00.000Z",
-	                "coordinator": 1,
-	                "last_modified_user": 1,
-	                "last_modified_date": "2019-05-11T16:20:30.000Z",
-	                "object_created_date": "2019-04-29T23:10:58.000Z",
-	                "super_category": 1,
-	                "category": 1,
-	                "sub_category": 1
+	                "object_designation": "sddfdfgsdf"
 	            }
 	        ]
 	    }
 	}
 
+	
+------------
+## GET /api/datasheet/:id
+
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	search - palavra utilizada na pesquisa de fichas técnicas por nome
+### devolve:
+##### se não tiver autenticado:
+	{
+		   "error": 2,
+		   "message": "Por favor efectue autenticação",
+		   "res": {}
+	 }
+##### se ocorrer um erro:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro na aquisição do objeto, por favor tente novamente",
+	   "res": {}
+	}
+##### se for listado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Objeto",
+	    "res": {
+	        "datasheet": {
+	            "id": 1,
+	            "object_designation": "Movel",
+	            "CEARC_process": "123",
+	            "CEARC_process_date": "2018-04-30T23:00:00.000Z",
+	            "CEARC_entry_date": "2019-04-30T23:00:00.000Z",
+	            "LCRM_process": "123",
+	            "LCRM_process_date": "2018-04-30T23:00:00.000Z",
+	            "LCRM_entry_date": "2019-04-30T23:00:00.000Z",
+	            "coordinator": 1,
+	            "last_modified_user": 1,
+	            "last_modified_date": "2019-05-25T23:02:09.000Z",
+	            "object_created_date": "2019-04-29T23:10:58.000Z",
+	            "super_category": 1,
+	            "category": 1,
+	            "sub_category": 4,
+	            "dimensions": null,
+	            "other_dimensions": null,
+	            "tipology": null,
+	            "site": null,
+	            "object_owner": null,
+	            "owner": null,
+	            "patron": null,
+	            "object_is_a_set": 0,
+	            "set_type": "test",
+	            "set_elements": "test1",
+	            "set_materials": "madeira",
+	            "set_inscriptions": "test2",
+	            "set_mount": " test3",
+	            "set_build": "test4",
+	            "classification": "test5",
+	            "period": 1,
+	            "quality": 2,
+	            "style": null,
+	            "small_description": "test12",
+	            "analogies": "test13",
+	            "conclusions": "test14",
+	            "author": "test15",
+	            "dating": null,
+	            "origin": "test16",
+	            "materials_structure": "test6",
+	            "materials_surface": "test7",
+	            "materials_elementsAccessories": "test8",
+	            "techniques_structure": "test9",
+	            "techniques_surface": "test10",
+	            "techniques_elementsAccessories": "test11"
+	        }
+	    }
+	}
 	
 ------------
 ## GET /api/datasheet/super_categories/list:
