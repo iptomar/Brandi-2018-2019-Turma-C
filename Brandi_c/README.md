@@ -565,6 +565,31 @@
 		author - autor 
 		dating - datação
 		origin - origem
+:
+
+		:page = 4
+		site_description - descrição do local
+		cold_temp Frio- temperatura 
+		hot_temp Quente- temperatura
+		cold_humidity Frio-Humidade
+		hot_humidity Frio-Humidade
+		cold_start Frio- Início
+		cold_end Frio- Fim
+		hot_start Quente- Início
+		hot_end Quente- Fim
+		lightning_type_natural Radiação tipo natural
+		lightning_origin_artificial Radiação tipo artificial
+		artificial_lux Radiação artificial - valor Iluminância
+		natural_lux Radiação natural - valor Iluminância
+		artificial_uv Radiação artificial - Valor de U.V.
+		natural_uv Radiação natural - Valor de U.V.
+		natural_real_uv Radiação natural- Valor Real de U.V.
+		artificial_real_uv Radiação artificial- Valor Real de U.V.
+		poluting_agents Agentes Poluidores
+		poluting_sources Fontes de poluição
+		poluting_results Resultados de poluição
+		env_conclusions Resultados
+
 ### devolve:
 ##### se não tiver autenticado:
 	{
@@ -672,7 +697,7 @@
 	            "LCRM_entry_date": "2019-04-30T23:00:00.000Z",
 	            "coordinator": 1,
 	            "last_modified_user": 1,
-	            "last_modified_date": "2019-05-25T23:02:09.000Z",
+	            "last_modified_date": "2019-05-26T02:05:15.000Z",
 	            "object_created_date": "2019-04-29T23:10:58.000Z",
 	            "super_category": 1,
 	            "category": 1,
@@ -706,11 +731,31 @@
 	            "materials_elementsAccessories": "test8",
 	            "techniques_structure": "test9",
 	            "techniques_surface": "test10",
-	            "techniques_elementsAccessories": "test11"
+	            "techniques_elementsAccessories": "test11",
+	            "site_description": "test12",
+	            "cold_temp": "test13",
+	            "hot_temp": "test14",
+	            "cold_humidity": "test15",
+	            "hot_humidity": "test16",
+	            "cold_start": 1,
+	            "cold_end": 2,
+	            "hot_start": 3,
+	            "hot_end": 4,
+	            "lightning_type_natural": "test17",
+	            "lightning_origin_artificial": "test18",
+	            "artificial_lux": "test19",
+	            "natural_lux": "test20",
+	            "artificial_uv": "test21",
+	            "natural_uv": "test22",
+	            "artificial_real_uv": "test23",
+	            "natural_real_uv": "test24",
+	            "poluting_agents": "test25",
+	            "poluting_sources": "test26",
+	            "poluting_results": "test27",
+	            "env_conclusions": "test28"
 	        }
 	    }
-	}
-	
+	}	
 ------------
 ## GET /api/datasheet/super_categories/list:
 
