@@ -431,6 +431,46 @@ async function changeDataSheetP3(db, id, object_is_a_set, set_type, set_elements
 }
 
 
+/**
+ * 
+ * @param {database.Database} db Class de ligação à base de dados - confirmar tipo de dados
+ * @param {number} id id da ficha técnica
+ * @param {String} site_description descrição do local
+ * @param {String} cold_temp Frio- temperatura 
+ * @param {String} hot_temp Quente- temperatura
+ * @param {String} cold_humidity Frio-Humidade
+ * @param {String} hot_humidity Frio-Humidade
+ * @param {number} cold_start Frio- Início
+ * @param {number} cold_end Frio- Fim
+ * @param {number} hot_start Quente- Início
+ * @param {number} hot_end Quente- Fim
+ * @param {String} lightning_type_natural Radiação tipo natural
+ * @param {String} lightning_origin_artificial Radiação tipo artificial
+ * @param {String} artificial_lux Radiação artificial - valor Iluminância
+ * @param {String} natural_lux Radiação natural - valor Iluminância
+ * @param {String} artificial_uv Radiação artificial - Valor de U.V.
+ * @param {String} natural_uv Radiação natural - Valor de U.V.
+ * @param {String} natural_real_uv Radiação natural- Valor Real de U.V.
+ * @param {String} artificial_real_uv Radiação artificial- Valor Real de U.V.
+ * @param {String} poluting_agents Agentes Poluidores
+ * @param {String} poluting_sources Fontes de poluição
+ * @param {String} poluting_results Resultados de poluição
+ * @param {String} env_conclusions Resultados
+ * @param {any} userId
+ */
+async function changeDataSheetP4(db, id, site_description, cold_temp, hot_temp, cold_humidity, hot_humidity, cold_start, cold_end, hot_start, hot_end, lightning_type_natural, lightning_origin_artificial, artificial_lux, natural_lux, artificial_uv, natural_uv, artificial_real_uv, natural_real_uv, poluting_agents, poluting_sources, poluting_results, env_conclusions, userId) {
+    let result = false;
+    //criação do novo objeto
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P4, [site_description, cold_temp, hot_temp, cold_humidity, hot_humidity, cold_start, cold_end, hot_start, hot_end, lightning_type_natural, lightning_origin_artificial, artificial_lux, natural_lux, artificial_uv, natural_uv, artificial_real_uv, natural_real_uv, poluting_agents, poluting_sources, poluting_results, env_conclusions, userId, id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    console.log(resultDb);
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0;
+    }
+    return result;
+}
+
+
 
 /**
  * 
@@ -443,13 +483,16 @@ async function changeDataSheetP3(db, id, object_is_a_set, set_type, set_elements
  * @param {string} lcrmprocdata data do processo LCRM
  * @param {string} lcrmentrancedata data de entrada LCRM
  * @param {number} coordinatorid id do coordenador
+ * @param {number} super_category id da super categoria
+ * @param {number} category id da categoria
+ * @param {number} sub_category id da sub categoria
  * @param {number} userId id do utilizador autenticado
  * @returns {number} id da ficha técnica ou -1 caso ocorra erro
  */
-async function createDataSheet(db, designation, cearcproc, cearcprocdata, cearcentrancedata, lcrmproc, lcrmprocdata, lcrmentrancedata ,coordinatorid, userId) {
+async function createDataSheet(db, designation, cearcproc, cearcprocdata, cearcentrancedata, lcrmproc, lcrmprocdata, lcrmentrancedata, coordinatorid, super_category, category, sub_category, userId) {
     let result = -1;
     //criação do novo objeto
-    let resultDb = await db.doQuery(q_DataSheet.CREATE_OBJECT, [designation, cearcproc, cearcprocdata, cearcentrancedata, lcrmproc, lcrmprocdata, lcrmentrancedata, coordinatorid, userId]);
+    let resultDb = await db.doQuery(q_DataSheet.CREATE_OBJECT, [designation, cearcproc, cearcprocdata, cearcentrancedata, lcrmproc, lcrmprocdata, lcrmentrancedata, coordinatorid, super_category, category, sub_category, userId]);
     //se não ocorreu nenhum erro, devolve o id inserido
     if (!resultDb.error) {
         result = resultDb.res.insertId;
@@ -475,7 +518,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
             //verifica se todos os campos obrigatórios estão presentes
             result.error = 2;
             result.message = "Insira todos os campos obrigatórios";
-            if (/**req.body.idobject && **/ req.body.designation && /**req.body.lcrmproc && req.body.lcrmprocdata && req.body.cearcprocdata && req.body.cearcentrancedata**/ req.body.cearcproc && req.body.coordinatorid && req.body.lcrmentrancedata) {
+            if (/**req.body.idobject && **/ req.body.designation && /**req.body.lcrmproc && req.body.lcrmprocdata && req.body.cearcprocdata && req.body.cearcentrancedata**/ req.body.cearcproc && req.body.coordinatorid && req.body.lcrmentrancedata && req.body.super_category && req.body.category && req.body.sub_category) {
                 //define erro para o caso de algo correr mal
                 result.error = 1;
                 result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
@@ -486,7 +529,20 @@ exports.appendToExpress = function (app, _db, _prefix) {
                 req.body.lcrmprocdata = !req.body.lcrmprocdata ? null : req.body.lcrmprocdata;
                 //verifica se é para editar ou para criar
                 //tenta criar um novo objeto
-                let resultInsertId = await createDataSheet(db,req.body.designation, req.body.cearcproc, req.body.cearcprocdata, req.body.cearcentrancedata, req.body.lcrmproc, req.body.lcrmprocdata, req.body.lcrmentrancedata, req.body.coordinatorid, u.id);
+                let resultInsertId = await createDataSheet(
+                    db,
+                    req.body.designation,
+                    req.body.cearcproc,
+                    req.body.cearcprocdata,
+                    req.body.cearcentrancedata,
+                    req.body.lcrmproc,
+                    req.body.lcrmprocdata,
+                    req.body.lcrmentrancedata,
+                    req.body.coordinatorid,
+                    req.body.super_category,
+                    req.body.category,
+                    req.body.sub_category,
+                    u.id);
                 //se este foi criado
                 if (resultInsertId !== -1) {
                     result.error = 0;
@@ -626,7 +682,62 @@ exports.appendToExpress = function (app, _db, _prefix) {
                                 u.id
                             );
                         }
-                        break;
+                    break;
+                case "4":
+                    //define erro para o caso de algo correr mal
+                    result.error = 1;
+                    result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                    //todos os campos não obrigatórios ficam como null caso não estejam definidos
+                    req.body.site_description = global.notRequiredField(req.body.site_description);
+                    req.body.cold_temp = global.notRequiredField(req.body.cold_temp);
+                    req.body.hot_temp = global.notRequiredField(req.body.hot_temp);
+                    req.body.cold_humidity = global.notRequiredField(req.body.cold_humidity);
+                    req.body.hot_humidity = global.notRequiredField(req.body.hot_humidity);
+                    req.body.cold_start = global.notRequiredField(req.body.cold_start);
+                    req.body.cold_end = global.notRequiredField(req.body.cold_end);
+                    req.body.hot_start = global.notRequiredField(req.body.hot_start);
+                    req.body.hot_end = global.notRequiredField(req.body.hot_end);
+                    req.body.lightning_type_natural = global.notRequiredField(req.body.lightning_type_natural);
+                    req.body.lightning_origin_artificial = global.notRequiredField(req.body.lightning_origin_artificial);
+                    req.body.artificial_lux = global.notRequiredField(req.body.artificial_lux);
+                    req.body.natural_lux = global.notRequiredField(req.body.natural_lux);
+                    req.body.artificial_uv = global.notRequiredField(req.body.artificial_uv);
+                    req.body.natural_uv = global.notRequiredField(req.body.natural_uv);
+                    req.body.artificial_real_uv = global.notRequiredField(req.body.artificial_real_uv);
+                    req.body.natural_real_uv = global.notRequiredField(req.body.natural_real_uv);
+                    req.body.poluting_agents = global.notRequiredField(req.body.poluting_agents);
+                    req.body.poluting_sources = global.notRequiredField(req.body.poluting_sources);
+                    req.body.poluting_results = global.notRequiredField(req.body.poluting_results);
+                    req.body.env_conclusions = global.notRequiredField(req.body.env_conclusions);
+                    //verifica se é para editar ou para criar
+                    //tenta altearar um objeto e se este foi alterado
+                    resultDb = await changeDataSheetP4(
+                        db,
+                        req.params.id,
+                        req.body.site_description,
+                        req.body.cold_temp,
+                        req.body.hot_temp,
+                        req.body.cold_humidity,
+                        req.body.hot_humidity,
+                        req.body.cold_start,
+                        req.body.cold_end,
+                        req.body.hot_start,
+                        req.body.hot_end,
+                        req.body.lightning_type_natural,
+                        req.body.lightning_origin_artificial,
+                        req.body.artificial_lux,
+                        req.body.natural_lux,
+                        req.body.artificial_uv,
+                        req.body.natural_uv,
+                        req.body.artificial_real_uv,
+                        req.body.natural_real_uv,
+                        req.body.poluting_agents,
+                        req.body.poluting_sources,
+                        req.body.poluting_results,
+                        req.body.env_conclusions,
+                        u.id
+                    );
+                    break;
                     default:
                         result.error=2;
                         result.message="Pagina não existente";
@@ -993,7 +1104,8 @@ exports.appendToExpress = function (app, _db, _prefix) {
 
 
     app.get(prefix + ROUTE_DATASHEET_PREFIX + '/:id', async function (req, res) {
-        let result = { error: 2, message: "Por favor efectue autenticação", res: { datasheet: [] } };
+        let result = {
+            error: 2, message: "Por favor efectue autenticação", res: {} };
         //verifica se utilizador está autenticado
         let u = auth.getUserFromSession(req);
         if (u) {
