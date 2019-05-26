@@ -567,7 +567,7 @@
 		origin - origem
 :
 
-		:page = 4
+	:page = 4
 		site_description - descrição do local
 		cold_temp Frio- temperatura 
 		hot_temp Quente- temperatura
