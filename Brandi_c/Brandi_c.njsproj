@@ -30,13 +30,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="lib\DataBase.js" />
-    <Compile Include="lib\Auth.js">
+    <f Include="lib\Auth.js">
+      <SubType>Code</SubType>
+    </f>
+    <Compile Include="lib\DataSheet.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="lib\InfoDB.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="lib\Person.js" />
+    <Compile Include="lib\queries\q_Datasheet.js" />
     <Compile Include="lib\queries\q_Auth.js">
       <SubType>Code</SubType>
     </Compile>
