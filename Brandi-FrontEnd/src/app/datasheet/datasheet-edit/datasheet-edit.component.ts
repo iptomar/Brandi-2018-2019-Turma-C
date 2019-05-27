@@ -75,6 +75,8 @@ export class DatasheetEditComponent implements OnInit {
   ngOnInit() {
     this.datasheetService.getDatasheet(parseInt(this.route.snapshot.paramMap.get('id'),10)).subscribe((datasheet : Datasheet) => {
       this._datasheet=datasheet;
+      
+      console.log(this._datasheet);
       this.updateDatasheetInAllPages();
     },
     take(1)

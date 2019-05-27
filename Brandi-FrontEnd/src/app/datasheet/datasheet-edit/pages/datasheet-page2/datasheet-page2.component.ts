@@ -14,10 +14,6 @@ export class DatasheetPage2Component implements OnInit,DatasheetPage {
   _searchWord: string;
   _contacts: Contacto[];
 
-  getForm(event: any): Datasheet {
-    console.log("page2");
-    return this._datasheet;
-  }
 
   datasheet(datasheet: Datasheet): void {
     this._datasheet=datasheet;
@@ -25,6 +21,19 @@ export class DatasheetPage2Component implements OnInit,DatasheetPage {
   isEditing(isEditing: boolean): void {
     this._isEditing=isEditing;
   }
+  public getForm(event: any): any {
+    let datasheet: any = Object.assign({}, this._datasheet); // clona os dados
+    datasheet.dimensions= event.target.dimensions.value;
+    datasheet.other_dimensions= event.target.other_dimensions.value;
+    datasheet.tipology= event.target.tipology.value;
+    datasheet.site= event.target.site.value;
+    datasheet.object_owner= event.target.object_owner.value;
+    datasheet.owner= event.target.owner.value;
+    datasheet.patron= event.target.patron.value;
+    console.log(datasheet);
+    return datasheet;
+  }
+
   public searchContact(event) : void {
     if(event != null) {
       event.preventDefault();
