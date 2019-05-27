@@ -35,7 +35,7 @@ export class DatasheetPage4Component implements OnInit {
   datasheet.poluting_sources= event.target.poluting_sources.value;
   datasheet.poluting_results= event.target.poluting_results.value;
   datasheet.env_conclusions= event.target.env_conclusions.value;
-  console.log(datasheet);
+  
   return datasheet;
   }
 

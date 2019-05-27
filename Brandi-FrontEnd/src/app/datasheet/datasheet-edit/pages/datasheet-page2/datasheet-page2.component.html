@@ -1,12 +1,12 @@
 <div class="row">
   <div class="col-lg-6 form-group">
     <label for="Dimensions">Dimensões</label>
-    <input name="Dimensions" type="text" class="form-control" placeholder="(Comp. X Prof. X Alt.) | (Diâmetro)"
+    <input name="dimensions" type="text" class="form-control" placeholder="(Comp. X Prof. X Alt.) | (Diâmetro)"
       [readonly]="!_isEditing" [value]="_datasheet?.dimensions" />
   </div>
   <div class="col-lg-6 form-group">
     <label for="OtherDimensions">Outras dimensões</label>
-    <input name="OtherDimensions" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.other_dimensions"/>
+    <input name="other_dimensions" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.other_dimensions"/>
   </div>
 </div>
 <div class="form-group">
@@ -21,17 +21,17 @@
 <div class="row">
   <div class="form-group col-lg-6">
     <label for="owner">Proprietário</label>
-    <select class="form-control" [disabled]='!_isEditing'  [value]="_datasheet?.owner"></select>
+    <select name="owner" class="form-control" [disabled]='!_isEditing'  [value]="_datasheet?.owner"></select>
   </div>
   <div class="form-group col-lg-6">
     <label for="objectOwner">Dono da Obra</label>
-    <select class="form-control" [disabled]='!_isEditing'  [value]="_datasheet?.object_owner"></select>
+    <select name="object_owner" class="form-control" [disabled]='!_isEditing'  [value]="_datasheet?.object_owner"></select>
   </div>
 </div>
 <div class="row">
   <div class=" col-lg-6 form-group">
     <label for="patron">Mecenas</label>
-    <select name="mecenas" class="form-control" [disabled]='!_isEditing'  [value]="_datasheet?.patron">
+    <select name="patron" class="form-control" [disabled]='!_isEditing'  [value]="_datasheet?.patron">
     <option value="" selected disabled hidden>Utilizador Eliminado</option>
     <option *ngFor="let u of _contacts" value="{{u.id}}">{{u.full_name}}</option>
   </select>

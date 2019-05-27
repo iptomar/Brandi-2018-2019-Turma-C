@@ -38,7 +38,7 @@ export class DatasheetPage3Component implements OnInit, DatasheetPage {
     datasheet.techniques_surface= event.target.techniques_surface.value;
     datasheet.techniques_elementsAccessories= event.target.techniques_elementsAccessories.value;
 
-    console.log(datasheet);
+    
     return datasheet;
   }
 

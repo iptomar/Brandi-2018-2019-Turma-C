@@ -30,7 +30,7 @@ export class DatasheetPage2Component implements OnInit,DatasheetPage {
     datasheet.object_owner= event.target.object_owner.value;
     datasheet.owner= event.target.owner.value;
     datasheet.patron= event.target.patron.value;
-    console.log(datasheet);//tirar
+    
     return datasheet;
   }
 

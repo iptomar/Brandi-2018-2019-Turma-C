@@ -3,34 +3,34 @@
 </h5>
 
 <div class="form-group form-check">
-  <input class="form-check-input" type="checkbox" id="gridCheck" [disabled]="!_isEditing" [value]="_datasheet?.object_is_a_set">
+  <input name="object_is_a_set" class="form-check-input" type="checkbox" id="gridCheck" [disabled]="!_isEditing" [value]="_datasheet?.object_is_a_set">
   <label class="form-check-label" for="gridCheck">
     Bem integrado em conjunto
   </label>
 </div>
   <div class="form-group col-lg-12 row">
     <label for="setType">Tipo de Conjunto | Bens do Conjunto</label>
-    <textarea class="form-control" id="setType" rows="2" [readonly]="!_isEditing" [value]="_datasheet?.set_type"></textarea>
+    <textarea class="form-control" name="set_type" rows="2" [readonly]="!_isEditing" [value]="_datasheet?.set_type"></textarea>
 </div>
 <div class="form-group col-lg-12 row">
   <label for="setElements">Elementos Constituintes do Bem Cultural</label>
-  <textarea class="form-control" id="setElements" rows="2" [readonly]="!_isEditing" [value]="_datasheet?.set_elements"></textarea>
+  <textarea class="form-control" name="set_elements" rows="2" [readonly]="!_isEditing" [value]="_datasheet?.set_elements"></textarea>
 </div>
 <div class="form-group col-lg-12 row">
   <label for="setMaterials">Materiais | Elementos Acessórios</label>
-  <textarea class="form-control" id="setMaterials" rows="2" [readonly]="!_isEditing" [value]="_datasheet?.set_materials"></textarea>
+  <textarea class="form-control" name="set_materials" rows="2" [readonly]="!_isEditing" [value]="_datasheet?.set_materials"></textarea>
 </div>
 <div class="form-group col-lg-12 row">
   <label for="setInscriptions">Marcas | Inscrições | Assinaturas de Autoria</label>
-  <textarea class="form-control" id="setInscriptions" rows="2" [readonly]="!_isEditing" [value]="_datasheet?.set_inscriptions"></textarea>
+  <textarea class="form-control" name="set_inscriptions" rows="2" [readonly]="!_isEditing" [value]="_datasheet?.set_inscriptions"></textarea>
 </div>
 <div class="form-group col-lg-12 row">
   <label for="setMount">Marcas | Inscrições de Montagem de Elementos</label>
-  <textarea class="form-control" id="setMount" rows="2" [readonly]="!_isEditing" [value]="_datasheet?.set_mount"></textarea>
+  <textarea class="form-control" name="set_mount" rows="2" [readonly]="!_isEditing" [value]="_datasheet?.set_mount"></textarea>
 </div>
 <div class="form-group col-lg-12 row">
   <label for="setBuild">Marcas | Inscrições de Construção</label>
-  <textarea class="form-control" id="setBuild" rows="2" [readonly]="!_isEditing" [value]="_datasheet?.set_build"></textarea>
+  <textarea class="form-control" name="set_build" rows="2" [readonly]="!_isEditing" [value]="_datasheet?.set_build"></textarea>
 </div>
 <div class="row">
   <div class="form-group col-lg-8">
@@ -71,34 +71,34 @@
 <div class="row">
   <div class="form-group col-lg-4">
     <label for="matStruct">Materiais - Estrutura</label>
-    <textarea class="form-control" id="matStruct" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.materials_structure"></textarea>
+    <textarea class="form-control" name="materials_structure" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.materials_structure"></textarea>
   </div>
   <div class="form-group col-lg-4">
     <label for="matSurf">Materiais - Superfície</label>
-    <textarea class="form-control" id="matSurf" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.materials_surface"></textarea>
+    <textarea class="form-control" name="materials_surface" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.materials_surface"></textarea>
   </div>
   <div class="form-group col-lg-4">
     <label for="matAcess">Materiais - Elementos Acessórios</label>
-    <textarea class="form-control" id="matAcess" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.materials_elementsAccessories"></textarea>
+    <textarea class="form-control" name="materials_elementsAccessories" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.materials_elementsAccessories"></textarea>
   </div>
 </div>
 <div class="row">
   <div class="form-group col-lg-4">
     <label for="tecStruct">Técnicas - Estrutura</label>
-    <textarea class="form-control" id="tecStruct" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.techniques_structure"></textarea>
+    <textarea class="form-control" name="techniques_structure" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.techniques_structure"></textarea>
   </div>
   <div class="form-group col-lg-4">
     <label for="tecSurf">Técnicas - Superfície</label>
-    <textarea class="form-control" id="tecSurf" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.techniques_surface"></textarea>
+    <textarea class="form-control" name="techniques_surface" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.techniques_surface"></textarea>
   </div>
   <div class="form-group col-lg-4">
     <label for="tecAcess">Técnicas - Elementos Acessórios</label>
-    <textarea class="form-control" id="tecAcess" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.techniques_elementsAccessories"></textarea>
+    <textarea class="form-control" name="techniques_elementsAccessories" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.techniques_elementsAccessories"></textarea>
   </div>
 </div>
 <div class="form-group col-lg-12">
   <label for="description">Breve Descrição</label>
-  <textarea class="form-control" id="description" rows="2" [readonly]="!_isEditing" [value]="_datasheet?.small_description"></textarea>
+  <textarea class="form-control" name="small_description" rows="2" [readonly]="!_isEditing" [value]="_datasheet?.small_description"></textarea>
 </div>
 <div class="form-group col-lg-12">
   <label for="analogies">Analogias</label>
