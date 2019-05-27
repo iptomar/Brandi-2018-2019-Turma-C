@@ -5,7 +5,7 @@
 <div class="form-group row">
   <label for="envDescription" class="col-lg-2 col-form-label">Descrição do local</label>
   <div class="col-lg-10">
-    <textarea class="form-control" name="site_description" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.site_description"></textarea>
+    <textarea class="form-control" name="site_description" id="site_description" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.site_description"></textarea>
   </div>
 </div>
 
@@ -27,10 +27,10 @@
       <label>Temperatura (Valores Médios em ºC)</label>
     </div>
     <div class="col-lg-4">
-      <input name="cold_temp" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.cold_temp"/>
+      <input name="cold_temp" id="cold_temp" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.cold_temp"/>
     </div>
     <div class="col-lg-4">
-      <input name="hot_temp" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.hot_temp"/>
+      <input name="hot_temp" id="hot_temp" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.hot_temp"/>
     </div>
   </div>
   <div class="row">
@@ -38,10 +38,10 @@
       <label>Humidade Relativa (Valores Médios em %)</label>
     </div>
     <div class="col-lg-4">
-      <input name="cold_humidity" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" [value]="_datasheet?.cold_humidity" />
+      <input name="cold_humidity" id="cold_humidity" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" [value]="_datasheet?.cold_humidity" />
     </div>
     <div class="col-lg-4">
-      <input name="hot_humidity" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.hot_humidity"/>
+      <input name="hot_humidity" id="hot_humidity" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.hot_humidity"/>
     </div>
   </div>
   <div class="row">
@@ -51,7 +51,7 @@
     </div>
     <div class="col-lg-4 d-flex">
       <div class="flex-grow-1">
-        <select class="form-control" name="cold_start" [disabled]='!_isEditing' [value]="_datasheet?.cold_start">
+        <select class="form-control" name="cold_start" id="cold_start" [disabled]='!_isEditing' [value]="_datasheet?.cold_start">
           <option selected>Seleccione</option>
           <option value="1">Janeiro</option>
           <option value="2">Fevereiro</option>
@@ -69,7 +69,7 @@
       </div>
       <div class="align-self-center">&ensp;/&ensp;</div>
       <div class="flex-grow-1">
-        <select class="form-control" name="cold_end" [disabled]='!_isEditing' [value]="_datasheet?.cold_end">
+        <select class="form-control" name="cold_end" id="cold_end" [disabled]='!_isEditing' [value]="_datasheet?.cold_end">
           <option selected>Seleccione</option>
           <option value="1">Janeiro</option>
           <option value="2">Fevereiro</option>
@@ -88,7 +88,7 @@
     </div>
     <div class="col-lg-4 d-flex">
       <div class="flex-grow-1">
-        <select class="form-control" name="hot_start" [disabled]='!_isEditing' [value]="_datasheet?.hot_start">
+        <select class="form-control" name="hot_start" id="hot_start" [disabled]='!_isEditing' [value]="_datasheet?.hot_start">
           <option selected>Seleccione</option>
           <option value="1">Janeiro</option>
           <option value="2">Fevereiro</option>
@@ -106,7 +106,7 @@
       </div>
       <div class="align-self-center">&ensp;/&ensp;</div>
       <div class="flex-grow-1">
-        <select class="form-control" name="hot_end" [disabled]='!_isEditing' [value]="_datasheet?.hot_end">
+        <select class="form-control" name="hot_end" id="hot_end" [disabled]='!_isEditing' [value]="_datasheet?.hot_end">
           <option selected>Seleccione</option>
           <option value="1">Janeiro</option>
           <option value="2">Fevereiro</option>
@@ -139,25 +139,25 @@
         <div class="form-group row">
           <label for="lightning_type_natural" class="col-lg-3 col-form-label">Tipo</label>
           <div class="col-lg-9">
-            <input name="lightning_type_natural" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" [value]="_datasheet?.lightning_type_natural" />
+            <input name="lightning_type_natural" id="lightning_type_natural" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" [value]="_datasheet?.lightning_type_natural" />
           </div>
         </div>
         <div class="form-group row">
           <label for="natural_lux" class="col-lg-7 col-form-label">Valor de Iluminância (lux)</label>
           <div class="col-lg-5">
-            <input name="natural_lux" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.natural_lux"/>
+            <input name="natural_lux" id="natural_lux" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.natural_lux"/>
           </div>
         </div>
         <div class="form-group row">
           <label for="natural_uv" class="col-lg-7 col-form-label">Valor de U.V. Medidos (µw/cm2)</label>
           <div class="col-lg-5">
-            <input name="natural_uv" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.natural_uv"/>
+            <input name="natural_uv" id="natural_uv" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.natural_uv"/>
           </div>
         </div>
         <div class="form-group row">
           <label for="natural_real_uv" class="col-lg-7 col-form-label">Valor Real de U.V. (µw/cm2)</label>
           <div class="col-lg-5">
-            <input name="natural_real_uv" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.natural_real_uv"/>
+            <input name="natural_real_uv" id="natural_real_uv" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.natural_real_uv"/>
           </div>
         </div>
       </div>
@@ -170,26 +170,26 @@
         <div class="form-group row">
           <label for="lightning_origin_artificial" class="col-lg-3 col-form-label">Tipo</label>
           <div class="col-lg-9">
-            <input name="lightning_origin_artificial" type="text" class="form-control" placeholder=""
+            <input name="lightning_origin_artificial" id="lightning_origin_artificial" type="text" class="form-control" placeholder=""
               [readonly]="!_isEditing" [value]="_datasheet?.lightning_origin_artificial" />
           </div>
         </div>
         <div class="form-group row">
           <label for="artificial_lux" class="col-lg-7 col-form-label">Valor de Iluminância (lux)</label>
           <div class="col-lg-5">
-            <input name="artificial_lux" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" [value]="_datasheet?.artificial_lux" />
+            <input name="artificial_lux" id="artificial_lux" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" [value]="_datasheet?.artificial_lux" />
           </div>
         </div>
         <div class="form-group row">
           <label for="artificial_uv" class="col-lg-7 col-form-label">Valor de U.V. Medidos (µw/cm2)</label>
           <div class="col-lg-5">
-            <input name="artificial_uv" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" [value]="_datasheet?.artificial_uv" />
+            <input name="artificial_uv" id="artificial_uv" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" [value]="_datasheet?.artificial_uv" />
           </div>
         </div>
         <div class="form-group row">
           <label for="artificial_real_uv" class="col-lg-7 col-form-label">Valor Real de U.V. (µw/cm2)</label>
           <div class="col-lg-5">
-            <input name="artificial_real_uv" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.artificial_real_uv"/>
+            <input name="artificial_real_uv"  id="artificial_real_uv" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.artificial_real_uv"/>
           </div>
         </div>
       </div>
@@ -203,19 +203,19 @@
   <div class="form-group row">
     <label for="poluting_agents" class="col-lg-2 col-form-label">Agentes Poluidores</label>
     <div class="col-lg-10">
-      <textarea class="form-control" name="poluting_agents" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.poluting_agents"></textarea>
+      <textarea class="form-control" name="poluting_agents" id="poluting_agents" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.poluting_agents"></textarea>
     </div>
   </div>
   <div class="form-group row">
     <label for="poluting_sources" class="col-lg-2 col-form-label">Fontes | Origem</label>
     <div class="col-lg-10">
-      <textarea class="form-control" name="poluting_sources" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.poluting_sources"></textarea>
+      <textarea class="form-control" name="poluting_sources" id="poluting_sources" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.poluting_sources"></textarea>
     </div>
   </div>
   <div class="form-group row">
     <label for="poluting_results" class="col-lg-2 col-form-label">Resultados</label>
     <div class="col-lg-10">
-      <textarea class="form-control" name="poluting_results" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.poluting_results"></textarea>
+      <textarea class="form-control" name="poluting_results" id="poluting_results" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.poluting_results"></textarea>
     </div>
   </div>
 </fieldset>
@@ -223,6 +223,6 @@
 <div class="form-group row">
   <label for="env_conclusions" class="col-lg-2 col-form-label">Observações | Conclusões</label>
   <div class="col-lg-10">
-    <textarea class="form-control" name="env_conclusions" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.env_conclusions"></textarea>
+    <textarea class="form-control" name="env_conclusions" id="env_conclusions" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.env_conclusions"></textarea>
   </div>
 </div>
