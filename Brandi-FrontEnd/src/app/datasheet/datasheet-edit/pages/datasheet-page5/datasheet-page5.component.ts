@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatasheetPage } from '../../datasheet-edit.component';
-import { Datasheet, DatasheetService } from 'src/app/services/datasheet/datasheet.service';
+import { Datasheet } from 'src/app/services/datasheet/datasheet.service';
 
 @Component({
   selector: 'app-datasheet-page5',
@@ -11,6 +11,7 @@ export class DatasheetPage5Component implements OnInit, DatasheetPage {
   _datasheet: Datasheet;
   _isEditing: boolean;
 
+  /**Metodo que vai ser executado para cada child do create edit page 1, ... ,page 10*/
   getForm(event: any): Datasheet {
     console.log('page3');
     return this._datasheet;

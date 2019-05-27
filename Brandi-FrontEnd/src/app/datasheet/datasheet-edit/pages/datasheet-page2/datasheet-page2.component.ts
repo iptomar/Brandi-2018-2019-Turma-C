@@ -21,6 +21,7 @@ export class DatasheetPage2Component implements OnInit,DatasheetPage {
   isEditing(isEditing: boolean): void {
     this._isEditing=isEditing;
   }
+  /**Metodo que vai ser executado para cada child do create edit page 1, ... ,page 10*/
   public getForm(event: any): any {
     let datasheet: any = Object.assign({}, this._datasheet); // clona os dados
     datasheet.dimensions= event.target.dimensions.value;

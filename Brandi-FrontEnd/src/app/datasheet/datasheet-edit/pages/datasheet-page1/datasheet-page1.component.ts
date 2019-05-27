@@ -1,6 +1,6 @@
 import { Component, OnInit, ɵConsole, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Datasheet, DatasheetService } from 'src/app/services/datasheet/datasheet.service';
-import { Type } from '@angular/compiler';
+//import { Type } from '@angular/compiler';
 import { Global } from 'src/app/Global';
 import { User } from 'src/app/services/auth/auth.service';
 import { UsersService } from 'src/app/services/users/users.service';
@@ -51,7 +51,7 @@ export class DatasheetPage1Component implements OnInit, DatasheetPage, OnDestroy
   isEditing(isEditing: boolean): void {
     this._isEditing = isEditing;
   }
-
+  /**Metodo que vai ser executado para cada child do create edit page 1, ... ,page 10*/
   public getForm(event: any): Datasheet {
     let datasheet: Datasheet = Object.assign({}, this._datasheet); // clona os dados
     datasheet.object_designation = event.target.design.value;

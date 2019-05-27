@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DatasheetPage } from '../../datasheet-edit.component';
-import { Datasheet, DatasheetService } from 'src/app/services/datasheet/datasheet.service';
+
+import { Datasheet } from 'src/app/services/datasheet/datasheet.service';
 
 @Component({
   selector: 'app-datasheet-page4',
@@ -11,6 +11,7 @@ export class DatasheetPage4Component implements OnInit {
   _datasheet: any;
   _isEditing: boolean;
 
+  /**Metodo que vai ser executado para cada child do create edit page 1, ... ,page 10*/
   getForm(event: any): any {
 
     let datasheet: any = Object.assign({}, this._datasheet); // clona os dados

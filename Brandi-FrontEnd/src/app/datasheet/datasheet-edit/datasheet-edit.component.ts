@@ -11,7 +11,7 @@ import { DatasheetPage8Component } from './pages/datasheet-page8/datasheet-page8
 import { DatasheetPage9Component } from './pages/datasheet-page9/datasheet-page9.component';
 import { DatasheetPage10Component } from './pages/datasheet-page10/datasheet-page10.component';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscribable, Subscription } from 'rxjs';
+//import { Subscribable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 export interface DatasheetPage {
@@ -73,16 +73,17 @@ export class DatasheetEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    (<HTMLElement>this.dataSheetTabs.nativeElement.querySelector('#datasheet-tabs .nav-item:first-child .nav-link')).classList.add("active");
     this.datasheetService.getDatasheet(parseInt(this.route.snapshot.paramMap.get('id'),10)).subscribe((datasheet : Datasheet) => {
       this._datasheet=datasheet;
       
-      console.log(this._datasheet);
+      //console.log(this._datasheet);
       this.updateDatasheetInAllPages();
     },
     take(1)
     );
   }
+  
+  
   
   public get isEditing() {
     // devolve true se puder ser editado
@@ -120,6 +121,11 @@ export class DatasheetEditComponent implements OnInit {
         }, 3 * 1000); // espera 3 segundos antes de sair da pagina de edição
       } else { this.messageEditErr = result.message; }
     });
+  }
+
+  
+  public changeTab(event) {
+    event.preventDefault();
   }
 
   public cancelar() : void {

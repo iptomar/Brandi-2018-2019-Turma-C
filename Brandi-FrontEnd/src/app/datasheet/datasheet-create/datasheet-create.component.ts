@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { DatasheetService, Datasheet } from 'src/app/services/datasheet/datasheet.service';
+import { DatasheetService } from 'src/app/services/datasheet/datasheet.service';
 import { Global } from 'src/app/Global';
 import { User } from 'src/app/services/auth/auth.service';
 import { UsersService } from 'src/app/services/users/users.service';
