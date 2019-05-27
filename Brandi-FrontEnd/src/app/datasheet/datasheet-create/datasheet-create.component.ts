@@ -40,23 +40,23 @@ export class DatasheetCreateComponent implements OnInit, OnDestroy {
    public submitData(event){
      
     event.preventDefault();
-    let data: any={};
-      data.id =-1;
-      data.object_designation= event.target.design.value;
-      data.CEARC_process= event.target.CEARC.value;
-      data.CEARC_process_date= event.target.CEARCdate.value;
-      data.CEARC_entry_date= event.target.CEARCentrydate.value;
-      data.LCRM_process= event.target.LCRM.value;
-      data.LCRM_process_date=event.target.LCRMdate.value;
-      data.LCRM_entry_date= event.target.LCRMentrydate.value;
-      data.coordinator= event.target.coordinator.value;
-      data.super_category=event.target.supercategory.value;
-      data.category=event.target.category.value;
-      data.sub_category=event.target.subcategory.value;
+    let datasheet: any={};
+      datasheet.id =-1;
+      datasheet.object_designation = event.target.design.value;
+      datasheet.CEARC_process = event.target.CEARC.value;
+      datasheet.CEARC_process_date = Global.stringToDate(event.target.CEARCdate.value);
+      datasheet.CEARC_entry_date = Global.stringToDate(event.target.CEARCentrydate.value);
+      datasheet.LCRM_process = event.target.LCRM.value;
+      datasheet.LCRM_process_date = Global.stringToDate(event.target.LCRMdate.value);
+      datasheet.LCRM_entry_date = Global.stringToDate(event.target.LCRMentrydate.value);
+      datasheet.coordinator = event.target.coordinator.value;
+      datasheet.super_category=event.target.supercategory.value;
+      datasheet.category=event.target.category.value;
+      datasheet.sub_category=event.target.subcategory.value;
       this.messageEditErr ="";
       this.messageEditSuccess ="";
       window.scroll(0,0);
-      this._datasheet.submitDatasheets(data,0).subscribe((result) => {
+      this._datasheet.submitDatasheets(datasheet,0).subscribe((result) => {
         if(!result.error) {
           this.messageEditSuccess = result.message;
           setTimeout(()=> {

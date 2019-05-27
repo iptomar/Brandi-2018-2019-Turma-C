@@ -16,14 +16,63 @@ export interface Datasheet {
   LCRM_process_date: Date;
   LCRM_entry_date: Date;
   coordinator: number;
-  coordinator_name: string;
   last_modified_user: number;
-  last_modified_user_name: string;
   last_modified_date: Date;
   object_created_date: Date;
   super_category: number;
   category: number;
   sub_category: number;
+  dimensions: string;
+  other_dimensions: string;
+  tipology: string;
+  site: string;
+  object_owner: number;
+  owner: number;
+  patron: number;
+  object_is_a_set: number;
+  set_type: string;
+  set_elements: string;
+  set_materials: string;
+  set_inscriptions: string;
+  set_mount: string;
+  set_build: string;
+  classification: string;
+  period: number;
+  quality: number;
+  style: number;
+  small_description: string;
+  analogies: string;
+  conclusions: string;
+  author: string;
+  dating: string;
+  origin: string;
+  materials_structure: string;
+  materials_surface: string;
+  materials_elementsAccessories: string;
+  techniques_structure: string;
+  techniques_surface: string;
+  techniques_elementsAccessories: string;
+  site_description: string;
+  cold_temp: string;
+  hot_temp: string;
+  cold_humidity: string;
+  hot_humidity: string;
+  cold_start: number;
+  cold_end: number;
+  hot_start: number;
+  hot_end: number;
+  lightning_type_natural: string;
+  lightning_origin_artificial: string;
+  artificial_lux: string;
+  natural_lux: string;
+  artificial_uv: string;
+  natural_uv: string;
+  artificial_real_uv: string;
+  natural_real_uv: string;
+  poluting_agents: string;
+  poluting_sources: string;
+  poluting_results: string;
+  env_conclusions: string;
 }
 
 
@@ -31,24 +80,6 @@ export interface Datasheet {
 export interface DatasheetList {
   id: number;
   object_designation: string;
-}
-
-
-export interface SuperCategories {
-  id: number;
-  supercategory: string;
-}
-
-export interface Categories {
-  id: number;
-  category: string;
-  id_super_category:number;
-}
-
-export interface SubCategories {
-  id: number;
-  subcategory: string;
-  id_category:number;
 }
 
 @Injectable({
@@ -84,12 +115,12 @@ export class DatasheetService {
       );
   }
 
-  public getDatasheet(id: number): Observable<any> { //datasheet nao tem os campos novos todos
+  public getDatasheet(id: number): Observable<Datasheet> { 
     return this.http
       .get(Global.HOST_PREFIX + DatasheetService.DATA + "/" + id)
       .pipe(
         map((data: ReceivedData) => {
-          let ficha:any= null;
+          let ficha:Datasheet= null;
           if (!data.error) {
             let element = data.res.datasheet;
               element.CEARC_process_date = Global.stringToDate(
@@ -124,7 +155,7 @@ export class DatasheetService {
   ): Observable<ReceivedData> {
     let dados: any;
     switch(idPage){
-      case(1):
+      case(0):
         dados=  {
           designation: data.object_designation,
           cearcproc: data.CEARC_process,
@@ -152,7 +183,7 @@ export class DatasheetService {
 
         };
         break;
-        case(2):
+        case(1):
         dados=  {
           dimensions: data.dimensions,
           other_dimensions : data.other_dimensions,
@@ -163,7 +194,7 @@ export class DatasheetService {
           patron :data.patron
         };
         break;
-        case(3):
+        case(2):
         dados=  {
           object_is_a_set : data.object_is_a_set,
           set_type: data.set_type,
@@ -190,7 +221,7 @@ export class DatasheetService {
           origin: data.origin
         };
         break;
-        case(4):
+        case(3):
         dados=  {
           site_description: data.site_description,
           cold_temp: data.cold_temp,

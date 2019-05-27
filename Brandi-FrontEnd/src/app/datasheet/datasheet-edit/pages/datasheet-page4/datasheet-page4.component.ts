@@ -25,7 +25,7 @@ export class DatasheetPage4Component implements OnInit {
   datasheet.hot_end= event.target.hot_end.value;
   datasheet.lightning_type_natural= event.target.lightning_type_natural.value;
   datasheet.lightning_origin_artificial= event.target.lightning_origin_artificial.value;
-  datasheet.artificial_lux= event.target.artificial_lux.value;// ?
+  datasheet.artificial_lux= event.target.artificial_lux.value;
   datasheet.natural_lux= event.target.natural_lux.value;
   datasheet.artificial_uv= event.target.artificial_uv.value;
   datasheet.natural_uv= event.target.natural_uv.value;

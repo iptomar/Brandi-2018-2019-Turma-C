@@ -62,7 +62,6 @@ export class DatasheetPage1Component implements OnInit, DatasheetPage, OnDestroy
     datasheet.LCRM_process_date = Global.stringToDate(event.target.LCRMdate.value);
     datasheet.LCRM_entry_date = Global.stringToDate(event.target.LCRMentrydate.value);
     datasheet.coordinator = event.target.coordinator.value;
-    datasheet.coordinator_name = event.target.coordinator.value;
     datasheet.super_category=event.target.supercategory.value;
     datasheet.category=event.target.category.value;
     datasheet.sub_category=event.target.subcategory.value;
