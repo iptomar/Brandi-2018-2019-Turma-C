@@ -40,7 +40,8 @@ export class DatasheetCreateComponent implements OnInit, OnDestroy {
    public submitData(event){
      
     event.preventDefault();
-    let data: Datasheet=DatasheetService.createCleanDatasheet();
+    let data: any={};
+      data.id =-1;
       data.object_designation= event.target.design.value;
       data.CEARC_process= event.target.CEARC.value;
       data.CEARC_process_date= event.target.CEARCdate.value;

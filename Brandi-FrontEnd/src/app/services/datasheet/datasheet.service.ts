@@ -60,71 +60,11 @@ export class DatasheetService {
   public static DATA_CREATE = "datasheet/create";
   public static DATA_EDIT = "datasheet/edit";
 
-  
-  public static SUPER_CATEGORIES = "datasheet/super_categories/list";
-  public static CATEGORIES = "datasheet/categories/list";
-  public static SUB_CATEGORIES = "datasheet/sub_categories/list";
   constructor(
     private http: HttpClient,
     private auth: AuthService,
     private datePipe: DatePipe
   ) {}
-
-
-  public getSuperCategories(pesquisa: string): Observable<SuperCategories[]> {
-    return this.http
-      .get(Global.HOST_PREFIX + DatasheetService.SUPER_CATEGORIES, {
-        params: new HttpParams().set("search", pesquisa)
-      })
-      .pipe(
-        map((data: ReceivedData) => {
-          let fichas: SuperCategories[] = [];
-          if (!data.error) {
-            fichas = data.res.super_categories;
-          } else if (data.error === 2) {
-            this.auth.forceLogout();
-          }
-          return fichas;
-        })
-      );
-  }
-
-  public getCategories(id_super_category:number, pesquisa: string): Observable<Categories[]> {
-    return this.http
-      .get(Global.HOST_PREFIX + DatasheetService.CATEGORIES, {
-        params: new HttpParams().set("search", pesquisa).set("super_category", id_super_category+"")
-      })
-      .pipe(
-        map((data: ReceivedData) => {
-          let fichas: Categories[] = [];
-          if (!data.error) {
-            fichas = data.res.categories;
-          } else if (data.error === 3) {
-            this.auth.forceLogout();
-          }
-          return fichas;
-        })
-      );
-  }
-
-  
-  public getSubCategories(id_category:number, pesquisa: string): Observable<SubCategories[]> {
-    return this.http
-      .get(Global.HOST_PREFIX + DatasheetService.SUB_CATEGORIES, {
-        params: new HttpParams().set("search", pesquisa).set("category", id_category+"")
-      })
-      .pipe(
-        map((data: ReceivedData) => {
-          let fichas: SubCategories[] = [];
-          if (!data.error) {
-            fichas = data.res.sub_categories;
-          } else if (data.error === 3) {
-            this.auth.forceLogout();
-          }
-          return fichas;
-        })
-      );
-  }
 
   public getDatasheets(pesquisa: string): Observable<DatasheetList[]> {
     return this.http
@@ -256,7 +196,7 @@ export class DatasheetService {
           cold_temp: data.cold_temp,
           hot_temp: data.hot_temp,
           cold_humidity: data.cold_humidity,
-          hot_humidity: data.hot_humidity, //sounds nasty
+          hot_humidity: data.hot_humidity, 
           cold_start: data.cold_start,
           cold_end: data.cold_end,
           hot_start: data.hot_start,
@@ -309,24 +249,5 @@ export class DatasheetService {
           })
         );
     }
-  }
-
-  public static createCleanDatasheet(): Datasheet {
-    return <Datasheet>{
-      id: -1,
-      CEARC_entry_date: new Date(),
-      CEARC_process: "",
-      CEARC_process_date: new Date(),
-      LCRM_entry_date: new Date(),
-      LCRM_process: "",
-      LCRM_process_date: new Date(),
-      coordinator: 0,
-      coordinator_name: "",
-      last_modified_date: new Date(),
-      last_modified_user: 0,
-      last_modified_user_name: "",
-      object_created_date: new Date(),
-      object_designation: ""
-    };
   }
 }
