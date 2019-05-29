@@ -89,11 +89,17 @@ WebDriver driver;
         driver.findElement(By.name("searchBox")).sendKeys("marcio");
         driver.findElement(By.xpath("/html/body/app-root/div/app-user-list/div/div/form/div[1]/div/button")).click();
         Thread.sleep(1000);
-        driver.findElement(By.xpath("/html/body/app-root/div/app-user-list/div/div/form/div[2]/table/tbody/tr[3]/td[5]/div/button[1]")).click();
+        driver.findElement(By.xpath("/html/body/app-root/div/app-user-list/div/div/form/div[2]/table/tbody/tr[1]/td[5]/div/button[1]")).click();
         Thread.sleep(1000);
+       
         WebElement quali = driver.findElement(By.name("qualifications"));
          quali.clear();
          quali.sendKeys("12");
+         
+        WebElement title = driver.findElement(By.name("title"));
+        title.clear();
+        title.sendKeys("Técnico");
+        
         driver.findElement(By.xpath("/html/body/app-root/div/app-user-list/div/div/form/div[8]/div/button[1]")).click();
         Thread.sleep(1000);
       }

@@ -33,9 +33,8 @@ public class Utilizador_FichaTecnica {
          driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/a")).click();
             Thread.sleep(1000);
             
-            driver.findElement(By.name("email")).sendKeys("teste123456@ipt.pt"); 
-            driver.findElement(By.name("password")).sendKeys("123456");
-   
+            driver.findElement(By.name("email")).sendKeys("admin@admin.admin"); 
+            driver.findElement(By.name("password")).sendKeys("admin");         
          driver.findElement(By.xpath("/html/body/app-root/div/app-login/div/div/form/button")).click();       
            Thread.sleep(1000);
        
@@ -57,11 +56,10 @@ public class Utilizador_FichaTecnica {
        driver.findElement(By.name("LCRM")).sendKeys("20052018");
        driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-create/div/div/form/div[3]/div[2]/div/input")).sendKeys("22052018");
       driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-create/div/div/form/div[3]/div[3]/div/input")).sendKeys("24052018");
-       
       Select coord = new Select (driver.findElement(By.name("coordinator")));
        coord.selectByValue("7");
          Thread.sleep(1000);
-        
+   
          Select select = new Select(driver.findElement(By.name("supercategory")));
                  select.selectByValue("1"); 
                  Thread.sleep(1000);
@@ -94,7 +92,7 @@ public class Utilizador_FichaTecnica {
       driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-create/div/div/form/div[3]/div[3]/div/input")).sendKeys("24052018");  
        driver.findElement(By.name("coordinator")).click();
         Select select = new Select(driver.findElement(By.name("supercategory")));
-                 select.selectByValue("1"); 
+                 select.selectByValue("4"); 
                  Thread.sleep(1000);
        driver.findElement(By.name("category")).click();
           Thread.sleep(1000);
@@ -103,4 +101,6 @@ public class Utilizador_FichaTecnica {
      Thread.sleep(1000);
          
      }
+     
+     
 }

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: ListadeUtilizadores
+Test set: Categorias_Admin
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 20.458 sec
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.139 sec

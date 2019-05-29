@@ -1,0 +1,12 @@
+#surefire
+#Wed May 29 22:05:35 BST 2019
+jpda.address=6404
+maven.ext.class.path=C\:\\Program Files\\NetBeans 8.2\\java\\maven-nblib\\netbeans-eventspy.jar
+file.encoding=UTF-8
+jpda.listen=true
+forkMode=once
+user.dir=C\:\\Users\\vanes\\Desktop\\PSI-T\\Brandi-2018-2019-Turma-C\\Brandi-2018-2019-Turma-C\\Testes\\Testes Cliente\\mavenproject1
+localRepository=C\:\\Users\\vanes\\.m2\\repository
+test=Categorias_Admin
+basedir=C\:\\Users\\vanes\\Desktop\\PSI-T\\Brandi-2018-2019-Turma-C\\Brandi-2018-2019-Turma-C\\Testes\\Testes Cliente\\mavenproject1
+maven.surefire.debug=-Xdebug -Xrunjdwp\:transport\=dt_socket,server\=n,address\=6404
