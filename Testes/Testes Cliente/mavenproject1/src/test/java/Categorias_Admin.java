@@ -69,6 +69,15 @@ public class Categorias_Admin {
           Thread.sleep(1000);
       
      }
+                  @Test
+         public void admin_CriarCategoria_Já_Criada() throws Exception {
+         driver.get("http://brandic.devll.eu:61080/#/admin/categories");
+         driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/form[1]/input")).sendKeys("Teste");
+         driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/form[1]/button")).click();
+          Thread.sleep(1000);
+      
+     }
+         
       
         @Test
          public void admin_ProcurarEncontrado () throws Exception {
