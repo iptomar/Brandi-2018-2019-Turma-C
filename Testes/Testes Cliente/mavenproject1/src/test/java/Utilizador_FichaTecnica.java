@@ -8,7 +8,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
@@ -81,22 +83,46 @@ public class Utilizador_FichaTecnica {
         Thread.sleep(1000);
         driver.findElement(By.xpath("//*[@id=\"navbarDropdownDatasheet\"]")).click();
         Thread.sleep(1000);
-        //driver.findElement(By.linkText("/admin/user/register")).click();
         driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[2]/div/a[1]")).click();
         Thread.sleep(1000);
-        driver.findElement(By.name("design")).sendKeys("Objeto");
-        driver.findElement(By.name("CEARC")).sendKeys("15633");
-        driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-create/div/div/form/div[3]/div[2]/div/input")).sendKeys("22052018");
-        driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-create/div/div/form/div[3]/div[3]/div/input")).sendKeys("24052018");
-        driver.findElement(By.name("coordinator")).click();
-        Select select = new Select(driver.findElement(By.name("supercategory")));
-        select.selectByValue("1");
-        Thread.sleep(1000);
-        driver.findElement(By.name("category")).click();
-        Thread.sleep(1000);
-        driver.findElement(By.name("subcategory")).click();
-        driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-create/div/div/form/div[7]/button")).click();
-        Thread.sleep(1000);
+                //Designação do objeto
+        WebElement design = driver.findElement(By.name("design"));
+        design.sendKeys("Peça XXXX qualquer coisa - :D");
+        //Numero do processo CEARC
+        WebElement cearc = driver.findElement(By.name("CEARC"));
+        cearc.sendKeys("321321321");
+        
+        //CEARC data
+        WebElement cearcDate = driver.findElement(By.name("CEARCdate"));
+        //Preencher data como dd/mm/yyyy para 09/02/2019
+        cearcDate.sendKeys("922019");
+       
+        //CEARC data entrada
+        WebElement cearCentryDate = driver.findElement(By.name("CEARCentryDate"));
+        //Preencher data como dd/mm/yyyy para 09/02/2019
+        cearCentryDate.sendKeys("922019");
+       
+       //Numero do processo LCMR
+       WebElement lcmr = driver.findElement(By.name("LCRM"));
+       lcmr.sendKeys("12158");
+       
+       //LCRM data
+        WebElement lcrmDate = driver.findElement(By.name("LCRMdate"));
+        //Preencher data como dd/mm/yyyy para 09/02/2019
+        lcrmDate.sendKeys("922019");
+        
+        //LCRM data entrada
+        WebElement lcrmEntryDate = driver.findElement(By.name("LCRMCentryDate"));
+        //Preencher data como dd/mm/yyyy para 09/02/2019
+        lcrmEntryDate.sendKeys("922019");
+        
+        //RADIO BUTTON
+        WebElement coordinator = driver.findElement(By.name("coordinator"));
+        coordinator.sendKeys(Keys.DOWN);
+        coordinator.sendKeys(Keys.RETURN);
 
+
+        driver.findElement(By.name("submit")).click();
+        // driver.close();
     }
 }
