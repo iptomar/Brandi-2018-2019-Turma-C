@@ -8,8 +8,8 @@
         <div class="row">
           <button type="button" (click)="setEditMode(true)"
             class="btn btn-outline-success col-lg-8 mr-lg-2 ml-3 mr-3 mb-2 mb-lg-0">Editar</button>
-          <button type="button" (click)="deleteDatasheet()"
-            class="btn btn-outline-danger col-lg mr-3 ml-lg-2 ml-3">Eliminar</button>
+          <!-- <button type="button" (click)="deleteDatasheet()" -->
+            <!-- class="btn btn-outline-danger col-lg mr-3 ml-lg-2 ml-3">Eliminar</button> -->
         </div>
       </div>
       <ng-template #editbuttons>
@@ -69,6 +69,10 @@
           <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part10" role="tab"
             aria-selected="false" data-id="9">Fontes</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part11" role="tab"
+            aria-selected="false" data-id="10">Testes Solubilização</a>
+        </li>
       </ul>
       <div *ngIf='messageEditErr !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>{{messageEditErr}}</strong>
@@ -116,6 +120,9 @@
         </div>
         <div class="tab-pane" id="datasheet_part10" role="tabpanel" aria-labelledby="settings-tab">
           <app-datasheet-page10></app-datasheet-page10>
+        </div>
+        <div class="tab-pane" id="datasheet_part11" role="tabpanel" aria-labelledby="settings-tab">
+          <app-datasheet-page11></app-datasheet-page11>
         </div>
       </div>
     </div>

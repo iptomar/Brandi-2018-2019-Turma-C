@@ -10,6 +10,7 @@ import { DatasheetPage7Component } from './pages/datasheet-page7/datasheet-page7
 import { DatasheetPage8Component } from './pages/datasheet-page8/datasheet-page8.component';
 import { DatasheetPage9Component } from './pages/datasheet-page9/datasheet-page9.component';
 import { DatasheetPage10Component } from './pages/datasheet-page10/datasheet-page10.component';
+import { DatasheetPage11Component } from './pages/datasheet-page11/datasheet-page11.component';
 import { Router, ActivatedRoute } from '@angular/router';
 //import { Subscribable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -42,14 +43,15 @@ export class DatasheetEditComponent implements OnInit {
   @ViewChild(DatasheetPage8Component) datasheetPage8Component: DatasheetPage8Component;
   @ViewChild(DatasheetPage9Component) datasheetPage9Component: DatasheetPage9Component;
   @ViewChild(DatasheetPage10Component) datasheetPage10Component: DatasheetPage10Component;
+  @ViewChild(DatasheetPage11Component) datasheetPage11Component: DatasheetPage11Component;
   @ViewChild("datasheetTabs") dataSheetTabs: ElementRef;
-  
+
 
   private updateDatasheetInAllPages() {
     this.pages = [this.datasheetPage1Component, this.datasheetPage2Component,
       this.datasheetPage3Component, this.datasheetPage4Component, this.datasheetPage5Component,
       this.datasheetPage6Component, this.datasheetPage7Component, this.datasheetPage8Component,
-      this.datasheetPage9Component, this.datasheetPage10Component];
+      this.datasheetPage9Component, this.datasheetPage10Component, this.datasheetPage11Component];
     // so alterar acima
       for (let i = 0; i < this.pages.length; i++) {
         if (this.pages[i]) {
@@ -67,7 +69,7 @@ export class DatasheetEditComponent implements OnInit {
   public messageEditErr: string;
   // mensagem sucesso
   public messageEditSuccess: string;
-  constructor(private datasheetService: DatasheetService, private changeDetectorRef: ChangeDetectorRef, private router : Router ,private route: ActivatedRoute,) { 
+  constructor(private datasheetService: DatasheetService, private changeDetectorRef: ChangeDetectorRef, private router : Router ,private route: ActivatedRoute,) {
     this.messageEditErr = "";
     this.messageEditSuccess = "";
   }
@@ -75,16 +77,16 @@ export class DatasheetEditComponent implements OnInit {
   ngOnInit() {
     this.datasheetService.getDatasheet(parseInt(this.route.snapshot.paramMap.get('id'),10)).subscribe((datasheet : Datasheet) => {
       this._datasheet=datasheet;
-      
+
       //console.log(this._datasheet);
       this.updateDatasheetInAllPages();
     },
     take(1)
     );
   }
-  
-  
-  
+
+
+
   public get isEditing() {
     // devolve true se puder ser editado
     return this._onEdit;
@@ -98,7 +100,7 @@ export class DatasheetEditComponent implements OnInit {
     this.setEditMode(false);
   }
 
-  
+
   private getComponentOpen(): DatasheetPageSearch {
     let identification = parseInt(this.dataSheetTabs.nativeElement.querySelector('[aria-selected="true"]').getAttribute("data-id"), 10);
     return {datasheetpage: this.pages[identification], identification: identification};
@@ -123,7 +125,7 @@ export class DatasheetEditComponent implements OnInit {
     });
   }
 
-  
+
   public changeTab(event) {
     event.preventDefault();
   }

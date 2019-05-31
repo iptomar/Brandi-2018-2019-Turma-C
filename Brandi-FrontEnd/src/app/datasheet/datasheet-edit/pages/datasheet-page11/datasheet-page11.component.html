@@ -1,0 +1,103 @@
+<div class="card">
+  <div class="card-body">
+    <button (click)="cenas();" type="button">yay</button> <!-- Cenas à Duque, arranjar sff  -->
+    <div *ngIf="_verTeste; else testlist">
+        <div class="form-group">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th style="width: 30%">Solvente ou Mistura de Solventes</th>
+                  <th style="width: 15%">Grau de Eficácia</th>
+                  <th style="width: 35%">Observações</th>
+                  <th style="width: 20%"></th>
+                </tr>
+                <tr>
+                  <th class="align-middle">
+                    <input type="text" class="form-control " placeholder="Identificação do Estrato" />
+                  </th>
+                  <th>
+                  <select class="form-control" name="period" id="period" [disabled]='!_isEditing' >
+                      <option selected hidden >Seleccione</option>
+                      <option value="1">Muito Eficaz</option>
+                      <option value="2">Eficaz</option>
+                      <option value="3">Eficácia Média</option>
+                      <option value="4">Pouco Eficaz</option>
+                      <option value="5">Eficácia Nula</option>
+                    </select>
+                  </th>
+                  <th class="align-middle">
+                    <textarea type="text" class="form-control" placeholder="Características"></textarea>
+                  </th>
+                  <th class="align-middle">
+                      <button type="submit" class="btn btn-outline-success mt-2" [disabled]='!_isEditing'>Adicionar teste <i
+                        class="fa fa-flask"></i>
+                    </button>
+                  </th>
+                </tr>
+
+              </thead>
+
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+
+    </div>
+    <ng-template #testlist>
+      <h3>Lista de Testes de Solubilização</h3>
+      <form class="table-responsive">
+        <div class="input-group mb-3">
+          <input type="text" name="searchBox" class="form-control" placeholder="Pesquisar por"
+            aria-label="Pesquisar por">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i> Pesquisar</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="width: 40%">Identificação do Estrato/Sujidade</th>
+                <th style="width: 50%">Características</th>
+                <th style="width: 10%"></th>
+              </tr>
+              <tr>
+                <th class="align-middle">
+                  <input type="text" class="form-control " placeholder="Identificação do Estrato" />
+                </th>
+                <th class="align-middle">
+                  <textarea type="text" class="form-control" placeholder="Características"></textarea>
+                </th>
+                <th class="align-middle">
+                    <button type="submit" class="btn btn-outline-success mt-2" [disabled]='!_isEditing'>Adicionar teste <i
+                      class="fa fa-flask"></i>
+                  </button>
+                </th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <!-- <tr *ngFor="let u of _users; let i = index">
+                <td>{{u.id}}</td>
+                <td>{{u.full_name}}</td>
+                <td>{{u.email}}</td>
+                <td>{{u.last_login | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+                <td>
+                  <div class="row" style="margin: 0;">
+                    <button (click)="editMode(i)"
+                      class="btn btn-warning form-control col-xl mr-xl-2 mr-0 mb-xl-0 mb-2"><i class="fa fa-user"></i>
+                      Editar</button>
+                    <button (click)="deleteUser(i)" class="btn btn-danger form-control col-xl"><i
+                        class="fa fa-minus"></i> Eliminar</button>
+                  </div>
+                </td>
+              </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </form>
+    </ng-template>
+  </div>
+</div>
