@@ -47,6 +47,7 @@ export class DatasheetEditComponent implements OnInit {
   @ViewChild(DatasheetPage11Component) datasheetPage11Component: DatasheetPage11Component;
   @ViewChild(DatasheetPage12Component) datasheetPage12Component: DatasheetPage12Component;
   @ViewChild("datasheetTabs") dataSheetTabs: ElementRef;
+  @ViewChild("firstTab") firstTab : ElementRef;
 
 
   private updateDatasheetInAllPages() {
@@ -80,6 +81,7 @@ export class DatasheetEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    (<HTMLElement>this.firstTab.nativeElement).classList.add("active");
     this.datasheetService.getDatasheet(parseInt(this.route.snapshot.paramMap.get('id'),10)).subscribe((datasheet : Datasheet) => {
       this._datasheet = datasheet;
 
@@ -103,6 +105,7 @@ export class DatasheetEditComponent implements OnInit {
 
   public reset() {
     this.setEditMode(false);
+    location.reload();
   }
 
 
@@ -118,13 +121,15 @@ export class DatasheetEditComponent implements OnInit {
     let datasheet: Datasheet = datasheetPageSearch.datasheetpage.getForm(event);
     this.datasheetService.submitDatasheets(datasheet, datasheetPageSearch.identification).subscribe((result) => {
       if (!result.error) {
+        for(let k in this._datasheet) {
+          this._datasheet[k]=datasheet[k];
+        }
         this.messageEditSuccess = result.message;
         this.setEditMode(false);
         // this._datasheetlist[this._onEdit]=u;//atualizamos os dados para o cliente
         setTimeout(() => {
           this.messageEditErr = "";
           this.messageEditSuccess = "";
-          this._datasheet = datasheet;
         }, 3 * 1000); // espera 3 segundos antes de sair da pagina de edição
       } else { this.messageEditErr = result.message; }
     });
