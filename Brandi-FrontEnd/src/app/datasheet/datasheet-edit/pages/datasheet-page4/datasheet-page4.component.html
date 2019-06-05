@@ -27,10 +27,10 @@
       <label>Temperatura (Valores Médios em ºC)</label>
     </div>
     <div class="col-lg-4">
-      <input name="cold_temp" id="cold_temp" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.cold_temp"/>
+      <input name="cold_temp" id="cold_temp" type="number" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.cold_temp"/>
     </div>
     <div class="col-lg-4">
-      <input name="hot_temp" id="hot_temp" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.hot_temp"/>
+      <input name="hot_temp" id="hot_temp" type="number" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.hot_temp"/>
     </div>
   </div>
   <div class="row">
@@ -38,10 +38,10 @@
       <label>Humidade Relativa (Valores Médios em %)</label>
     </div>
     <div class="col-lg-4">
-      <input name="cold_humidity" id="cold_humidity" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" [value]="_datasheet?.cold_humidity" />
+      <input name="cold_humidity" id="cold_humidity" type="number" class="form-control" placeholder="" [readonly]="!_isEditing" [value]="_datasheet?.cold_humidity" />
     </div>
     <div class="col-lg-4">
-      <input name="hot_humidity" id="hot_humidity" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.hot_humidity"/>
+      <input name="hot_humidity" id="hot_humidity" type="number" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.hot_humidity"/>
     </div>
   </div>
   <div class="row">
@@ -145,19 +145,19 @@
         <div class="form-group row">
           <label for="natural_lux" class="col-lg-7 col-form-label">Valor de Iluminância (lux)</label>
           <div class="col-lg-5">
-            <input name="natural_lux" id="natural_lux" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.natural_lux"/>
+            <input name="natural_lux" id="natural_lux" type="number" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.natural_lux"/>
           </div>
         </div>
         <div class="form-group row">
           <label for="natural_uv" class="col-lg-7 col-form-label">Valor de U.V. Medidos (µw/cm2)</label>
           <div class="col-lg-5">
-            <input name="natural_uv" id="natural_uv" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.natural_uv"/>
+            <input name="natural_uv" id="natural_uv" type="number" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.natural_uv"/>
           </div>
         </div>
         <div class="form-group row">
           <label for="natural_real_uv" class="col-lg-7 col-form-label">Valor Real de U.V. (µw/cm2)</label>
           <div class="col-lg-5">
-            <input name="natural_real_uv" id="natural_real_uv" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.natural_real_uv"/>
+            <input name="natural_real_uv" id="natural_real_uv" type="number" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.natural_real_uv"/>
           </div>
         </div>
       </div>
@@ -177,19 +177,19 @@
         <div class="form-group row">
           <label for="artificial_lux" class="col-lg-7 col-form-label">Valor de Iluminância (lux)</label>
           <div class="col-lg-5">
-            <input name="artificial_lux" id="artificial_lux" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" [value]="_datasheet?.artificial_lux" />
+            <input name="artificial_lux" id="artificial_lux" type="number" class="form-control" placeholder="" [readonly]="!_isEditing" [value]="_datasheet?.artificial_lux" />
           </div>
         </div>
         <div class="form-group row">
           <label for="artificial_uv" class="col-lg-7 col-form-label">Valor de U.V. Medidos (µw/cm2)</label>
           <div class="col-lg-5">
-            <input name="artificial_uv" id="artificial_uv" type="text" class="form-control" placeholder="" [readonly]="!_isEditing" [value]="_datasheet?.artificial_uv" />
+            <input name="artificial_uv" id="artificial_uv" type="number" class="form-control" placeholder="" [readonly]="!_isEditing" [value]="_datasheet?.artificial_uv" />
           </div>
         </div>
         <div class="form-group row">
           <label for="artificial_real_uv" class="col-lg-7 col-form-label">Valor Real de U.V. (µw/cm2)</label>
           <div class="col-lg-5">
-            <input name="artificial_real_uv"  id="artificial_real_uv" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.artificial_real_uv"/>
+            <input name="artificial_real_uv"  id="artificial_real_uv" type="number" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.artificial_real_uv"/>
           </div>
         </div>
       </div>
