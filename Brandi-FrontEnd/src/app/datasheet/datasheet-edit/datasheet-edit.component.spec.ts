@@ -11,6 +11,8 @@ import { DatasheetPage7Component } from './pages/datasheet-page7/datasheet-page7
 import { DatasheetPage8Component } from './pages/datasheet-page8/datasheet-page8.component';
 import { DatasheetPage9Component } from './pages/datasheet-page9/datasheet-page9.component';
 import { DatasheetPage10Component } from './pages/datasheet-page10/datasheet-page10.component';
+import { DatasheetPage11Component } from './pages/datasheet-page11/datasheet-page11.component';
+import { DatasheetPage12Component } from './pages/datasheet-page12/datasheet-page12.component';
 
 describe('DatasheetEditComponent', () => {
   let component: DatasheetEditComponent;
@@ -21,7 +23,8 @@ describe('DatasheetEditComponent', () => {
       declarations: [ DatasheetEditComponent,  DatasheetPage1Component,
         DatasheetPage2Component, DatasheetPage3Component, DatasheetPage4Component,
         DatasheetPage5Component, DatasheetPage6Component, DatasheetPage7Component,
-        DatasheetPage8Component, DatasheetPage9Component, DatasheetPage10Component ]
+        DatasheetPage8Component, DatasheetPage9Component, DatasheetPage10Component,
+        DatasheetPage11Component, DatasheetPage12Component ]
     })
     .compileComponents();
   }));
