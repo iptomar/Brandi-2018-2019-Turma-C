@@ -2,12 +2,74 @@
   Folha de Obra
 </h5>
 
-<button type="button" class="btn btn-outline-success mt-2" [disabled]='!_isEditing'>Adicionar fonte <i
-  class="fa fa-book"></i>
+<button type="button" class="btn btn-outline-success mt-2" [disabled]='!_isEditing'>Adicionar procedimento <i
+    class="fa fa-paint-brush"></i>
 </button>
 <br /><br />
 <div>
 
-Tabela com a lista de intervenções realizadas
+  Tabela com a lista de intervenções realizadas
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="align-middle" style="width: 10%">Data</th>
+        <th class="align-middle" style="width: 30%">Designação do procedimento</th>
+        <th class="align-middle" style="width: 15%">Materiais e Produtos</th>
+        <th class="align-middle" style="width: 10%">Quantidades</th>
+        <th class="align-middle" style="width: 10%">Duração (h:m)</th>
+        <th class="align-middle" style="width: 10%">Técnico</th>
+        <th class="align-middle" style="width: 15%">Observações</th>
+      </tr>
+    </thead>
+
+    <tbody></tbody>
+    </table>
+
+  <ng-template #worksheet>
+
+    <form class="table-responsive">
+      <div class="input-group mb-3">
+        <input type="text" name="searchBox" class="form-control" placeholder="Pesquisar por" aria-label="Pesquisar por">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i> Pesquisar</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th style="width: 10%">Data</th>
+              <th style="width: 30%">Designação do procedimento</th>
+              <th style="width: 15%">Materiais e Produtos</th>
+              <th style="width: 10%">Quantidades</th>
+              <th style="width: 10%">Duração</th>
+              <th style="width: 10%">Técnico</th>
+              <th style="width: 15%">Observações</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <!-- <tr *ngFor="let u of _users; let i = index">
+            <td>{{u.id}}</td>
+            <td>{{u.full_name}}</td>
+            <td>{{u.email}}</td>
+            <td>{{u.last_login | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+            <td>
+              <div class="row" style="margin: 0;">
+                <button (click)="editMode(i)"
+                  class="btn btn-warning form-control col-xl mr-xl-2 mr-0 mb-xl-0 mb-2"><i class="fa fa-user"></i>
+                  Editar</button>
+                <button (click)="deleteUser(i)" class="btn btn-danger form-control col-xl"><i
+                    class="fa fa-minus"></i> Eliminar</button>
+              </div>
+            </td>
+          </tr> -->
+          </tbody>
+        </table>
+      </div>
+    </form>
+  </ng-template>
 
 </div>
