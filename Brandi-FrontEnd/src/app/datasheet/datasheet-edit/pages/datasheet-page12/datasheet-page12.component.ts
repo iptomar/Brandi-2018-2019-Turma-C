@@ -3,18 +3,18 @@ import { DatasheetPage } from '../../datasheet-edit.component';
 import { Datasheet } from 'src/app/services/datasheet/datasheet.service';
 
 @Component({
-  selector: 'app-datasheet-page11',
-  templateUrl: './datasheet-page11.component.html',
-  styleUrls: ['./datasheet-page11.component.scss']
+  selector: 'app-datasheet-page12',
+  templateUrl: './datasheet-page12.component.html',
+  styleUrls: ['./datasheet-page12.component.scss']
 })
-export class DatasheetPage11Component implements OnInit {
+export class DatasheetPage12Component implements OnInit {
   _datasheet: Datasheet;
   _isEditing: boolean;
   _verTeste: boolean;
 
   /** Metodo que vai ser executado para cada child do create edit page 1, ... ,page 12*/
   getForm(event: any): Datasheet {
-    console.log('page11');
+    console.log('page12');
     return this._datasheet;
   }
 
@@ -30,11 +30,6 @@ export class DatasheetPage11Component implements OnInit {
     this._isEditing = false;
     this._verTeste = false;
   }
-  public cenas() {
-    this._verTeste = !this._verTeste;
-  }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

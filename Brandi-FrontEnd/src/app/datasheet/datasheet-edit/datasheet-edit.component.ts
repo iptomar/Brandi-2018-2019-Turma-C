@@ -11,8 +11,9 @@ import { DatasheetPage8Component } from './pages/datasheet-page8/datasheet-page8
 import { DatasheetPage9Component } from './pages/datasheet-page9/datasheet-page9.component';
 import { DatasheetPage10Component } from './pages/datasheet-page10/datasheet-page10.component';
 import { DatasheetPage11Component } from './pages/datasheet-page11/datasheet-page11.component';
+import { DatasheetPage12Component } from './pages/datasheet-page12/datasheet-page12.component';
 import { Router, ActivatedRoute } from '@angular/router';
-//import { Subscribable, Subscription } from 'rxjs';
+// import { Subscribable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 export interface DatasheetPage {
@@ -44,6 +45,7 @@ export class DatasheetEditComponent implements OnInit {
   @ViewChild(DatasheetPage9Component) datasheetPage9Component: DatasheetPage9Component;
   @ViewChild(DatasheetPage10Component) datasheetPage10Component: DatasheetPage10Component;
   @ViewChild(DatasheetPage11Component) datasheetPage11Component: DatasheetPage11Component;
+  @ViewChild(DatasheetPage12Component) datasheetPage12Component: DatasheetPage12Component;
   @ViewChild("datasheetTabs") dataSheetTabs: ElementRef;
 
 
@@ -51,7 +53,8 @@ export class DatasheetEditComponent implements OnInit {
     this.pages = [this.datasheetPage1Component, this.datasheetPage2Component,
       this.datasheetPage3Component, this.datasheetPage4Component, this.datasheetPage5Component,
       this.datasheetPage6Component, this.datasheetPage7Component, this.datasheetPage8Component,
-      this.datasheetPage9Component, this.datasheetPage10Component, this.datasheetPage11Component];
+      this.datasheetPage9Component, this.datasheetPage10Component, this.datasheetPage11Component,
+      this.datasheetPage12Component];
     // so alterar acima
       for (let i = 0; i < this.pages.length; i++) {
         if (this.pages[i]) {
@@ -69,16 +72,18 @@ export class DatasheetEditComponent implements OnInit {
   public messageEditErr: string;
   // mensagem sucesso
   public messageEditSuccess: string;
-  constructor(private datasheetService: DatasheetService, private changeDetectorRef: ChangeDetectorRef, private router : Router ,private route: ActivatedRoute,) {
-    this.messageEditErr = "";
-    this.messageEditSuccess = "";
+  constructor(private datasheetService: DatasheetService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private router : Router , private route: ActivatedRoute) {
+    this.messageEditErr = '';
+    this.messageEditSuccess = '';
   }
 
   ngOnInit() {
     this.datasheetService.getDatasheet(parseInt(this.route.snapshot.paramMap.get('id'),10)).subscribe((datasheet : Datasheet) => {
-      this._datasheet=datasheet;
+      this._datasheet = datasheet;
 
-      //console.log(this._datasheet);
+      // console.log(this._datasheet);
       this.updateDatasheetInAllPages();
     },
     take(1)

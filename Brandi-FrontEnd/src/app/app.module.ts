@@ -24,6 +24,7 @@ import { DatasheetPage9Component } from './datasheet/datasheet-edit/pages/datash
 import { DatasheetPage10Component } from './datasheet/datasheet-edit/pages/datasheet-page10/datasheet-page10.component';
 import { DatasheetEditComponent } from './datasheet/datasheet-edit/datasheet-edit.component';
 import { DatasheetPage11Component } from './datasheet/datasheet-edit/pages/datasheet-page11/datasheet-page11.component';
+import { DatasheetPage12Component } from './datasheet/datasheet-edit/pages/datasheet-page12/datasheet-page12.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { DatasheetPage11Component } from './datasheet/datasheet-edit/pages/datas
     DatasheetPage9Component,
     DatasheetPage10Component,
     DatasheetEditComponent,
-    DatasheetPage11Component
+    DatasheetPage11Component,
+    DatasheetPage12Component
   ],
   imports: [
     BrowserModule,
