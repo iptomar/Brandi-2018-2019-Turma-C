@@ -456,7 +456,7 @@ async function changeDataSheetP3(db, id, object_is_a_set, set_type, set_elements
  * @param {String} poluting_sources Fontes de poluição
  * @param {String} poluting_results Resultados de poluição
  * @param {String} env_conclusions Resultados
- * @param {number} userId
+ * @param {number} userId id do utilizador autenticado
  */
 async function changeDataSheetP4(db, id, site_description, cold_temp, hot_temp, cold_humidity, hot_humidity, cold_start, cold_end, hot_start, hot_end, lightning_type_natural, lightning_origin_artificial, artificial_lux, natural_lux, artificial_uv, natural_uv, artificial_real_uv, natural_real_uv, poluting_agents, poluting_sources, poluting_results, env_conclusions, userId) {
     let result = false;
@@ -537,7 +537,7 @@ async function changeDataSheetP7(db, id, support, surface, elements, conclusions
  * @param {String} observations - observações da proposta
  * @param {Date} proposal_date - Data da Informação da Proposta
  * @param {Date} acceptation_date - Data da Aceitação da Proposta
- * @param {number} userId
+ * @param {number} userId - id do utilizador autenticado
  */
 async function changeDataSheetP8(db, id, owner_preserve, owner_conserve, owner_restaure, specific_aspects, prop_preserve, prop_conserve, prop_restaure, support_proposal, support_resources, surface_proposal, surface_resources, elements_proposal, elements_resources, observations, proposal_date, acceptation_date, userId) {
     let result = false;
@@ -549,6 +549,32 @@ async function changeDataSheetP8(db, id, owner_preserve, owner_conserve, owner_r
     }
     return result;
 }
+
+/**
+ * 
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da ficha técnica
+ * @param {String} support_intervention - Estrutura da intervenção
+ * @param {String} support_resources_intervention - Recursos da estrutura
+ * @param {String} surface_intervention - Superfície da intervenção
+ * @param {String} surface_resources_intervention - Recursos da estrutura
+ * @param {String} elements_intervention - Elementos Acessórios da intervenção
+ * @param {String} elements_resources_intervention - Recursos dos Elementos Acessórios
+ * @param {String} observations_intervention - Observações da intervenção
+ * @param {number} userId - id do utilizador autenticado
+ */
+async function changeDataSheetP9(db, id, support_intervention, support_resources_intervention, surface_intervention, surface_resources_intervention, elements_intervention, elements_resources_intervention, observations_intervention, userId) {
+    let result = false;
+    //criação do novo objeto
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P9, [support_intervention, support_resources_intervention, surface_intervention, surface_resources_intervention, elements_intervention, elements_resources_intervention, observations_intervention, userId, id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0;
+    }
+    return result;
+}
+
+
 
 
 
@@ -912,6 +938,35 @@ exports.appendToExpress = function (app, _db, _prefix) {
                         req.body.proposal_date,
                         req.body.acceptation_date,
                         u.id
+                        
+                    );
+                    break;
+                case "9":
+                    //define erro para o caso de algo correr mal
+                    result.error = 1;
+                    result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                    //todos os campos não obrigatórios ficam como null caso não estejam definidos
+                    req.body.support_intervention = global.notRequiredField(req.body.support_intervention);
+                    req.body.support_resources_intervention = global.notRequiredField(req.body.support_resources_intervention);
+                    req.body.surface_intervention = global.notRequiredField(req.body.surface_intervention);
+                    req.body.surface_resources_intervention = global.notRequiredField(req.body.surface_resources_intervention);
+                    req.body.elements_intervention = global.notRequiredField(req.body.elements_intervention);
+                    req.body.elements_resources_intervention = global.notRequiredField(req.body.elements_resources_intervention);
+                    req.body.observations_intervention = global.notRequiredField(req.body.observations_intervention);
+                    //verifica se é para editar ou para criar
+                    //tenta altearar um objeto e se este foi alterado
+                    resultDb = await changeDataSheetP9(
+                        db,
+                        req.params.id,
+                        req.body.support_intervention,
+                        req.body.support_resources_intervention,
+                        req.body.surface_intervention,
+                        req.body.surface_resources_intervention,
+                        req.body.elements_intervention,
+                        req.body.elements_resources_intervention,
+                        req.body.observations_intervention,
+                        u.id
+                        
                         
                     );
                     break;
