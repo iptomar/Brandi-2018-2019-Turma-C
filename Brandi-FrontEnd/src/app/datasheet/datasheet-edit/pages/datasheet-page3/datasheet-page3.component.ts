@@ -13,8 +13,8 @@ export class DatasheetPage3Component implements OnInit, DatasheetPage {
 
  /**Metodo que vai ser executado para cada child do create edit page 1, ... ,page 10*/
   public getForm(event: any): any {
-    let datasheet: any = Object.assign({}, this._datasheet); // clona os dados
-    datasheet.object_is_a_set= event.target.object_is_a_set.value;
+    let datasheet: Datasheet = Object.assign({}, this._datasheet); // clona os dados
+    datasheet.object_is_a_set= (<HTMLInputElement>event.target.object_is_a_set).checked ? 1: 0;
     datasheet.set_type= event.target.set_type.value;
     datasheet.set_elements= event.target.set_elements.value;
     datasheet.set_materials= event.target.set_materials.value;
@@ -25,7 +25,7 @@ export class DatasheetPage3Component implements OnInit, DatasheetPage {
     datasheet.period= event.target.period.value;
     datasheet.quality= event.target.quality.value;
     datasheet.style= event.target.style.value;
-    datasheet.small_description= event.target.small_description.value;// ?
+    datasheet.small_description= event.target.small_description.value;
     datasheet.analogies= event.target.analogies.value;
     datasheet.conclusions= event.target.conclusions.value;
     datasheet.author= event.target.author.value;
