@@ -39,7 +39,7 @@ export interface Datasheet {
   classification: string;
   period: number;
   quality: number;
-  style: number;
+  style: string;
   small_description: string;
   analogies: string;
   conclusions: string;
