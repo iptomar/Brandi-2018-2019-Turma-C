@@ -219,6 +219,85 @@
 	 }
 
 ------------
+## GET /api/user/listNames:
+> para ver a lista de utilizadores
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	search - palavara a ser utilizada na pesqusia (esta pesquisa no nome e no email)
+### devolve:
+##### se com sucesso:
+	{
+	    "error": 0,
+	    "message": "Lista de utilizadores",
+	    "res": {
+	        "users": [
+	            {
+	                "id": 1,
+	                "full_name": "admin@admin.admin"
+	            },
+	            {
+	                "id": 2,
+	                "full_name": "Nuno Marques"
+	            },
+	            {
+	                "id": 3,
+	                "full_name": "Virgílio Quintino"
+	            },
+	            {
+	                "id": 7,
+	                "full_name": "Filipe Branco"
+	            },
+	            {
+	                "id": 5,
+	                "full_name": "Mario"
+	            },
+	            {
+	                "id": 6,
+	                "full_name": "Maria"
+	            },
+	            {
+	                "id": 8,
+	                "full_name": "Nobody"
+	            },
+	            {
+	                "id": 9,
+	                "full_name": "andre"
+	            },
+	            {
+	                "id": 10,
+	                "full_name": "marcio"
+	            },
+	            {
+	                "id": 12,
+	                "full_name": "Teste User"
+	            },
+	            {
+	                "id": 13,
+	                "full_name": "%/#%#%(#%"
+	            },
+	            {
+	                "id": 17,
+	                "full_name": "marcio"
+	            },
+	            {
+	                "id": 18,
+	                "full_name": "marcio"
+	            },
+	            {
+	                "id": 19,
+	                "full_name": "marcio"
+	            }
+	        ]
+	    }
+	}
+##### se não tiver permissões:
+	{
+		   "error": 1,
+		   "message": "Não tem permissões para listar utilizadores",
+		   "res": {}
+	 }
+------------
 ## POST /api/user/delete
 >  para eliminar um utilizador
 ### Condições:
