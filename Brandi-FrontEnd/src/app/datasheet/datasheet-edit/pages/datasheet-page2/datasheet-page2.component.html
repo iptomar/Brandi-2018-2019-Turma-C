@@ -39,7 +39,45 @@
   </div>
   <div class="col-lg-6 form-group">
     <label for="patron">&nbsp;</label>
-    <button type="button" class="form-control btn btn-outline-success" [disabled]='!_isEditing'>Adicionar contacto <i
+    <button type="button" class="form-control btn btn-outline-success" [disabled]='!_isEditing' data-toggle="modal" data-target="#modal_contacts">Adicionar contacto <i
         class="fa fa-file"></i></button>
   </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal_contacts" tabindex="-1" role="dialog" aria-labelledby="modal_contacts__Title" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form (submit)="addNewContact($event)">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal_contacts__Title">Adicionar contacto</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+                <div class="row col-lg-12 form-group">
+                  <label for="contact_name">Nome</label>
+                  <input name="contact_name" id="contact_name" type="text" class="form-control" placeholder="Nome" />
+                </div>
+                <div class="row col-lg-12 form-group">
+                  <label for="contact_email">Email</label>
+                  <input name="contact_email" id="contact_email" type="email" class="form-control" placeholder="Email" />
+                </div>
+                <div class="row col-lg-12 form-group">
+                  <label for="contact_address">Morada</label>
+                  <input name="contact_address" id="contact_address" type="text" class="form-control" placeholder="Morada" />
+                </div>
+                <div class="row col-lg-12 form-group">
+                  <label for="contact_phone">Telemóvel</label>
+                  <input name="contact_phone" id="contact_phone" type="text" class="form-control" placeholder="Telemóvel" />
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Adiciona novo contacto</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
 </div>

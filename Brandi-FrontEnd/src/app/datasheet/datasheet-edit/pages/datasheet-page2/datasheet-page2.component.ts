@@ -51,6 +51,10 @@ export class DatasheetPage2Component implements OnInit,DatasheetPage {
     this._contacts=[];
   }
 
+  public addNewContact(event) : void {
+    event.preventDefault();
+  }
+
   ngOnInit() {
   }
 

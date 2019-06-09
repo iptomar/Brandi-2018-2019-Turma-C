@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/co
 import { DatasheetService } from 'src/app/services/datasheet/datasheet.service';
 import { Global } from 'src/app/Global';
 import { User } from 'src/app/services/auth/auth.service';
-import { UsersService } from 'src/app/services/users/users.service';
+import { UsersService, UserNames } from 'src/app/services/users/users.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -19,7 +19,7 @@ export class DatasheetCreateComponent implements OnInit, OnDestroy {
   
   public messageEditErr : string;
   public messageEditSuccess : string;
-  public _users : User[];
+  public _users : UserNames[];
   public id_super_category: BehaviorSubject<number>;
   public id_category: BehaviorSubject<number>;
   public super_categories$ : Observable<SuperCategories[]>;
@@ -31,7 +31,7 @@ export class DatasheetCreateComponent implements OnInit, OnDestroy {
     
     this.messageEditErr ="";
     this.messageEditSuccess ="";
-    this.users.getUsers("").subscribe((users_list) => {
+    this.users.getUsersNames("").subscribe((users_list) => {
       this._users=users_list;
     });
     this.id_super_category= new BehaviorSubject<number>(0);
@@ -66,20 +66,28 @@ export class DatasheetCreateComponent implements OnInit, OnDestroy {
       });
     
    }
+
+   
+  public resetSelect() {
+    this.categorySelect.nativeElement.value="";
+    this.resetSelectCat();
+  }
+
+  public resetSelectCat() {
+    this.subcategorySelect.nativeElement.value="";
+  }
+
    ngOnInit() {
-    this.super_categories$ = this.categoriesService.getSuperCategories("");
+    this.id_sub_category$ = this.id_category.asObservable().subscribe((id_cat:number) => this.categoriesService.getSubCategories(id_cat,"").subscribe((data : SubCategories[]) => {
+      this.sub_categories = data;
+    }, take(1)
+    ));
     this.id_category$ = this.id_super_category.asObservable().subscribe((id_super:number) =>  this.categoriesService.getCategories(id_super,"").subscribe((data : Categories[]) => {
       this.categories = data;
       this.sub_categories = [];
-      this.categorySelect.nativeElement.value="";
-      this.subcategorySelect.nativeElement.value="";
     }, take(1)
     ));
-    this.id_sub_category$ = this.id_category.asObservable().subscribe((id_cat:number) => this.categoriesService.getSubCategories(id_cat,"").subscribe((data : SubCategories[]) => {
-      this.sub_categories = data;
-      this.subcategorySelect.nativeElement.value="";
-    }, take(1)
-    ));
+    this.super_categories$ = this.categoriesService.getSuperCategories("");
   }
   ngOnDestroy(): void {
     this.id_category$.unsubscribe();

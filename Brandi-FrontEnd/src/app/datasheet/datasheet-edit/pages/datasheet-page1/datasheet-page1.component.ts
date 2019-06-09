@@ -3,7 +3,7 @@ import { Datasheet, DatasheetService } from 'src/app/services/datasheet/datashee
 //import { Type } from '@angular/compiler';
 import { Global } from 'src/app/Global';
 import { User } from 'src/app/services/auth/auth.service';
-import { UsersService } from 'src/app/services/users/users.service';
+import { UsersService, UserNames } from 'src/app/services/users/users.service';
 import { DatasheetPage } from '../../datasheet-edit.component';
 import { Observable, Subscribable, BehaviorSubject, Subscriber, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -20,7 +20,7 @@ export class DatasheetPage1Component implements OnInit, DatasheetPage, OnDestroy
 
   public _datasheet: Datasheet;
   public _isEditing: boolean;
-  public _users: User[];
+  public _users: UserNames[];
   public super_category: BehaviorSubject<number>;
   public category: BehaviorSubject<number>;
   public super_categories$ : Observable<SuperCategories[]>;
@@ -33,7 +33,7 @@ export class DatasheetPage1Component implements OnInit, DatasheetPage, OnDestroy
   constructor(public users: UsersService,public categoriesService : CategoriesService, public datasheetService : DatasheetService, public global : Global) {
     this._isEditing = false;
     this._users = [];
-    this.users.getUsers("").subscribe((users_list) => {
+    this.users.getUsersNames("").subscribe((users_list) => {
       this._users = users_list;
     });
     this.firstload=true;
@@ -80,18 +80,16 @@ export class DatasheetPage1Component implements OnInit, DatasheetPage, OnDestroy
   }
 
   ngOnInit() {    
-    this.super_categories$ = this.categoriesService.getSuperCategories("");
+    this.id_sub_category$ = this.category.asObservable().subscribe((id_cat:number) => this.categoriesService.getSubCategories(id_cat,"").subscribe((data : SubCategories[]) => {
+      this.sub_categories = data;
+    }, take(1)
+    ));
     this.id_category$ = this.super_category.asObservable().subscribe((id_super:number) =>  this.categoriesService.getCategories(id_super,"").subscribe((data : Categories[]) => {
       this.categories = data;
       this.sub_categories = [];
     }, take(1)
     ));
-    this.id_sub_category$ = this.category.asObservable().subscribe((id_cat:number) => this.categoriesService.getSubCategories(id_cat,"").subscribe((data : SubCategories[]) => {
-      this.sub_categories = data;
-      this.subcategorySelect.nativeElement.value="";
-      this.firstload=false;
-    }, take(1)
-    ));
+    this.super_categories$ = this.categoriesService.getSuperCategories("");
   }
   ngOnDestroy(): void {
     this.id_category$.unsubscribe();

@@ -50,6 +50,7 @@ export class DatasheetEditComponent implements OnInit {
   @ViewChild("firstTab") firstTab : ElementRef;
 
 
+
   private updateDatasheetInAllPages() {
     this.pages = [this.datasheetPage1Component, this.datasheetPage2Component,
       this.datasheetPage3Component, this.datasheetPage4Component, this.datasheetPage5Component,
@@ -65,6 +66,7 @@ export class DatasheetEditComponent implements OnInit {
     }
   }
 
+  public clearFields:boolean;
   public _datasheet : Datasheet;
   private pages: DatasheetPage[] = [];
   // index do datasheet a ser modificado
@@ -78,6 +80,7 @@ export class DatasheetEditComponent implements OnInit {
     private router : Router , private route: ActivatedRoute) {
     this.messageEditErr = '';
     this.messageEditSuccess = '';
+    this.clearFields=false;
   }
 
   ngOnInit() {
@@ -105,7 +108,11 @@ export class DatasheetEditComponent implements OnInit {
 
   public reset() {
     this.setEditMode(false);
-    location.reload();
+    this.clearFields=true;
+    this.changeDetectorRef.detectChanges();
+    this.clearFields=false;
+    this.changeDetectorRef.detectChanges();
+    this.updateDatasheetInAllPages();
   }
 
 
@@ -133,11 +140,6 @@ export class DatasheetEditComponent implements OnInit {
         }, 3 * 1000); // espera 3 segundos antes de sair da pagina de edição
       } else { this.messageEditErr = result.message; }
     });
-  }
-
-
-  public changeTab(event) {
-    event.preventDefault();
   }
 
   public cancelar() : void {

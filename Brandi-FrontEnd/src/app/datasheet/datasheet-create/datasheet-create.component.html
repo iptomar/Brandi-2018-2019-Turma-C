@@ -75,7 +75,7 @@
 <div class="row">
     <div class="col-lg-6 form-group">
       <label for="SuperCathegory">Super-Categoria</label>
-      <select class="form-control" name="supercategory" (change)="id_super_category.next($event.target.value)">
+      <select class="form-control" name="supercategory" (change)="resetSelect();id_super_category.next($event.target.value)">
         <option value="" selected disabled hidden>Escolha uma super categoria</option>
         <option *ngFor="let sc of super_categories$ | async" [value]="sc.id">{{sc.supercategory}}</option>
   
@@ -83,7 +83,7 @@
     </div>
     <div class="col-lg-6 form-group">
       <label for="Cathegory">Categoria</label>
-      <select class="form-control" name="category" (change)="id_category.next($event.target.value)" #categorySelect>
+      <select class="form-control" name="category" (change)="resetSelectCat();id_category.next($event.target.value)" #categorySelect>
         <option value="" selected disabled hidden>Escolha uma categoria</option>
         <option *ngFor="let c of categories" [value]="c.id">{{c.category}}</option>
       </select>
