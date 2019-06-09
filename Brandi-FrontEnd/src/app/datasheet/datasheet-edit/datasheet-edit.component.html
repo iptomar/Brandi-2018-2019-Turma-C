@@ -94,7 +94,7 @@
       </div>
       <!--Mensagem de Sucesso acaba aqui-->
       <!-- Tab panes -->
-      <div class="tab-content" *ngIf="!clearFields">
+      <div class="tab-content" *ngIf="!clearFields" #datasheetTabsPages>
         <div class="tab-pane active pt-2" id="datasheet_part1" role="tabpanel" aria-labelledby="home-tab">
           <app-datasheet-page1></app-datasheet-page1>
         </div>

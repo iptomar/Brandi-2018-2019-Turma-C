@@ -47,6 +47,7 @@ export class DatasheetEditComponent implements OnInit {
   @ViewChild(DatasheetPage11Component) datasheetPage11Component: DatasheetPage11Component;
   @ViewChild(DatasheetPage12Component) datasheetPage12Component: DatasheetPage12Component;
   @ViewChild("datasheetTabs") dataSheetTabs: ElementRef;
+  @ViewChild("datasheetTabsPages") datasheetTabsPages: ElementRef;
   @ViewChild("firstTab") firstTab : ElementRef;
 
 
@@ -113,6 +114,9 @@ export class DatasheetEditComponent implements OnInit {
     this.clearFields=false;
     this.changeDetectorRef.detectChanges();
     this.updateDatasheetInAllPages();
+    //reopen the right tab
+    this.datasheetTabsPages.nativeElement.querySelector(".active").classList.remove("active");
+    this.datasheetTabsPages.nativeElement.querySelector((<HTMLElement>this.dataSheetTabs.nativeElement).querySelector(".active").getAttribute("href")).classList.add("active");
   }
 
 
