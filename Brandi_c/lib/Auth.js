@@ -635,6 +635,29 @@ exports.appendToExpress = function (app, _db, _prefix) {
         res.json(result);
     });
 
+    app.get(prefix + ROUTE_USER_PREFIX + '/listNames', async function (req, res) {
+        //prepara resposta para cliente
+        let result = { error: 1, message: "Não tem permissões para listar utilizadores", res: { users: [] } };
+        //carrega os dados em sessão do utilizador
+        let u = thiss.getUserFromSession(req);
+        //verifica se está autenticado
+        if (u) {
+            //verifica se este é administrador
+            //if (u.type_user === infoDB.ADMIN_TYPE_NAME) {
+                let resultDb = await thiss.geUserList(db, !req.query.search ? "" : req.query.search);
+                result.error = 0;
+                result.message = "Lista de utilizadores";
+                //por cada utilizador pede o  json deste
+                resultDb.users.forEach(u => {
+                    let u2 = u.getJSON();
+                    result.res.users.push({id: u.id, full_name: u.full_name});
+                });
+            //}
+        }
+        //define a resposta
+        res.json(result);
+    });
+
     app.get(prefix + ROUTE_USER_TYPE_PREFIX +'/list', async function (req, res) {
         //prepara resposta para cliente
         let result = { error: 1, message: "Não tem permissões para listar tipos de utilizador", res: { user_types: [] } };
