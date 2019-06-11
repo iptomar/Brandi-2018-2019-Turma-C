@@ -5,10 +5,13 @@
  */
 
 import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
@@ -73,8 +76,13 @@ public class Utilizador_FichaTecnica {
           Thread.sleep(1000);
        driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-create/div/div/form/div[7]/button")).click();
      Thread.sleep(1000);
-      
-}
+     
+     
+            WebElement msg = driver.findElement(By.className("alert-success"));
+            if (!msg.isDisplayed())
+                fail("not save");
+     }
+     
     @Test
      public void Utilizador_FichaTecnica_Registar_Incompleto() throws Exception {
          
@@ -99,7 +107,11 @@ public class Utilizador_FichaTecnica {
        driver.findElement(By.name("subcategory")).click();
        driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-create/div/div/form/div[7]/button")).click();
      Thread.sleep(1000);
-         
+     
+     
+       WebElement msg = driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-create/div/div/form/div[1]/strong"));
+       assertEquals("Insira todos os campos obrigatórios",msg.getText());
+     
      }
      
      

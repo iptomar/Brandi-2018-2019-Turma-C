@@ -4,10 +4,12 @@
  * and open the template in the editor.
  */
 
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -18,7 +20,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  *
  * @author LittleChinese
  */
-public class ListaFichasTecnicas_Admin {
+public class Editar_ListaFichasTecnicas_Admin {
 
     WebDriver driver;
 
@@ -42,7 +44,7 @@ public class ListaFichasTecnicas_Admin {
     }
 
     @Test
-    public void ListaFichasTecnicas_procurar() throws Exception {
+    public void ListaFichasTecnicas_procurar_Editar() throws Exception {
 
         driver.get("http://brandic.devll.eu:61080/");
         driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
@@ -64,7 +66,7 @@ public class ListaFichasTecnicas_Admin {
         driver.findElement(By.name("other_dimensions")).sendKeys("1x1x1");
         driver.findElement(By.name("tipology")).sendKeys("teste");
         driver.findElement(By.name("site")).sendKeys("Local");
-        /*Select prop = new Select (driver.findElement(By.name("owner")));
+        Select prop = new Select (driver.findElement(By.name("owner")));
         prop.selectByValue("2");
          Thread.sleep(1000);
                 
@@ -75,10 +77,12 @@ public class ListaFichasTecnicas_Admin {
         Select patron = new Select (driver.findElement(By.name("patron")));
         patron.selectByValue("1");
          Thread.sleep(1000);
-        */ 
         
-       // driver.findElement(By.xpath("//*[@id=\"datasheet_part2\"]/app-datasheet-page2/div[5]/div[2]/button")).click();
+        driver.findElement(By.xpath("//*[@id=\"datasheet_part2\"]/app-datasheet-page2/div[5]/div[2]/button")).click();
         
+        
+        //bug o teste vai falhar
+       WebElement msg = driver.findElement(By.className("alert-sucess"));
+       assertEquals("Ficha técnica atualizada com sucesso",msg.getText());
     }
-
 }
