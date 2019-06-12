@@ -23,14 +23,20 @@ export class ContactsService {
       {params: new HttpParams().set('search', pesquisa)} ).pipe(map((data: ReceivedData) => {
       let contact_list: Array<Contacto> = [];
       if(!data.error) {
-        contact_list = <Array<Contacto>>data.res.contactos;// mudar contactos para o nome que vier da API
-      }else if(this.auth.isAdmin()) this.auth.forceLogout(); //nao tenho a certeza desta linha
+        contact_list = <Array<Contacto>>data.res.contactos;
+      }else if(this.auth.isAdmin()) this.auth.forceLogout(); 
       return contact_list;
     }));
   }
+
+  /*
+    falta criar contacto
+  */
   public userExists(users : Contacto[], id : number) : boolean{
     for(let i = 0; i < users.length; i++) if(users[i].id === id) return true;
     return false;
   }
  
 }
+
+
