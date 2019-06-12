@@ -7,27 +7,31 @@
 
 <fieldset class="border p-2">
   <div class="form-group row">
-    <label for="support_previous" class="col-lg-2 col-form-label">Estrutura</label>
+    <label for="support" class="col-lg-2 col-form-label">Estrutura</label>
     <div class="col-lg-10">
-      <textarea class="form-control" id="support_previous" rows="3" [readonly]="!_isEditing"></textarea>
+      <textarea class="form-control"  rows="3" [readonly]="!_isEditing" [value]="_datasheet?.support"  name="support" id="support"
+      ></textarea>
     </div>
   </div>
   <div class="form-group row">
-    <label for="surface_previous" class="col-lg-2 col-form-label">Superfície</label>
+    <label for="surface" class="col-lg-2 col-form-label">Superfície</label>
     <div class="col-lg-10">
-      <textarea class="form-control" id="surface_previous" rows="3" [readonly]="!_isEditing"></textarea>
+      <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.surface"  name="surface" id="surface"
+      ></textarea>
     </div>
   </div>
   <div class="form-group row">
-    <label for="elements_previous" class="col-lg-2 col-form-label">Elementos Acessórios</label>
+    <label for="elements" class="col-lg-2 col-form-label">Elementos Acessórios</label>
     <div class="col-lg-10">
-      <textarea class="form-control" id="elements_previous" rows="3" [readonly]="!_isEditing"></textarea>
+      <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.elements"  name="elements" id="elements"
+      ></textarea>
     </div>
   </div>
 </fieldset>
 <br />
 <div class="form-group row">
-  <label for="previous_conclusions" class="col-lg-2 col-form-label">Observações | Conclusões</label>
+  <label for="conclusions_previous_interventions" class="col-lg-2 col-form-label">Observações | Conclusões</label>
   <div class="col-lg-10">
-    <textarea class="form-control" id="previous_conclusions" rows="3" [readonly]="!_isEditing"></textarea>
+    <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.conclusions_previous_interventions"  name="conclusions_previous_interventions" id="conclusions_previous_interventions"
+    ></textarea>
   </div>

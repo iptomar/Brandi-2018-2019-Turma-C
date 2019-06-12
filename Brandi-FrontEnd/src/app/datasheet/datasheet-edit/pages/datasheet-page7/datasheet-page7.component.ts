@@ -15,8 +15,16 @@ export class DatasheetPage7Component implements OnInit, DatasheetPage {
 
   /**Metodo que vai ser executado para cada child do create edit page 1, ... ,page 10*/
   getForm(event: any): Datasheet {
-    console.log('page7');
-    return this._datasheet;
+    let datasheet: any = Object.assign({}, this._datasheet); // clona os dados
+    datasheet.support= event.target.support.value;
+    datasheet.surface= event.target.surface.value;
+    datasheet.elements= event.target.elements.value;
+    datasheet.conclusions_previous_interventions= event.target.conclusions_previous_interventions.value;
+    
+
+  
+  return datasheet;
+
   }
 
   datasheet(datasheet: Datasheet): void {

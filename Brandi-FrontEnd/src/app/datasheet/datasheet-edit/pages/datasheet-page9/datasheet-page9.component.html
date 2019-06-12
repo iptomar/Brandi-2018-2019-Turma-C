@@ -4,41 +4,41 @@
 
 <div class="row">
   <div class="form-group col-lg-7">
-    <label for="interv_support">Estrutura</label>
-    <textarea class="form-control" id="interv_support" rows="3" [readonly]="!_isEditing"></textarea>
+    <label for="support_intervention">Estrutura</label>
+    <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.support_intervention "  name="support_intervention " id="support_intervention "></textarea>
   </div>
   <div class="form-group col-lg-5">
-    <label for="int_support_resources">Recursos (Materiais | Técnicos | Tecnológicos)
+    <label for="support_resources_intervention">Recursos (Materiais | Técnicos | Tecnológicos)
     </label>
-    <textarea class="form-control" id="int_support_resources" rows="3" [readonly]="!_isEditing"></textarea>
+    <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.support_resources_intervention "  name="support_resources_intervention " id="support_resources_intervention "></textarea>
   </div>
 </div>
 <div class="row">
   <div class="form-group col-lg-7">
-    <label for="interv_surface">Superfície</label>
-    <textarea class="form-control" id="interv_surface" rows="3" [readonly]="!_isEditing"></textarea>
+    <label for="surface_intervention">Superfície</label>
+    <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.surface_intervention "  name="surface_intervention " id="surface_intervention "></textarea>
   </div>
   <div class="form-group col-lg-5">
-    <label for="int_surface_resources">Recursos (Materiais | Técnicos | Tecnológicos)
+    <label for="surface_resources_intervention">Recursos (Materiais | Técnicos | Tecnológicos)
     </label>
-    <textarea class="form-control" id="int_surface_resources" rows="3" [readonly]="!_isEditing"></textarea>
+    <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.surface_resources_intervention "  name="surface_resources_intervention " id="surface_resources_intervention "></textarea>
   </div>
 </div>
 <div class="row">
   <div class="form-group col-lg-7">
-    <label for="interv_elements">Elementos Acessórios</label>
-    <textarea class="form-control" id="interv_elements" rows="3" [readonly]="!_isEditing"></textarea>
+    <label for="elements_intervention">Elementos Acessórios</label>
+    <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.elements_intervention "  name="elements_intervention " id="elements_intervention "></textarea>
   </div>
   <div class="form-group col-lg-5">
-    <label for="int_elements_resources">Recursos (Materiais | Técnicos | Tecnológicos)
+    <label for="elements_resources_intervention">Recursos (Materiais | Técnicos | Tecnológicos)
     </label>
-    <textarea class="form-control" id="int_elements_resources" rows="3" [readonly]="!_isEditing"></textarea>
+    <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.elements_resources_intervention "  name="elements_resources_intervention " id="elements_resources_intervention "></textarea>
   </div>
 </div>
 <br />
 <div class="form-group row">
-  <label for="interv_observations" class="col-lg-2 col-form-label">Observações | Conclusões</label>
+  <label for="observations_intervention" class="col-lg-2 col-form-label">Observações | Conclusões</label>
   <div class="col-lg-10">
-    <textarea class="form-control" id="interv_observations" rows="3" [readonly]="!_isEditing"></textarea>
+    <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.observations_intervention "  name="observations_intervention " id="observations_intervention "></textarea>
   </div>
 </div>
