@@ -1,0 +1,7 @@
+*********************** DOCUMENTAÇÃO DOS TESTES EFETUADOS EM POSTMAN - VIEW IN WEB ******************************
+
+
+https://winter-firefly-3272.postman.co/collections/6806043-179ed9f7-4454-451c-972e-c7df5b3f2ce0?version=latest&workspace=86237016-29f4-4fdf-8f68-4ea3fc372353
+
+
+************************************ IN 12-06-2019 **************************************************************

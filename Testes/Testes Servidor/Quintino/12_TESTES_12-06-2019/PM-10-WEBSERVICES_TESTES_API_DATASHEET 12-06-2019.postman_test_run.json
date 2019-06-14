@@ -1,0 +1,5156 @@
+{
+	"id": "b3d86554-9a76-4cdb-bb4c-b942f6d5a80a",
+	"name": "PM-10-WEBSERVICES_TESTES_API_DATASHEET 12-06-2019",
+	"allTests": [],
+	"timestamp": "2019-06-14T22:20:51.282Z",
+	"collection_id": "179ed9f7-4454-451c-972e-c7df5b3f2ce0",
+	"folder_id": 0,
+	"target_type": "collection",
+	"environment_id": "94fcbf32-16f5-4206-9220-87cece466959",
+	"data": [],
+	"delay": 0,
+	"count": 1,
+	"collection": {
+		"id": "179ed9f7-4454-451c-972e-c7df5b3f2ce0",
+		"name": "PM-10-WEBSERVICES_TESTES_API_DATASHEET 12-06-2019",
+		"description": "Testes Webservices Projeto Brandi_C - Alteração dos api/datasheet\n\nTestes efetuados a partir de:\n\nDATA: 12-06-2019\nHORA: 23:00\n\nUSER: Quintino\nUSER: Filipe",
+		"auth": null,
+		"events": [
+			{
+				"listen": "prerequest",
+				"script": {
+					"id": "1e0505c5-5113-485a-af7b-39d2549ba2b8",
+					"type": "text/javascript",
+					"exec": [
+						"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+						"    console.log(response.json());",
+						"});",
+						"",
+						"pm.sendRequest({",
+						"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+						"    method: 'POST',",
+						"    body: {",
+						"        mode: 'urlencoded',",
+						"        urlencoded: [",
+						"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+						"            {\"key\":\"password\",\"value\":\"admin\"}",
+						"        ]",
+						"    }",
+						"}, function (errr, res) {",
+						"    console.log(res);",
+						"});"
+					]
+				}
+			},
+			{
+				"listen": "test",
+				"script": {
+					"id": "6204884d-2075-4cb1-87b9-18267e4604fd",
+					"type": "text/javascript",
+					"exec": [
+						"pm.test(\"Teste da API/Datasheet nas várias condições!\", function() {",
+						"    var jsonData = pm.response.json();",
+						"    pm.expect(jsonData.error).to.eql(3);",
+						"    pm.expect(jsonData.message).to.eql(\"teste efetuado com sucesso\");",
+						"});"
+					]
+				}
+			}
+		],
+		"variables": [],
+		"order": [],
+		"folders_order": [
+			"48392b2f-125c-4d73-9f20-8d45422f1077",
+			"a9f49908-e475-4227-943e-2f214d2b787b",
+			"63d6559c-b400-499a-b30e-1059b0193945",
+			"774419a2-77c5-40e5-bdb6-2e9cba2a0be7",
+			"1572a5dc-fc3b-4307-9da6-6e9c5ad7bad0",
+			"52fafa1e-f140-4556-99f7-60742a059563",
+			"8fd5cc26-49b9-400e-b7d9-24cf881ab328",
+			"fbd90604-58b9-476a-8415-524c4b52c164",
+			"be0b5717-02aa-463d-a001-6a748217d793",
+			"20ea8c42-001f-4ff2-a0fd-42dc2d99440e",
+			"677d0182-1a47-4ed0-8778-dadf7b06c9ce",
+			"7fa3a7ca-fd5e-4e5c-8309-3b32f2dc8dba",
+			"0afd47b7-556a-432e-9960-70a4281c9cb1",
+			"4968f5ce-8547-43b6-85dc-c08c88884cda",
+			"c9a3dfd3-52c6-4d07-b300-48b64ca972a9",
+			"14950e60-b5a6-46ab-a7d9-10c46a55a01c",
+			"e9bbe71b-8905-4252-8416-09f4a5bcd6bc",
+			"f9474805-f0f8-4f35-98ab-1a70007d8581"
+		],
+		"owner": "6806043",
+		"favorite": false,
+		"isFavorite": true,
+		"type": "collection",
+		"depth": 0
+	},
+	"folder": null,
+	"environment": null,
+	"globals": [
+		{
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			},
+			"value": "testes123456@ipt.pt",
+			"key": "email",
+			"enabled": true
+		},
+		{
+			"value": "8efa7760-269f-4186-b640-c38dbe289433",
+			"key": "newToken",
+			"enabled": true
+		},
+		{
+			"value": "user-1",
+			"key": "filter",
+			"enabled": true
+		}
+	],
+	"results": [
+		{
+			"name": "Autenticacao do USER como ADMIN",
+			"id": "5612866b-fb2f-4c8d-b019-a7f14905283f",
+			"url": "http://brandic.devll.eu:61080/api/user/auth",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"229"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false
+				}
+			],
+			"time": "229",
+			"totalRequestTime": "229",
+			"iterationResults": {}
+		},
+		{
+			"name": "Logout do USER",
+			"id": "e0e49b53-011b-4c65-be47-1a5f596db9eb",
+			"url": "http://brandic.devll.eu:61080/api/user/logout",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"16"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false
+				}
+			],
+			"time": "16",
+			"totalRequestTime": "16",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/create - sem sucesso ERROR:3 sem autenticacao",
+			"id": "36ece297-0ec2-403f-ad7b-9a8ab18a6c10",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar ou atualizar a DataSheet, mas sem autenticação!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas sem autenticação!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"231"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar ou atualizar a DataSheet, mas sem autenticação!": true
+				}
+			],
+			"time": "231",
+			"totalRequestTime": "231",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/create - sem sucesso ERROR:2 falta campos obrigatorios",
+			"id": "2f9cc13c-34a2-4d6c-8690-4eada3413cf2",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar ou atualizar a DataSheet, mas com falta de campos obrigatórios!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas com falta de campos obrigatórios!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"231"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar ou atualizar a DataSheet, mas com falta de campos obrigatórios!": false
+				}
+			],
+			"time": "231",
+			"totalRequestTime": "231",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/create - sem sucesso ERROR:1 campos mal preenchidos",
+			"id": "ebc079bc-6f83-4197-9ab4-41b60aeb469c",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar ou atualizar a DataSheet, mas com campos inválidos!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas com campos inválidos!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"231"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar ou atualizar a DataSheet, mas com campos inválidos!": false
+				}
+			],
+			"time": "231",
+			"totalRequestTime": "231",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/create - sem sucesso ERROR:1 campos mal preenchidos Copy",
+			"id": "ffd55d2f-2738-4b05-a828-8369f3b25ed2",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar ou atualizar a DataSheet, mas com campos inválidos!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas com campos inválidos!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"220"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar ou atualizar a DataSheet, mas com campos inválidos!": false
+				}
+			],
+			"time": "220",
+			"totalRequestTime": "220",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/createandedit - sem sucesso ERROR:1 campos mal preenchidos Copy",
+			"id": "96162265-effa-4f7b-be02-cf8a254fa1d8",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/createandedit",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found",
+				"detail": {
+					"name": "Not Found",
+					"detail": "The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar ou atualizar a DataSheet, mas com campos inválidos!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas com campos inválidos!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"241"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar ou atualizar a DataSheet, mas com campos inválidos!": false
+				}
+			],
+			"time": "241",
+			"totalRequestTime": "241",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/create - com sucesso ERROR:0 criado com sucesso",
+			"id": "26ad26a7-8f45-4c94-a11d-f41eccd0d787",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar ou atualizar a DataSheet, criada com sucesso!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, criada com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"227"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar ou atualizar a DataSheet, criada com sucesso!": false
+				}
+			],
+			"time": "227",
+			"totalRequestTime": "227",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/create - com sucesso ERROR:0 criada com sucesso copy",
+			"id": "983a945b-40f9-4ed1-9b7c-015cb254723d",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar ou atualizar a DataSheet, criada com sucesso!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, criada com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"232"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar ou atualizar a DataSheet, criada com sucesso!": false
+				}
+			],
+			"time": "232",
+			"totalRequestTime": "232",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/edit/:id/page/:page - sem sucesso ERROR:4 sem autenticacao",
+			"id": "627ff0e5-14fe-4a0f-b162-2d2d292c94d1",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/edit/1/page/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar ou atualizar a DataSheet, mas sem autenticação!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas sem autenticação!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"219"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar ou atualizar a DataSheet, mas sem autenticação!": true
+				}
+			],
+			"time": "219",
+			"totalRequestTime": "219",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/edit/:id/page/:page - sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "eac6faac-f964-4ff3-96e8-1f682e374845",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/edit/1/page/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar ou atualizar a DataSheet, mas com falta de campos obrigatórios!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas com falta de campos obrigatórios!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"228"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar ou atualizar a DataSheet, mas com falta de campos obrigatórios!": false
+				}
+			],
+			"time": "228",
+			"totalRequestTime": "228",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/edit/:id/page/:page - sem sucesso ERROR:2 pagina invalida",
+			"id": "b0561a73-3c4e-40f3-92c3-1101d474ebb4",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/edit/1/page/0",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar ou atualizar a DataSheet, mas se a página estiver errada!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas se a página estiver errada!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"222"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar ou atualizar a DataSheet, mas se a página estiver errada!": true
+				}
+			],
+			"time": "222",
+			"totalRequestTime": "222",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/edit/:id/page/:page - sem sucesso ERROR:1 ocorreu um erro",
+			"id": "f92e1731-43da-4eb4-a4b5-a4f5ac8ee683",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/edit/1/page/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar ou atualizar a DataSheet, mas com erro - caso data formato inválido!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas com erro - caso data formato inválido!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"264"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar ou atualizar a DataSheet, mas com erro - caso data formato inválido!": false
+				}
+			],
+			"time": "264",
+			"totalRequestTime": "264",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/edit/:id/page/:page - com sucesso ERROR:0 atualizada com sucesso",
+			"id": "c16d0905-8432-4075-a372-5cba9cc16b8f",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/edit/1/page/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar ou atualizar a DataSheet, com sucesso!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, com sucesso!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"272"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar ou atualizar a DataSheet, com sucesso!": true
+				}
+			],
+			"time": "272",
+			"totalRequestTime": "272",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/list - sem sucesso ERROR:2 sem autenticacao",
+			"id": "0fa1c0aa-fe82-487c-9fa0-98c99e342fa3",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para listar as DataSheet, sem autenticação!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as DataSheet, sem autenticação!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"225"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para listar as DataSheet, sem autenticação!": true
+				}
+			],
+			"time": "225",
+			"totalRequestTime": "225",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/list - sem sucesso ERROR:1 ocorrer um erro",
+			"id": "488e3655-931d-4afc-95cb-3468fadece18",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para listar as DataSheet, se ocorrer um erro não especificado!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as DataSheet, se ocorrer um erro não especificado!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"225"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para listar as DataSheet, se ocorrer um erro não especificado!": false
+				}
+			],
+			"time": "225",
+			"totalRequestTime": "225",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/list - com sucesso ERROR:0 listado com sucesso",
+			"id": "c1f406bc-0823-447e-b604-3b9679f9e827",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para listar as DataSheet, com sucesso!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as DataSheet, com sucesso!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"20"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para listar as DataSheet, com sucesso!": true
+				}
+			],
+			"time": "20",
+			"totalRequestTime": "20",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/list - sem sucesso ERROR:2 sem autenticacao",
+			"id": "ae9a4179-767c-4167-ae4e-add62874b382",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para listar as DataSheet, sem autenticação!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as DataSheet, sem autenticação!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"230"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para listar as DataSheet, sem autenticação!": true
+				}
+			],
+			"time": "230",
+			"totalRequestTime": "230",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/list - sem sucesso ERROR:1 ocorrer um erro",
+			"id": "aaed9fdc-9f81-4185-b72d-60d38f5e3f13",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para listar as DataSheet, se ocorrer um erro não especificado!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as DataSheet, se ocorrer um erro não especificado!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"250"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para listar as DataSheet, se ocorrer um erro não especificado!": false
+				}
+			],
+			"time": "250",
+			"totalRequestTime": "250",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/list - com sucesso ERROR:0 listado com sucesso",
+			"id": "ce21981d-a4c3-41df-9bd6-b82efd7fc9f6",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para listar as DataSheet, com sucesso!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as DataSheet, com sucesso!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"35"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para listar as DataSheet, com sucesso!": true
+				}
+			],
+			"time": "35",
+			"totalRequestTime": "35",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/list - sem sucesso ERROR:2 sem autenticacao",
+			"id": "9dcc6ce6-3525-4fd5-96e7-018f2c1253ff",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para listar as DataSheet, sem autenticação!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as DataSheet, sem autenticação!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"237"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para listar as DataSheet, sem autenticação!": false
+				}
+			],
+			"time": "237",
+			"totalRequestTime": "237",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/list - sem sucesso ERROR:1 se ocorrer um erro",
+			"id": "7bde5bc1-7913-4d22-a20f-de84b4e9307d",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para listar as Super-Categorias das DataSheet, e se ocorrer um erro não especificado!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Super-Categorias das DataSheet, e se ocorrer um erro não especificado!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"233"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para listar as Super-Categorias das DataSheet, e se ocorrer um erro não especificado!": false
+				}
+			],
+			"time": "233",
+			"totalRequestTime": "233",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/list - com sucesso ERROR:0 listado com sucesso",
+			"id": "00164497-e0c9-4587-8e3a-20b63da20d15",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para listar as Super-Categorias das DataSheet, e for listado com sucesso!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Super-Categorias das DataSheet, e for listado com sucesso!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"239"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para listar as Super-Categorias das DataSheet, e for listado com sucesso!": true
+				}
+			],
+			"time": "239",
+			"totalRequestTime": "239",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/list - sem sucesso ERROR:3 sem autenticacao",
+			"id": "af4d8dac-250d-449f-8fb0-c3be486948d2",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para listar as Categorias das DataSheet, sem autenticação!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Categorias das DataSheet, sem autenticação!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"230"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para listar as Categorias das DataSheet, sem autenticação!": false
+				}
+			],
+			"time": "230",
+			"totalRequestTime": "230",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/list - sem sucesso ERROR:2 falta id super categoria",
+			"id": "056e8965-a8ce-4ab7-94e3-51c5b9823c34",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para listar as Categorias das DataSheet, mas faltando o ID da super categoria!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Categorias das DataSheet, mas faltando o ID da super categoria!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"223"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para listar as Categorias das DataSheet, mas faltando o ID da super categoria!": false
+				}
+			],
+			"time": "223",
+			"totalRequestTime": "223",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/list - sem sucesso ERROR:1 ocorreu um erro",
+			"id": "a2e3360d-f7e1-4bfc-b4b3-368d19134b4c",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para listar as Categorias das DataSheet, mas se ocorreu um erro!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Categorias das DataSheet, mas se ocorreu um erro!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"233"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para listar as Categorias das DataSheet, mas se ocorreu um erro!": false
+				}
+			],
+			"time": "233",
+			"totalRequestTime": "233",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/list - com sucesso ERROR:0 listado com sucesso",
+			"id": "0dc77e91-8ef3-4c4d-b2db-bc489813efcd",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/list?super_category=1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para listar as Categorias das DataSheet, listado com sucesso!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Categorias das DataSheet, listado com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"233"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para listar as Categorias das DataSheet, listado com sucesso!": false
+				}
+			],
+			"time": "233",
+			"totalRequestTime": "233",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/list - sem sucesso ERROR:3 sem autenticacao",
+			"id": "b5bd2d56-2fb7-43f8-853a-dbe1aef39eaa",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para listar as Sub_Categorias das DataSheet, sem autenticação!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Sub_Categorias das DataSheet, sem autenticação!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"232"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para listar as Sub_Categorias das DataSheet, sem autenticação!": false
+				}
+			],
+			"time": "232",
+			"totalRequestTime": "232",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/list - sem sucesso ERROR:2 falta id super categoria",
+			"id": "c3a2f976-913d-401c-92e2-c588e7315789",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para listar as Sub_Categorias das DataSheet, mas faltando o ID da categoria!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Sub_Categorias das DataSheet, mas faltando o ID da categoria!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"230"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para listar as Sub_Categorias das DataSheet, mas faltando o ID da categoria!": false
+				}
+			],
+			"time": "230",
+			"totalRequestTime": "230",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/list - sem sucesso ERROR:1 ocorreu um erro",
+			"id": "293bbb4f-4a44-4df3-98ac-8471a2f988d8",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para listar as Sub_Categorias das DataSheet, mas se ocorreu um erro!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Sub_Categorias das DataSheet, mas se ocorreu um erro!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"227"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para listar as Sub_Categorias das DataSheet, mas se ocorreu um erro!": false
+				}
+			],
+			"time": "227",
+			"totalRequestTime": "227",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/list - com sucesso ERROR:0 listado com sucesso",
+			"id": "d7e5636a-2722-41f4-bf94-b7bdc6210862",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/list?category=1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para listar as Sub_Categorias das DataSheet, listado com sucesso!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Sub_Categorias das DataSheet, listado com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"229"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para listar as Sub_Categorias das DataSheet, listado com sucesso!": false
+				}
+			],
+			"time": "229",
+			"totalRequestTime": "229",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/create - sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "c835179c-5afb-4e23-91e9-5e679ab1b53c",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar super categorias, mas sem autenticação!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar super categorias, mas sem autenticação!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"229"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar super categorias, mas sem autenticação!": true
+				}
+			],
+			"time": "229",
+			"totalRequestTime": "229",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/create - sem sucesso ERROR:3 falta campos obrigatorios",
+			"id": "b4d7250d-8acc-4e56-9f34-02d5501613b9",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar super categorias, mas faltam campos obrigatórios!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar super categorias, mas faltam campos obrigatórios!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"232"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar super categorias, mas faltam campos obrigatórios!": false
+				}
+			],
+			"time": "232",
+			"totalRequestTime": "232",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/create - sem sucesso ERROR:2 falta id",
+			"id": "48b402e1-5e32-4d90-9652-4d26eaff3cac",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar super categorias, mas falta ID ou ID repetido!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar super categorias, mas falta ID ou ID repetido!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"228"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar super categorias, mas falta ID ou ID repetido!": true
+				}
+			],
+			"time": "228",
+			"totalRequestTime": "228",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/create - sem sucesso ERROR:1 ocorrer um erro",
+			"id": "931062cf-77b8-4ed7-a7e7-95529a3bf537",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar super categorias, mas ocorrer um erro!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar super categorias, mas ocorrer um erro!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"231"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar super categorias, mas ocorrer um erro!": false
+				}
+			],
+			"time": "231",
+			"totalRequestTime": "231",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/create - com sucesso ERROR:0 criado com sucesso",
+			"id": "5efb99ad-2344-4f9e-b746-8defbdb88479",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar super categorias, criada com sucesso!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar super categorias, criada com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"227"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar super categorias, criada com sucesso!": false
+				}
+			],
+			"time": "227",
+			"totalRequestTime": "227",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/create - sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "9a6fb99d-2949-4716-9aee-b035980db81f",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar categorias, mas sem autenticação ou permissão!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar categorias, mas sem autenticação ou permissão!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"234"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar categorias, mas sem autenticação ou permissão!": true
+				}
+			],
+			"time": "234",
+			"totalRequestTime": "234",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/create - sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "a5f99629-f528-4d48-95ec-00164df51c10",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar categorias, como admin, mas faltam campos onrigatórios!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar categorias, como admin, mas faltam campos onrigatórios!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"232"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar categorias, como admin, mas faltam campos onrigatórios!": true
+				}
+			],
+			"time": "232",
+			"totalRequestTime": "232",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/create - sem sucesso ERROR:2 falta ID ou ID repetido",
+			"id": "a4228806-d20b-473d-983e-bd9134e13c3c",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar categorias, como admin, mas falta ID ou ID repetido!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar categorias, como admin, mas falta ID ou ID repetido!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"265"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar categorias, como admin, mas falta ID ou ID repetido!": false
+				}
+			],
+			"time": "265",
+			"totalRequestTime": "265",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/create - sem sucesso ERROR:1 ocorreu um erro",
+			"id": "8febb353-ee18-49a7-8af6-60db699f91bc",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar categorias, como admin, mas campos mal definidos!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar categorias, como admin, mas campos mal definidos!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"277"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar categorias, como admin, mas campos mal definidos!": true
+				}
+			],
+			"time": "277",
+			"totalRequestTime": "277",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/create - com sucesso ERROR:0 criado com sucesso",
+			"id": "d5e0edb5-78dd-4f19-bcbc-3ede1cdb9d42",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar categorias, como admin, criado com sucesso!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar categorias, como admin, criado com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"278"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar categorias, como admin, criado com sucesso!": false
+				}
+			],
+			"time": "278",
+			"totalRequestTime": "278",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/create - sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "dd834b06-cd7f-4cb5-8af7-623752d4a816",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar sub_categorias, mas sem autenticação ou permissão!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar sub_categorias, mas sem autenticação ou permissão!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"222"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar sub_categorias, mas sem autenticação ou permissão!": true
+				}
+			],
+			"time": "222",
+			"totalRequestTime": "222",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/create - sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "f95ba0aa-a63f-4889-9501-f3e5027e2da6",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar sub_categorias, como admin, mas faltam campos obrigatórios!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar sub_categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"232"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar sub_categorias, como admin, mas faltam campos obrigatórios!": true
+				}
+			],
+			"time": "232",
+			"totalRequestTime": "232",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/create - sem sucesso ERROR:2 falta ID ou ID repetido",
+			"id": "01a3278c-8675-4fe8-b6af-32c63bbb0bf4",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar sub_categorias, como admin, mas falta ID ou ID repetido!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar sub_categorias, como admin, mas falta ID ou ID repetido!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"235"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar sub_categorias, como admin, mas falta ID ou ID repetido!": false
+				}
+			],
+			"time": "235",
+			"totalRequestTime": "235",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/create - sem sucesso ERROR:1 ocorrer um erro ou campo mal definido",
+			"id": "91e5a65e-028f-4f86-a687-5013e5f9524c",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar sub_categorias, como admin, mas ocorreu um erro ou campo mal definido!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar sub_categorias, como admin, mas ocorreu um erro ou campo mal definido!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"231"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar sub_categorias, como admin, mas ocorreu um erro ou campo mal definido!": false
+				}
+			],
+			"time": "231",
+			"totalRequestTime": "231",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/create - com sucesso ERROR:0 criado com sucesso",
+			"id": "52935f0f-3a13-4b86-836f-2dca8d9da995",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para criar sub_categorias, como admin, criado com sucesso!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar sub_categorias, como admin, criado com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"224"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para criar sub_categorias, como admin, criado com sucesso!": false
+				}
+			],
+			"time": "224",
+			"totalRequestTime": "224",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/change - sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "284fe97d-2532-416a-8a54-2ad1d8fe6927",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para alterar super_categorias, mas sem autenticação ou permissão!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar super_categorias, mas sem autenticação ou permissão!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"226"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para alterar super_categorias, mas sem autenticação ou permissão!": true
+				}
+			],
+			"time": "226",
+			"totalRequestTime": "226",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/change - sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "b36a278f-4f7a-4b08-a6e1-4d3afdb86122",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para alterar super_categorias, como admin, mas faltam campos obrigatórios!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar super_categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"233"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para alterar super_categorias, como admin, mas faltam campos obrigatórios!": true
+				}
+			],
+			"time": "233",
+			"totalRequestTime": "233",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/change - sem sucesso ERROR:2 super_categoria duplicada",
+			"id": "6648b16f-41bf-4ab9-9813-2f2f06c56d7d",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para alterar super_categorias, como admin, mas faltam campos obrigatórios!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar super_categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"242"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para alterar super_categorias, como admin, mas faltam campos obrigatórios!": false
+				}
+			],
+			"time": "242",
+			"totalRequestTime": "242",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/change - sem sucesso ERROR:1 ocorrer um erro - campo mal definido",
+			"id": "faf2af30-64c8-4681-b263-69122e35f1f3",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para alterar super_categorias, como admin, mas ocorre um erro ou existe campo mal definido!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar super_categorias, como admin, mas ocorre um erro ou existe campo mal definido!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"246"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para alterar super_categorias, como admin, mas ocorre um erro ou existe campo mal definido!": true
+				}
+			],
+			"time": "246",
+			"totalRequestTime": "246",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/change - com sucesso ERROR:0 alterado com sucesso",
+			"id": "e77d899c-1cfa-4c77-bc04-4c4e5a419dbc",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para alterar super_categorias, como admin, alterado com sucesso!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar super_categorias, como admin, alterado com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"241"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para alterar super_categorias, como admin, alterado com sucesso!": false
+				}
+			],
+			"time": "241",
+			"totalRequestTime": "241",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/change - sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "5a37e336-c732-485b-aa51-3d6499b85a8e",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para alterar categorias, mas sem autenticação ou permissão!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar categorias, mas sem autenticação ou permissão!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"222"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para alterar categorias, mas sem autenticação ou permissão!": true
+				}
+			],
+			"time": "222",
+			"totalRequestTime": "222",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/change - sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "3734e588-e120-4e66-bb0b-a962c522104e",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para alterar categorias, como admin, mas faltam campos obrigatórios!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"235"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para alterar categorias, como admin, mas faltam campos obrigatórios!": true
+				}
+			],
+			"time": "235",
+			"totalRequestTime": "235",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/change - sem sucesso ERROR:2 categoria duplicada",
+			"id": "162410b9-0793-4ed7-8117-06657e660ac0",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para alterar categorias, como admin, mas faltam campos obrigatórios!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"273"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para alterar categorias, como admin, mas faltam campos obrigatórios!": false
+				}
+			],
+			"time": "273",
+			"totalRequestTime": "273",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/change - sem sucesso ERROR:1 ocorrer um erro - campo mal definido",
+			"id": "91936494-cb8d-4d7b-baf2-c7787f723914",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para alterar categorias, como admin, mas ocorre um erro ou existe campo mal definido!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar categorias, como admin, mas ocorre um erro ou existe campo mal definido!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"231"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para alterar categorias, como admin, mas ocorre um erro ou existe campo mal definido!": true
+				}
+			],
+			"time": "231",
+			"totalRequestTime": "231",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/change - com sucesso ERROR:0 alterado com sucesso",
+			"id": "5b2cb189-659a-43d9-95b8-749c324a44bc",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para alterar categorias, como admin, alterado com sucesso!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar categorias, como admin, alterado com sucesso!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"270"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para alterar categorias, como admin, alterado com sucesso!": true
+				}
+			],
+			"time": "270",
+			"totalRequestTime": "270",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/change - sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "887d80cc-794a-475a-bfc8-7d1393653818",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para alterar sub_categorias, mas sem autenticação ou permissão!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar sub_categorias, mas sem autenticação ou permissão!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"228"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para alterar sub_categorias, mas sem autenticação ou permissão!": true
+				}
+			],
+			"time": "228",
+			"totalRequestTime": "228",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/change - sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "cac84dd8-6394-4afb-9be9-eaa82b240b83",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para alterar sub_categorias, como admin, mas faltam campos obrigatórios!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar sub_categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"223"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para alterar sub_categorias, como admin, mas faltam campos obrigatórios!": false
+				}
+			],
+			"time": "223",
+			"totalRequestTime": "223",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/change - sem sucesso ERROR:2 sub_categoria duplicada",
+			"id": "2a677124-52a4-4217-9452-f8f4249050b4",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para alterar sub_categorias, como admin, mas faltam campos obrigatórios!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar sub_categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"231"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para alterar sub_categorias, como admin, mas faltam campos obrigatórios!": false
+				}
+			],
+			"time": "231",
+			"totalRequestTime": "231",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/change - sem sucesso ERROR:1 ocorrer um erro - campo mal definido",
+			"id": "1ebc6faf-ddce-4222-8466-85acafdaaf1e",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para alterar sub_categorias, como admin, mas ocorreu um erro ou existe campo mal definido!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar sub_categorias, como admin, mas ocorreu um erro ou existe campo mal definido!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"229"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para alterar sub_categorias, como admin, mas ocorreu um erro ou existe campo mal definido!": false
+				}
+			],
+			"time": "229",
+			"totalRequestTime": "229",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/change - com sucesso ERROR:0 alterado com sucesso",
+			"id": "a33a4244-f858-4a0e-a0dc-81c089149163",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para alterar sub_categorias, como admin, alterado com sucesso!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar sub_categorias, como admin, alterado com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"227"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para alterar sub_categorias, como admin, alterado com sucesso!": false
+				}
+			],
+			"time": "227",
+			"totalRequestTime": "227",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/delete- sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "9d841ff7-255b-4723-b34b-b067ede0aa97",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para eliminar sub_categorias, mas sem autenticação ou permissão!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar sub_categorias, mas sem autenticação ou permissão!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"233"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para eliminar sub_categorias, mas sem autenticação ou permissão!": true
+				}
+			],
+			"time": "233",
+			"totalRequestTime": "233",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/delete- sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "9ec2cd7a-a7dd-4206-88bd-b4bb6447268c",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para eliminar sub_categorias, como admin, mas faltam campos obrigatórios!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar sub_categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"229"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para eliminar sub_categorias, como admin, mas faltam campos obrigatórios!": false
+				}
+			],
+			"time": "229",
+			"totalRequestTime": "229",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/delete- sem sucesso ERROR:2 sub_categoria em uso num objeto",
+			"id": "43986b6b-e29d-494f-a53f-81f4574f95bc",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para eliminar sub_categorias, como admin, mas ainda em uso num objeto!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar sub_categorias, como admin, mas ainda em uso num objeto!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"232"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para eliminar sub_categorias, como admin, mas ainda em uso num objeto!": false
+				}
+			],
+			"time": "232",
+			"totalRequestTime": "232",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/delete- sem sucesso ERROR:1 ocorrer um erro - campo mal definido",
+			"id": "60f89545-f0d5-4b71-a3fc-8e47874ee99e",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para eliminar sub_categorias, como admin, mas ocorreu um erro ou existe campo mal definido!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar sub_categorias, como admin, mas ocorreu um erro ou existe campo mal definido!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"232"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para eliminar sub_categorias, como admin, mas ocorreu um erro ou existe campo mal definido!": true
+				}
+			],
+			"time": "232",
+			"totalRequestTime": "232",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/delete- com sucesso ERROR:0 eliminada com sucesso",
+			"id": "61fa521b-5196-4514-a25c-780911e8c10a",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para eliminar sub_categorias, como admin, eliminada com sucesso!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar sub_categorias, como admin, eliminada com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"228"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para eliminar sub_categorias, como admin, eliminada com sucesso!": false
+				}
+			],
+			"time": "228",
+			"totalRequestTime": "228",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/delete- sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "b1517da6-e36c-4c69-a687-95ec25576890",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para eliminar categorias, mas sem autenticação ou permissão!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar categorias, mas sem autenticação ou permissão!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"221"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para eliminar categorias, mas sem autenticação ou permissão!": true
+				}
+			],
+			"time": "221",
+			"totalRequestTime": "221",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/delete- sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "424418d6-3617-4182-9654-be9b98eab3d0",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para eliminar categorias, como admin, mas faltam campos obrigatórios!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"226"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para eliminar categorias, como admin, mas faltam campos obrigatórios!": true
+				}
+			],
+			"time": "226",
+			"totalRequestTime": "226",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/delete- sem sucesso ERROR:2 categoria em uso num objeto",
+			"id": "cf1dc5ec-e8c2-46c9-9741-86f53a422ffa",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para eliminar categorias, como admin, mas ainda em uso num objeto!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar categorias, como admin, mas ainda em uso num objeto!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"233"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para eliminar categorias, como admin, mas ainda em uso num objeto!": true
+				}
+			],
+			"time": "233",
+			"totalRequestTime": "233",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/delete- sem sucesso ERROR:1 ocorrer um erro - campo mal definido",
+			"id": "cd95d660-25e2-4db2-9279-bbab9e33d644",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para eliminar categorias, como admin, mas ocorreu um erro ou existe campo mal definido!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar categorias, como admin, mas ocorreu um erro ou existe campo mal definido!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"231"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para eliminar categorias, como admin, mas ocorreu um erro ou existe campo mal definido!": true
+				}
+			],
+			"time": "231",
+			"totalRequestTime": "231",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/categories/delete- com sucesso ERROR:0 eliminada com sucesso",
+			"id": "e08ea939-c91c-4406-8983-d00a6b72c189",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para eliminar categorias, como admin, eliminada com sucesso!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar categorias, como admin, eliminada com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"233"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para eliminar categorias, como admin, eliminada com sucesso!": false
+				}
+			],
+			"time": "233",
+			"totalRequestTime": "233",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/delete- sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "816f9d0e-7c59-475e-9576-0c90d9e0e5af",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para eliminar super_categorias, mas sem autenticação ou permissão!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar super_categorias, mas sem autenticação ou permissão!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"228"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para eliminar super_categorias, mas sem autenticação ou permissão!": true
+				}
+			],
+			"time": "228",
+			"totalRequestTime": "228",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/delete- sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "175645bf-b8c8-41b5-a3ac-13ab4948bc85",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para eliminar super_categorias, como admin, mas faltam campos obrigatórios!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar super_categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"238"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para eliminar super_categorias, como admin, mas faltam campos obrigatórios!": true
+				}
+			],
+			"time": "238",
+			"totalRequestTime": "238",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/delete- sem sucesso ERROR:2 super_categoria em uso num objeto",
+			"id": "f653d4f5-2d7f-4b0d-acca-b9ae5b9c4dae",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para eliminar super_categorias, como admin, mas ainda em uso num objeto!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar super_categorias, como admin, mas ainda em uso num objeto!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"227"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para eliminar super_categorias, como admin, mas ainda em uso num objeto!": false
+				}
+			],
+			"time": "227",
+			"totalRequestTime": "227",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/delete- sem sucesso ERROR:1 ocorrer um erro - campo mal definido",
+			"id": "05d423d9-6266-44c4-83b9-0d77d1f9b370",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para eliminar super_categorias, como admin, mas ocorreu um erro ou existe campo mal definido!": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar super_categorias, como admin, mas ocorreu um erro ou existe campo mal definido!": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"230"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para eliminar super_categorias, como admin, mas ocorreu um erro ou existe campo mal definido!": true
+				}
+			],
+			"time": "230",
+			"totalRequestTime": "230",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/datasheet/super_categories/delete- com sucesso ERROR:0 eliminada com sucesso",
+			"id": "48d76300-9cf9-4848-81ac-2d2ec79238d2",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste para eliminar super_categorias, como admin, eliminada com sucesso!": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar super_categorias, como admin, eliminada com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"236"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste para eliminar super_categorias, como admin, eliminada com sucesso!": false
+				}
+			],
+			"time": "236",
+			"totalRequestTime": "236",
+			"iterationResults": {}
+		},
+		{
+			"name": "/api/user/listNames - sem sucesso ERROR:1obter lista de nomes utilizadores sem autenticação",
+			"id": "8ec43c47-56e8-4ed5-a63e-a3dfafd3a762",
+			"url": "http://brandic.devll.eu:61080/api/user/listNames",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste de obter lista de utilizadores sem autenticação.": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste de obter lista de utilizadores sem autenticação.": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"229"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste de obter lista de utilizadores sem autenticação.": true
+				}
+			],
+			"time": "229",
+			"totalRequestTime": "229",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/listNames - com sucesso ERROR:0 obter lista de utilizadores com autenticação com usertypeid 2",
+			"id": "89d2382c-c912-47ef-8192-4988d0a939df",
+			"url": "http://brandic.devll.eu:61080/api/user/listNames",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste de obter lista de utilizadores com autenticação com tipo de utilizador usertypeid 2.": false
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste de obter lista de utilizadores com autenticação com tipo de utilizador usertypeid 2.": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"235"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste de obter lista de utilizadores com autenticação com tipo de utilizador usertypeid 2.": false
+				}
+			],
+			"time": "235",
+			"totalRequestTime": "235",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/listNames - com sucesso ERROR:0 obter lista de utilizadores com autenticação com usertypeid 1",
+			"id": "90ca44eb-c951-4637-8bf0-8427b7217781",
+			"url": "http://brandic.devll.eu:61080/api/user/listNames",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste da API/Datasheet nas várias condições!": false,
+				"Teste de obter lista de utilizadores com autenticação de utilizador com usertypeid 1.": true
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste de obter lista de utilizadores com autenticação de utilizador com usertypeid 1.": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"244"
+			],
+			"allTests": [
+				{
+					"Teste da API/Datasheet nas várias condições!": false,
+					"Teste de obter lista de utilizadores com autenticação de utilizador com usertypeid 1.": true
+				}
+			],
+			"time": "244",
+			"totalRequestTime": "244",
+			"iterationResults": {}
+		}
+	],
+	"totalPass": 35,
+	"totalFail": 121,
+	"totalTime": 17893,
+	"lifecycle": "done",
+	"requests": [
+		{
+			"name": "Autenticacao do USER como ADMIN",
+			"id": "5612866b-fb2f-4c8d-b019-a7f14905283f",
+			"url": "http://brandic.devll.eu:61080/api/user/auth",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "Logout do USER",
+			"id": "e0e49b53-011b-4c65-be47-1a5f596db9eb",
+			"url": "http://brandic.devll.eu:61080/api/user/logout",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/create - sem sucesso ERROR:3 sem autenticacao",
+			"id": "36ece297-0ec2-403f-ad7b-9a8ab18a6c10",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas sem autenticação!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/create - sem sucesso ERROR:2 falta campos obrigatorios",
+			"id": "2f9cc13c-34a2-4d6c-8690-4eada3413cf2",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas com falta de campos obrigatórios!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/create - sem sucesso ERROR:1 campos mal preenchidos",
+			"id": "ebc079bc-6f83-4197-9ab4-41b60aeb469c",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas com campos inválidos!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/create - sem sucesso ERROR:1 campos mal preenchidos Copy",
+			"id": "ffd55d2f-2738-4b05-a828-8369f3b25ed2",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas com campos inválidos!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/createandedit - sem sucesso ERROR:1 campos mal preenchidos Copy",
+			"id": "96162265-effa-4f7b-be02-cf8a254fa1d8",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/createandedit",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found",
+				"detail": {
+					"name": "Not Found",
+					"detail": "The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas com campos inválidos!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/create - com sucesso ERROR:0 criado com sucesso",
+			"id": "26ad26a7-8f45-4c94-a11d-f41eccd0d787",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, criada com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/create - com sucesso ERROR:0 criada com sucesso copy",
+			"id": "983a945b-40f9-4ed1-9b7c-015cb254723d",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, criada com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/edit/:id/page/:page - sem sucesso ERROR:4 sem autenticacao",
+			"id": "627ff0e5-14fe-4a0f-b162-2d2d292c94d1",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/edit/1/page/1",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas sem autenticação!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/edit/:id/page/:page - sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "eac6faac-f964-4ff3-96e8-1f682e374845",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/edit/1/page/1",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas com falta de campos obrigatórios!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/edit/:id/page/:page - sem sucesso ERROR:2 pagina invalida",
+			"id": "b0561a73-3c4e-40f3-92c3-1101d474ebb4",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/edit/1/page/0",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas se a página estiver errada!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/edit/:id/page/:page - sem sucesso ERROR:1 ocorreu um erro",
+			"id": "f92e1731-43da-4eb4-a4b5-a4f5ac8ee683",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/edit/1/page/1",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, mas com erro - caso data formato inválido!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/edit/:id/page/:page - com sucesso ERROR:0 atualizada com sucesso",
+			"id": "c16d0905-8432-4075-a372-5cba9cc16b8f",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/edit/1/page/1",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar ou atualizar a DataSheet, com sucesso!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/list - sem sucesso ERROR:2 sem autenticacao",
+			"id": "0fa1c0aa-fe82-487c-9fa0-98c99e342fa3",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/list",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as DataSheet, sem autenticação!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/list - sem sucesso ERROR:1 ocorrer um erro",
+			"id": "488e3655-931d-4afc-95cb-3468fadece18",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/list",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as DataSheet, se ocorrer um erro não especificado!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/list - com sucesso ERROR:0 listado com sucesso",
+			"id": "c1f406bc-0823-447e-b604-3b9679f9e827",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/list",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as DataSheet, com sucesso!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/list - sem sucesso ERROR:2 sem autenticacao",
+			"id": "ae9a4179-767c-4167-ae4e-add62874b382",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/list",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as DataSheet, sem autenticação!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/list - sem sucesso ERROR:1 ocorrer um erro",
+			"id": "aaed9fdc-9f81-4185-b72d-60d38f5e3f13",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/list",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as DataSheet, se ocorrer um erro não especificado!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/list - com sucesso ERROR:0 listado com sucesso",
+			"id": "ce21981d-a4c3-41df-9bd6-b82efd7fc9f6",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/list",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as DataSheet, com sucesso!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/list - sem sucesso ERROR:2 sem autenticacao",
+			"id": "9dcc6ce6-3525-4fd5-96e7-018f2c1253ff",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/list",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as DataSheet, sem autenticação!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/list - sem sucesso ERROR:1 se ocorrer um erro",
+			"id": "7bde5bc1-7913-4d22-a20f-de84b4e9307d",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/list",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Super-Categorias das DataSheet, e se ocorrer um erro não especificado!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/list - com sucesso ERROR:0 listado com sucesso",
+			"id": "00164497-e0c9-4587-8e3a-20b63da20d15",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/list",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Super-Categorias das DataSheet, e for listado com sucesso!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/list - sem sucesso ERROR:3 sem autenticacao",
+			"id": "af4d8dac-250d-449f-8fb0-c3be486948d2",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/list",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Categorias das DataSheet, sem autenticação!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/list - sem sucesso ERROR:2 falta id super categoria",
+			"id": "056e8965-a8ce-4ab7-94e3-51c5b9823c34",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/list",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Categorias das DataSheet, mas faltando o ID da super categoria!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/list - sem sucesso ERROR:1 ocorreu um erro",
+			"id": "a2e3360d-f7e1-4bfc-b4b3-368d19134b4c",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/list",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Categorias das DataSheet, mas se ocorreu um erro!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/list - com sucesso ERROR:0 listado com sucesso",
+			"id": "0dc77e91-8ef3-4c4d-b2db-bc489813efcd",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/list?super_category=1",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Categorias das DataSheet, listado com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/list - sem sucesso ERROR:3 sem autenticacao",
+			"id": "b5bd2d56-2fb7-43f8-853a-dbe1aef39eaa",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/list",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Sub_Categorias das DataSheet, sem autenticação!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/list - sem sucesso ERROR:2 falta id super categoria",
+			"id": "c3a2f976-913d-401c-92e2-c588e7315789",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/list",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Sub_Categorias das DataSheet, mas faltando o ID da categoria!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/list - sem sucesso ERROR:1 ocorreu um erro",
+			"id": "293bbb4f-4a44-4df3-98ac-8471a2f988d8",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/list",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Sub_Categorias das DataSheet, mas se ocorreu um erro!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/list - com sucesso ERROR:0 listado com sucesso",
+			"id": "d7e5636a-2722-41f4-bf94-b7bdc6210862",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/list?category=1",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para listar as Sub_Categorias das DataSheet, listado com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/create - sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "c835179c-5afb-4e23-91e9-5e679ab1b53c",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar super categorias, mas sem autenticação!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/create - sem sucesso ERROR:3 falta campos obrigatorios",
+			"id": "b4d7250d-8acc-4e56-9f34-02d5501613b9",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar super categorias, mas faltam campos obrigatórios!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/create - sem sucesso ERROR:2 falta id",
+			"id": "48b402e1-5e32-4d90-9652-4d26eaff3cac",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar super categorias, mas falta ID ou ID repetido!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/create - sem sucesso ERROR:1 ocorrer um erro",
+			"id": "931062cf-77b8-4ed7-a7e7-95529a3bf537",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar super categorias, mas ocorrer um erro!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/create - com sucesso ERROR:0 criado com sucesso",
+			"id": "5efb99ad-2344-4f9e-b746-8defbdb88479",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar super categorias, criada com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/create - sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "9a6fb99d-2949-4716-9aee-b035980db81f",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar categorias, mas sem autenticação ou permissão!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/create - sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "a5f99629-f528-4d48-95ec-00164df51c10",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar categorias, como admin, mas faltam campos onrigatórios!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/create - sem sucesso ERROR:2 falta ID ou ID repetido",
+			"id": "a4228806-d20b-473d-983e-bd9134e13c3c",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar categorias, como admin, mas falta ID ou ID repetido!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/create - sem sucesso ERROR:1 ocorreu um erro",
+			"id": "8febb353-ee18-49a7-8af6-60db699f91bc",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar categorias, como admin, mas campos mal definidos!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/create - com sucesso ERROR:0 criado com sucesso",
+			"id": "d5e0edb5-78dd-4f19-bcbc-3ede1cdb9d42",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar categorias, como admin, criado com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/create - sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "dd834b06-cd7f-4cb5-8af7-623752d4a816",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar sub_categorias, mas sem autenticação ou permissão!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/create - sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "f95ba0aa-a63f-4889-9501-f3e5027e2da6",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar sub_categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/create - sem sucesso ERROR:2 falta ID ou ID repetido",
+			"id": "01a3278c-8675-4fe8-b6af-32c63bbb0bf4",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar sub_categorias, como admin, mas falta ID ou ID repetido!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/create - sem sucesso ERROR:1 ocorrer um erro ou campo mal definido",
+			"id": "91e5a65e-028f-4f86-a687-5013e5f9524c",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar sub_categorias, como admin, mas ocorreu um erro ou campo mal definido!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/create - com sucesso ERROR:0 criado com sucesso",
+			"id": "52935f0f-3a13-4b86-836f-2dca8d9da995",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/create",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para criar sub_categorias, como admin, criado com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/change - sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "284fe97d-2532-416a-8a54-2ad1d8fe6927",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/change",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar super_categorias, mas sem autenticação ou permissão!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/change - sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "b36a278f-4f7a-4b08-a6e1-4d3afdb86122",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/change",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar super_categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/change - sem sucesso ERROR:2 super_categoria duplicada",
+			"id": "6648b16f-41bf-4ab9-9813-2f2f06c56d7d",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/change",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar super_categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/change - sem sucesso ERROR:1 ocorrer um erro - campo mal definido",
+			"id": "faf2af30-64c8-4681-b263-69122e35f1f3",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/change",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar super_categorias, como admin, mas ocorre um erro ou existe campo mal definido!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/change - com sucesso ERROR:0 alterado com sucesso",
+			"id": "e77d899c-1cfa-4c77-bc04-4c4e5a419dbc",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/change",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar super_categorias, como admin, alterado com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/change - sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "5a37e336-c732-485b-aa51-3d6499b85a8e",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/change",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar categorias, mas sem autenticação ou permissão!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/change - sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "3734e588-e120-4e66-bb0b-a962c522104e",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/change",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/change - sem sucesso ERROR:2 categoria duplicada",
+			"id": "162410b9-0793-4ed7-8117-06657e660ac0",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/change",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/change - sem sucesso ERROR:1 ocorrer um erro - campo mal definido",
+			"id": "91936494-cb8d-4d7b-baf2-c7787f723914",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/change",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar categorias, como admin, mas ocorre um erro ou existe campo mal definido!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/change - com sucesso ERROR:0 alterado com sucesso",
+			"id": "5b2cb189-659a-43d9-95b8-749c324a44bc",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/change",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar categorias, como admin, alterado com sucesso!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/change - sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "887d80cc-794a-475a-bfc8-7d1393653818",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/change",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar sub_categorias, mas sem autenticação ou permissão!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/change - sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "cac84dd8-6394-4afb-9be9-eaa82b240b83",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/change",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar sub_categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/change - sem sucesso ERROR:2 sub_categoria duplicada",
+			"id": "2a677124-52a4-4217-9452-f8f4249050b4",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/change",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar sub_categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/change - sem sucesso ERROR:1 ocorrer um erro - campo mal definido",
+			"id": "1ebc6faf-ddce-4222-8466-85acafdaaf1e",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/change",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar sub_categorias, como admin, mas ocorreu um erro ou existe campo mal definido!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/change - com sucesso ERROR:0 alterado com sucesso",
+			"id": "a33a4244-f858-4a0e-a0dc-81c089149163",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/change",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para alterar sub_categorias, como admin, alterado com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/delete- sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "9d841ff7-255b-4723-b34b-b067ede0aa97",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/delete",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar sub_categorias, mas sem autenticação ou permissão!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/delete- sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "9ec2cd7a-a7dd-4206-88bd-b4bb6447268c",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/delete",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar sub_categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/delete- sem sucesso ERROR:2 sub_categoria em uso num objeto",
+			"id": "43986b6b-e29d-494f-a53f-81f4574f95bc",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/delete",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar sub_categorias, como admin, mas ainda em uso num objeto!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/delete- sem sucesso ERROR:1 ocorrer um erro - campo mal definido",
+			"id": "60f89545-f0d5-4b71-a3fc-8e47874ee99e",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/delete",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar sub_categorias, como admin, mas ocorreu um erro ou existe campo mal definido!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/sub_categories/delete- com sucesso ERROR:0 eliminada com sucesso",
+			"id": "61fa521b-5196-4514-a25c-780911e8c10a",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/delete",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar sub_categorias, como admin, eliminada com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/delete- sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "b1517da6-e36c-4c69-a687-95ec25576890",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/delete",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar categorias, mas sem autenticação ou permissão!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/delete- sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "424418d6-3617-4182-9654-be9b98eab3d0",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/delete",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/delete- sem sucesso ERROR:2 categoria em uso num objeto",
+			"id": "cf1dc5ec-e8c2-46c9-9741-86f53a422ffa",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/delete",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar categorias, como admin, mas ainda em uso num objeto!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/delete- sem sucesso ERROR:1 ocorrer um erro - campo mal definido",
+			"id": "cd95d660-25e2-4db2-9279-bbab9e33d644",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/delete",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar categorias, como admin, mas ocorreu um erro ou existe campo mal definido!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/categories/delete- com sucesso ERROR:0 eliminada com sucesso",
+			"id": "e08ea939-c91c-4406-8983-d00a6b72c189",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/categories/delete",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar categorias, como admin, eliminada com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/delete- sem sucesso ERROR:4 sem permissoes ou autenticacao",
+			"id": "816f9d0e-7c59-475e-9576-0c90d9e0e5af",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/delete",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar super_categorias, mas sem autenticação ou permissão!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/delete- sem sucesso ERROR:3 faltam campos obrigatorios",
+			"id": "175645bf-b8c8-41b5-a3ac-13ab4948bc85",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/delete",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar super_categorias, como admin, mas faltam campos obrigatórios!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/delete- sem sucesso ERROR:2 super_categoria em uso num objeto",
+			"id": "f653d4f5-2d7f-4b0d-acca-b9ae5b9c4dae",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/sub_categories/delete",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar super_categorias, como admin, mas ainda em uso num objeto!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/delete- sem sucesso ERROR:1 ocorrer um erro - campo mal definido",
+			"id": "05d423d9-6266-44c4-83b9-0d77d1f9b370",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/delete",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar super_categorias, como admin, mas ocorreu um erro ou existe campo mal definido!": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "/api/datasheet/super_categories/delete- com sucesso ERROR:0 eliminada com sucesso",
+			"id": "48d76300-9cf9-4848-81ac-2d2ec79238d2",
+			"url": "http://brandic.devll.eu:61080/api/datasheet/super_categories/delete",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste para eliminar super_categorias, como admin, eliminada com sucesso!": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "/api/user/listNames - sem sucesso ERROR:1obter lista de nomes utilizadores sem autenticação",
+			"id": "8ec43c47-56e8-4ed5-a63e-a3dfafd3a762",
+			"url": "http://brandic.devll.eu:61080/api/user/listNames",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste de obter lista de utilizadores sem autenticação.": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "../api/user/listNames - com sucesso ERROR:0 obter lista de utilizadores com autenticação com usertypeid 2",
+			"id": "89d2382c-c912-47ef-8192-4988d0a939df",
+			"url": "http://brandic.devll.eu:61080/api/user/listNames",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste de obter lista de utilizadores com autenticação com tipo de utilizador usertypeid 2.": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/listNames - com sucesso ERROR:0 obter lista de utilizadores com autenticação com usertypeid 1",
+			"id": "90ca44eb-c951-4637-8bf0-8427b7217781",
+			"url": "http://brandic.devll.eu:61080/api/user/listNames",
+			"time": "2019-06-14T22:20:51.282Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste da API/Datasheet nas várias condições!": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Teste de obter lista de utilizadores com autenticação de utilizador com usertypeid 1.": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		}
+	],
+	"synced": false
+}
