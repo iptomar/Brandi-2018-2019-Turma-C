@@ -25,6 +25,7 @@ export class DatasheetPage6Component implements OnInit, DatasheetPage {
     datasheet.support_deterioration= event.target.support_deterioration.value;
     datasheet.conclusions_conservation= event.target.conclusions_conservation.value;
 
+
   
   return datasheet;
   }

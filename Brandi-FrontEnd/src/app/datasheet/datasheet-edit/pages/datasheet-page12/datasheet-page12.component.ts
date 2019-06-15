@@ -7,7 +7,7 @@ import { Datasheet } from 'src/app/services/datasheet/datasheet.service';
   templateUrl: './datasheet-page12.component.html',
   styleUrls: ['./datasheet-page12.component.scss']
 })
-export class DatasheetPage12Component implements OnInit {
+export class DatasheetPage12Component implements OnInit, DatasheetPage {
   _datasheet: Datasheet;
   _isEditing: boolean;
   _verTeste: boolean;
