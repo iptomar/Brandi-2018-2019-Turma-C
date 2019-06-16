@@ -1,0 +1,2090 @@
+{
+	"info": {
+		"_postman_id": "fac2d1bb-6720-43be-a190-577b781c9339",
+		"name": "03.PM-Brandi-C_Testes_API_DATASHEET",
+		"description": "Testes Webservices Projeto Brandi_C - Alteração dos api/datasheet\n\nTestes efetuados a partir de:\n\nDATA: 12-06-2019\nHORA: 23:00\n\nUSER: Quintino\nUSER: Filipe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/datasheet/list -Lista dados de fichas técnicas",
+			"item": [
+				{
+					"name": "../api/datasheet/list - Tentativa de obter dados de fichas técnicas sem autenticação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste de obter dados de fichas técnicas sem autenticação.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(2);",
+									"    pm.expect(jsonData.message).to.eql(\"Por favor efectue autenticação\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "search",
+									"value": "designação",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/list",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"list"
+							]
+						},
+						"description": "GET /api/datasheet/list:\n\tLista fichas técnicas\n\t\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n\tsearch - palavra utilizada na pesquisa de fichas técnicas por \t\tnome\n\ndevolve:\n\tse não tiver autenticado:\n\n{\n    \"error\": 2,\n    \"message\": \"Por favor efectue autenticação\",\n    \"res\": {\n        \"datasheets\": []\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/list - Obter dados de de fichas técnicas sem campo de pesquisa",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste de obter lista de fichas técnicas sem campos de pesquisa.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Lista de fichas técnicas\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/list",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"list"
+							]
+						},
+						"description": "GET /api/datasheet/list:\n\tLista fichas técnicas\n\t\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n\tsearch - palavra utilizada na pesquisa de fichas técnicas por \t\tnome\n\ndevolve:\n\tse for listado com sucesso:\n\t\n{\n    \"error\": 0,\n    \"message\": \"Lista de fichas técnicas\",\n    \"res\": {\n        \"datasheets\": [\n            {\n                \"id\": 1,\n                \"object_designation\": \"asdsadasd33\",\n                \"CEARC_process\": \"1234\",\n                \"CEARC_process_date\": \"2019-02-13T00:00:00.000Z\",\n                \"CEARC_entry_date\": \"2018-12-12T00:00:00.000Z\",\n                \"LCRM_process\": \"455677686\",\n                \"LCRM_process_date\": \"2019-03-31T23:00:00.000Z\",\n                \"LCRM_entry_date\": \"2019-04-02T23:00:00.000Z\",\n                \"coordinator\": 3,\n                \"coordinator_name\": \"Virgílio Quintino\",\n                \"last_modified_user\": 1,\n                \"last_modified_user_name\": \"admin@admin.admin\",\n                \"last_modified_date\": \"2019-05-02T11:31:01.000Z\",\n                \"object_created_date\": \"2019-04-29T23:10:58.000Z\"\n            },\n            {\n                \"id\": 2,\n                \"object_designation\": \"sddfdfgsdf\",\n                \"CEARC_process\": \"1234\",\n                \"CEARC_process_date\": \"2019-02-13T00:00:00.000Z\",\n                \"CEARC_entry_date\": \"2018-12-12T00:00:00.000Z\",\n                \"LCRM_process\": \"455677686\",\n                \"LCRM_process_date\": \"2019-03-31T23:00:00.000Z\",\n                \"LCRM_entry_date\": \"2019-04-02T23:00:00.000Z\",\n                \"coordinator\": 1,\n                \"coordinator_name\": \"admin@admin.admin\",\n                \"last_modified_user\": 1,\n                \"last_modified_user_name\": \"admin@admin.admin\",\n                \"last_modified_date\": \"2019-05-02T08:54:30.000Z\",\n                \"object_created_date\": \"2019-04-29T23:10:58.000Z\"\n            },\n            {\n                \"id\": 3,\n                \"object_designation\": \"cdggdfgd\",\n                \"CEARC_process\": \"1234\",\n                \"CEARC_process_date\": \"2019-05-14T23:00:00.000Z\",\n                \"CEARC_entry_date\": \"2019-01-09T00:00:00.000Z\",\n                \"LCRM_process\": \"516122313165\",\n                \"LCRM_process_date\": \"2019-04-30T23:00:00.000Z\",\n                \"LCRM_entry_date\": \"2019-04-30T23:00:00.000Z\",\n                \"coordinator\": 2,\n                \"coordinator_name\": \"Nuno Marques\",\n                \"last_modified_user\": 1,\n                \"last_modified_user_name\": \"admin@admin.admin\",\n                \"last_modified_date\": \"2019-05-05T17:36:32.000Z\",\n                \"object_created_date\": \"2019-05-05T17:15:16.000Z\"\n            },\n            {\n                \"id\": 4,\n                \"object_designation\": \"cdggdfgd\",\n                \"CEARC_process\": \"1234\",\n                \"CEARC_process_date\": \"2019-05-14T23:00:00.000Z\",\n                \"CEARC_entry_date\": \"2019-01-09T00:00:00.000Z\",\n                \"LCRM_process\": \"516122313165\",\n                \"LCRM_process_date\": \"2019-04-30T23:00:00.000Z\",\n                \"LCRM_entry_date\": \"2019-04-30T23:00:00.000Z\",\n                \"coordinator\": 2,\n                \"coordinator_name\": \"Nuno Marques\",\n                \"last_modified_user\": 1,\n                \"last_modified_user_name\": \"admin@admin.admin\",\n                \"last_modified_date\": \"2019-05-05T17:35:50.000Z\",\n                \"object_created_date\": \"2019-05-05T17:15:16.000Z\"\n            },\n            {\n                \"id\": 5,\n                \"object_designation\": \"teste\",\n                \"CEARC_process\": \"1\",\n                \"CEARC_process_date\": \"2019-05-06T23:00:00.000Z\",\n                \"CEARC_entry_date\": \"2019-05-06T23:00:00.000Z\",\n                \"LCRM_process\": \"1\",\n                \"LCRM_process_date\": \"2019-05-06T23:00:00.000Z\",\n                \"LCRM_entry_date\": \"2019-05-06T23:00:00.000Z\",\n                \"coordinator\": 5,\n                \"coordinator_name\": \"Jorge Duque\",\n                \"last_modified_user\": 1,\n                \"last_modified_user_name\": \"admin@admin.admin\",\n                \"last_modified_date\": \"2019-05-07T22:22:53.000Z\",\n                \"object_created_date\": \"2019-05-07T22:22:53.000Z\"\n            },\n            {\n                \"id\": 6,\n                \"object_designation\": \"designação xpto\",\n                \"CEARC_process\": \"nove mil e novecentos e noventa e nove\",\n                \"CEARC_process_date\": null,\n                \"CEARC_entry_date\": null,\n                \"LCRM_process\": \"muitos noves\",\n                \"LCRM_process_date\": null,\n                \"LCRM_entry_date\": null,\n                \"coordinator\": 1,\n                \"coordinator_name\": \"admin@admin.admin\",\n                \"last_modified_user\": 7,\n                \"last_modified_user_name\": \"Filipe Branco\",\n                \"last_modified_date\": \"2019-05-08T08:54:34.000Z\",\n                \"object_created_date\": \"2019-05-08T08:54:34.000Z\"\n            },\n            {\n                \"id\": 11,\n                \"object_designation\": \"descrição do artigo\",\n                \"CEARC_process\": \"9999\",\n                \"CEARC_process_date\": \"2019-04-30T23:00:00.000Z\",\n                \"CEARC_entry_date\": \"2019-04-29T23:00:00.000Z\",\n                \"LCRM_process\": \"99999999999\",\n                \"LCRM_process_date\": \"2019-04-28T23:00:00.000Z\",\n                \"LCRM_entry_date\": \"2019-04-27T23:00:00.000Z\",\n                \"coordinator\": 1,\n                \"coordinator_name\": \"admin@admin.admin\",\n                \"last_modified_user\": 7,\n                \"last_modified_user_name\": \"Filipe Branco\",\n                \"last_modified_date\": \"2019-05-08T09:30:44.000Z\",\n                \"object_created_date\": \"2019-05-08T09:17:25.000Z\"\n            }\n        ]\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/list - Obter dados de de fichas técnicas com campo de pesquisa",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste de obter dados de fichas técnicas com campo de pesquisa.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Lista de fichas técnicas\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "search",
+									"value": "descrição",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/list?search=arca",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"list"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "arca"
+								}
+							]
+						},
+						"description": "GET /api/datasheet/list:\n\tLista fichas técnicas\n\t\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n\tsearch - palavra utilizada na pesquisa de fichas técnicas por \t\tnome\n\ndevolve:\n\tse for listado com sucesso:\n\n{\n    \"error\": 0,\n    \"message\": \"Lista de fichas técnicas\",\n    \"res\": {\n        \"datasheets\": [\n            {\n                \"id\": 11,\n                \"object_designation\": \"descrição do artigo\",\n                \"CEARC_process\": \"9999\",\n                \"CEARC_process_date\": \"2019-04-30T23:00:00.000Z\",\n                \"CEARC_entry_date\": \"2019-04-29T23:00:00.000Z\",\n                \"LCRM_process\": \"99999999999\",\n                \"LCRM_process_date\": \"2019-04-28T23:00:00.000Z\",\n                \"LCRM_entry_date\": \"2019-04-27T23:00:00.000Z\",\n                \"coordinator\": 1,\n                \"coordinator_name\": \"admin@admin.admin\",\n                \"last_modified_user\": 7,\n                \"last_modified_user_name\": \"Filipe Branco\",\n                \"last_modified_date\": \"2019-05-08T09:30:44.000Z\",\n                \"object_created_date\": \"2019-05-08T09:17:25.000Z\"\n            }\n        ]\n    }\n}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/datasheet/create - Criar dados da ficha técnica",
+			"item": [
+				{
+					"name": "../api/datasheet/create - tentativa de adicionar ficha técnica sem autenticação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para adicionar ficha técnica sem autenticação.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(3);",
+									"    pm.expect(jsonData.message).to.eql(\"Por favor efectue autenticação\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "designation",
+									"value": "designação xpto",
+									"type": "text"
+								},
+								{
+									"key": "cearcproc",
+									"value": "9999",
+									"type": "text"
+								},
+								{
+									"key": "cearcprocdata",
+									"value": "2019-05-01",
+									"type": "text"
+								},
+								{
+									"key": "cearcentrancedata",
+									"value": "2019-04-30",
+									"type": "text"
+								},
+								{
+									"key": "lcrmproc",
+									"value": "99999999999",
+									"type": "text"
+								},
+								{
+									"key": "lcrmprocdata",
+									"value": "2019-04-29",
+									"type": "text"
+								},
+								{
+									"key": "lcrmentrancedata",
+									"value": "2019-04-28",
+									"type": "text"
+								},
+								{
+									"key": "coordinatorid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "super_category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "sub_category",
+									"value": "22",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"create"
+							]
+						},
+						"description": "POST /api/datasheet/create:\n\tCria ou atualiza dados da ficha técnica\n\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n\tdesignation - designação do objeto (obrigatório)\n\tcearcproc - processo CEARC (obrigatório)\n\tcearcprocdata - data do processo CEARC\n\tcearcentrancedata - data de entrada CEARC\n\tlcrmproc - processo LCRM\n\tlcrmprocdata - data do processo LCRM\n\tlcrmentrancedata - data de entrada LCRM (obrigatório)\n\tcoordinatorid - id do coordenador (obrigatório)\n\tsuper_category - id da super categoria (obrigatório)\n\tcategory - id da categoria (obrigatório)\n\tsub_category - id da sub categoria (obrigatório)\n\ndevolve:\n\tse não tiver autenticado:\n\n{\n    \"error\": 3,\n    \"message\": \"Por favor efectue autenticação\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/create - tentativa de adicionar ficha técnica sem campos obrigatórios",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"estt6967@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para adicionar ficha técnica sem campos obrigatórios.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(2);",
+									"    pm.expect(jsonData.message).to.eql(\"Insira todos os campos obrigatórios\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "designation",
+									"value": "designação xpto",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "cearcproc",
+									"value": "9999",
+									"type": "text"
+								},
+								{
+									"key": "cearcprocdata",
+									"value": "2019-05-01",
+									"type": "text"
+								},
+								{
+									"key": "cearcentrancedata",
+									"value": "2019-04-30",
+									"type": "text"
+								},
+								{
+									"key": "lcrmproc",
+									"value": "99999999999",
+									"type": "text"
+								},
+								{
+									"key": "lcrmprocdata",
+									"value": "2019-04-29",
+									"type": "text"
+								},
+								{
+									"key": "lcrmentrancedata",
+									"value": "2019-04-28",
+									"type": "text"
+								},
+								{
+									"key": "coordinatorid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "super_category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "sub_categoty",
+									"value": "22",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"create"
+							]
+						},
+						"description": "POST /api/datasheet/create:\n\tCria ou atualiza dados da ficha técnica\n\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n\tdesignation - designação do objeto (obrigatório)\n\tcearcproc - processo CEARC (obrigatório)\n\tcearcprocdata - data do processo CEARC\n\tcearcentrancedata - data de entrada CEARC\n\tlcrmproc - processo LCRM\n\tlcrmprocdata - data do processo LCRM\n\tlcrmentrancedata - data de entrada LCRM (obrigatório)\n\tcoordinatorid - id do coordenador (obrigatório)\n\tsuper_category - id da super categoria (obrigatório)\n\tcategory - id da categoria (obrigatório)\n\tsub_category - id da sub categoria (obrigatório)\n\ndevolve:\n\tse não forem dados todos os campos obrigatórios:\n\n{\n    \"error\": 2,\n    \"message\": \"Insira todos os campos obrigatórios\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/create - tentativa de adicionar ficha técnica com campos inválidos",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"estt6967@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para adicionar ficha técnica com campos inválidos.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Ocorreu um erro, algum dos campos pode estar mal definido\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "designation",
+									"value": "designação xpto",
+									"type": "text"
+								},
+								{
+									"key": "cearcproc",
+									"value": "nove mil e novecentos e noventa e nove",
+									"type": "text"
+								},
+								{
+									"key": "cearcprocdata",
+									"value": "um de maio de dois mil e dezanove",
+									"type": "text"
+								},
+								{
+									"key": "cearcentrancedata",
+									"value": "trinta de abril de dois mil e dezanove",
+									"type": "text"
+								},
+								{
+									"key": "lcrmproc",
+									"value": "muitos noves",
+									"type": "text"
+								},
+								{
+									"key": "lcrmprocdata",
+									"value": "vinte de nove de abril de dois mil de dezanove",
+									"type": "text"
+								},
+								{
+									"key": "lcrmentrancedata",
+									"value": "vinte e oito de abril de dois mil e desanove",
+									"type": "text"
+								},
+								{
+									"key": "coordinatorid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "super_category",
+									"value": "um",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "um",
+									"type": "text"
+								},
+								{
+									"key": "sub_category",
+									"value": "vinte e dois",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"create"
+							]
+						},
+						"description": "POST /api/datasheet/create:\n\tCria ou atualiza dados da ficha técnica\n\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n\tdesignation - designação do objeto (obrigatório)\n\tcearcproc - processo CEARC (obrigatório)\n\tcearcprocdata - data do processo CEARC\n\tcearcentrancedata - data de entrada CEARC\n\tlcrmproc - processo LCRM\n\tlcrmprocdata - data do processo LCRM\n\tlcrmentrancedata - data de entrada LCRM (obrigatório)\n\tcoordinatorid - id do coordenador (obrigatório)\n\tsuper_category - id da super categoria (obrigatório)\n\tcategory - id da categoria (obrigatório)\n\tsub_category - id da sub categoria (obrigatório)\n\ndevolve:\n\tse ocorrer um erro (por exemplo a data não conter um formato válido):\n\n{\n    \"error\": 1,\n    \"message\": \"Ocorreu um erro, algum dos campos pode estar mal definido\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/create - tentativa de adicionar ficha técnica com campos inválidos (parte2)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"estt6967@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para adicionar ficha técnica com campos inválidos.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Ocorreu um erro, algum dos campos pode estar mal definido\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "designation",
+									"value": "designação xpto parte 2",
+									"type": "text"
+								},
+								{
+									"key": "cearcproc",
+									"value": "nove mil e novecentos e noventa e oito",
+									"type": "text"
+								},
+								{
+									"key": "cearcprocdata",
+									"value": "um de maio de dois mil e dezoito",
+									"type": "text"
+								},
+								{
+									"key": "cearcentrancedata",
+									"value": "trinta de abril de dois mil e dezoito",
+									"type": "text"
+								},
+								{
+									"key": "lcrmproc",
+									"value": "muitos oitos",
+									"type": "text"
+								},
+								{
+									"key": "lcrmprocdata",
+									"value": "vinte de nove de abril de dois mil de dezoito",
+									"type": "text"
+								},
+								{
+									"key": "lcrmentrancedata",
+									"value": "vinte e oito de abril de dois mil e desaoito",
+									"type": "text"
+								},
+								{
+									"key": "coordinatorid",
+									"value": "um",
+									"type": "text"
+								},
+								{
+									"key": "super_category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "sub_category",
+									"value": "22",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"create"
+							]
+						},
+						"description": "POST /api/datasheet/create:\n\tCria ou atualiza dados da ficha técnica\n\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n\tdesignation - designação do objeto (obrigatório)\n\tcearcproc - processo CEARC (obrigatório)\n\tcearcprocdata - data do processo CEARC\n\tcearcentrancedata - data de entrada CEARC\n\tlcrmproc - processo LCRM\n\tlcrmprocdata - data do processo LCRM\n\tlcrmentrancedata - data de entrada LCRM (obrigatório)\n\tcoordinatorid - id do coordenador (obrigatório)\n\tsuper_category - id da super categoria (obrigatório)\n\tcategory - id da categoria (obrigatório)\n\tsub_category - id da sub categoria (obrigatório)\n\ndevolve:\n\tse ocorrer um erro (por exemplo a data não conter um formato válido):\n\n{\n    \"error\": 1,\n    \"message\": \"Ocorreu um erro, algum dos campos pode estar mal definido\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/create - adicionar ficha técnica com sucesso",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"estt6967@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para adicionar ficha técnica com sucesso.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Ficha técnica criada com sucesso\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "designation",
+									"value": "designação descritiva do artigo associado",
+									"type": "text"
+								},
+								{
+									"key": "cearcproc",
+									"value": "9999",
+									"type": "text"
+								},
+								{
+									"key": "cearcprocdata",
+									"value": "2019-05-01",
+									"type": "text"
+								},
+								{
+									"key": "cearcentrancedata",
+									"value": "2019-04-30",
+									"type": "text"
+								},
+								{
+									"key": "lcrmproc",
+									"value": "99999999999",
+									"type": "text"
+								},
+								{
+									"key": "lcrmprocdata",
+									"value": "2019-04-29",
+									"type": "text"
+								},
+								{
+									"key": "lcrmentrancedata",
+									"value": "2019-04-28",
+									"type": "text"
+								},
+								{
+									"key": "coordinatorid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "super_category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "sub_category",
+									"value": "22",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"create"
+							]
+						},
+						"description": "POST /api/datasheet/create:\n\tCria ou atualiza dados da ficha técnica\n\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n\tdesignation - designação do objeto (obrigatório)\n\tcearcproc - processo CEARC (obrigatório)\n\tcearcprocdata - data do processo CEARC\n\tcearcentrancedata - data de entrada CEARC\n\tlcrmproc - processo LCRM\n\tlcrmprocdata - data do processo LCRM\n\tlcrmentrancedata - data de entrada LCRM (obrigatório)\n\tcoordinatorid - id do coordenador (obrigatório)\n\tsuper_category - id da super categoria (obrigatório)\n\tcategory - id da categoria (obrigatório)\n\tsub_category - id da sub categoria (obrigatório)\n\ndevolve:\n\tse for criado com sucesso:\n\n{\n    \"error\": 0,\n    \"message\": \"Ficha técnica criada com sucesso\",\n    \"res\": {\n        \"id\": 46\n    }\n}"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "961c2e27-0df9-40b9-82dc-1df4f763ed33",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b806a4c2-349a-4260-8d92-ba9417bed383",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "/api/datasheet/edit/:id/page/:page - Actualiza dados da ficha técnica",
+			"item": [
+				{
+					"name": "../api/datasheet/edit/:id/page/:page - tentativa de modificar ficha técnica sem autenticação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para modificar ficha técnica sem autenticação.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(4);",
+									"    pm.expect(jsonData.message).to.eql(\"Por favor efectue autenticação\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "designation",
+									"value": "designação xpto",
+									"type": "text"
+								},
+								{
+									"key": "cearcproc",
+									"value": "9999",
+									"type": "text"
+								},
+								{
+									"key": "cearcprocdata",
+									"value": "2019-05-01",
+									"type": "text"
+								},
+								{
+									"key": "cearcentrancedata",
+									"value": "2019-04-30",
+									"type": "text"
+								},
+								{
+									"key": "lcrmproc",
+									"value": "99999999999",
+									"type": "text"
+								},
+								{
+									"key": "lcrmprocdata",
+									"value": "2019-04-29",
+									"type": "text"
+								},
+								{
+									"key": "lcrmentrancedata",
+									"value": "2019-04-28",
+									"type": "text"
+								},
+								{
+									"key": "coordinatorid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "super_category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "sub_category",
+									"value": "22",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/edit/46/page/1",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"edit",
+								"46",
+								"page",
+								"1"
+							]
+						},
+						"description": "POST /api/datasheet/edit/:id/page/:page\n\tCria ou atualiza dados da ficha técnica\n\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n:page = 1\n\tdesignation - designação do objeto (obrigatório)\n\tcearcproc - processo CEARC (obrigatório)\n\tcearcprocdata - data do processo CEARC\n\tcearcentrancedata - data de entrada CEARC\n\tlcrmproc - processo LCRM\n\tlcrmprocdata - data do processo LCRM\n\tlcrmentrancedata - data de entrada LCRM (obrigatório)\n\tcoordinatorid - id do coordenador (obrigatório)\n\tsuper_category - id da super categoria,\n\tcategory - id da categoria(esta tem de estar associada a super categoria),\n\tsub_category - id da sub categoria(esta tem de estar associada a categoria)\n:\n\n:page = 2 (não tem campos obrigatórios)\n\tdimensions - dimensões do objeto\n\tother_dimensions - outras dimensões\n\ttipology - tipologia do objeto\n\tsite - localização\n\tobject_owner -proprietário do objeto\n\towner - dono da obra\n\tpatron - mecenas\n:\n\n:page = 3\n\tobject_is_a_set - informação respetiva a se existe ou nao bem integrado em conjunto (obrigatório)\n\tset_type - tipo de conjunto do objecto\n\telements - elementos do objeto\n\tset_materials - materiais do objeto\n\tset_inscriptions - inscrições no objeto\n\tset_mount - inscrições de Montagem do objeto\n\tset_build - inscrições de Construção\n\tclassification - classificação do objeto\n    period - época do objeto\n\tquality - qualidade do objeto\n\tstyle - estilo do objeto\n\tmaterials_structure - materiais da estrutura do objeto\n\tmaterials_surface - materiais da superficie do objeto\n\tmaterials_elementsAccessories - materiais dos elementos acessórios do objeto\n\ttechniques_structure - técnicas da estrutura do objeto\n\ttechniques_surface - técnicas da superficie do objeto\n\ttechniques_elementsAccessories - técnicas dos elementos acessórios do objeto\n\tsmall_description - pequena descrição do objeto\n\tanalogies - analogias \n\tconclusions - conclusões\n\tauthor - autor \n\tdating - datação\n\torigin - origem\n:\n\n:page = 4 (não tem campos obrigatórios)\n\tsite_description - descrição do local\n\tcold_temp Frio- temperatura \n\thot_temp Quente- temperatura\n\tcold_humidity Frio-Humidade\n\thot_humidity Frio-Humidade\n\tcold_start Frio- Início\n\tcold_end Frio- Fim\n\thot_start Quente- Início\n\thot_end Quente- Fim\n\tlightning_type_natural Radiação tipo natural\n\tlightning_origin_artificial Radiação tipo artificial\n\tartificial_lux Radiação artificial - valor Iluminância\n\tnatural_lux Radiação natural - valor Iluminância\n\tartificial_uv Radiação artificial - Valor de U.V.\n\tnatural_uv Radiação natural - Valor de U.V.\n\tnatural_real_uv Radiação natural- Valor Real de U.V.\n\tartificial_real_uv Radiação artificial- Valor Real de U.V.\n\tpoluting_agents - Agentes Poluidores\n\tpoluting_sources - Fontes de poluição\n\tpoluting_results - Resultados de poluição\n\tenv_conclusions - Resultados\n:\n\n:page = 6(não tem campos obrigatórios)\n\tsupport_deterioration - Deterioração da Estrutura\n\tsurface_deterioration - Deterioração da Superfície\n\telements_deterioration - Deterioração dos Elementos Acessórios\n\tsupport_diagnostic - Diagnóstico da Estrutura\n\tsurface_diagnostic - Diagnóstico da Superfície\n\telements_diagnostic - Diagnóstico dos Elementos Acessórios\n\tconclusions_conservation - Conclusões do estado de conservação\n:\n\n:page = 7(não tem campos obrigatórios)\n\tsupport - Estrutura da intervenção anterior\n\tsurface - Superfície da intervenção anterior\n\telements - Elementos Acessórios da intervenção anterior\n\tconclusions_previous_interventions - Conclusões de intervenções anteriores\n:\n\n:page = 8(não tem campos obrigatórios)\n\towner_preserve - Preservação Dono da Obra\n\towner_conserve - Conservação Dono da Obra\n\towner_restaure - Restauro Dono da Obra\n\tspecific_aspects - Aspetos específicos - Dono da Obra\n\tprop_preserve - Preservação Proposta\n\tprop_conserve - Conservação Proposta\n\tprop_restaure - Restauro Proposta\n\tsupport_proposal - Estrutura Proposta\n\tsupport_resources - Recursos Estrutura\n\tsurface_proposal - Superfície Proposta\n\tsurface_resources - Recursos Superfície\n\telements_proposal - Elementos Acessórios Proposta\n\telements_resources - Recursos Elementos Acessórios\n\tobservations - observações da proposta\n\tproposal_date - Data da Informação da Proposta\n\tacceptation_date - Data da Aceitação da Proposta\n:\n\n:page = 9(não tem campos obrigatórios)\n\tsupport_intervention - Estrutura da intervenção\n\tsupport_resources_intervention - Recursos da estrutura\n\tsurface_intervention - Superfície da intervenção\n\tsurface_resources_intervention - Recursos da estrutura\n\telements_intervention - Elementos Acessórios da intervenção\n\telements_resources_intervention - Recursos dos Elementos Acessórios\n\tobservations_intervention - Observações da intervenção\n\ndevolve:\n\tse não tiver autenticado:\n\n{\n    \"error\": 4,\n    \"message\": \"Por favor efectue autenticação\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/edit/:id/page/:page - tentativa de modificar ficha técnica sem campos obrigatórios",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"estt6967@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para modificar ficha técnica sem campos obrigatórios.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(3);",
+									"    pm.expect(jsonData.message).to.eql(\"Insira todos os campos obrigatórios\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "designation",
+									"value": "designação do produto",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "cearcproc",
+									"value": "9999",
+									"type": "text"
+								},
+								{
+									"key": "cearcprocdata",
+									"value": "2019-05-01",
+									"type": "text"
+								},
+								{
+									"key": "cearcentrancedata",
+									"value": "2019-04-30",
+									"type": "text"
+								},
+								{
+									"key": "lcrmproc",
+									"value": "99999999999",
+									"type": "text"
+								},
+								{
+									"key": "lcrmprocdata",
+									"value": "2019-04-29",
+									"type": "text"
+								},
+								{
+									"key": "lcrmentrancedata",
+									"value": "2019-04-28",
+									"type": "text"
+								},
+								{
+									"key": "coordinatorid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "super_category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "sub_category",
+									"value": "22",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/edit/46/page/1",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"edit",
+								"46",
+								"page",
+								"1"
+							]
+						},
+						"description": "POST /api/datasheet/edit/:id/page/:page\n\tCria ou atualiza dados da ficha técnica\n\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n:page = 1\n\tdesignation - designação do objeto (obrigatório)\n\tcearcproc - processo CEARC (obrigatório)\n\tcearcprocdata - data do processo CEARC\n\tcearcentrancedata - data de entrada CEARC\n\tlcrmproc - processo LCRM\n\tlcrmprocdata - data do processo LCRM\n\tlcrmentrancedata - data de entrada LCRM (obrigatório)\n\tcoordinatorid - id do coordenador (obrigatório)\n\tsuper_category - id da super categoria,\n\tcategory - id da categoria(esta tem de estar associada a super categoria),\n\tsub_category - id da sub categoria(esta tem de estar associada a categoria)\n:\n\n:page = 2 (não tem campos obrigatórios)\n\tdimensions - dimensões do objeto\n\tother_dimensions - outras dimensões\n\ttipology - tipologia do objeto\n\tsite - localização\n\tobject_owner -proprietário do objeto\n\towner - dono da obra\n\tpatron - mecenas\n:\n\n:page = 3\n\tobject_is_a_set - informação respetiva a se existe ou nao bem integrado em conjunto (obrigatório)\n\tset_type - tipo de conjunto do objecto\n\telements - elementos do objeto\n\tset_materials - materiais do objeto\n\tset_inscriptions - inscrições no objeto\n\tset_mount - inscrições de Montagem do objeto\n\tset_build - inscrições de Construção\n\tclassification - classificação do objeto\n    period - época do objeto\n\tquality - qualidade do objeto\n\tstyle - estilo do objeto\n\tmaterials_structure - materiais da estrutura do objeto\n\tmaterials_surface - materiais da superficie do objeto\n\tmaterials_elementsAccessories - materiais dos elementos acessórios do objeto\n\ttechniques_structure - técnicas da estrutura do objeto\n\ttechniques_surface - técnicas da superficie do objeto\n\ttechniques_elementsAccessories - técnicas dos elementos acessórios do objeto\n\tsmall_description - pequena descrição do objeto\n\tanalogies - analogias \n\tconclusions - conclusões\n\tauthor - autor \n\tdating - datação\n\torigin - origem\n:\n\n:page = 4 (não tem campos obrigatórios)\n\tsite_description - descrição do local\n\tcold_temp Frio- temperatura \n\thot_temp Quente- temperatura\n\tcold_humidity Frio-Humidade\n\thot_humidity Frio-Humidade\n\tcold_start Frio- Início\n\tcold_end Frio- Fim\n\thot_start Quente- Início\n\thot_end Quente- Fim\n\tlightning_type_natural Radiação tipo natural\n\tlightning_origin_artificial Radiação tipo artificial\n\tartificial_lux Radiação artificial - valor Iluminância\n\tnatural_lux Radiação natural - valor Iluminância\n\tartificial_uv Radiação artificial - Valor de U.V.\n\tnatural_uv Radiação natural - Valor de U.V.\n\tnatural_real_uv Radiação natural- Valor Real de U.V.\n\tartificial_real_uv Radiação artificial- Valor Real de U.V.\n\tpoluting_agents - Agentes Poluidores\n\tpoluting_sources - Fontes de poluição\n\tpoluting_results - Resultados de poluição\n\tenv_conclusions - Resultados\n:\n\n:page = 6(não tem campos obrigatórios)\n\tsupport_deterioration - Deterioração da Estrutura\n\tsurface_deterioration - Deterioração da Superfície\n\telements_deterioration - Deterioração dos Elementos Acessórios\n\tsupport_diagnostic - Diagnóstico da Estrutura\n\tsurface_diagnostic - Diagnóstico da Superfície\n\telements_diagnostic - Diagnóstico dos Elementos Acessórios\n\tconclusions_conservation - Conclusões do estado de conservação\n:\n\n:page = 7(não tem campos obrigatórios)\n\tsupport - Estrutura da intervenção anterior\n\tsurface - Superfície da intervenção anterior\n\telements - Elementos Acessórios da intervenção anterior\n\tconclusions_previous_interventions - Conclusões de intervenções anteriores\n:\n\n:page = 8(não tem campos obrigatórios)\n\towner_preserve - Preservação Dono da Obra\n\towner_conserve - Conservação Dono da Obra\n\towner_restaure - Restauro Dono da Obra\n\tspecific_aspects - Aspetos específicos - Dono da Obra\n\tprop_preserve - Preservação Proposta\n\tprop_conserve - Conservação Proposta\n\tprop_restaure - Restauro Proposta\n\tsupport_proposal - Estrutura Proposta\n\tsupport_resources - Recursos Estrutura\n\tsurface_proposal - Superfície Proposta\n\tsurface_resources - Recursos Superfície\n\telements_proposal - Elementos Acessórios Proposta\n\telements_resources - Recursos Elementos Acessórios\n\tobservations - observações da proposta\n\tproposal_date - Data da Informação da Proposta\n\tacceptation_date - Data da Aceitação da Proposta\n:\n\n:page = 9(não tem campos obrigatórios)\n\tsupport_intervention - Estrutura da intervenção\n\tsupport_resources_intervention - Recursos da estrutura\n\tsurface_intervention - Superfície da intervenção\n\tsurface_resources_intervention - Recursos da estrutura\n\telements_intervention - Elementos Acessórios da intervenção\n\telements_resources_intervention - Recursos dos Elementos Acessórios\n\tobservations_intervention - Observações da intervenção\n\ndevolve:\n\tse não forem dados todos os campos obrigatórios:\n\n{\n    \"error\": 3,\n    \"message\": \"Insira todos os campos obrigatórios\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/edit/:id/page/:page - modificar ficha técnica com sucesso",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"estt6967@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Modificar ficha técnica com sucesso.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Ficha técnica atualizada com sucesso\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "designation",
+									"value": "Produto X",
+									"type": "text"
+								},
+								{
+									"key": "cearcproc",
+									"value": "9999",
+									"type": "text"
+								},
+								{
+									"key": "cearcprocdata",
+									"value": "2019-05-01",
+									"type": "text"
+								},
+								{
+									"key": "cearcentrancedata",
+									"value": "2019-04-30",
+									"type": "text"
+								},
+								{
+									"key": "lcrmproc",
+									"value": "99999999999",
+									"type": "text"
+								},
+								{
+									"key": "lcrmprocdata",
+									"value": "2019-04-29",
+									"type": "text"
+								},
+								{
+									"key": "lcrmentrancedata",
+									"value": "2019-04-28",
+									"type": "text"
+								},
+								{
+									"key": "coordinatorid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "super_category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "sub_category",
+									"value": "22",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/edit/46/page/1",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"edit",
+								"46",
+								"page",
+								"1"
+							]
+						},
+						"description": "POST /api/datasheet/edit/:id/page/:page\n\tCria ou atualiza dados da ficha técnica\n\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n:page = 1\n\tdesignation - designação do objeto (obrigatório)\n\tcearcproc - processo CEARC (obrigatório)\n\tcearcprocdata - data do processo CEARC\n\tcearcentrancedata - data de entrada CEARC\n\tlcrmproc - processo LCRM\n\tlcrmprocdata - data do processo LCRM\n\tlcrmentrancedata - data de entrada LCRM (obrigatório)\n\tcoordinatorid - id do coordenador (obrigatório)\n\tsuper_category - id da super categoria,\n\tcategory - id da categoria(esta tem de estar associada a super categoria),\n\tsub_category - id da sub categoria(esta tem de estar associada a categoria)\n:\n\n:page = 2 (não tem campos obrigatórios)\n\tdimensions - dimensões do objeto\n\tother_dimensions - outras dimensões\n\ttipology - tipologia do objeto\n\tsite - localização\n\tobject_owner -proprietário do objeto\n\towner - dono da obra\n\tpatron - mecenas\n:\n\n:page = 3\n\tobject_is_a_set - informação respetiva a se existe ou nao bem integrado em conjunto (obrigatório)\n\tset_type - tipo de conjunto do objecto\n\telements - elementos do objeto\n\tset_materials - materiais do objeto\n\tset_inscriptions - inscrições no objeto\n\tset_mount - inscrições de Montagem do objeto\n\tset_build - inscrições de Construção\n\tclassification - classificação do objeto\n    period - época do objeto\n\tquality - qualidade do objeto\n\tstyle - estilo do objeto\n\tmaterials_structure - materiais da estrutura do objeto\n\tmaterials_surface - materiais da superficie do objeto\n\tmaterials_elementsAccessories - materiais dos elementos acessórios do objeto\n\ttechniques_structure - técnicas da estrutura do objeto\n\ttechniques_surface - técnicas da superficie do objeto\n\ttechniques_elementsAccessories - técnicas dos elementos acessórios do objeto\n\tsmall_description - pequena descrição do objeto\n\tanalogies - analogias \n\tconclusions - conclusões\n\tauthor - autor \n\tdating - datação\n\torigin - origem\n:\n\n:page = 4 (não tem campos obrigatórios)\n\tsite_description - descrição do local\n\tcold_temp Frio- temperatura \n\thot_temp Quente- temperatura\n\tcold_humidity Frio-Humidade\n\thot_humidity Frio-Humidade\n\tcold_start Frio- Início\n\tcold_end Frio- Fim\n\thot_start Quente- Início\n\thot_end Quente- Fim\n\tlightning_type_natural Radiação tipo natural\n\tlightning_origin_artificial Radiação tipo artificial\n\tartificial_lux Radiação artificial - valor Iluminância\n\tnatural_lux Radiação natural - valor Iluminância\n\tartificial_uv Radiação artificial - Valor de U.V.\n\tnatural_uv Radiação natural - Valor de U.V.\n\tnatural_real_uv Radiação natural- Valor Real de U.V.\n\tartificial_real_uv Radiação artificial- Valor Real de U.V.\n\tpoluting_agents - Agentes Poluidores\n\tpoluting_sources - Fontes de poluição\n\tpoluting_results - Resultados de poluição\n\tenv_conclusions - Resultados\n:\n\n:page = 6(não tem campos obrigatórios)\n\tsupport_deterioration - Deterioração da Estrutura\n\tsurface_deterioration - Deterioração da Superfície\n\telements_deterioration - Deterioração dos Elementos Acessórios\n\tsupport_diagnostic - Diagnóstico da Estrutura\n\tsurface_diagnostic - Diagnóstico da Superfície\n\telements_diagnostic - Diagnóstico dos Elementos Acessórios\n\tconclusions_conservation - Conclusões do estado de conservação\n:\n\n:page = 7(não tem campos obrigatórios)\n\tsupport - Estrutura da intervenção anterior\n\tsurface - Superfície da intervenção anterior\n\telements - Elementos Acessórios da intervenção anterior\n\tconclusions_previous_interventions - Conclusões de intervenções anteriores\n:\n\n:page = 8(não tem campos obrigatórios)\n\towner_preserve - Preservação Dono da Obra\n\towner_conserve - Conservação Dono da Obra\n\towner_restaure - Restauro Dono da Obra\n\tspecific_aspects - Aspetos específicos - Dono da Obra\n\tprop_preserve - Preservação Proposta\n\tprop_conserve - Conservação Proposta\n\tprop_restaure - Restauro Proposta\n\tsupport_proposal - Estrutura Proposta\n\tsupport_resources - Recursos Estrutura\n\tsurface_proposal - Superfície Proposta\n\tsurface_resources - Recursos Superfície\n\telements_proposal - Elementos Acessórios Proposta\n\telements_resources - Recursos Elementos Acessórios\n\tobservations - observações da proposta\n\tproposal_date - Data da Informação da Proposta\n\tacceptation_date - Data da Aceitação da Proposta\n:\n\n:page = 9(não tem campos obrigatórios)\n\tsupport_intervention - Estrutura da intervenção\n\tsupport_resources_intervention - Recursos da estrutura\n\tsurface_intervention - Superfície da intervenção\n\tsurface_resources_intervention - Recursos da estrutura\n\telements_intervention - Elementos Acessórios da intervenção\n\telements_resources_intervention - Recursos dos Elementos Acessórios\n\tobservations_intervention - Observações da intervenção\n\ndevolve:\n\tse for atualizado com sucesso:\n\n{\n    \"error\": 0,\n    \"message\": \"Ficha técnica atualizada com sucesso\",\n    \"res\": {\n        \"id\": 46\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/edit/:id/page/:page - Tentar modificar ficha técnica para um registo inexistente",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"estt6967@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Modificar ficha técnica sem sucesso. Campos mal preenchidos ou em falta\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Ocorreu um erro, algum dos campos pode estar mal definido\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "designation",
+									"value": "Produto X",
+									"type": "text"
+								},
+								{
+									"key": "cearcproc",
+									"value": "9999",
+									"type": "text"
+								},
+								{
+									"key": "cearcprocdata",
+									"value": "2019-05-01",
+									"type": "text"
+								},
+								{
+									"key": "cearcentrancedata",
+									"value": "2019-04-30",
+									"type": "text"
+								},
+								{
+									"key": "lcrmproc",
+									"value": "99999999999",
+									"type": "text"
+								},
+								{
+									"key": "lcrmprocdata",
+									"value": "2019-04-29",
+									"type": "text"
+								},
+								{
+									"key": "lcrmentrancedata",
+									"value": "2019-04-28",
+									"type": "text"
+								},
+								{
+									"key": "coordinatorid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "super_category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "sub_category",
+									"value": "22",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/edit/1000/page/1",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"edit",
+								"1000",
+								"page",
+								"1"
+							]
+						},
+						"description": "POST /api/datasheet/edit/:id/page/:page\n\tCria ou atualiza dados da ficha técnica\n\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n:page = 1\n\tdesignation - designação do objeto (obrigatório)\n\tcearcproc - processo CEARC (obrigatório)\n\tcearcprocdata - data do processo CEARC\n\tcearcentrancedata - data de entrada CEARC\n\tlcrmproc - processo LCRM\n\tlcrmprocdata - data do processo LCRM\n\tlcrmentrancedata - data de entrada LCRM (obrigatório)\n\tcoordinatorid - id do coordenador (obrigatório)\n\tsuper_category - id da super categoria,\n\tcategory - id da categoria(esta tem de estar associada a super categoria),\n\tsub_category - id da sub categoria(esta tem de estar associada a categoria)\n:\n\n:page = 2 (não tem campos obrigatórios)\n\tdimensions - dimensões do objeto\n\tother_dimensions - outras dimensões\n\ttipology - tipologia do objeto\n\tsite - localização\n\tobject_owner -proprietário do objeto\n\towner - dono da obra\n\tpatron - mecenas\n:\n\n:page = 3\n\tobject_is_a_set - informação respetiva a se existe ou nao bem integrado em conjunto (obrigatório)\n\tset_type - tipo de conjunto do objecto\n\telements - elementos do objeto\n\tset_materials - materiais do objeto\n\tset_inscriptions - inscrições no objeto\n\tset_mount - inscrições de Montagem do objeto\n\tset_build - inscrições de Construção\n\tclassification - classificação do objeto\n    period - época do objeto\n\tquality - qualidade do objeto\n\tstyle - estilo do objeto\n\tmaterials_structure - materiais da estrutura do objeto\n\tmaterials_surface - materiais da superficie do objeto\n\tmaterials_elementsAccessories - materiais dos elementos acessórios do objeto\n\ttechniques_structure - técnicas da estrutura do objeto\n\ttechniques_surface - técnicas da superficie do objeto\n\ttechniques_elementsAccessories - técnicas dos elementos acessórios do objeto\n\tsmall_description - pequena descrição do objeto\n\tanalogies - analogias \n\tconclusions - conclusões\n\tauthor - autor \n\tdating - datação\n\torigin - origem\n:\n\n:page = 4 (não tem campos obrigatórios)\n\tsite_description - descrição do local\n\tcold_temp Frio- temperatura \n\thot_temp Quente- temperatura\n\tcold_humidity Frio-Humidade\n\thot_humidity Frio-Humidade\n\tcold_start Frio- Início\n\tcold_end Frio- Fim\n\thot_start Quente- Início\n\thot_end Quente- Fim\n\tlightning_type_natural Radiação tipo natural\n\tlightning_origin_artificial Radiação tipo artificial\n\tartificial_lux Radiação artificial - valor Iluminância\n\tnatural_lux Radiação natural - valor Iluminância\n\tartificial_uv Radiação artificial - Valor de U.V.\n\tnatural_uv Radiação natural - Valor de U.V.\n\tnatural_real_uv Radiação natural- Valor Real de U.V.\n\tartificial_real_uv Radiação artificial- Valor Real de U.V.\n\tpoluting_agents - Agentes Poluidores\n\tpoluting_sources - Fontes de poluição\n\tpoluting_results - Resultados de poluição\n\tenv_conclusions - Resultados\n:\n\n:page = 6(não tem campos obrigatórios)\n\tsupport_deterioration - Deterioração da Estrutura\n\tsurface_deterioration - Deterioração da Superfície\n\telements_deterioration - Deterioração dos Elementos Acessórios\n\tsupport_diagnostic - Diagnóstico da Estrutura\n\tsurface_diagnostic - Diagnóstico da Superfície\n\telements_diagnostic - Diagnóstico dos Elementos Acessórios\n\tconclusions_conservation - Conclusões do estado de conservação\n:\n\n:page = 7(não tem campos obrigatórios)\n\tsupport - Estrutura da intervenção anterior\n\tsurface - Superfície da intervenção anterior\n\telements - Elementos Acessórios da intervenção anterior\n\tconclusions_previous_interventions - Conclusões de intervenções anteriores\n:\n\n:page = 8(não tem campos obrigatórios)\n\towner_preserve - Preservação Dono da Obra\n\towner_conserve - Conservação Dono da Obra\n\towner_restaure - Restauro Dono da Obra\n\tspecific_aspects - Aspetos específicos - Dono da Obra\n\tprop_preserve - Preservação Proposta\n\tprop_conserve - Conservação Proposta\n\tprop_restaure - Restauro Proposta\n\tsupport_proposal - Estrutura Proposta\n\tsupport_resources - Recursos Estrutura\n\tsurface_proposal - Superfície Proposta\n\tsurface_resources - Recursos Superfície\n\telements_proposal - Elementos Acessórios Proposta\n\telements_resources - Recursos Elementos Acessórios\n\tobservations - observações da proposta\n\tproposal_date - Data da Informação da Proposta\n\tacceptation_date - Data da Aceitação da Proposta\n:\n\n:page = 9(não tem campos obrigatórios)\n\tsupport_intervention - Estrutura da intervenção\n\tsupport_resources_intervention - Recursos da estrutura\n\tsurface_intervention - Superfície da intervenção\n\tsurface_resources_intervention - Recursos da estrutura\n\telements_intervention - Elementos Acessórios da intervenção\n\telements_resources_intervention - Recursos dos Elementos Acessórios\n\tobservations_intervention - Observações da intervenção\n\ndevolve:\n\tse ocorrer um erro (por exemplo a data não conter um formato válido):\n\n{\n    \"error\": 1,\n    \"message\": \"Ocorreu um erro, algum dos campos pode estar mal definido\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/edit/:id/page/:page - Tentar modificar ficha técnica para uma página inexistente",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"estt6967@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Modificar ficha técnica sem sucesso. Página inexistente!\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(2);",
+									"    pm.expect(jsonData.message).to.eql(\"Pagina não existente\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "designation",
+									"value": "Produto X",
+									"type": "text"
+								},
+								{
+									"key": "cearcproc",
+									"value": "9999",
+									"type": "text"
+								},
+								{
+									"key": "cearcprocdata",
+									"value": "2019-05-01",
+									"type": "text"
+								},
+								{
+									"key": "cearcentrancedata",
+									"value": "2019-04-30",
+									"type": "text"
+								},
+								{
+									"key": "lcrmproc",
+									"value": "99999999999",
+									"type": "text"
+								},
+								{
+									"key": "lcrmprocdata",
+									"value": "2019-04-29",
+									"type": "text"
+								},
+								{
+									"key": "lcrmentrancedata",
+									"value": "2019-04-28",
+									"type": "text"
+								},
+								{
+									"key": "coordinatorid",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "super_category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "sub_category",
+									"value": "22",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/edit/46/page/100",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"edit",
+								"46",
+								"page",
+								"100"
+							]
+						},
+						"description": "POST /api/datasheet/edit/:id/page/:page\n\tCria ou atualiza dados da ficha técnica\n\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n:page = 1\n\tdesignation - designação do objeto (obrigatório)\n\tcearcproc - processo CEARC (obrigatório)\n\tcearcprocdata - data do processo CEARC\n\tcearcentrancedata - data de entrada CEARC\n\tlcrmproc - processo LCRM\n\tlcrmprocdata - data do processo LCRM\n\tlcrmentrancedata - data de entrada LCRM (obrigatório)\n\tcoordinatorid - id do coordenador (obrigatório)\n\tsuper_category - id da super categoria,\n\tcategory - id da categoria(esta tem de estar associada a super categoria),\n\tsub_category - id da sub categoria(esta tem de estar associada a categoria)\n:\n\n:page = 2 (não tem campos obrigatórios)\n\tdimensions - dimensões do objeto\n\tother_dimensions - outras dimensões\n\ttipology - tipologia do objeto\n\tsite - localização\n\tobject_owner -proprietário do objeto\n\towner - dono da obra\n\tpatron - mecenas\n:\n\n:page = 3\n\tobject_is_a_set - informação respetiva a se existe ou nao bem integrado em conjunto (obrigatório)\n\tset_type - tipo de conjunto do objecto\n\telements - elementos do objeto\n\tset_materials - materiais do objeto\n\tset_inscriptions - inscrições no objeto\n\tset_mount - inscrições de Montagem do objeto\n\tset_build - inscrições de Construção\n\tclassification - classificação do objeto\n    period - época do objeto\n\tquality - qualidade do objeto\n\tstyle - estilo do objeto\n\tmaterials_structure - materiais da estrutura do objeto\n\tmaterials_surface - materiais da superficie do objeto\n\tmaterials_elementsAccessories - materiais dos elementos acessórios do objeto\n\ttechniques_structure - técnicas da estrutura do objeto\n\ttechniques_surface - técnicas da superficie do objeto\n\ttechniques_elementsAccessories - técnicas dos elementos acessórios do objeto\n\tsmall_description - pequena descrição do objeto\n\tanalogies - analogias \n\tconclusions - conclusões\n\tauthor - autor \n\tdating - datação\n\torigin - origem\n:\n\n:page = 4 (não tem campos obrigatórios)\n\tsite_description - descrição do local\n\tcold_temp Frio- temperatura \n\thot_temp Quente- temperatura\n\tcold_humidity Frio-Humidade\n\thot_humidity Frio-Humidade\n\tcold_start Frio- Início\n\tcold_end Frio- Fim\n\thot_start Quente- Início\n\thot_end Quente- Fim\n\tlightning_type_natural Radiação tipo natural\n\tlightning_origin_artificial Radiação tipo artificial\n\tartificial_lux Radiação artificial - valor Iluminância\n\tnatural_lux Radiação natural - valor Iluminância\n\tartificial_uv Radiação artificial - Valor de U.V.\n\tnatural_uv Radiação natural - Valor de U.V.\n\tnatural_real_uv Radiação natural- Valor Real de U.V.\n\tartificial_real_uv Radiação artificial- Valor Real de U.V.\n\tpoluting_agents - Agentes Poluidores\n\tpoluting_sources - Fontes de poluição\n\tpoluting_results - Resultados de poluição\n\tenv_conclusions - Resultados\n:\n\n:page = 6(não tem campos obrigatórios)\n\tsupport_deterioration - Deterioração da Estrutura\n\tsurface_deterioration - Deterioração da Superfície\n\telements_deterioration - Deterioração dos Elementos Acessórios\n\tsupport_diagnostic - Diagnóstico da Estrutura\n\tsurface_diagnostic - Diagnóstico da Superfície\n\telements_diagnostic - Diagnóstico dos Elementos Acessórios\n\tconclusions_conservation - Conclusões do estado de conservação\n:\n\n:page = 7(não tem campos obrigatórios)\n\tsupport - Estrutura da intervenção anterior\n\tsurface - Superfície da intervenção anterior\n\telements - Elementos Acessórios da intervenção anterior\n\tconclusions_previous_interventions - Conclusões de intervenções anteriores\n:\n\n:page = 8(não tem campos obrigatórios)\n\towner_preserve - Preservação Dono da Obra\n\towner_conserve - Conservação Dono da Obra\n\towner_restaure - Restauro Dono da Obra\n\tspecific_aspects - Aspetos específicos - Dono da Obra\n\tprop_preserve - Preservação Proposta\n\tprop_conserve - Conservação Proposta\n\tprop_restaure - Restauro Proposta\n\tsupport_proposal - Estrutura Proposta\n\tsupport_resources - Recursos Estrutura\n\tsurface_proposal - Superfície Proposta\n\tsurface_resources - Recursos Superfície\n\telements_proposal - Elementos Acessórios Proposta\n\telements_resources - Recursos Elementos Acessórios\n\tobservations - observações da proposta\n\tproposal_date - Data da Informação da Proposta\n\tacceptation_date - Data da Aceitação da Proposta\n:\n\n:page = 9(não tem campos obrigatórios)\n\tsupport_intervention - Estrutura da intervenção\n\tsupport_resources_intervention - Recursos da estrutura\n\tsurface_intervention - Superfície da intervenção\n\tsurface_resources_intervention - Recursos da estrutura\n\telements_intervention - Elementos Acessórios da intervenção\n\telements_resources_intervention - Recursos dos Elementos Acessórios\n\tobservations_intervention - Observações da intervenção\n\ndevolve:\n\tse a página dada for inválida:\n\n{\n    \"error\": 2,\n    \"message\": \"Pagina não existente\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/edit/:id/page/:page - modificar alguns dados da ficha técnica com sucesso",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"estt6967@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Modificar ficha técnica com sucesso. Apenas alterar alguns dados!\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Ficha técnica atualizada com sucesso\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dimensions",
+									"value": "114x42x51",
+									"type": "text"
+								},
+								{
+									"key": "other_dimensions",
+									"value": "4th dimension",
+									"type": "text"
+								},
+								{
+									"key": "tipology",
+									"value": "Artefacto único",
+									"type": "text"
+								},
+								{
+									"key": "site",
+									"value": "Instituto Politécnico de Tomar",
+									"type": "text"
+								},
+								{
+									"key": "object_owner",
+									"value": "IPT",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "owner",
+									"value": "Deus",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "patron",
+									"value": "mecenas",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/edit/46/page/2",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"edit",
+								"46",
+								"page",
+								"2"
+							]
+						},
+						"description": "POST /api/datasheet/edit/:id/page/:page\n\tCria ou atualiza dados da ficha técnica\n\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n:page = 1\n\tdesignation - designação do objeto (obrigatório)\n\tcearcproc - processo CEARC (obrigatório)\n\tcearcprocdata - data do processo CEARC\n\tcearcentrancedata - data de entrada CEARC\n\tlcrmproc - processo LCRM\n\tlcrmprocdata - data do processo LCRM\n\tlcrmentrancedata - data de entrada LCRM (obrigatório)\n\tcoordinatorid - id do coordenador (obrigatório)\n\tsuper_category - id da super categoria,\n\tcategory - id da categoria(esta tem de estar associada a super categoria),\n\tsub_category - id da sub categoria(esta tem de estar associada a categoria)\n:\n\n:page = 2 (não tem campos obrigatórios)\n\tdimensions - dimensões do objeto\n\tother_dimensions - outras dimensões\n\ttipology - tipologia do objeto\n\tsite - localização\n\tobject_owner -proprietário do objeto\n\towner - dono da obra\n\tpatron - mecenas\n:\n\n:page = 3\n\tobject_is_a_set - informação respetiva a se existe ou nao bem integrado em conjunto (obrigatório)\n\tset_type - tipo de conjunto do objecto\n\telements - elementos do objeto\n\tset_materials - materiais do objeto\n\tset_inscriptions - inscrições no objeto\n\tset_mount - inscrições de Montagem do objeto\n\tset_build - inscrições de Construção\n\tclassification - classificação do objeto\n    period - época do objeto\n\tquality - qualidade do objeto\n\tstyle - estilo do objeto\n\tmaterials_structure - materiais da estrutura do objeto\n\tmaterials_surface - materiais da superficie do objeto\n\tmaterials_elementsAccessories - materiais dos elementos acessórios do objeto\n\ttechniques_structure - técnicas da estrutura do objeto\n\ttechniques_surface - técnicas da superficie do objeto\n\ttechniques_elementsAccessories - técnicas dos elementos acessórios do objeto\n\tsmall_description - pequena descrição do objeto\n\tanalogies - analogias \n\tconclusions - conclusões\n\tauthor - autor \n\tdating - datação\n\torigin - origem\n:\n\n:page = 4 (não tem campos obrigatórios)\n\tsite_description - descrição do local\n\tcold_temp Frio- temperatura \n\thot_temp Quente- temperatura\n\tcold_humidity Frio-Humidade\n\thot_humidity Frio-Humidade\n\tcold_start Frio- Início\n\tcold_end Frio- Fim\n\thot_start Quente- Início\n\thot_end Quente- Fim\n\tlightning_type_natural Radiação tipo natural\n\tlightning_origin_artificial Radiação tipo artificial\n\tartificial_lux Radiação artificial - valor Iluminância\n\tnatural_lux Radiação natural - valor Iluminância\n\tartificial_uv Radiação artificial - Valor de U.V.\n\tnatural_uv Radiação natural - Valor de U.V.\n\tnatural_real_uv Radiação natural- Valor Real de U.V.\n\tartificial_real_uv Radiação artificial- Valor Real de U.V.\n\tpoluting_agents - Agentes Poluidores\n\tpoluting_sources - Fontes de poluição\n\tpoluting_results - Resultados de poluição\n\tenv_conclusions - Resultados\n:\n\n:page = 6(não tem campos obrigatórios)\n\tsupport_deterioration - Deterioração da Estrutura\n\tsurface_deterioration - Deterioração da Superfície\n\telements_deterioration - Deterioração dos Elementos Acessórios\n\tsupport_diagnostic - Diagnóstico da Estrutura\n\tsurface_diagnostic - Diagnóstico da Superfície\n\telements_diagnostic - Diagnóstico dos Elementos Acessórios\n\tconclusions_conservation - Conclusões do estado de conservação\n:\n\n:page = 7(não tem campos obrigatórios)\n\tsupport - Estrutura da intervenção anterior\n\tsurface - Superfície da intervenção anterior\n\telements - Elementos Acessórios da intervenção anterior\n\tconclusions_previous_interventions - Conclusões de intervenções anteriores\n:\n\n:page = 8(não tem campos obrigatórios)\n\towner_preserve - Preservação Dono da Obra\n\towner_conserve - Conservação Dono da Obra\n\towner_restaure - Restauro Dono da Obra\n\tspecific_aspects - Aspetos específicos - Dono da Obra\n\tprop_preserve - Preservação Proposta\n\tprop_conserve - Conservação Proposta\n\tprop_restaure - Restauro Proposta\n\tsupport_proposal - Estrutura Proposta\n\tsupport_resources - Recursos Estrutura\n\tsurface_proposal - Superfície Proposta\n\tsurface_resources - Recursos Superfície\n\telements_proposal - Elementos Acessórios Proposta\n\telements_resources - Recursos Elementos Acessórios\n\tobservations - observações da proposta\n\tproposal_date - Data da Informação da Proposta\n\tacceptation_date - Data da Aceitação da Proposta\n:\n\n:page = 9(não tem campos obrigatórios)\n\tsupport_intervention - Estrutura da intervenção\n\tsupport_resources_intervention - Recursos da estrutura\n\tsurface_intervention - Superfície da intervenção\n\tsurface_resources_intervention - Recursos da estrutura\n\telements_intervention - Elementos Acessórios da intervenção\n\telements_resources_intervention - Recursos dos Elementos Acessórios\n\tobservations_intervention - Observações da intervenção\n\ndevolve:\n\tse for atualizado com sucesso:\n{\n    \"error\": 0,\n    \"message\": \"Ficha técnica atualizada com sucesso\",\n    \"res\": {\n        \"id\": 46\n    }\n}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/datasheet/:id",
+			"item": [
+				{
+					"name": "../api/datasheet/:id - Tentativa de obter dados de ficha técnica sem autenticação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste de obter dados de fichas técnicas sem autenticação.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(2);",
+									"    pm.expect(jsonData.message).to.eql(\"Por favor efectue autenticação\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/1?search=a",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"1"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "a"
+								}
+							]
+						},
+						"description": "GET /api/datasheet/:id\n\tObter dados da ficha técnica\n\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n\tsearch - palavra utilizada na pesquisa de fichas técnicas por \t\tnome\n\ndevolve:\n\tse não tiver autenticado:\n\n{\n    \"error\": 2,\n    \"message\": \"Por favor efectue autenticação\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/:id - Obter dados de ficha técnica",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste de obter lista de fichas técnicas sem campos de pesquisa.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Objeto\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/49",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"49"
+							]
+						},
+						"description": "GET /api/datasheet/:id\n\tObter dados da ficha técnica\n\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n\tsearch - palavra utilizada na pesquisa de fichas técnicas por \t\tnome\n\ndevolve:\n\tse for listado com sucesso:\n\n{\n    \"error\": 0,\n    \"message\": \"Objeto\",\n    \"res\": {\n        \"datasheet\": {\n            \"id\": 1,\n            \"object_designation\": \"Movel\",\n            \"CEARC_process\": \"1232\",\n            \"CEARC_process_date\": \"2018-04-30T23:00:00.000Z\",\n            \"CEARC_entry_date\": \"2019-04-30T23:00:00.000Z\",\n            \"LCRM_process\": \"123\",\n            \"LCRM_process_date\": \"2018-04-30T23:00:00.000Z\",\n            \"LCRM_entry_date\": \"2019-04-30T23:00:00.000Z\",\n            \"coordinator\": 1,\n            \"last_modified_user\": 1,\n            \"last_modified_date\": \"2019-05-27T19:11:37.000Z\",\n            \"object_created_date\": \"2019-04-29T23:10:58.000Z\",\n            \"super_category\": 1,\n            \"category\": 1,\n            \"sub_category\": 4,\n            \"dimensions\": null,\n            \"other_dimensions\": null,\n            \"tipology\": null,\n            \"site\": null,\n            \"object_owner\": null,\n            \"owner\": null,\n            \"patron\": null,\n            \"object_is_a_set\": 0,\n            \"set_type\": \"test\",\n            \"set_elements\": \"test1\",\n            \"set_materials\": \"madeira\",\n            \"set_inscriptions\": \"test2\",\n            \"set_mount\": \" test3\",\n            \"set_build\": \"test4\",\n            \"classification\": \"test5\",\n            \"period\": 1,\n            \"quality\": 2,\n            \"style\": null,\n            \"small_description\": \"test12\",\n            \"analogies\": \"test13\",\n            \"conclusions\": \"test14\",\n            \"author\": \"test15\",\n            \"dating\": null,\n            \"origin\": \"test16\",\n            \"materials_structure\": \"test6\",\n            \"materials_surface\": \"test7\",\n            \"materials_elementsAccessories\": \"test8\",\n            \"techniques_structure\": \"test9\",\n            \"techniques_surface\": \"test10\",\n            \"techniques_elementsAccessories\": \"test11\",\n            \"site_description\": \"test12\",\n            \"cold_temp\": \"test13\",\n            \"hot_temp\": \"test14\",\n            \"cold_humidity\": \"test15\",\n            \"hot_humidity\": \"test16\",\n            \"cold_start\": 1,\n            \"cold_end\": 2,\n            \"hot_start\": 3,\n            \"hot_end\": 4,\n            \"lightning_type_natural\": \"test17\",\n            \"lightning_origin_artificial\": \"test18\",\n            \"artificial_lux\": \"test19\",\n            \"natural_lux\": \"test20\",\n            \"artificial_uv\": \"test21\",\n            \"natural_uv\": \"test22\",\n            \"artificial_real_uv\": \"test23\",\n            \"natural_real_uv\": \"test24\",\n            \"poluting_agents\": \"test25\",\n            \"poluting_sources\": \"test26\",\n            \"poluting_results\": \"test27\",\n            \"env_conclusions\": \"test28\"\n        }\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/:id - Obter dados de ficha técnica com campo de pesquisa",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste de obter dados de fichas técnicas com campo de pesquisa.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Objeto\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/1?search=artigo",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"1"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "artigo"
+								}
+							]
+						},
+						"description": "GET /api/datasheet/:id\n\tObter dados da ficha técnica\n\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n\tsearch - palavra utilizada na pesquisa de fichas técnicas \t\t\tpor nome\n\ndevolve:\n\tse for listado com sucesso:\n\n{\n    \"error\": 0,\n    \"message\": \"Objeto\",\n    \"res\": {\n        \"datasheet\": {\n            \"id\": 1,\n            \"object_designation\": \"Movel\",\n            \"CEARC_process\": \"1232\",\n            \"CEARC_process_date\": \"2018-04-30T23:00:00.000Z\",\n            \"CEARC_entry_date\": \"2019-04-30T23:00:00.000Z\",\n            \"LCRM_process\": \"123\",\n            \"LCRM_process_date\": \"2018-04-30T23:00:00.000Z\",\n            \"LCRM_entry_date\": \"2019-04-30T23:00:00.000Z\",\n            \"coordinator\": 1,\n            \"last_modified_user\": 1,\n            \"last_modified_date\": \"2019-05-27T19:11:37.000Z\",\n            \"object_created_date\": \"2019-04-29T23:10:58.000Z\",\n            \"super_category\": 1,\n            \"category\": 1,\n            \"sub_category\": 4,\n            \"dimensions\": null,\n            \"other_dimensions\": null,\n            \"tipology\": null,\n            \"site\": null,\n            \"object_owner\": null,\n            \"owner\": null,\n            \"patron\": null,\n            \"object_is_a_set\": 0,\n            \"set_type\": \"test\",\n            \"set_elements\": \"test1\",\n            \"set_materials\": \"madeira\",\n            \"set_inscriptions\": \"test2\",\n            \"set_mount\": \" test3\",\n            \"set_build\": \"test4\",\n            \"classification\": \"test5\",\n            \"period\": 1,\n            \"quality\": 2,\n            \"style\": null,\n            \"small_description\": \"test12\",\n            \"analogies\": \"test13\",\n            \"conclusions\": \"test14\",\n            \"author\": \"test15\",\n            \"dating\": null,\n            \"origin\": \"test16\",\n            \"materials_structure\": \"test6\",\n            \"materials_surface\": \"test7\",\n            \"materials_elementsAccessories\": \"test8\",\n            \"techniques_structure\": \"test9\",\n            \"techniques_surface\": \"test10\",\n            \"techniques_elementsAccessories\": \"test11\",\n            \"site_description\": \"test12\",\n            \"cold_temp\": \"test13\",\n            \"hot_temp\": \"test14\",\n            \"cold_humidity\": \"test15\",\n            \"hot_humidity\": \"test16\",\n            \"cold_start\": 1,\n            \"cold_end\": 2,\n            \"hot_start\": 3,\n            \"hot_end\": 4,\n            \"lightning_type_natural\": \"test17\",\n            \"lightning_origin_artificial\": \"test18\",\n            \"artificial_lux\": \"test19\",\n            \"natural_lux\": \"test20\",\n            \"artificial_uv\": \"test21\",\n            \"natural_uv\": \"test22\",\n            \"artificial_real_uv\": \"test23\",\n            \"natural_real_uv\": \"test24\",\n            \"poluting_agents\": \"test25\",\n            \"poluting_sources\": \"test26\",\n            \"poluting_results\": \"test27\",\n            \"env_conclusions\": \"test28\"\n        }\n    }\n}"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c989b72f-d2dd-4f9f-9a14-5884e8a38909",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "cb2d7f8b-1507-4f08-b889-398758614cc8",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "aa39b589-0ea1-4199-8e68-336bfdd91d0f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "92083407-554c-4a7c-8e53-95106e7e0b57",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

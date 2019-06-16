@@ -1,0 +1,1836 @@
+{
+	"info": {
+		"_postman_id": "3c158240-c449-400b-861c-84120b980019",
+		"name": "02.PM-Brandi-C_Testes_API_USER_TYPE",
+		"description": "Testes Webservices Projeto Brandi_C - Alteração dos api/user/type\n\nTestes efetuados a partir de:\n\nDATA: 12-06-2019\nHORA: 23:00\n\nUSER: Quintino\nUSER: Filipe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/user/type/list - Listar Tipos de Utilizadores",
+			"item": [
+				{
+					"name": "../api/user/type/list - obter lista de tipos de utilizadores sem login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para obter lista de tipo de utilizadores sem login.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para listar tipos de utilizador\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/list",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"list"
+							]
+						},
+						"description": "GET /api/user/type/list:\n\tpara listar os tipos de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tsearch - palavara a ser utilizada na pesqusia (esta pesquisa no nome)\n\ndevolve:\n\tse não tiver permissões:\n\n{\n    \"error\": 1,\n    \"message\": \"Não tem permissões para listar tipos de utilizador\",\n    \"res\": {\n        \"user_types\": []\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/list - obter lista de tipos de utilizadores com login usertype 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"teste123456@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para obter lista de tipo de utilizadores com login de usertypeid 2.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para listar tipos de utilizador\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/list",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"list"
+							]
+						},
+						"description": "GET /api/user/type/list:\n\tpara listar os tipos de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tsearch - palavara a ser utilizada na pesqusia (esta pesquisa no nome)\n\ndevolve:\n\tse não tiver permissões:\n\n{\n    \"error\": 1,\n    \"message\": \"Não tem permissões para listar tipos de utilizador\",\n    \"res\": {\n        \"user_types\": []\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/list - obter lista de tipos de utilizadores com login usertype 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para obter lista de tipo de utilizadores com login de usertypeid 1.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Lista de tipos de utilizador\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/list",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"list"
+							]
+						},
+						"description": "GET /api/user/type/list:\n\tpara listar os tipos de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tsearch - palavara a ser utilizada na pesqusia (esta pesquisa no nome)\n\ndevolve:\n\tse com sucesso:\n\n{\n    \"error\": 0,\n    \"message\": \"Lista de tipos de utilizador\",\n    \"res\": {\n        \"user_types\": [\n            {\n                \"id\": 1,\n                \"name\": \"Admin\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"User\"\n            },\n            {\n                \"id\": 11,\n                \"name\": \"xpto\"\n            },\n            {\n                \"id\": 12,\n                \"name\": \"xpto1\"\n            },\n            {\n                \"id\": 13,\n                \"name\": \"utilizador\"\n            },\n            {\n                \"id\": 14,\n                \"name\": \"novotipo\"\n            },\n            {\n                \"id\": 15,\n                \"name\": \"novotipo2\"\n            },\n            {\n                \"id\": 16,\n                \"name\": \"novotipo4\"\n            },\n            {\n                \"id\": 17,\n                \"name\": \"novotipo5\"\n            }\n        ]\n    }\n}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/user/type/create - Criar Tipos de Utilizadores",
+			"item": [
+				{
+					"name": "../api/user/type/create - tentativa de adicionar tipo de utilizador sem autenticação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para adicionar tipo de utilizador sem autenticação.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(3);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para adicionar tipos de utilizador\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "xpto",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"create"
+							]
+						},
+						"description": "POST /api/user/type/create:\n\tpara criar um tipo de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tname - nome do tipo de utilizador\n\ndevolve:\n\tse não tiver permissões:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para adicionar tipos de utilizador\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/create - tentativa de adicionar tipo de utilizador com usertypeid 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "cc407e6d-4018-4330-ade1-7eeb532d4aaa",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"teste123456@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "697b5730-c33a-4fe3-b217-ce4c827614d7",
+								"exec": [
+									"pm.test(\"Teste para adicionar tipo de utilizador com login de utilizxador do tipo usertypeid 2.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(3);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para adicionar tipos de utilizador\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "xpto",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"create"
+							]
+						},
+						"description": "POST /api/user/type/create:\n\tpara criar um tipo de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tname - nome do tipo de utilizador\n\ndevolve:\n\tse não tiver permissões:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para adicionar tipos de utilizador\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/create - tentativa de adicionar tipo de utilizador com usertypeid 1 sem campos obrigatórios",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "42d5ce90-41e2-447d-ad6c-d4acc6a4e34d",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b1b2782d-e74f-404e-a47e-9b384d743c0b",
+								"exec": [
+									"pm.test(\"Teste para adicionar tipo de utilizador com login de utilizador do tipo usertypeid 1 sem campos obrigatórios.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(2);",
+									"    pm.expect(jsonData.message).to.eql(\"Insira todos os campos obrigatórios\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"create"
+							]
+						},
+						"description": "POST /api/user/type/create:\n\tpara criar um tipo de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tname - nome do tipo de utilizador\n\ndevolve:\n\tse não forem dados todos os campos obrigatórios:\n\n{\n    \"error\": 2,\n    \"message\": \"Insira todos os campos obrigatórios\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/create - adicionar tipo de utilizador com usertypeid 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "42d5ce90-41e2-447d-ad6c-d4acc6a4e34d",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b1b2782d-e74f-404e-a47e-9b384d743c0b",
+								"exec": [
+									"pm.test(\"Teste para adicionar tipo de utilizador com login de utilizador do tipo usertypeid 1.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Tipo de utilizador adicionado com sucesso\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "novotipo7",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"create"
+							]
+						},
+						"description": "POST /api/user/type/create:\n\tpara criar um tipo de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tname - nome do tipo de utilizador\n\ndevolve:\n\tse for registado com sucesso:\n\n{\n    \"error\": 0,\n    \"message\": \"Tipo de utilizador adicionado com sucesso\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/create - tentativa de adicionar tipo de utilizador com usertypeid 1 de tipo de user já existente",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "42d5ce90-41e2-447d-ad6c-d4acc6a4e34d",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b1b2782d-e74f-404e-a47e-9b384d743c0b",
+								"exec": [
+									"pm.test(\"Teste para adicionar tipo de utilizador já existente.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Ocorreu um erro, provavelmente esse tipo de utilizador já existe\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "novotipo",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"create"
+							]
+						},
+						"description": "POST /api/user/type/create:\n\tpara criar um tipo de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tname - nome do tipo de utilizador\n\ndevolve:\n\tse ocorrer um erro ou introduzirem um nome que já exista:\n\n{\n    \"error\": 1,\n    \"message\": \"Ocorreu um erro, provavelmente esse tipo de utilizador já existe\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/user/type/change - Modificar Tipos de Utilizador",
+			"item": [
+				{
+					"name": "../api/user/type/change - tentativa de alterar tipo de utilizador sem autenticação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para alterar tipo de utilizador sem autenticação.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(3);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para alterar tipos de utilizador\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "xpto",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/change",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"change"
+							]
+						},
+						"description": "POST /api/user/type/change:\n\tpara alterar um tipo de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid - id do tipo de utilizador a alterar\n\tname - nome do tipo de utilizador\n\ndevolve:\n\tse não tiver permissões:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para alterar tipos de utilizador\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/change - tentativa de alterar tipo de utilizador com autenticação sem ser administrador",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"fbranco114@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para alterar tipo de utilizador com autenticação sem ser administrador.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(3);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para alterar tipos de utilizador\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "xpto",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/change",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"change"
+							]
+						},
+						"description": "POST /api/user/type/change:\n\tpara alterar um tipo de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid - id do tipo de utilizador a alterar\n\tname - nome do tipo de utilizador\n\ndevolve:\n\tse não tiver permissões:\n\n{\n    \"error\": 3,\n    \"message\": \"Não tem permissões para alterar tipos de utilizador\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/change - tentativa de alterar tipo de utilizador faltando campos obrigatórios",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para alterar tipo de utilizador faltando campos obrigatórios.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(2);",
+									"    pm.expect(jsonData.message).to.eql(\"Insira todos os campos obrigatórios\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "12",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/change",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"change"
+							]
+						},
+						"description": "POST /api/user/type/change:\n\tpara alterar um tipo de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid - id do tipo de utilizador a alterar\n\tname - nome do tipo de utilizador\n\ndevolve:\n\tse não forem dados todos os campos obrigatórios:\n\n{\n    \"error\": 2,\n    \"message\": \"Insira todos os campos obrigatórios\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/change - tentativa de alterar tipo de utilizador para nome já existente",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para alterar tipo de utilizador para nome já existente.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Ocorreu um erro, provavelmente o nome dado já existe\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "xpto",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/change",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"change"
+							]
+						},
+						"description": "POST /api/user/type/change:\n\tpara alterar um tipo de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid - id do tipo de utilizador a alterar\n\tname - nome do tipo de utilizador\n\ndevolve:\n\tse ocorrer um erro ou introduzirem um nome que já exista:\n\n{\n    \"error\": 1,\n    \"message\": \"Ocorreu um erro, provavelmente o nome dado já existe\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/change - alterar tipo de utilizador com sucesso",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para alterar tipo de utilizador com sucesso.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Tipo de utilizador alterado com sucesso\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "azerty",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/change",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"change"
+							]
+						},
+						"description": "POST /api/user/type/change:\n\tpara alterar um tipo de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid - id do tipo de utilizador a alterar\n\tname - nome do tipo de utilizador\n\ndevolve:\n\tse for alterado com sucesso:\n\n{\n    \"error\": 0,\n    \"message\": \"Tipo de utilizador alterado com sucesso\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/change - alterar novamente tipo de utilizador para o mesmo nome",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para alterar tipo de utilizador com sucesso.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Tipo de utilizador alterado com sucesso\");",
+									"});",
+									"",
+									"",
+									"// Se se tentar mudar o nome do tipo de utilizador para o mesmo nome aceita sempre a alteração, mesmo que fique igual.",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "azerty",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/change",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"change"
+							]
+						},
+						"description": "POST /api/user/type/change:\n\tpara alterar um tipo de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid - id do tipo de utilizador a alterar\n\tname - nome do tipo de utilizador\n\ndevolve:\n\tse for alterado com sucesso:\n\n{\n    \"error\": 0,\n    \"message\": \"Tipo de utilizador alterado com sucesso\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7444294e-d845-4859-9e57-0dac215a86cf",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "fc3c409c-8b8a-41c1-bc05-c5a29e6851f3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "/api/user/type/delete - Eliminar Tipos de Utilizadores",
+			"item": [
+				{
+					"name": "../api/user/type/delete - tentativa de eliminar tipo de utilizador sem autenticação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para eliminar tipo de utilizador sem autenticação.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(4);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para eliminar tipos de utilizador\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "17",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/delete",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"delete"
+							]
+						},
+						"description": "POST /api/user/type/delete:\n\tpara eliminar um tipo de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid - id do tipo de utilizador a alterar\n\ndevolve:\n\tse não tiver permissões:\n\n{\n    \"error\": 4,\n    \"message\": \"Não tem permissões para eliminar tipos de utilizador\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/delete - tentativa de eliminar tipo de utilizador com autenticação sem ser administrador",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"teste123456@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para eliminar tipo de utilizador com autenticação sem ser administrador.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(4);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para eliminar tipos de utilizador\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "17",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/delete",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"delete"
+							]
+						},
+						"description": "POST /api/user/type/delete:\n\tpara eliminar um tipo de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid - id do tipo de utilizador a alterar\n\ndevolve:\n\tse não tiver permissões:\n\n{\n    \"error\": 4,\n    \"message\": \"Não tem permissões para eliminar tipos de utilizador\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/delete - tentativa de eliminar tipo de utilizador faltando campos obrigatórios",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para eliminar tipo de utilizador faltando campos obrigatórios.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(3);",
+									"    pm.expect(jsonData.message).to.eql(\"Insira todos os campos obrigatórios\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/delete",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"delete"
+							]
+						},
+						"description": "POST /api/user/type/delete:\n\tpara eliminar um tipo de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid - id do tipo de utilizador a alterar\n\ndevolve:\n\tse não forem dados todos os campos obrigatórios:\n\n{\n    \"error\": 3,\n    \"message\": \"Insira todos os campos obrigatórios\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/delete - tentativa de eliminar tipo de utilizador inexistente",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para eliminar tipo de utilizador inexistente.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Esse tipo de utilizador não foi encontrado\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "10000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/delete",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"delete"
+							]
+						},
+						"description": "POST /api/user/type/delete:\n\tpara eliminar um tipo de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid - id do tipo de utilizador a alterar\n\ndevolve:\n\tse ocorrer um erro ou não exista este tipo de utilizadores:\n\n{\n    \"error\": 1,\n    \"message\": \"Esse tipo de utilizador não foi encontrado\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/delete - tentativa de eliminar tipo de utilizador associado a uma pelo menos uma conta de utilizador",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para eliminar tipo de utilizador associado a pelo menos uma conta de utilizador.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(2);",
+									"    pm.expect(jsonData.message).to.eql(\"Ocorreu um erro, provavelmente existem utilizadores associados a este tipo\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "13",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/delete",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"delete"
+							]
+						},
+						"description": "POST /api/user/type/delete:\n\tpara eliminar um tipo de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid - id do tipo de utilizador a alterar\n\ndevolve:\n\tse ocorrer um erro ou existam utilizadores associados a este:\n\n{\n    \"error\": 2,\n    \"message\": \"Ocorreu um erro, provavelmente existem utilizadores associados a este tipo\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/user/type/delete - eliminar tipo de utilizador com  sucesso",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "947eb411-24c5-4fcf-842a-54eceadaf491",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e63831d3-8f01-4fa6-981e-8d2a5e29fa9b",
+								"exec": [
+									"pm.test(\"Teste para eliminar tipo de utilizador com sucesso.\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Tipo de utilizador eliminado com sucesso\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "14",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/user/type/delete",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"user",
+								"type",
+								"delete"
+							]
+						},
+						"description": "POST /api/user/type/delete:\n\tpara eliminar um tipo de utilizador\n\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid - id do tipo de utilizador a alterar\n\ndevolve:\n\tse for eliminado com sucesso:\n\n{\n    \"error\": 0,\n    \"message\": \"Tipo de utilizador eliminado com sucesso\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "fe11b7df-504b-44d0-babc-7c81af113a57",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "20a425e4-1dec-4878-ae33-4a5ef26dfab7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
