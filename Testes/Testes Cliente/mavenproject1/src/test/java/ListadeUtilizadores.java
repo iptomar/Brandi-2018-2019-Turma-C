@@ -5,6 +5,8 @@
  */
 
 import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -41,6 +43,7 @@ WebDriver driver;
            Thread.sleep(1000);
        
 }
+     
  @Test 
       public void admin_ListaUtilizadores() throws Exception {
           driver.get("http://brandic.devll.eu:61080/");
@@ -72,11 +75,14 @@ WebDriver driver;
             Title.sendKeys("Eng");
          Select Util = new Select(driver.findElement(By.name("id_type_user")));
          Util.selectByValue("2");
-         driver.findElement(By.xpath("/html/body/app-root/div/app-user-list/div/div/form/div[8]/div/button[1]")).click();
+         driver.findElement(By.xpath("/html/body/app-root/div/app-user-list/div/div/form/div[5]/div/button[1]")).click();
          Thread.sleep(1000);
-         
-        
+        WebElement msg = driver.findElement(By.className("alert-success"));
+         if (!msg.isDisplayed())
+         fail("not save");
+       
       }
+      
       @After
       public void admin_ListaUtilizadores_Procurar() throws Exception {
           driver.get("http://brandic.devll.eu:61080/");
@@ -86,7 +92,7 @@ WebDriver driver;
        Thread.sleep(1000);
        driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[3]/div/a[1]")).click();
         Thread.sleep(1000);
-        driver.findElement(By.name("searchBox")).sendKeys("marcio");
+        driver.findElement(By.name("searchBox")).sendKeys("Marcio");
         driver.findElement(By.xpath("/html/body/app-root/div/app-user-list/div/div/form/div[1]/div/button")).click();
         Thread.sleep(1000);
         driver.findElement(By.xpath("/html/body/app-root/div/app-user-list/div/div/form/div[2]/table/tbody/tr[1]/td[5]/div/button[1]")).click();
@@ -100,8 +106,12 @@ WebDriver driver;
         title.clear();
         title.sendKeys("Técnico");
         
-        driver.findElement(By.xpath("/html/body/app-root/div/app-user-list/div/div/form/div[8]/div/button[1]")).click();
-        Thread.sleep(1000);
+         driver.findElement(By.xpath("/html/body/app-root/div/app-user-list/div/div/form/div[5]/div/button[1]")).click();
+         Thread.sleep(1000);
+        WebElement msg = driver.findElement(By.className("alert-success"));
+         if (!msg.isDisplayed())
+         fail("not save");
+       
       }
       
 }

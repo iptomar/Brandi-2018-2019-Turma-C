@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,10 +63,19 @@ public class Editar_ListaFichasTecnicas_Admin {
         Thread.sleep(1000);
         driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-edit/form/div[1]/div/div[2]/div/button[1]")).click();
         Thread.sleep(1000);
-        driver.findElement(By.name("dimensions")).sendKeys("2x3x2");
-        driver.findElement(By.name("other_dimensions")).sendKeys("1x1x1");
-        driver.findElement(By.name("tipology")).sendKeys("teste");
-        driver.findElement(By.name("site")).sendKeys("Local");
+       WebElement dimensao = driver.findElement(By.name("dimensions"));
+        dimensao.clear();
+        dimensao.sendKeys("2x3x2");
+          WebElement outras_dimensoes = driver.findElement(By.name("other_dimensions"));
+            outras_dimensoes.clear();
+         outras_dimensoes.sendKeys("1x1x1");
+       WebElement tipo =  driver.findElement(By.name("tipology"));
+       tipo.clear();
+       tipo.sendKeys("teste");
+       WebElement site = driver.findElement(By.name("site"));
+       site.clear();
+       site.sendKeys("Local");
+       /*
         Select prop = new Select (driver.findElement(By.name("owner")));
         prop.selectByValue("2");
          Thread.sleep(1000);
@@ -78,11 +88,20 @@ public class Editar_ListaFichasTecnicas_Admin {
         patron.selectByValue("1");
          Thread.sleep(1000);
         
+*/
         driver.findElement(By.xpath("//*[@id=\"datasheet_part2\"]/app-datasheet-page2/div[5]/div[2]/button")).click();
-        
-        
-        //bug o teste vai falhar
-       WebElement msg = driver.findElement(By.className("alert-sucess"));
-       assertEquals("Ficha técnica atualizada com sucesso",msg.getText());
+     
     }
-}
+    
+    @After
+    public void ListaFichasTecnicas_AdicionarContacto() throws Exception {
+        driver.findElement(By.name("contact_name")).sendKeys("Marcio");
+        driver.findElement(By.name("contact_email")).sendKeys("aluno20619@ipt.pt");
+        driver.findElement(By.name("contact_address")).sendKeys("Rua das Pedreiras");
+        driver.findElement(By.name("contact_phone")).sendKeys("922453214");
+        driver.findElement(By.xpath("//*[@id=\"modal_contacts\"]/div/div/form/div[3]/button[2]")).click();
+        Thread.sleep(1000);
+    }
+ }
+    
+

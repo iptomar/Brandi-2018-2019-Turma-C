@@ -44,7 +44,7 @@ public class Categorias_Admin {
        
 
     }
-   /*
+   
      
            @Test 
      public void admin_Editar() throws Exception {
@@ -75,8 +75,7 @@ public class Categorias_Admin {
          assertEquals("Super categoria criada com sucesso",msg.getText());
       
      }
-         
-         
+        
                   @Test
          public void admin_CriarCategoria_Já_Criada() throws Exception {
          driver.get("http://brandic.devll.eu:61080/#/admin/categories");
@@ -99,7 +98,7 @@ public class Categorias_Admin {
             if (!msg.isDisplayed())
                 fail("not found");
     
-      } */
+      } 
       
          
          @Test
@@ -107,12 +106,30 @@ public class Categorias_Admin {
          driver.get("http://brandic.devll.eu:61080/#/admin/categories");
          WebElement procurar = driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/form[2]/input"));
          procurar.clear();
-         procurar.sendKeys("Cultura");
+         procurar.sendKeys("admin");
          WebElement enter = driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/form[2]/input"));
          enter.sendKeys(Keys.ENTER);
+        WebElement msg = driver.findElement(By.className("alert-warning"));
+         assertEquals("Não exitem Super Categorias",msg.getText());
          }
          
          
+        /*      @Test
+         public void Admin_ApagarCategoria() throws Exception {
+          driver.get("http://brandic.devll.eu:61080/#/admin/categories");
+          Thread.sleep(1000);
+        driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/div[2]/form[9]/button[3]")).click();
+          Thread.sleep(1000); 
+         
+         //ainda nao consegui chegar a parte do pop up
+        // WebElement Alert = driver.findElement(By.id(""))
+          
+         
+         WebElement msg = driver.findElement(By.className("alert-success"));
+         assertEquals("Super Categoria eliminada com sucesso",msg.getText());
+          
+         }
+        */
 
     
 }
