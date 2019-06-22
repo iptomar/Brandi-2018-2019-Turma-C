@@ -32,13 +32,46 @@
   </div>
 </fieldset>
 
-<button type="button" class="btn btn-outline-success mt-2" [disabled]='!_isEditing'>Adicionar exame/análise <i
-    class="fa fa-folder"></i>
+<button type="button" class="btn btn-outline-success mt-2" [disabled]='!_isEditing'>Adicionar exame/análise 
 </button>
 
 <div>
+<!--
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="width: 10%">Tipo</th>
+        <th style="width: 15%">Localização</th>
+        <th style="width: 13%">Objectivos</th>
+        <th style="width: 15%">Resultados</th>
+        <th style="width: 15%">Responsável</th>
+        <th style="width: 10%">data</th>
+      </tr>
+      
+    </thead>
 
-  Tabela com os exames realizados
+    <tbody>
+        <tr *ngFor="let item of _datasheet.array">
+            <th>
+                item.ref
+            </th>
+            <th>
+                item.area
+            </th>
+            <th>
+                item.objective
+            </th>
+            <th>
+                item.result
+            </th>
+            <th>
+                item.entity
+            </th><th>
+                item.timestamp
+            </th>  
+        </tr>    
+    </tbody>
+  </table>-->
 
 </div>
 

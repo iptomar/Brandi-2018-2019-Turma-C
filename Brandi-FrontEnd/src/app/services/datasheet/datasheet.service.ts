@@ -7,6 +7,7 @@ import { AuthService } from "../auth/auth.service";
 import { DatePipe } from "@angular/common";
 
 export interface Datasheet {
+  //dados folha 1
   id: number;
   object_designation: string;
   CEARC_process: string;
@@ -22,6 +23,7 @@ export interface Datasheet {
   super_category: number;
   category: number;
   sub_category: number;
+  //dados folha 2
   dimensions: string;
   other_dimensions: string;
   tipology: string;
@@ -29,6 +31,7 @@ export interface Datasheet {
   object_owner: number;
   owner: number;
   patron: number;
+  //dados folha 3
   object_is_a_set: number;
   set_type: string;
   set_elements: string;
@@ -52,6 +55,7 @@ export interface Datasheet {
   techniques_structure: string;
   techniques_surface: string;
   techniques_elementsAccessories: string;
+  //dados folha 4
   site_description: string;
   cold_temp: string;
   hot_temp: string;
@@ -73,6 +77,58 @@ export interface Datasheet {
   poluting_sources: string;
   poluting_results: string;
   env_conclusions: string;
+
+/** 
+ * falta a 5
+ * : number;
+ * : number;
+ * : number;
+ * : number;
+ * : number;
+ * : number;
+ * : string;
+ * : string;
+ * 
+*/
+//
+  //dados folha 6
+  support_deterioration: string;
+	surface_deterioration: string;
+	elements_deterioration: string;
+	support_diagnostic: string;
+	surface_diagnostic: string;
+	elements_diagnostic: string;
+  conclusions_conservation: string;
+  //dados folha 7
+  support: string;
+	surface: string;
+	elements: string;
+  conclusions_previous_interventions: string;
+  //dados folhas 8  
+  owner_preserve: number;
+	owner_conserve: number;
+	owner_restaure: number;
+	specific_aspects: string;
+	prop_preserve: number;
+	prop_conserve: number;
+	prop_restaure: number;
+	support_proposal: string;
+	support_resources: string;
+	surface_proposal: string;
+	surface_resources: string;
+	elements_proposal: string;
+	elements_resources: string;
+	observations: string;
+	proposal_date: string;
+  acceptation_date: string;
+  //dados folha 9
+  support_intervention: string;
+	support_resources_intervention: string;
+	surface_intervention: string;
+	surface_resources_intervention: string;
+	elements_intervention: string;
+	elements_resources_intervention: string;
+	observations_intervention: string;
 }
 
 
@@ -246,6 +302,73 @@ export class DatasheetService {
           env_conclusions: data.env_conclusions
         };
         break;
+        case(4):
+        dados=  {
+
+          /**
+           * 
+           * FALTA FOLHA 5
+           */
+        };
+        break;
+        case(5):
+        dados=  {
+          support_deterioration: data.support_deterioration,
+          surface_deterioration: data.surface_deterioration,
+          elements_deterioration: data.elements_deterioration,
+          support_diagnostic: data.support_diagnostic,
+          elements_diagnostic: data.elements_diagnostic,
+          conclusions_conservation: data.conclusions_conservation
+        };
+        break;
+        case(6):
+        dados=  {
+          support : data.support,
+          surface : data.surface,
+          elements : data.elements,
+          conclusions_previous_interventions : data.conclusions_previous_interventions
+        };
+        break;
+        
+        case(7):
+        dados=  {
+          owner_preserve : data.owner_preserve,
+          owner_conserve : data.owner_conserve,
+          owner_restaure : data.owner_restaure,
+          specific_aspects : data.specific_aspects,
+          prop_preserve : data.prop_preserve,
+          prop_conserve : data.prop_conserve,
+          prop_restaure : data.prop_restaure,
+          support_resources : data.support_resources,
+          support_proposal : data.support_proposal,
+          surface_proposal : data.surface_proposal,
+          surface_resources : data.surface_resources,
+          elements_proposal : data.elements_proposal,
+          elements_resources : data.elements_resources,
+          observations : data.observations,
+          proposal_date: this.datePipe.transform(
+            data.proposal_date,
+            "yyyy-MM-dd"
+          ),
+          acceptation_date: this.datePipe.transform(
+            data.acceptation_date,
+            "yyyy-MM-dd"
+          ),
+        };
+        break; 
+        case(8):
+        dados=  {
+          support_intervention : data.support_intervention,
+          support_resources_intervention : data.support_resources_intervention,
+          surface_intervention : data.surface_intervention,
+          surface_resources_intervention : data.surface_resources_intervention,
+          elements_intervention : data.elements_intervention,
+          elements_resources_intervention : data.elements_resources_intervention,
+          observations_intervention : data.observations_intervention
+        };
+        break;
+        
+        
 
         
         default:

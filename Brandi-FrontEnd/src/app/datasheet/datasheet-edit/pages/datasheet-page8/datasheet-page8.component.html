@@ -10,15 +10,15 @@
     <label>Tipo de Intervenção:</label>
     <div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="owner_preserve" value="owner_preserve">
+        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing" [checked]="_datasheet?.owner_preserve != '0'"  name="owner_preserve" id="owner_preserve">
         <label class="form-check-label" for="owner_preserve">Preservação</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="owner_conserve" value="owner_conserve">
+        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing" [checked]="_datasheet?.owner_conserve  != '0'" name="owner_conserve" id="owner_conserve">
         <label class="form-check-label" for="owner_conserve">Conservação</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="owner_restaure" value="owner_restaure">
+        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing"  [checked]="_datasheet?.owner_restaure  != '0'"  name="owner_restaure" id="owner_restaure">
         <label class="form-check-label" for="owner_restaure">Restauro</label>
       </div>
     </div>
@@ -28,7 +28,7 @@
     <div class="form-group row">
       <label for="support_deterioration" class="col-lg-2 col-form-label">Aspectos Específicos</label>
       <div class="col-lg-10">
-        <textarea class="form-control" id="support_deterioration" rows="3" [readonly]="!_isEditing"></textarea>
+        <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.specific_aspects"  name="specific_aspects" id="specific_aspects"></textarea>
       </div>
     </div>
   </div>
@@ -42,15 +42,15 @@
     <label>Tipo de Intervenção:</label>
     <div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="prop_preserve" value="prop_preserve">
+        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing" [checked]="_datasheet?.prop_preserve  != '0'"   name="prop_preserve " id="prop_preserve">
         <label class="form-check-label" for="prop_preserve">Preservação</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="prop_conserve" value="prop_conserve">
+        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing" [checked]="_datasheet?.prop_conserve   != '0'"   name="prop_conserve  " id="prop_conserve">
         <label class="form-check-label" for="prop_conserve">Conservação</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="prop_restaure" value="prop_restaure">
+        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing" [checked]="_datasheet?.prop_restaure    != '0'"   name="prop_restaure   " id="prop_restaure">
         <label class="form-check-label" for="prop_restaure">Restauro</label>
       </div>
     </div>
@@ -62,43 +62,43 @@
 
   <div class="row">
     <div class="form-group col-lg-7">
-      <label for="support">Estrutura</label>
-      <textarea class="form-control" id="support" rows="3" [readonly]="!_isEditing"></textarea>
+      <label for="support_proposal ">Estrutura</label>
+      <textarea class="form-control"  rows="3" [readonly]="!_isEditing" [value]="_datasheet?.support_proposal"  name="support_proposal" id="support_proposal"></textarea>
     </div>
     <div class="form-group col-lg-5">
       <label for="support_resources">Recursos (Materiais | Técnicos | Tecnológicos)
       </label>
-      <textarea class="form-control" id="support_resources" rows="3" [readonly]="!_isEditing"></textarea>
+      <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.support_resources"  name="support_resources" id="support_resources"></textarea>
     </div>
   </div>
   <div class="row">
     <div class="form-group col-lg-7">
-      <label for="surface">Superfície</label>
-      <textarea class="form-control" id="surface" rows="3" [readonly]="!_isEditing"></textarea>
+      <label for="surface_proposal ">Superfície</label>
+      <textarea class="form-control" rows="3" [readonly]="!_isEditing"[value]="_datasheet?.surface_proposal"  name="surface_proposal" id="surface_proposal"></textarea>
     </div>
     <div class="form-group col-lg-5">
-      <label for="surface_resources">Recursos (Materiais | Técnicos | Tecnológicos)
+      <label for="surface_resources ">Recursos (Materiais | Técnicos | Tecnológicos)
       </label>
-      <textarea class="form-control" id="surface_resources" rows="3" [readonly]="!_isEditing"></textarea>
+      <textarea class="form-control"rows="3" [readonly]="!_isEditing" [value]="_datasheet?.surface_resources"  name="surface_resources" id="surface_resources"></textarea>
     </div>
   </div>
   <div class="row">
     <div class="form-group col-lg-7">
-      <label for="elements">Elementos Acessórios</label>
-      <textarea class="form-control" id="elements" rows="3" [readonly]="!_isEditing"></textarea>
+      <label for="elements_proposal">Elementos Acessórios</label>
+      <textarea class="form-control"rows="3" [readonly]="!_isEditing" [value]="_datasheet?.elements_proposal"  name="elements_proposal" id="elements_proposal"></textarea>
     </div>
     <div class="form-group col-lg-5">
       <label for="elements_resources">Recursos (Materiais | Técnicos | Tecnológicos)
       </label>
-      <textarea class="form-control" id="elements_resources" rows="3" [readonly]="!_isEditing"></textarea>
+      <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.elements_resources"  name="elements_resources" id="elements_resources"></textarea>
     </div>
   </div>
 </fieldset>
 <br />
 <div class="form-group row">
-  <label for="proposal_observations" class="col-lg-2 col-form-label">Observações | Conclusões</label>
+  <label for="observations" class="col-lg-2 col-form-label">Observações | Conclusões</label>
   <div class="col-lg-10">
-    <textarea class="form-control" id="proposal_observations" rows="3" [readonly]="!_isEditing"></textarea>
+    <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.observations"  name="observations" id="observations"></textarea>
   </div>
 </div>
 
@@ -114,7 +114,7 @@
   </div>
   <div class="form-group col-lg-6">
       <label for="proposal_date" class="col-lg-6">Data da Informação da Proposta</label>
-      <input type="date" id="proposal_date" class="form-control col-lg-6 text-center" [readonly]="!_isEditing">
+      <input type="date" id="proposal_date" class="form-control col-lg-6 text-center" [readonly]="!_isEditing" [value]="_datasheet?.proposal_date"  name="proposal_date" id="proposal_date">
     </div>
 </form>
 <form class="form-inline row">
@@ -123,8 +123,8 @@
     <select id="client_intervenient" class="form-control col-lg-8" [disabled]="!_isEditing"></select>
   </div>
   <div class="form-group col-lg-6">
-      <label for="acceptance_date" class="col-lg-6">Data da Aceitação da Proposta</label>
-      <input type="date" id="acceptance_date" class="form-control col-lg-6 text-center" [readonly]="!_isEditing">
+      <label for="acceptation_date" class="col-lg-6">Data da Aceitação da Proposta</label>
+      <input type="date" id="acceptation_date" class="form-control col-lg-6 text-center" [readonly]="!_isEditing" [value]="_datasheet?.acceptation_date"  name="acceptation_date" id="acceptation_date">
     </div>
 </form>
 <br />

@@ -6,22 +6,23 @@
   <legend class="w-auto">Deterioração Física, Química e Mecânica dos Materiais</legend>
   <p class="text-muted">Alterabilidade: decorrente de envelhecimento natural<br />
 Alteração: decorrente de fatores físicos, químicos, biológicos e antrópicos</p>
+
   <div class="form-group row">
     <label for="support_deterioration" class="col-lg-2 col-form-label">Estrutura</label>
     <div class="col-lg-10">
-      <textarea class="form-control" id="support_deterioration" rows="3" [readonly]="!_isEditing"></textarea>
+      <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.support_deterioration"  name="support_deterioration" id="support_deterioration" ></textarea>
     </div>
   </div>
   <div class="form-group row">
     <label for="surface_deterioration" class="col-lg-2 col-form-label">Superfície</label>
     <div class="col-lg-10">
-      <textarea class="form-control" id="surface_deterioration" rows="3" [readonly]="!_isEditing"></textarea>
+      <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.surface_deterioration"  name="surface_deterioration" id="surface_deterioration"></textarea>
     </div>
   </div>
   <div class="form-group row">
     <label for="elements_deterioration" class="col-lg-2 col-form-label">Elementos Acessórios</label>
     <div class="col-lg-10">
-      <textarea class="form-control" id="elements_deterioration" rows="3" [readonly]="!_isEditing"></textarea>
+      <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.elements_deterioration"  name="elements_deterioration" id="elements_deterioration"></textarea>
     </div>
   </div>
 </fieldset>
@@ -32,25 +33,25 @@ Alteração: decorrente de fatores físicos, químicos, biológicos e antrópico
     <div class="form-group row">
       <label for="support_diagnostic" class="col-lg-2 col-form-label">Estrutura</label>
       <div class="col-lg-10">
-        <textarea class="form-control" id="support_diagnostic" rows="3" [readonly]="!_isEditing"></textarea>
+        <textarea class="form-control"  rows="3" [readonly]="!_isEditing" [value]="_datasheet?.support_diagnostic"  name="support_diagnostic" id="support_diagnostic"></textarea>
       </div>
     </div>
     <div class="form-group row">
       <label for="surface_diagnostic" class="col-lg-2 col-form-label">Superfície</label>
       <div class="col-lg-10">
-        <textarea class="form-control" id="surface_diagnostic" rows="3" [readonly]="!_isEditing"></textarea>
+        <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.surface_diagnostic"  name="surface_diagnostic" id="surface_diagnostic"></textarea>
       </div>
     </div>
     <div class="form-group row">
       <label for="elements_diagnostic" class="col-lg-2 col-form-label">Elementos Acessórios</label>
       <div class="col-lg-10">
-        <textarea class="form-control" id="elements_diagnostic" rows="3" [readonly]="!_isEditing"></textarea>
+        <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.elements_diagnostic"  name="elements_diagnostic" id="elements_diagnostic"></textarea>
       </div>
     </div>
   </fieldset>
   <br />
 <div class="form-group row">
-  <label for="state_conclusions" class="col-lg-2 col-form-label">Observações | Conclusões</label>
+  <label for="conclusions_conservation" class="col-lg-2 col-form-label">Observações | Conclusões</label>
   <div class="col-lg-10">
-    <textarea class="form-control" id="state_conclusions" rows="3" [readonly]="!_isEditing"></textarea>
+    <textarea class="form-control" rows="3" [readonly]="!_isEditing" [value]="_datasheet?.conclusions_conservation"  name="conclusions_conservation" id="conclusions_conservation"></textarea>
   </div>

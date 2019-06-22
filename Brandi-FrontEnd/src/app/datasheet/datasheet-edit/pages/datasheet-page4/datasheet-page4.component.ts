@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Datasheet } from 'src/app/services/datasheet/datasheet.service';
+import { DatasheetPage } from '../../datasheet-edit.component';
 
 @Component({
   selector: 'app-datasheet-page4',
   templateUrl: './datasheet-page4.component.html',
   styleUrls: ['./datasheet-page4.component.scss']
 })
-export class DatasheetPage4Component implements OnInit {
+export class DatasheetPage4Component implements OnInit, DatasheetPage {
   _datasheet: any;
   _isEditing: boolean;
 

@@ -219,6 +219,85 @@
 	 }
 
 ------------
+## GET /api/user/listNames:
+> para ver a lista de utilizadores
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	search - palavara a ser utilizada na pesqusia (esta pesquisa no nome e no email)
+### devolve:
+##### se com sucesso:
+	{
+	    "error": 0,
+	    "message": "Lista de utilizadores",
+	    "res": {
+	        "users": [
+	            {
+	                "id": 1,
+	                "full_name": "admin@admin.admin"
+	            },
+	            {
+	                "id": 2,
+	                "full_name": "Nuno Marques"
+	            },
+	            {
+	                "id": 3,
+	                "full_name": "Virgílio Quintino"
+	            },
+	            {
+	                "id": 7,
+	                "full_name": "Filipe Branco"
+	            },
+	            {
+	                "id": 5,
+	                "full_name": "Mario"
+	            },
+	            {
+	                "id": 6,
+	                "full_name": "Maria"
+	            },
+	            {
+	                "id": 8,
+	                "full_name": "Nobody"
+	            },
+	            {
+	                "id": 9,
+	                "full_name": "andre"
+	            },
+	            {
+	                "id": 10,
+	                "full_name": "marcio"
+	            },
+	            {
+	                "id": 12,
+	                "full_name": "Teste User"
+	            },
+	            {
+	                "id": 13,
+	                "full_name": "%/#%#%(#%"
+	            },
+	            {
+	                "id": 17,
+	                "full_name": "marcio"
+	            },
+	            {
+	                "id": 18,
+	                "full_name": "marcio"
+	            },
+	            {
+	                "id": 19,
+	                "full_name": "marcio"
+	            }
+	        ]
+	    }
+	}
+##### se não tiver permissões:
+	{
+		   "error": 1,
+		   "message": "Não tem permissões para listar utilizadores",
+		   "res": {}
+	 }
+------------
 ## POST /api/user/delete
 >  para eliminar um utilizador
 ### Condições:
@@ -482,6 +561,9 @@
 	lcrmprocdata - data do processo LCRM
 	lcrmentrancedata - data de entrada LCRM (obrigatório)
 	coordinatorid - id do coordenador (obrigatório)
+	super_category - id da super categoria (obrigatório)
+	category - id da categoria (obrigatório)
+	sub_category - id da sub categoria (obrigatório)
 ### devolve:
 ##### se não tiver autenticado:
 	{
@@ -526,6 +608,115 @@
 		super_category - id da super categoria,
 		category - id da categoria(esta tem de estar associada a super categoria),
 		sub_category - id da sub categoria(esta tem de estar associada a categoria)
+:
+
+	:page = 2 (não tem campos obrigatórios)
+		dimensions - dimensões do objeto
+		other_dimensions - outras dimensões
+		tipology - tipologia do objeto
+		site - localização
+		object_owner -proprietário do objeto
+		owner - dono da obra
+		patron - mecenas
+:
+
+	:page = 3
+		object_is_a_set - informação respetiva a se existe ou nao bem integrado em conjunto (obrigatório)
+		set_type - tipo de conjunto do objecto
+		elements - elementos do objeto
+		set_materials - materiais do objeto
+		set_inscriptions - inscrições no objeto
+		set_mount - inscrições de Montagem do objeto
+		set_build - inscrições de Construção
+		classification - classificação do objeto
+	    period - época do objeto
+		quality - qualidade do objeto
+		style - estilo do objeto
+		materials_structure - materiais da estrutura do objeto
+		materials_surface - materiais da superficie do objeto
+		materials_elementsAccessories - materiais dos elementos acessórios do objeto
+		techniques_structure - técnicas da estrutura do objeto
+		techniques_surface - técnicas da superficie do objeto
+		techniques_elementsAccessories - técnicas dos elementos acessórios do objeto
+		small_description - pequena descrição do objeto
+		analogies - analogias 
+		conclusions - conclusões
+		author - autor 
+		dating - datação
+		origin - origem
+:
+
+	:page = 4 (não tem campos obrigatórios)
+		site_description - descrição do local
+		cold_temp Frio- temperatura 
+		hot_temp Quente- temperatura
+		cold_humidity Frio-Humidade
+		hot_humidity Frio-Humidade
+		cold_start Frio- Início
+		cold_end Frio- Fim
+		hot_start Quente- Início
+		hot_end Quente- Fim
+		lightning_type_natural Radiação tipo natural
+		lightning_origin_artificial Radiação tipo artificial
+		artificial_lux Radiação artificial - valor Iluminância
+		natural_lux Radiação natural - valor Iluminância
+		artificial_uv Radiação artificial - Valor de U.V.
+		natural_uv Radiação natural - Valor de U.V.
+		natural_real_uv Radiação natural- Valor Real de U.V.
+		artificial_real_uv Radiação artificial- Valor Real de U.V.
+		poluting_agents - Agentes Poluidores
+		poluting_sources - Fontes de poluição
+		poluting_results - Resultados de poluição
+		env_conclusions - Resultados
+:
+		
+	:page = 6(não tem campos obrigatórios)
+		support_deterioration - Deterioração da Estrutura
+		surface_deterioration - Deterioração da Superfície
+		elements_deterioration - Deterioração dos Elementos Acessórios
+		support_diagnostic - Diagnóstico da Estrutura
+		surface_diagnostic - Diagnóstico da Superfície
+		elements_diagnostic - Diagnóstico dos Elementos Acessórios
+		conclusions_conservation - Conclusões do estado de conservação
+:
+
+	:page = 7(não tem campos obrigatórios)
+		support - Estrutura da intervenção anterior
+		surface - Superfície da intervenção anterior
+		elements - Elementos Acessórios da intervenção anterior
+		conclusions_previous_interventions - Conclusões de intervenções anteriores
+:
+
+	:page = 8(não tem campos obrigatórios)
+		owner_preserve - Preservação Dono da Obra
+		owner_conserve - Conservação Dono da Obra
+		owner_restaure - Restauro Dono da Obra
+		specific_aspects - Aspetos específicos - Dono da Obra
+		prop_preserve - Preservação Proposta
+		prop_conserve - Conservação Proposta
+		prop_restaure - Restauro Proposta
+		support_proposal - Estrutura Proposta
+		support_resources - Recursos Estrutura
+		surface_proposal - Superfície Proposta
+		surface_resources - Recursos Superfície
+		elements_proposal - Elementos Acessórios Proposta
+		elements_resources - Recursos Elementos Acessórios
+		observations - observações da proposta
+		proposal_date - Data da Informação da Proposta
+		acceptation_date - Data da Aceitação da Proposta
+:
+	
+	:page = 9(não tem campos obrigatórios)
+		support_intervention - Estrutura da intervenção
+		support_resources_intervention - Recursos da estrutura
+		surface_intervention - Superfície da intervenção
+		surface_resources_intervention - Recursos da estrutura
+		elements_intervention - Elementos Acessórios da intervenção
+		elements_resources_intervention - Recursos dos Elementos Acessórios
+		observations_intervention - Observações da intervenção
+				
+	
+
 ### devolve:
 ##### se não tiver autenticado:
 	{
@@ -586,43 +777,146 @@
 	        "datasheets": [
 	            {
 	                "id": 1,
-	                "object_designation": "Movel",
-	                "CEARC_process": "123",
-	                "CEARC_process_date": null,
-	                "CEARC_entry_date": null,
-	                "LCRM_process": null,
-	                "LCRM_process_date": null,
-	                "LCRM_entry_date": null,
-	                "coordinator": 1,
-	                "last_modified_user": 1,
-	                "last_modified_date": "2019-05-13T00:42:53.000Z",
-	                "object_created_date": "2019-04-29T23:10:58.000Z",
-	                "super_category": 1,
-	                "category": 4,
-	                "sub_category": 10
+	                "object_designation": "Movel"
 	            },
 	            {
 	                "id": 2,
-	                "object_designation": "sddfdfgsdf",
-	                "CEARC_process": "1234",
-	                "CEARC_process_date": "2019-02-13T00:00:00.000Z",
-	                "CEARC_entry_date": "2018-12-12T00:00:00.000Z",
-	                "LCRM_process": "455677686",
-	                "LCRM_process_date": "2019-03-31T23:00:00.000Z",
-	                "LCRM_entry_date": "2019-04-02T23:00:00.000Z",
-	                "coordinator": 1,
-	                "last_modified_user": 1,
-	                "last_modified_date": "2019-05-11T16:20:30.000Z",
-	                "object_created_date": "2019-04-29T23:10:58.000Z",
-	                "super_category": 1,
-	                "category": 1,
-	                "sub_category": 1
+	                "object_designation": "sddfdfgsdf"
 	            }
 	        ]
 	    }
 	}
 
 	
+------------
+## GET /api/datasheet/:id
+
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	search - palavra utilizada na pesquisa de fichas técnicas por nome
+### devolve:
+##### se não tiver autenticado:
+	{
+		   "error": 2,
+		   "message": "Por favor efectue autenticação",
+		   "res": {}
+	 }
+##### se ocorrer um erro:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro na aquisição do objeto, por favor tente novamente",
+	   "res": {}
+	}
+##### se for listado com sucesso:
+			{
+    "error": 0,
+    "message": "Objeto",
+    "res": {
+        "datasheet": {
+            "id": 1,
+            "object_designation": "Movel",
+            "CEARC_process": "123",
+            "CEARC_process_date": "2018-04-30T23:00:00.000Z",
+            "CEARC_entry_date": "2019-04-30T23:00:00.000Z",
+            "LCRM_process": "123",
+            "LCRM_process_date": "2018-04-30T23:00:00.000Z",
+            "LCRM_entry_date": "2019-04-30T23:00:00.000Z",
+            "coordinator": 3,
+            "last_modified_user": 1,
+            "last_modified_date": "2019-06-05T22:03:46.000Z",
+            "object_created_date": "2019-04-29T23:10:58.000Z",
+            "super_category": 3,
+            "category": 12,
+            "sub_category": 1,
+            "dimensions": "123",
+            "other_dimensions": "123",
+            "tipology": "123123",
+            "site": "213",
+            "object_owner": null,
+            "owner": null,
+            "patron": null,
+            "object_is_a_set": 1,
+            "set_type": "test",
+            "set_elements": null,
+            "set_materials": "sangue, suor e lágrimas\n",
+            "set_inscriptions": "test2",
+            "set_mount": " test3",
+            "set_build": "test4",
+            "classification": "test5",
+            "period": 1,
+            "quality": 2,
+            "style": null,
+            "small_description": "test12",
+            "analogies": "test13",
+            "conclusions": "test14",
+            "author": "test15",
+            "dating": null,
+            "origin": "test16",
+            "materials_structure": "test6",
+            "materials_surface": "test7",
+            "materials_elementsAccessories": "test8",
+            "techniques_structure": "test9",
+            "techniques_surface": "test10",
+            "techniques_elementsAccessories": "test11",
+            "site_description": "test1266",
+            "cold_temp": "test13",
+            "hot_temp": "test14",
+            "cold_humidity": "test15",
+            "hot_humidity": "test16",
+            "cold_start": 1,
+            "cold_end": 2,
+            "hot_start": 3,
+            "hot_end": 4,
+            "lightning_type_natural": "test17",
+            "lightning_origin_artificial": "test18",
+            "artificial_lux": "test19",
+            "natural_lux": "test20",
+            "artificial_uv": "test21",
+            "natural_uv": "test22",
+            "artificial_real_uv": "test23",
+            "natural_real_uv": "test24",
+            "poluting_agents": "test25",
+            "poluting_sources": "test26",
+            "poluting_results": "test27",
+            "env_conclusions": "test28",
+            "support_deterioration": "test29",
+            "surface_deterioration": "test30",
+            "elements_deterioration": "test31",
+            "support_diagnostic": "test32",
+            "surface_diagnostic": "test33",
+            "elements_diagnostic": "test34",
+            "conclusions_conservation": "test35",
+            "support": "test36",
+            "surface": "test37",
+            "elements": "teste38",
+            "conclusions_previous_interventions": "test39",
+            "owner_preserve": 1,
+            "owner_conserve": 1,
+            "owner_restaure": 0,
+            "specific_aspects": "test40",
+            "prop_preserve": 0,
+            "prop_conserve": 0,
+            "prop_restaure": 0,
+            "support_proposal": "test44",
+            "support_resources": "test45",
+            "surface_proposal": null,
+            "surface_resources": "test46",
+            "elements_proposal": null,
+            "elements_resources": "test48",
+            "observations": "test49",
+            "proposal_date": "2018-06-11T23:00:00.000Z",
+            "acceptation_date": "2018-11-14T00:00:00.000Z",
+            "support_intervention": "test50",
+            "support_resources_intervention": "test51",
+            "surface_intervention": "test52",
+            "surface_resources_intervention": "test53",
+            "elements_intervention": "test54",
+            "elements_resources_intervention": "test55",
+            "observations_intervention": "test56"
+        }
+    }
+}	
 ------------
 ## GET /api/datasheet/super_categories/list:
 
