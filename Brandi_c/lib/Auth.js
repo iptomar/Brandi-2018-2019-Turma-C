@@ -508,7 +508,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
         let u = thiss.getUserFromSession(req);
         //verifica se ja existe o utilizador autenticado
         if (u) {
-            if (u.type_user === infoDB.ADMIN_TYPE_NAME || !req.body.id || req.body.id === u.id+"") {
+            if (u.type_user === infoDB.ADMIN_TYPE_NAME || !req.body.id || req.body.id === u.id) {
                 result.error = 2;
                 result.message = "Insira todos os campos obrigatórios";
                 if (req.body.fullname && req.body.address && req.body.cellphone && req.body.title && req.body.qualifications) {
@@ -516,7 +516,12 @@ exports.appendToExpress = function (app, _db, _prefix) {
                     //indica que nãoi foi autenticado até verificar
                     result.message = "Ocorreu um erro na alteração do utilizador, verifique se todos os campos săo válidos";
                     let id = (u.type_user === infoDB.ADMIN_TYPE_NAME ? (!req.body.id ? u.id : req.body.id) : u.id) //se for admin pode ser o id que vem do cliente ou o id do proprio utilizador, se não for, só pode ser o id do próprio utilizador
-                    let u_type = (u.type_user === infoDB.ADMIN_TYPE_NAME ? (!req.body.usertypeid ? u.id_type_user : req.body.usertypeid) : u.id_type_user); //se for admin, pode escolher o tipo de utilizador, se não mé obrigatóriamente o tipo de utilizador que estava
+                    let u_type = (u.type_user === infoDB.ADMIN_TYPE_NAME ? (!req.body.usertypeid ? u.id_type_user : (u.id === req.body.id ? u.id_type_user : req.body.usertypeid)) : u.id_type_user); //se for admin, pode escolher o tipo de utilizador, se não mé obrigatóriamente o tipo de utilizador que estava
+                    console.log(u.id);
+                    console.log(req.body.id);
+                    console.log(u_type);
+                    console.log(req.body.usertypeid);
+                    console.log(u.id_type_user);
                     //verifica os dados de autenticação
                     let resDb = await thiss.changeUser(db,
                         id,
