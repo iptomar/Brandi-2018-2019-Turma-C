@@ -379,6 +379,7 @@
 	usertypeid - id do tipo de utilizador referente aos tipos de utilizador (opcional e só valido para o administrador)
 	title - titulo
 	qualifications - qualificações
+	birthday - data de nascimento(formato: yyyy-mm-dd)
 ### devolve:
 ##### se com sucesso
 	{
@@ -777,11 +778,13 @@
 	        "datasheets": [
 	            {
 	                "id": 1,
-	                "object_designation": "Movel"
+	                "object_designation": "Movel",
+	                "image": "1.png"
 	            },
 	            {
 	                "id": 2,
-	                "object_designation": "sddfdfgsdf"
+	                "object_designation": "sddfdfgsdf",
+	                "image": "1.png"
 	            }
 	        ]
 	    }
@@ -913,7 +916,8 @@
             "surface_resources_intervention": "test53",
             "elements_intervention": "test54",
             "elements_resources_intervention": "test55",
-            "observations_intervention": "test56"
+            "observations_intervention": "test56",
+            "images": ["1.png","2.png","3.png","4.png"]
         }
     }
 }	
