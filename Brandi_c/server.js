@@ -1,10 +1,10 @@
 const express = require('express');
 const bodyParser = require("body-parser");
-const formidable = require('formidable');
 const session = require('express-session');
 const fs = require('fs');
 const path = require("path");
 const infoDB = require('./lib/InfoDB.js');
+const global = require("./lib/Global.js");
 
 //const person = require('./lib/Person.js');//para eliminar
 //----------------------------------- LIBS -----------------------------------
@@ -15,11 +15,16 @@ const datasheet = require('./lib/DataSheet');
 
 //----------------------------------- END LIBS -----------------------------------
 //porta do servidor
-const PORT = 8081;
+const PORT = 8080;
 const PREFIX_ROUTE = '/api';
 //diretória de ficheiros html estáticos
-const PUBLIC_DIR = __dirname + path.sep + 'html' + path.sep;
-console.log("STATIC HTML PATH=\"" + PUBLIC_DIR + "\"");
+console.log("STATIC HTML PATH=\"" + global.PUBLIC_DIR + "\"");
+
+console.log("create images folder if they dont exist");
+
+if (!fs.existsSync(global.DATASHEET_IMAGES_FOLDER)) {
+    fs.mkdirSync(global.DATASHEET_IMAGES_FOLDER);
+}
 
 //inicializaçăo da pool da base de dados
 const db = new database.Database(infoDB.HOST, infoDB.PORT, infoDB.USER, infoDB.PASSWORD, infoDB.DB);
@@ -61,7 +66,7 @@ db.createAllTables()
     //transforma o pedido em um pedido com .html(caso ja nao contenha este)
     app.use(function (req, res, next) {
         if (req.path.indexOf('.') === -1) {
-            var file = PUBLIC_DIR + req.path + '.html';
+            var file = global.PUBLIC_DIR + req.path + '.html';
             fs.exists(file, function (exists) {
                 if (exists)
                     req.url += '.html';
@@ -72,7 +77,9 @@ db.createAllTables()
             next();
     });
     //chama a página estática
-    app.use(express.static(PUBLIC_DIR));
+    app.use(express.static(global.PUBLIC_DIR));
+    //chama a página estática
+    app.use(express.static(global.DATASHEET_IMAGES_FOLDER));
     //app.post('/login', function (req, res) {
     //    var form = new formidable.IncomingForm();
 

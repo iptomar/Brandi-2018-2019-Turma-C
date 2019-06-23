@@ -57,8 +57,6 @@ exports.CREATE_TBL_OBJECT = "CREATE TABLE IF NOT EXISTS " + this.TBL_OBJECT + "(
 
 exports.CREATE_TBL_SOURCES = "CREATE TABLE IF NOT EXISTS " + this.TBL_SOURCES + "(id INT(11) NOT NULL AUTO_INCREMENT, object_id INT(11) NOT NULL, source_type_set INT(1), source TEXT, source_type VARCHAR(50), source_site VARCHAR(50), source_quota VARCHAR(50), PRIMARY KEY (id), FOREIGN KEY fk_sources_object(object_id) REFERENCES " + this.TBL_OBJECT + "(id))";
 
-exports.CREATE_TBL_STYLE = "CREATE TABLE IF NOT EXISTS " + this.TBL_STYLE + "(id INT(11) NOT NULL AUTO_INCREMENT, style VARCHAR(100) NOT NULL, PRIMARY KEY (id))";
-
 exports.CREATE_TBL_TEAM = "CREATE TABLE IF NOT EXISTS " + this.TBL_TEAM + "(id INT(11) NOT NULL AUTO_INCREMENT, object_id INT(11) NOT NULL, user_id INT(11) NOT NULL, PRIMARY KEY (id), FOREIGN KEY fk_team_object(object_id) REFERENCES " + this.TBL_OBJECT + "(id), FOREIGN KEY fk_team_user(user_id) REFERENCES " + this.TBL_USERS + "(id))";
 
 exports.CREATE_TBL_TECHNICS = "CREATE TABLE IF NOT EXISTS " + this.TBL_TECHNICS + "(id INT(11) NOT NULL AUTO_INCREMENT, object_id INT(11) NOT NULL, technics_type_id INT(11) NOT NULL, technics_used_id INT(11) NOT NULL, PRIMARY KEY (id), FOREIGN KEY fk_technics_object(object_id) REFERENCES " + this.TBL_OBJECT + "(id), FOREIGN KEY fk_tech_type(technics_type_id) REFERENCES " + this.TBL_MATERIAL_TYPES + "(id), FOREIGN KEY fk_tech_used(technics_used_id) REFERENCES  " + this.TBL_TECHNICS_USED + "(id))";
