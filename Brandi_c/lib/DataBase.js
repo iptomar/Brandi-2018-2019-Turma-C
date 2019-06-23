@@ -27,7 +27,7 @@ class Database {
      */
     async createAllTables() {
         //tentamos criar todas as tabelas
-        for(let i = 0; i < infoDB.CREATE_OREDER.length; i++) {
+        for (let i = 0; i < infoDB.CREATE_OREDER.length; i++) {
             //tentamos criar a tabela
             let res = await this.doQuery(infoDB.CREATE_OREDER[i], []);
             //cano haja um erro
@@ -35,7 +35,7 @@ class Database {
                 //n�o continuamos a cria��o de tabelas devido a que estas possam estar interligadas
                 return Promise.reject(res.res);
             }
-        };
+        }
         return Promise.resolve();
     }
 
