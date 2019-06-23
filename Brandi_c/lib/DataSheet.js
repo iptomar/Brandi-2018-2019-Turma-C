@@ -3,7 +3,10 @@ const user = require('./User.js');
 const infoDB = require('./InfoDB.js');
 const auth = require('./Auth.js');
 const q_DataSheet = require('./queries/q_Datasheet.js');
+const path = require("path");
+const fs = require("fs");
 const global = require('./Global');
+const formidable = require('formidable');
 
 const ROUTE_DATASHEET_PREFIX = "/datasheet";
 const ROUTE_CATEGORIES_PREFIX = ROUTE_DATASHEET_PREFIX + "/categories";
@@ -510,6 +513,76 @@ exports.appendToExpress = function (app, _db, _prefix) {
     let thiss = this;
     let db = _db;
     let prefix = _prefix;
+    
+    app.post(prefix + ROUTE_DATASHEET_PREFIX + '/delete_image/:id/:image', async function (req, res) {
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se a imagem existe
+            result.error = 1;
+            result.message = "A imagem não existe";
+            let img = global.DATASHEET_IMAGES_FOLDER + path.sep + req.params.id + path.sep + req.params.image;
+            if (fs.existsSync(img)) {
+                fs.unlinkSync(img);
+                result.error = 0;
+                result.message = "Imagem apagada";
+            }
+        }
+        res.json(result);
+    });
+    app.get(prefix + ROUTE_DATASHEET_PREFIX + '/get_image/:id/:image', async function (req, res) {
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            let img = global.DATASHEET_IMAGES_FOLDER + path.sep + req.params.id + path.sep + req.params.image;
+            if (!fs.existsSync(img)) {
+                img = global.DATASHEET_IMAGES_FOLDER + path.sep + "no_photo.jpg";
+            }
+            var stat = fs.statSync(img);
+            res.writeHead(200, {
+                'Content-Type': 'image/*',
+                'Content-Length': stat.size
+            });
+            var readStream = fs.createReadStream(img);
+            // We replaced all the event handlers with a simple call to readStream.pipe()
+            readStream.pipe(res);
+        } else res.status(403).send();
+    });
+
+    app.post(prefix + ROUTE_DATASHEET_PREFIX + '/send_image/:id', async function (req, res) {
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 1;
+            result.message = "Insira todos os campos obrigatórios";
+            await new Promise(function (resolve, reject) {
+                new formidable.IncomingForm().parse(req, function (err, fields, files) {
+                    if (err) {
+                        reject();
+                    }
+                    if (files.length === 0) reject();
+                }).on('file', (name, file) => {
+                    //create folder for 
+                    var dir = global.DATASHEET_IMAGES_FOLDER + path.sep + req.params.id;
+                    if (!fs.existsSync(dir)) {
+                        fs.mkdirSync(dir);
+                    }
+                    let idfile = global.getLastIdImage(req.params.id) + 1;
+                    let file_ext = file.name.split('.').pop();
+                    fs.renameSync(file.path, dir + path.sep + idfile + "." + file_ext);
+                    result.res.file = idfile + "." + file_ext;
+                    result.error = 0;
+                    result.message = "Imagem enviada com sucesso";
+                    resolve();
+                    });
+            }).catch(() => {});
+        }
+        res.json(result);
+    });
+
     app.post(prefix + ROUTE_DATASHEET_PREFIX + '/create', async function (req, res) {
         let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
         //verifica se utilizador está autenticado
@@ -768,6 +841,9 @@ exports.appendToExpress = function (app, _db, _prefix) {
                 result.error = 0;
                 result.message = "Lista de fichas técnicas";
                 result.res.datasheets = resultList.list;
+                result.res.datasheets.forEach((ds) => {
+                    ds.image = global.getFirstImage(ds.id);
+                });
             }
         }
         res.json(result);
@@ -1119,6 +1195,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
                 result.error = 0;
                 result.message = "Objeto";
                 result.res.datasheet = resultDb.datasheet;
+                result.res.datasheet.images = global.getAllImagesFromDatasheet(result.res.datasheet.id);
             }
         }
         res.json(result);

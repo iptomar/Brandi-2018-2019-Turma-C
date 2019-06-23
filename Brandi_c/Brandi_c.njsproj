@@ -36,6 +36,7 @@
     <Compile Include="lib\DataSheet.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="lib\Global.js" />
     <Compile Include="lib\InfoDB.js">
       <SubType>Code</SubType>
     </Compile>
