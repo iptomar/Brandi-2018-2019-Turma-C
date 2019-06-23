@@ -1,7 +1,7 @@
 import { Component, OnInit, ɵConsole, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Datasheet, DatasheetService } from 'src/app/services/datasheet/datasheet.service';
 //import { Type } from '@angular/compiler';
-import { Global } from 'src/app/Global';
+import { Global, ReceivedData } from 'src/app/Global';
 import { User } from 'src/app/services/auth/auth.service';
 import { UsersService, UserNames } from 'src/app/services/users/users.service';
 import { DatasheetPage } from '../../datasheet-edit.component';
@@ -17,7 +17,7 @@ import { CategoriesService, SuperCategories, Categories, SubCategories } from 's
 export class DatasheetPage1Component implements OnInit, DatasheetPage, OnDestroy {
   @ViewChild("categorySelect") categorySelect : ElementRef;
   @ViewChild("subcategorySelect") subcategorySelect : ElementRef;
-
+  
   public _datasheet: Datasheet;
   public _isEditing: boolean;
   public _users: UserNames[];
@@ -29,6 +29,8 @@ export class DatasheetPage1Component implements OnInit, DatasheetPage, OnDestroy
   public id_sub_category$  : Subscription;
   public id_category$  : Subscription;
   public firstload:boolean;
+  public messageEditSuccess : string;
+  public messageEditErr : string;
 
   constructor(public users: UsersService,public categoriesService : CategoriesService, public datasheetService : DatasheetService, public global : Global) {
     this._isEditing = false;
@@ -39,11 +41,13 @@ export class DatasheetPage1Component implements OnInit, DatasheetPage, OnDestroy
     this.firstload=true;
     this.super_category= new BehaviorSubject<number>(0);
     this.category= new BehaviorSubject<number>(0);
+    this.messageEditSuccess="";
+    this.messageEditErr="";
   }
 
   datasheet(datasheet: Datasheet): void {
     if(datasheet == null) return;
-    this._datasheet = datasheet;
+    this._datasheet = datasheet; 
     this.firstload=true;
     this.super_category.next(this._datasheet.super_category);
     this.category.next(this._datasheet.category);
@@ -96,4 +100,57 @@ export class DatasheetPage1Component implements OnInit, DatasheetPage, OnDestroy
     this.id_sub_category$.unsubscribe();
   }
 
+  public deleteImage(i : number) {
+    if(!confirm("Tem a certeza que pretende eliminar a imagem?")) return;
+    const is = i;
+    this.messageEditSuccess="";
+    this.messageEditErr="";
+    this.datasheetService.deleteImage(this._datasheet.id, this._datasheet.images[is]).subscribe((data : ReceivedData) => {
+      if(!data.error) {
+        this._datasheet.images.splice(is,1);
+        this.messageEditSuccess=data.message;
+        setTimeout(() => {
+          this.messageEditErr = "";
+          this.messageEditSuccess = "";
+        }, 3 * 1000); // espera 3 segundos antes de sair da pagina de edição
+      }else {
+        this.messageEditErr=data.message;
+      }
+    }, take(1));
+  }
+
+
+  private isFileImage(file : File) {
+    return file && file['type'].split('/')[0] === 'image';
+  }
+
+  public sendimage(event) {
+    event.preventDefault();
+    this.messageEditSuccess="";
+    this.messageEditErr="";
+    if(this._datasheet != null) {
+      console.log(event.target.image.files[0]);
+      if(!this.isFileImage(event.target.image.files[0])) {
+        this.messageEditErr="O ficheiro enviado não é uma imagem";
+      } else {
+        let f = new FormData();
+        f.append('file', event.target.image.files[0]);
+        this.datasheetService.sendImageDatasheet(this._datasheet.id, f).subscribe((data : ReceivedData) => {
+          if(!data.error) {
+            if(this._datasheet.images == null) this._datasheet.images = [];
+            this._datasheet.images.push(data.res.file); 
+            this.messageEditSuccess=data.message;
+            event.target.image.value="";
+            setTimeout(() => {
+              this.messageEditErr = "";
+              this.messageEditSuccess = "";
+            }, 3 * 1000); // espera 3 segundos antes de sair da pagina de edição
+          }else {
+            this.messageEditErr=data.message;
+          }
+        }, take(1));
+      }
+    }
+  }
+  
 }

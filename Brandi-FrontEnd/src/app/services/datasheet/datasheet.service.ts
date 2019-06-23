@@ -9,6 +9,7 @@ import { DatePipe } from "@angular/common";
 export interface Datasheet {
   //dados folha 1
   id: number;
+  images?: Array<string>;
   object_designation: string;
   CEARC_process: string;
   CEARC_process_date: Date;
@@ -135,6 +136,7 @@ export interface Datasheet {
 
 export interface DatasheetList {
   id: number;
+  image: string;
   object_designation: string;
 }
 
@@ -145,6 +147,8 @@ export class DatasheetService {
   public static DATA = "datasheet"; // caminho para lista de fichas tecnicas
   public static DATA_LIST = "datasheet/list"; // caminho para lista de fichas tecnicas
   public static DATA_CREATE = "datasheet/create";
+  public static SEND_IMAGE = "datasheet/send_image";
+  public static DELETE_IMAGE = "datasheet/delete_image";
   public static DATA_EDIT = "datasheet/edit";
 
   constructor(
@@ -152,6 +156,32 @@ export class DatasheetService {
     private auth: AuthService,
     private datePipe: DatePipe
   ) {}
+
+  public deleteImage(id : number, image : string): Observable<ReceivedData> {
+    return this.http
+      .post(Global.HOST_PREFIX + DatasheetService.DELETE_IMAGE + "/" + id + "/" + image ,{})
+      .pipe(
+        map((data: ReceivedData) => {
+          if (data.error === 1) {
+            this.auth.forceLogout();
+          }
+          return data;
+        })
+      );
+  }
+
+  public sendImageDatasheet(id : number, formData : FormData): Observable<ReceivedData> {
+    return this.http
+      .post(Global.HOST_PREFIX + DatasheetService.SEND_IMAGE + "/" + id, formData)
+      .pipe(
+        map((data: ReceivedData) => {
+          if (data.error === 2) {
+            this.auth.forceLogout();
+          }
+          return data;
+        })
+      );
+  }
 
   public getDatasheets(pesquisa: string): Observable<DatasheetList[]> {
     return this.http

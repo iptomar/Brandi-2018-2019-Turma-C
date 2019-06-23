@@ -1,11 +1,14 @@
-<div id="editDatasheetCarousel" class="carousel slide m-auto" data-ride="carousel">
+<div id="editDatasheetCarousel" class="carousel slide m-auto">
   <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="../../assets/images/background_texture.jpg">
+    <div class="carousel-item" *ngFor="let image of _datasheet?.images; let i = index;" [class.active]="i === 0">
+      <div class="close-image" (click)="deleteImage(i)" *ngIf="_isEditing">
+        <i class="fa fa-times-circle"></i>
+      </div>
+      <img src="/api/datasheet/get_image/{{_datasheet.id}}/{{image}}">
     </div>
-    <div class="carousel-item">
-      <img src="../../assets/images/background_texture.jpg">
-    </div>
+    <div class="carousel-item active" *ngIf="_datasheet == null || _datasheet?.images == null || _datasheet?.images.length === 0">
+        <img src="/api/datasheet/get_image/-1/-1">
+      </div>
   </div>
   <a class="carousel-control-prev" href="#editDatasheetCarousel" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -17,7 +20,31 @@
   </a>
 </div>
 
+
+<div *ngIf='messageEditErr !== ""' class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+  <strong>{{messageEditErr}}</strong>
+  <button type="button" class="close" aria-label="Close" (click)='messageEditErr=""'>
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!--mensage de alerta acaba aqui-->
+
+<div *ngIf='messageEditSuccess !== ""' class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+  <strong>{{messageEditSuccess}}</strong>
+  <button type="button" class="close" aria-label="Close" (click)='messageEditSuccess=""'>
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 <!--Inicio de campos-->
+<form (submit)="sendimage($event)" *ngIf="_isEditing">
+    <div class="form-group" (submit)="sendimage($event)">
+      <label for="design">Adicionar imagem</label>
+      <div class="row ml-0 mr-0">
+        <input name="image" type="file" required class="form-control col-md-10" placeholder="Imagem do objecto" />
+        <button type="submit" class="btn btn-primary col-md-2"><i class="fa fa-arrow-circle-up"></i></button>
+      </div>
+  </div>
+</form>
 <div class="form-group">
   <label for="design">Designação</label>
   <input name="design" id="design" type="text" class="form-control" placeholder="Designação de objecto" [readonly]="!_isEditing"
