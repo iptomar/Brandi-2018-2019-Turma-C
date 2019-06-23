@@ -1455,3 +1455,76 @@
 	    "message": "Super Categoria eliminada com sucesso",
 	    "res": {}
 	}
+
+------------
+## POST/api/datasheet/delete_image/:id/:image :
+	:id -> id do objeto
+	:image -> nome da imagem
+
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	nada
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 2,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se não existir a imagem:
+	{
+	   "error": 1,
+	   "message": "A imagem não existe",
+	   "res": {}
+	}
+##### se for eliminado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Imagem apagada",
+	    "res": {}
+	}
+
+------------
+## POST/api/datasheet/get_image/:id/:image :
+	:id -> id do objeto
+	:image -> nome da imagem
+
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	nada
+### devolve:
+##### se não estiver autenticado:
+	estado 401(Unauthorized)
+##### se não existir a imagem:
+	devolve a imagem por defeito
+##### se a imagem existir
+	devovle a imagem pedida
+
+------------
+## POST/api/datasheet/send_image/:id :
+	:id -> id do objeto
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	nada
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 2,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se não existir a imagem:
+	{
+	   "error": 1,
+	   "message": "Insira todos os campos obrigatórios",
+	   "res": {}
+	}
+##### se for eliminado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Imagem enviada com sucesso",
+	    "res": {file: "1.png"}
+	}
