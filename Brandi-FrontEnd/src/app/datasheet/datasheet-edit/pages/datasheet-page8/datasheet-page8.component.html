@@ -114,7 +114,7 @@
   </div>
   <div class="form-group col-lg-6">
       <label for="proposal_date" class="col-lg-6">Data da Informação da Proposta</label>
-      <input type="date" id="proposal_date" class="form-control col-lg-6 text-center" [readonly]="!_isEditing" [value]="_datasheet?.proposal_date"  name="proposal_date" id="proposal_date">
+      <input type="date"  class="form-control col-lg-6 text-center" [readonly]="!_isEditing" [value]="_datasheet?.proposal_date|date:'yyyy-MM-dd'"  name="proposal_date" id="proposal_date">
     </div>
 </form>
 <form class="form-inline row">
@@ -124,7 +124,7 @@
   </div>
   <div class="form-group col-lg-6">
       <label for="acceptation_date" class="col-lg-6">Data da Aceitação da Proposta</label>
-      <input type="date" id="acceptation_date" class="form-control col-lg-6 text-center" [readonly]="!_isEditing" [value]="_datasheet?.acceptation_date"  name="acceptation_date" id="acceptation_date">
+      <input type="date" class="form-control col-lg-6 text-center" [readonly]="!_isEditing" [value]="_datasheet?.acceptation_date|date:'yyyy-MM-dd'"  name="acceptation_date" id="acceptation_date">
     </div>
 </form>
 <br />

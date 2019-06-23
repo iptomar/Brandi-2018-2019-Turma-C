@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatasheetPage } from '../../datasheet-edit.component';
 import { Datasheet } from 'src/app/services/datasheet/datasheet.service';
+import { Global, ReceivedData } from 'src/app/Global';
 
 @Component({
   selector: 'app-datasheet-page8',
@@ -31,8 +32,8 @@ export class DatasheetPage8Component implements OnInit, DatasheetPage {
   datasheet.elements_proposal= event.target.elements_proposal.value;
   datasheet.elements_resources= event.target.elements_resources.value;
   datasheet.observations= event.target.observations.value;
-  datasheet.proposal_date= event.target.proposal_date.value;
-  datasheet.acceptation_date= event.target.acceptation_date.value;
+  datasheet.proposal_date= Global.stringToDate(event.target.proposal_date.value);
+  datasheet.acceptation_date= Global.stringToDate(event.target.acceptation_date.value);
   
 
 
