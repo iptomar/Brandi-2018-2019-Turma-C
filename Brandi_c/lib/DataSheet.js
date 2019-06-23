@@ -654,7 +654,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
             var readStream = fs.createReadStream(img);
             // We replaced all the event handlers with a simple call to readStream.pipe()
             readStream.pipe(res);
-        } else res.status(403).send();
+        } else res.status(401).send();
     });
 
     app.post(prefix + ROUTE_DATASHEET_PREFIX + '/send_image/:id', async function (req, res) {
