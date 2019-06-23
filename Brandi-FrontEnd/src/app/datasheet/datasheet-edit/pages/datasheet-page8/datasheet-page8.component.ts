@@ -15,14 +15,15 @@ export class DatasheetPage8Component implements OnInit, DatasheetPage {
   /**Metodo que vai ser executado para cada child do create edit page 1, ... ,page 10*/
   getForm(event: any): Datasheet {
     
+   
   let datasheet: any = Object.assign({}, this._datasheet); // clona os dados
-  datasheet.owner_preserve= event.target.owner_preserve.value;
-  datasheet.owner_conserve= event.target.owner_conserve.value;
-  datasheet.owner_restaure= event.target.owner_restaure.value;
+  datasheet.owner_preserve= (<HTMLInputElement>event.target.owner_preserve).checked ? 1: 0;
+  datasheet.owner_conserve= (<HTMLInputElement>event.target.owner_conserve).checked ? 1: 0;
+  datasheet.owner_restaure= (<HTMLInputElement>event.target.owner_restaure).checked ? 1: 0;
   datasheet.specific_aspects= event.target.specific_aspects.value;
-  datasheet.prop_preserve= event.target.prop_preserve.value;
-  datasheet.prop_conserve= event.target.prop_conserve.value;
-  datasheet.prop_restaure= event.target.prop_restaure.value;
+  datasheet.prop_preserve = (<HTMLInputElement>event.target.prop_preserve).checked ? 1: 0;
+  datasheet.prop_conserve = (<HTMLInputElement>event.target.prop_conserve).checked ? 1: 0
+  datasheet.prop_restaure = (<HTMLInputElement>event.target.prop_conserve).checked ? 1: 0
   datasheet.support_proposal= event.target.support_proposal.value;
   datasheet.support_resources= event.target.support_resources.value;
   datasheet.surface_proposal= event.target.surface_proposal.value;
