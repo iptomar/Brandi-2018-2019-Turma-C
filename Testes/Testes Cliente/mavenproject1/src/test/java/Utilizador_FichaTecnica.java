@@ -16,7 +16,7 @@ import org.openqa.selenium.support.ui.Select;
 
 /**
  *
- * @author LittleChinese
+ * @author Ricardo
  */
 public class Utilizador_FichaTecnica {
 

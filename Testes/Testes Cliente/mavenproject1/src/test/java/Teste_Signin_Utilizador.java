@@ -26,20 +26,5 @@ public class Teste_Signin_Utilizador {
     pass.sendKeys("asd");
     driver.findElement(By.id("butLogin")).click();
     
-   // driver.close();
   }
 }
-/*
-  @Test
-  public static void signUp() throws Exception{
-      WebDriver driver = new ChromeDriver();
-      driver.get("http://brandic.devll.eu:61080/index");
-             driver.findElement(By.id("signupBut")).click();
- 
-     //Thread.sleep(3000);
-   
-      
-  }
-           
-}
-*/

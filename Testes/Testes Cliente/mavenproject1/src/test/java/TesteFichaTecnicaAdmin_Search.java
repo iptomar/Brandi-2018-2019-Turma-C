@@ -27,8 +27,8 @@ public class TesteFichaTecnicaAdmin_Search {
         driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/a")).click();
         Thread.sleep(1000);
 
-        driver.findElement(By.name("email")).sendKeys("asd@web.com");
-        driver.findElement(By.name("password")).sendKeys("asd");
+        driver.findElement(By.name("email")).sendKeys("admin@aadmin.com");
+        driver.findElement(By.name("password")).sendKeys("admin");
 
         driver.findElement(By.xpath("/html/body/app-root/div/app-login/div/div/form/button")).click();
         Thread.sleep(1000);
@@ -55,21 +55,5 @@ public class TesteFichaTecnicaAdmin_Search {
         Thread.sleep(1000);
      
     }
-    
-    /*
-          @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-        WebDriver driver = new ChromeDriver();
-        driver.get("http://brandic.devll.eu:61080/#/datasheet/create");
-        //Designação do objeto
-        WebElement searchBox = driver.findElement(By.name("searchBox"));
-        searchBox.sendKeys("Ola Mundo");
-        searchBox.sendKeys(Keys.ENTER);
-        
-        WebElement divInfo = driver.findElement(By.className("card-title"));
-        divInfo.click();
-        // driver.close();
-    }
-    */
 
 }
