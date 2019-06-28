@@ -75,3 +75,13 @@ exports.DELETE_SUPER_CATEGORY = "DELETE FROM " + infoDB.TBL_SUPERCATEGORIES + " 
 exports.DELETE_CATEGORY = "DELETE FROM " + infoDB.TBL_CATEGORIES + " WHERE id=?";
 //Query DE listagem DE SUB CATEGORIAS
 exports.DELETE_SUB_CATEGORY = "DELETE FROM " + infoDB.TBL_SUBCATEGORIES + " WHERE id=?";
+
+
+exports.CREATE_CONTACT = "INSERT INTO " + infoDB.TBL_CONTACTS + "(full_name, address, email, phone) VALUES(?,?,?,?)";
+exports.DELETE_CONTACT = "DELETE FROM " + infoDB.TBL_CONTACTS + " WHERE id=?";
+exports.GET_CONTACT = "SELECT id, full_name, address, email, phone FROM " + infoDB.TBL_CONTACTS + " WHERE id=? LIMIT 1";
+exports.LIST_CONTACTS = "SELECT id, full_name, address, email, phone FROM " + infoDB.TBL_CONTACTS + " WHERE full_name like ? OR address like ? OR email like ? OR phone like ?";
+exports.SEARCH_CONTACT_1 = "SELECT id, full_name, address, email, phone FROM " + infoDB.TBL_CONTACTS + " WHERE full_name = ? OR email = ? OR phone = ? LIMIT 1";
+exports.SEARCH_CONTACT_CHANGE_1 = "SELECT id, full_name, address, email, phone FROM " + infoDB.TBL_CONTACTS + " WHERE (full_name = ? OR email = ? OR phone = ?) && id != ? LIMIT 1";
+exports.CHNAGE_CONTACT = "UPDATE " + infoDB.TBL_CONTACTS + " SET full_name=?, address=?, email=?, phone=? WHERE id = ?";
+exports.CHECK_CONTACT_USUAGE = "SELECT id FROM " + infoDB.TBL_OBJECT + " WHERE owner = ? OR patron = ? OR object_owner = ? LIMIT 1";

@@ -13,6 +13,9 @@ const ROUTE_CATEGORIES_PREFIX = ROUTE_DATASHEET_PREFIX + "/categories";
 const ROUTE_SUPER_CATEGORIES_PREFIX = ROUTE_DATASHEET_PREFIX + "/super_categories";
 const ROUTE_SUB_CATEGORIES_PREFIX = ROUTE_DATASHEET_PREFIX + "/sub_categories";
 
+
+const ROUTE_CONTACTS_PREFIX = ROUTE_DATASHEET_PREFIX + "/contacts";
+
 /**
  * lista super categorias
  * @param {database.Database} db Class de ligação à base de dados
@@ -92,6 +95,131 @@ async function listSubCategories(db, id_category, search) {
     return result;
 }
 
+/**
+ * 
+ *
+ * cria um contacto
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {string} full_name nome da pessoa
+ * @param {string} address morada da pessoa
+ * @param {string} email email da pessoa
+ * @param {string} phone numero de telemovel da pessoa
+ * @returns {number} id do contacto ou -1 caso ocorra erro, -2 caso o email ja exista, -3 caso o contacto ja exista, -4 caso o nome ja exista
+ */
+async function createContact(db,full_name, address, email, phone) {
+    let result = -1;
+    //procura contacto se existe
+    let searchContact = await db.doQuery(q_DataSheet.SEARCH_CONTACT_1, [full_name, email, phone]);
+    if (!searchContact.error) {
+        if (searchContact.res.length === 0) {
+            //criação do novo contacto
+            let resultDb = await db.doQuery(q_DataSheet.CREATE_CONTACT, [full_name, address, email, phone]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.insertId;
+            }
+        } else {
+            if (searchContact.res[0].phone.toLowerCase() === phone.toLowerCase()) result = -3;
+            else if (searchContact.res[0].email.toLowerCase() === email.toLowerCase()) result = -2;
+            else if (searchContact.res[0].full_name.toLowerCase() === full_name.toLowerCase()) result = -4;
+        }
+    }
+    return result;
+}
+
+/**
+ * 
+ * altera um contacto
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id do contacto da pessoa
+ * @param {string} full_name nome da pessoa
+ * @param {string} address morada da pessoa
+ * @param {string} email email da pessoa
+ * @param {string} phone numero de telemovel da pessoa
+ * @returns {number} 0 se correr tudo como planeado ou -1 caso ocorra erro, -2 caso o email ja exista, -3 caso o contacto ja exista, -4 caso o nome ja exista
+ */
+async function changeContact(db, id, full_name, address, email, phone) {
+    let result = -1;
+    //procura contacto se existe
+    let searchContact = await db.doQuery(q_DataSheet.SEARCH_CONTACT_CHANGE_1, [full_name, email, phone, id]);
+    if (!searchContact.error) {
+        if (searchContact.res.length === 0) {
+            //altera contacto
+            let resultDb = await db.doQuery(q_DataSheet.CHNAGE_CONTACT, [full_name, address, email, phone, id]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.affectedRows > 0 ? 0 : -1;
+            }
+        } else {
+            if (searchContact.res[0].phone.toLowerCase() === phone.toLowerCase()) result = -3;
+            else if (searchContact.res[0].email.toLowerCase() === email.toLowerCase()) result = -2;
+            else if (searchContact.res[0].full_name.toLowerCase() === full_name.toLowerCase()) result = -4;
+        }
+    }
+    return result;
+}
+
+
+/**
+ * 
+ * elimina um contacto
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id do contacto da pessoa
+ * @returns {number} 0 se correr tudo como planeado ou -1 caso ocorra erro, -2 caso esteja a ser utilizado
+ */
+async function deleteContact(db, id) {
+    let result = -1;
+    //procura contacto se existe
+    let searchContact = await db.doQuery(q_DataSheet.CHECK_CONTACT_USUAGE, [id, id, id]);
+    if (!searchContact.error) {
+        if (searchContact.res.length === 0) {
+            //altera contacto
+            let resultDb = await db.doQuery(q_DataSheet.DELETE_CONTACT, [id]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.affectedRows > 0 ? 0 : -1;
+            }
+        } else {
+            result = -2;
+        }
+    }
+    return result;
+}
+
+/**
+ * 
+ * devolve um contacto
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id do contacto da pessoa
+ * @returns {JSON} {<contact>} ou null caso nao seja encontrado
+ */
+async function getContact(db, id) {
+    //altera contacto
+    let resultDb = await db.doQuery(q_DataSheet.GET_CONTACT, [id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error && resultDb.res.length > 0) {
+        return resultDb.res[0];
+    }
+    return null;
+}
+
+/**
+ * 
+ * lista contactos
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {string} search palavra pesquisa
+ * @returns {Array<Contacts>} [<contacts>]
+ */
+async function listContact(db, search) {
+    let s = "%" + search + "%";
+    //altera contacto
+    let resultDb = await db.doQuery(q_DataSheet.LIST_CONTACTS, [s, s, s, s]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        return resultDb.res;
+    }
+    return [];
+}
 
 /**
  * cria uma nova super categoria
@@ -1151,6 +1279,133 @@ exports.appendToExpress = function (app, _db, _prefix) {
         res.json(result);
     });
 
+    app.post(prefix + ROUTE_CONTACTS_PREFIX + '/create', async function (req, res) {
+        let result = { error: 6, message: "Por favor efectue autenticação", res: { } };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 5;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.full_name && req.body.address &&  req.body.email && req.body.phone ) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //tenta criar um novo objeto
+                let resultInsertId = await createContact(db, req.body.full_name, req.body.address, req.body.email, req.body.phone);
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Contacto criado com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId };
+                } else if (resultInsertId === -2) {
+                    result.error = 4;
+                    result.message = "Já existe um contacto com esse email";
+                } else if (resultInsertId === -3) {
+                    result.error = 3;
+                    result.message = "Já existe um contacto com esse contacto";
+                } else if (resultInsertId === -4) {
+                    result.error = 2;
+                    result.message = "Já existe um contacto com esse nome";
+                }
+            }
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_CONTACTS_PREFIX + '/change/:id', async function (req, res) {
+        let result = { error: 6, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 5;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.full_name && req.body.address && req.body.email && req.body.phone) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido ou o conacto indicado não existe";
+                //tenta criar um novo objeto
+                let resultInsertId = await changeContact(db, req.params.id, req.body.full_name, req.body.address, req.body.email, req.body.phone);
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Contacto alterado com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId };
+                } else if (resultInsertId === -2) {
+                    result.error = 4;
+                    result.message = "Já existe um contacto com esse email";
+                } else if (resultInsertId === -3) {
+                    result.error = 3;
+                    result.message = "Já existe um contacto com esse contacto";
+                } else if (resultInsertId === -4) {
+                    result.error = 3;
+                    result.message = "Já existe um contacto com esse nome";
+                }
+            }
+        }
+        res.json(result);
+    }); 
+
+    app.post(prefix + ROUTE_CONTACTS_PREFIX + '/delete/:id', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //define erro para o caso de algo correr mal
+            result.error = 1;
+            result.message = "Ocorreu um erro, o contacto pode já não existir";
+            //tenta criar um novo objeto
+            let resultInsertId = await deleteContact(db, req.params.id);
+            //se este foi apagado
+            if (resultInsertId >= 0) {
+                result.error = 0;
+                result.message = "Contacto apagado com sucesso";
+                //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                result.res = { id: resultInsertId };
+            } else if (resultInsertId === -2) {
+                result.error = 2;
+                result.message = "O contacto está a ser utilizado, não pode ser apagado";
+            }
+        }
+        res.json(result);
+    });
+
+    app.get(prefix + ROUTE_CONTACTS_PREFIX + '/list', async function (req, res) {
+        let result = { error: 1, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //tenta criar um novo objeto
+            let contact = await listContact(db, !req.query.search ? "" : req.query.search);
+            result.error = 0;
+            result.message = "Contactos";
+            result.res = { contacts: contact };
+        }
+        res.json(result);
+    }); 
+
+    app.get(prefix + ROUTE_CONTACTS_PREFIX + '/:id', async function (req, res) {
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //tenta criar um novo objeto
+            let contact = await getContact(db, req.params.id);
+            //se este foi apagado
+            if (contact !== null) {
+                result.error = 0;
+                result.message = "Contacto";
+                result.res = { contact: contact };
+            } else if (contact === -2) {
+                result.error = 1;
+                result.message = "O contacto não foi encontrado";
+            }
+        }
+        res.json(result);
+    }); 
 
     app.post(prefix + ROUTE_SUPER_CATEGORIES_PREFIX + '/create', async function (req, res) {
         let result = { error: 4, message: "Não tem permissões para criar super categorias", res: {} };
@@ -1172,7 +1427,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
                     result.message = "Super categoria criada com sucesso";
                     //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
                     result.res = { id: resultInsertId };
-                }else if(resultInsertId == -2) {
+                }else if(resultInsertId === -2) {
                     result.error=2;
                     result.message="Já existe uma super categoria com esse nome";
                 }
