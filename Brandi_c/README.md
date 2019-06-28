@@ -1532,3 +1532,235 @@
 	    "message": "Imagem enviada com sucesso",
 	    "res": {file: "1.png"}
 	}
+
+------------
+## POST/api/contacts/create:
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	full_name - nome do contacto
+	address - morada do contacto
+	email - email do contacto
+	phone - telemóvel do contacto
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 6,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se não for inserido todos os campos obrigatórios:
+	{
+	   "error": 5,
+	   "message": "Insira todos os campos obrigatórios",
+	   "res": {}
+	}
+##### já existe um contacto com o email:
+	{
+	   "error": 4,
+	   "message": "Já existe um contacto com esse email",
+	   "res": {}
+	}
+#####  já existe um contacto com o contacto:
+	{
+	   "error": 3,
+	   "message": "Já existe um contacto com esse contacto",
+	   "res": {}
+	}
+#####  já existe um contacto com o nome:
+	{
+	   "error": 2,
+	   "message": "Já existe um contacto com esse nome",
+	   "res": {}
+	}
+##### ocorreu um erro inesperado:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+	   "res": {}
+	}
+##### se for criado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Contacto criado com sucesso",
+	    "res": {id: 23}
+	}
+------------
+## POST/api/contacts/change/:id :
+	:id - id do contacto a alterar
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	full_name - nome do contacto
+	address - morada do contacto
+	email - email do contacto
+	phone - telemóvel do contacto
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 6,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se não for inserido todos os campos obrigatórios:
+	{
+	   "error": 5,
+	   "message": "Insira todos os campos obrigatórios",
+	   "res": {}
+	}
+##### já existe um contacto com o email:
+	{
+	   "error": 4,
+	   "message": "Já existe um contacto com esse email",
+	   "res": {}
+	}
+#####  já existe um contacto com o contacto:
+	{
+	   "error": 3,
+	   "message": "Já existe um contacto com esse contacto",
+	   "res": {}
+	}
+#####  já existe um contacto com o nome:
+	{
+	   "error": 2,
+	   "message": "Já existe um contacto com esse nome",
+	   "res": {}
+	}
+##### ocorreu um erro inesperado:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+	   "res": {}
+	}
+##### se for alterado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Contacto alterado com sucesso",
+	    "res": {}
+	}
+
+------------
+## POST/api/contacts/delete/:id :
+	:id - id do contacto a eliminar
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	nada
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 3,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se o contacto estiver a ser utilizado num objeto:
+	{
+	   "error": 2,
+	   "message": "O contacto está a ser utilizado, não pode ser apagado",
+	   "res": {}
+	}
+##### ocorreu um erro inesperado:
+	{
+	   "error": 1,
+	   "message": "Ocorreu um erro, o contacto pode já não existir",
+	   "res": {}
+	}
+##### se for eliminado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Contacto eliminado com sucesso",
+	    "res": {}
+	}
+
+------------
+## POST/api/contacts/list :
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	search - palavra de pesquisa, pesquisa em: nome, morada, email e contacto
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 1,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se for listado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Contactos",
+	    "res": {
+	        "contacts": [
+	            {
+	                "id": 1,
+	                "full_name": "Teste",
+	                "address": "teste",
+	                "email": "teste",
+	                "phone": "teste"
+	            },
+	            {
+	                "id": 3,
+	                "full_name": "teste3",
+	                "address": "teste3",
+	                "email": "teste3",
+	                "phone": "teste3"
+	            },
+	            {
+	                "id": 4,
+	                "full_name": "teste",
+	                "address": "address",
+	                "email": "teste@teste.teste",
+	                "phone": "123456789"
+	            },
+	            {
+	                "id": 5,
+	                "full_name": "teste",
+	                "address": "address",
+	                "email": "teste@teste.test",
+	                "phone": "12345678"
+	            },
+	            {
+	                "id": 6,
+	                "full_name": "teste32",
+	                "address": "address",
+	                "email": "teste@teste.testee",
+	                "phone": "1234567892"
+	            }
+	        ]
+		}
+	}
+
+------------
+## POST/api/contacts/:id :
+	:id - id do contacto a que se quer as informações
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	nada
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 2,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se o contacto não existir:
+	{
+		   "error": 1,
+		   "message": "O contacto não foi encontrado",
+		   "res": {}
+	 }
+##### se for listado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Contacto",
+	    "res": {
+	        "contact": {
+	            "id": 4,
+	            "full_name": "teste",
+	            "address": "address",
+	            "email": "teste@teste.teste",
+	            "phone": "123456789"
+	        }
+	    }
+	}
