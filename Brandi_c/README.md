@@ -1806,13 +1806,18 @@
 	        ]
 	    }
 	}
+	
 ------------
 ## POST/api/datasheet/sources/change/:id
-	:id_object- id do obejto que está associado a fonte
+	:id - id da fonte
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
-	nada
+	source_type_set - se é um set
+	source - source
+	source_type - typo de source
+	source_site - site da source
+	source_quota - quota da source
 ### devolve:
 ##### se não estiver autenticado:
 	{
@@ -1838,13 +1843,17 @@
 	    "error": 0,
 	    "message": "Fonte altearada com sucesso",
 	    "res": {}
+	    
 ------------
 ## POST/api/datasheet/sources/create
-	:id_object- id do obejto que está associado a fonte
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
-	nada
+	source_type_set - se é um set
+	source - source
+	source_type - typo de source
+	source_site - site da source
+	source_quota - quota da source
 ### devolve:
 ##### se não estiver autenticado:
 	{
@@ -1869,11 +1878,13 @@
 	{
 	    "error": 0,
 	    "message": "Fonte criada com sucesso",
-	    "res": {}	 
+	    "res": {
+			id: 2
+		}	 
 
 ------------
 ## POST/api/datasheet/sources/delete/:id
-	:id_object- id do obejto que está associado a fonte
+	:id - id da fonte
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
@@ -1882,7 +1893,7 @@
 ##### se não estiver autenticado:
 	{
 		   "error": 2,
-		   "message": "Por favor efectue autenticaçãos",
+		   "message": "Por favor efectue autenticação",
 		   "res": {}
 	 }
 ##### se ocorrer erro
@@ -1895,13 +1906,13 @@
 ##### se for eliminado com sucesso:
 	{
 	    "error": 0,
-	    "message": "Fonte criada com sucesso",
+	    "message": "Fonte apagada com sucesso",
 	    "res": {}	 
 
        
  ------------
 ## POST/api/datasheet/sources/:id
-	:id_object- id do obejto que está associado a fonte
+	:id - id da fonte
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
@@ -1920,10 +1931,19 @@
 		   "res": {}
 	 }
 
-##### se for eliminado com sucesso:
+##### se for listado com sucesso:
 	{
 	    "error": 0,
 	    "message": "Fonte",
-	    "res": {}	 
-
-       
+	    "res": {
+	        "source": {
+	            "id": 2,
+	            "object_id": 1,
+	            "source_type_set": 0,
+	            "source": "teste",
+	            "source_type": "teste",
+	            "source_site": "teste",
+	            "source_quota": "teste"
+	        }
+	    }
+	}
