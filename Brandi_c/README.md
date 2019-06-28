@@ -1534,7 +1534,7 @@
 	}
 
 ------------
-## POST/api/contacts/create:
+## POST/api/datasheet/contacts/create:
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
@@ -1586,7 +1586,7 @@
 	    "res": {id: 23}
 	}
 ------------
-## POST/api/contacts/change/:id :
+## POST/api/datasheet/contacts/change/:id :
 	:id - id do contacto a alterar
 ### Condições:
 	Tem que estar autenticado
@@ -1640,7 +1640,7 @@
 	}
 
 ------------
-## POST/api/contacts/delete/:id :
+## POST/api/datasheet/contacts/delete/:id :
 	:id - id do contacto a eliminar
 ### Condições:
 	Tem que estar autenticado
@@ -1673,7 +1673,7 @@
 	}
 
 ------------
-## POST/api/contacts/list :
+## POST/api/datasheet/contacts/list :
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
@@ -1731,7 +1731,7 @@
 	}
 
 ------------
-## POST/api/contacts/:id :
+## POST/api/datasheet/contacts/:id :
 	:id - id do contacto a que se quer as informações
 ### Condições:
 	Tem que estar autenticado
@@ -1764,3 +1764,166 @@
 	        }
 	    }
 	}
+
+------------
+## POST/api/datasheet/sources/:id_object:
+	:id_object- id do obejto associado a fonte
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	nada
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 1,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se for listado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Fontes",
+	    "res": {
+	        "sources": [
+	            {
+	                "id": 2,
+	                "object_id": 1,
+	                "source_type_set": 0,
+	                "source": "teste",
+	                "source_type": "teste",
+	                "source_site": "teste",
+	                "source_quota": "teste"
+	            },
+	            {
+	                "id": 3,
+	                "object_id": 1,
+	                "source_type_set": 0,
+	                "source": "teste",
+	                "source_type": "teste",
+	                "source_site": "teste",
+	                "source_quota": "teste"
+	            }
+	        ]
+	    }
+	}
+------------
+## POST/api/datasheet/sources/change/:id
+	:id_object- id do obejto que está associado a fonte
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	nada
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 3,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se todos os campos que são obrigatórios não estiverem inseridos:
+	{
+		   "error": 2,
+		   "message": "Insira todos os campos obrigatórios",
+		   "res": {}
+	 }
+
+##### se algum dos campos estiver mal definido:
+	{
+		   "error": 1,
+		   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+		   "res": {}
+	 }
+##### se for alterado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Fonte altearada com sucesso",
+	    "res": {}
+------------
+## POST/api/datasheet/sources/create
+	:id_object- id do obejto que está associado a fonte
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	nada
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 3,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se todos os campos que são obrigatórios não estiverem inseridos:
+	{
+		   "error": 2,
+		   "message": "Insira todos os campos obrigatórios",
+		   "res": {}
+	 }
+
+##### se algum dos campos estiver mal definido:
+	{
+		   "error": 1,
+		   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+		   "res": {}
+	 }
+##### se for criado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Fonte criada com sucesso",
+	    "res": {}	 
+
+------------
+## POST/api/datasheet/sources/delete/:id
+	:id_object- id do obejto que está associado a fonte
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	nada
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 2,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se ocorrer erro
+	{
+		   "error": 1,
+		   "message": "Ocorreu um erro, a fonte pode já não existir",
+		   "res": {}
+	 }
+
+##### se for eliminado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Fonte criada com sucesso",
+	    "res": {}	 
+
+       
+ ------------
+## POST/api/datasheet/sources/:id
+	:id_object- id do obejto que está associado a fonte
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	nada
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 2,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se ocorrer erro
+	{
+		   "error": 1,
+		   "message": "Ocorreu um erro, a fonte pode já não existir",
+		   "res": {}
+	 }
+
+##### se for eliminado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Fonte",
+	    "res": {}	 
+
+       
