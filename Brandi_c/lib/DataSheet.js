@@ -15,6 +15,7 @@ const ROUTE_SUB_CATEGORIES_PREFIX = ROUTE_DATASHEET_PREFIX + "/sub_categories";
 
 
 const ROUTE_CONTACTS_PREFIX = ROUTE_DATASHEET_PREFIX + "/contacts";
+const ROUTE_SOURCES_PREFIX = ROUTE_DATASHEET_PREFIX + "/sources";
 
 /**
  * lista super categorias
@@ -215,6 +216,110 @@ async function listContact(db, search) {
     //altera contacto
     let resultDb = await db.doQuery(q_DataSheet.LIST_CONTACTS, [s, s, s, s]);
     //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        return resultDb.res;
+    }
+    return [];
+}
+
+
+/**
+ * cria fonte
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id da fonte
+ * @returns {number} 0 caso nao ocorra nenhum erro ou -1 caso ocorra erro
+ */
+async function deleteSource(db, id) {
+    let result = -1;
+    //criação do novo contacto
+    let resultDb = await db.doQuery(q_DataSheet.DELETE_SOURCE, [id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0 ? 0 : -1;
+    }
+    return result;
+}
+
+/**
+ * cria fonte
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id da fonte
+ * @returns {JSON} {<fonte>}
+ */
+async function getSource(db, id) {
+    //procura fonte
+    let resultDb = await db.doQuery(q_DataSheet.GET_SOURCE, [id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error && resultDb.res.length > 0) {
+        return resultDb.res[0];
+    }
+    return null;
+}
+
+
+/**
+ * cria fonte
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} object_id id do objeto associado
+ * @param {number} source_type_set se é um set
+ * @param {string} source fonte
+ * @param {string} source_type tipo de fonte
+ * @param {string} source_site site da fonte
+ * @param {string} source_quota 
+ * @returns {number} id da foñte ou -1 caso ocorra erro, -2 caso o objeto nao exista
+ */
+async function createSource(db, object_id, source_type_set, source, source_type, source_site, source_quota) {
+    let result = -1;
+    //procura contacto se existe
+    let checkObjecto = await db.doQuery(q_DataSheet.CHECK_OBJECT, [object_id]);
+    if (!checkObjecto.error) {
+        if (checkObjecto.res.length > 0) {
+            //criação do novo contacto
+            let resultDb = await db.doQuery(q_DataSheet.CREATE_SOURCE, [object_id, source_type_set, source, source_type, source_site, source_quota]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.insertId;
+            }
+        } else result = -2;
+    }
+    return result;
+}
+
+
+/**
+ * edita fonte
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da fonte
+ * @param {number} source_type_set se é um set
+ * @param {string} source fonte
+ * @param {string} source_type tipo de fonte
+ * @param {string} source_site site da fonte
+ * @param {string} source_quota 
+ * @returns {number} 0 caso nao ocorra nenhum erro ou -1 caso ocorra erro
+ */
+async function changeSource(db, id, source_type_set, source, source_type, source_site, source_quota) {
+    let result = -1;
+    //alteração do novo contacto
+    let resultDb = await db.doQuery(q_DataSheet.CHANGE_SOURCE, [source_type_set, source, source_type, source_site, source_quota,id]);
+    //se não ocorreu nenhum erro
+    if (!resultDb.error) {
+        result = 0;
+    }
+    return result;
+}
+
+/**
+ * 
+ * lista fontes
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id_object id do objeto associado
+ * @param {string} search palavra pesquisa
+ * @returns {Array<Sourdces>} [<fontes>]
+ */
+async function listSources(db, id_object, search) {
+    //lista sources
+    let resultDb = await db.doQuery(q_DataSheet.LIST_SOURCES, [id_object, "%" + search + "%"]);
+    //se não ocorreu nenhum erro, devolve lista
     if (!resultDb.error) {
         return resultDb.res;
     }
@@ -554,7 +659,6 @@ async function changeDataSheetP3(db, id, object_is_a_set, set_type, set_elements
     //criação do novo objeto
     let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P3, [object_is_a_set, set_type, set_elements, set_materials, set_inscriptions, set_mount, set_build, classification, period, quality, style, materials_structure, materials_surface, materials_elementsAccessories, techniques_structure, techniques_surface, techniques_elementsAccessories, small_description, analogies, conclusions, author, dating, origin, userId, id]);
     //se não ocorreu nenhum erro, devolve o id inserido
-    console.log(resultDb);
     if (!resultDb.error) {
         result = resultDb.res.affectedRows > 0;
     }
@@ -748,7 +852,133 @@ exports.appendToExpress = function (app, _db, _prefix) {
     let thiss = this;
     let db = _db;
     let prefix = _prefix;
+
+    app.get(prefix + ROUTE_SOURCES_PREFIX + '/list/:id_object', async function (req, res) {
+        let result = { error: 1, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //lista fontes
+            let sources = await listSources(db, req.params.id_object, !req.query.search ? "" : req.query.search);
+            result.error = 0;
+            result.message = "Fontes";
+            result.res = { sources: sources };
+        }
+        res.json(result);
+    }); 
+
+    app.post(prefix + ROUTE_SOURCES_PREFIX + '/change/:id', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 2;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.source_type_set && req.body.source && req.body.source_type && req.body.source_site && req.body.source_quota) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //verifica se é para editar ou para criar
+                //tenta criar um novo objeto
+                let resultInsertId = await changeSource(
+                    db,
+                    req.params.id,
+                    req.body.source_type_set,
+                    req.body.source,
+                    req.body.source_type,
+                    req.body.source_site,
+                    req.body.source_quota
+                );
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Fonte altearada com sucesso";
+                }
+
+            }
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_SOURCES_PREFIX + '/create', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 2;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.object_id && req.body.source_type_set && req.body.source && req.body.source_type && req.body.source_site && req.body.source_quota) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //verifica se é para editar ou para criar
+                //tenta criar um novo objeto
+                let resultInsertId = await createSource(
+                    db,
+                    req.body.object_id,
+                    req.body.source_type_set,
+                    req.body.source,
+                    req.body.source_type,
+                    req.body.source_site,
+                    req.body.source_quota
+                );
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Fonte criada com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId };
+                }
+
+            }
+        }
+        res.json(result);
+    });
     
+
+    app.post(prefix + ROUTE_SOURCES_PREFIX + '/delete/:id', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //define erro para o caso de algo correr mal
+            result.error = 1;
+            result.message = "Ocorreu um erro, a fonte pode já não existir";
+            //tenta criar um novo objeto
+            let resultInsertId = await deleteSource(db, req.params.id);
+            //se este foi apagado
+            if (resultInsertId >= 0) {
+                result.error = 0;
+                result.message = "Fonte apagada com sucesso";
+            } 
+        }
+        res.json(result);
+    }); 
+
+
+
+    app.get(prefix + ROUTE_SOURCES_PREFIX + '/:id', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //define erro para o caso de algo correr mal
+            result.error = 1;
+            result.message = "Ocorreu um erro, a fonte pode não existir";
+            //tenta buscar fonte
+            let resultInsertId = await getSource(db, req.params.id);
+            //se encontrou
+            if (resultInsertId !== null) {
+                result.error = 0;
+                result.message = "Fonte";
+                result.res.source = resultInsertId;
+            }
+        }
+        res.json(result);
+    }); 
+
     app.post(prefix + ROUTE_DATASHEET_PREFIX + '/delete_image/:id/:image', async function (req, res) {
         let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
         //verifica se utilizador está autenticado
@@ -932,7 +1162,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
 						);
                         break;
                     case "3":
-                    	if (req.body.object_is_a_set) {
+                    	if (req.body.object_is_a_set != null) {
                             //define erro para o caso de algo correr mal
                             result.error = 1;
                             result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
@@ -1363,8 +1593,6 @@ exports.appendToExpress = function (app, _db, _prefix) {
             if (resultInsertId >= 0) {
                 result.error = 0;
                 result.message = "Contacto apagado com sucesso";
-                //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
-                result.res = { id: resultInsertId };
             } else if (resultInsertId === -2) {
                 result.error = 2;
                 result.message = "O contacto está a ser utilizado, não pode ser apagado";
