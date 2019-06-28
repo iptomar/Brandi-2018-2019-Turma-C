@@ -37,7 +37,7 @@ export class DatasheetPage1Component implements OnInit, DatasheetPage, OnDestroy
     this._users = [];
     this.users.getUsersNames("").subscribe((users_list) => {
       this._users = users_list;
-    });
+    },take(1));
     this.firstload=true;
     this.super_category= new BehaviorSubject<number>(0);
     this.category= new BehaviorSubject<number>(0);

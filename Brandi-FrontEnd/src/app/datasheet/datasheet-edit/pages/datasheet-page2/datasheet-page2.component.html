@@ -21,19 +21,25 @@
 <div class="row">
   <div class="form-group col-lg-6">
     <label for="owner">Proprietário</label>
-    <select name="owner" id="owner" class="form-control" [disabled]='!_isEditing'  [value]="_datasheet?.owner"></select>
+    <select name="owner" id="owner" class="form-control" [disabled]='!_isEditing'>
+      <option value="" selected disabled hidden>Contacto Eliminado</option>
+      <option *ngFor="let contact of this._contacts" [value]="contact.id" [selected]="contact.id === _datasheet?.owner">{{contact.full_name}} | {{contact.phone}} | {{contact.email}}</option>
+    </select>
   </div>
   <div class="form-group col-lg-6">
     <label for="objectOwner">Dono da Obra</label>
-    <select name="object_owner" id="object_owner" class="form-control" [disabled]='!_isEditing'  [value]="_datasheet?.object_owner"></select>
+    <select name="object_owner" id="object_owner" class="form-control" [disabled]='!_isEditing'>
+      <option value="" selected disabled hidden>Contacto Eliminado</option>
+      <option *ngFor="let contact of this._contacts" [value]="contact.id" [selected]="contact.id === _datasheet?.object_owner">{{contact.full_name}} | {{contact.phone}} | {{contact.email}}</option>
+    </select>
   </div>
 </div>
 <div class="row">
   <div class=" col-lg-6 form-group">
     <label for="patron">Mecenas</label>
-    <select name="patron" id="patron" class="form-control" [disabled]='!_isEditing'  [value]="_datasheet?.patron">
-    <option value="" selected disabled hidden>Utilizador Eliminado</option>
-    <option *ngFor="let u of _contacts" value="{{u.id}}">{{u.full_name}}</option>
+    <select name="patron" id="patron" class="form-control" [disabled]='!_isEditing'>
+    <option value="" selected disabled hidden>Contacto Eliminado</option>
+    <option *ngFor="let contact of this._contacts" [value]="contact.id" [selected]="contact.id === _datasheet?.patron">{{contact.full_name}} | {{contact.phone}} | {{contact.email}}</option>
   </select>
    
   </div>
@@ -55,6 +61,20 @@
             </button>
           </div>
           <div class="modal-body">
+              <div *ngIf='messageEditErrContact !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>{{messageEditErrContact}}</strong>
+                  <button type="button" class="close" aria-label="Close" (click)='messageEditErrContact=""'>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <!--mensage de alerta acaba aqui-->
+          
+                <div *ngIf='messageEditSuccessContact !== ""' class="alert alert-success alert-dismissible fade show" role="alert">
+                  <strong>{{messageEditSuccessContact}}</strong>
+                  <button type="button" class="close" aria-label="Close" (click)='messageEditSuccessContact=""'>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
                 <div class="row col-lg-12 form-group">
                   <label for="contact_name">Nome</label>
                   <input name="contact_name" id="contact_name" type="text" class="form-control" placeholder="Nome" />

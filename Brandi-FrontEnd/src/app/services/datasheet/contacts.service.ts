@@ -5,38 +5,57 @@ import { Observable } from 'rxjs';
 import { Global, ReceivedData } from 'src/app/Global';
 import { map } from 'rxjs/operators';
 
-export interface Contacto {
+export interface Contact {
   id: number;
   full_name: string;
-  cellphone:string;
+  address:string;
   email: string;
+  phone:string;
 }
 @Injectable({
   providedIn: 'root'
 })
 export class ContactsService {
-  public static CONTACT_LIST = "contact/list";
+  public static LIST_CONTACTACTS = "datasheet/contacts/list";
+  public static CREATE_CONTACTACTS = "datasheet/contacts/create";
   constructor(private http : HttpClient, private auth : AuthService) {
   }
-   public getContacts(pesquisa : string): Observable<Array<Contacto>> {
-    return this.http.get(Global.HOST_PREFIX + ContactsService.CONTACT_LIST, 
-      {params: new HttpParams().set('search', pesquisa)} ).pipe(map((data: ReceivedData) => {
-      let contact_list: Array<Contacto> = [];
-      if(!data.error) {
-        contact_list = <Array<Contacto>>data.res.contactos;
-      }else if(this.auth.isAdmin()) this.auth.forceLogout(); 
-      return contact_list;
-    }));
+  
+
+  public getContacts(search: string): Observable<Contact[]> {
+    return this.http
+      .get(Global.HOST_PREFIX + ContactsService.LIST_CONTACTACTS ,{
+        params: new HttpParams().set("search", search)
+      })
+      .pipe(
+        map((data: ReceivedData) => {
+          if(!data.error) {
+            return <Contact[]>data.res.contacts;
+          }else if (data.error === 1) {
+            this.auth.forceLogout();
+          }
+          return [];
+        })
+      );
   }
 
-  /*
-    falta criar contacto
-  */
-  public userExists(users : Contacto[], id : number) : boolean{
-    for(let i = 0; i < users.length; i++) if(users[i].id === id) return true;
-    return false;
+  public createContact(name: string,address: string,email: string,phone: string): Observable<ReceivedData> {
+    return this.http
+      .post(Global.HOST_PREFIX + ContactsService.CREATE_CONTACTACTS ,{
+        full_name: name,
+        address: address,
+        email: email,
+        phone:phone
+      })
+      .pipe(
+        map((data: ReceivedData) => {
+          if (data.error === 1) {
+            this.auth.forceLogout();
+          }
+          return data;
+        })
+      );
   }
- 
 }
 
 

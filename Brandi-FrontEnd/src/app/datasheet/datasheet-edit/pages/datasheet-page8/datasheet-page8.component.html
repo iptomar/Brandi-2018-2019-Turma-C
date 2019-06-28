@@ -102,29 +102,91 @@
   </div>
 </div>
 
-<form class="form-inline row">
-  <div class="col-lg-6 ">
-    <h6 class="text-center mb-2 mt-2">Interlocutores do Processo:</h6>
-  </div>
-</form>
-<form class="form-inline row">
-  <div class="form-group col-lg-6">
-    <label for="ipt_intervenient" class="col-lg-4">I.P.T</label>
-    <select id="ipt_intervenient" class="form-control col-lg-8" [disabled]="!_isEditing"></select>
-  </div>
-  <div class="form-group col-lg-6">
-      <label for="proposal_date" class="col-lg-6">Data da Informação da Proposta</label>
-      <input type="date"  class="form-control col-lg-6 text-center" [readonly]="!_isEditing" [value]="_datasheet?.proposal_date|date:'yyyy-MM-dd'"  name="proposal_date" id="proposal_date">
+<fieldset _ngcontent-iia-c9="" class="border p-2">
+  <legend _ngcontent-iia-c9="" class="w-auto">Interlocutores do Processo</legend>
+  <div class="form-group row">
+    <div class="form-group col-lg-6">
+      <label for="ipt_intervenient">I.P.T</label>
+      <select name="ipt_intervenient"  id="ipt_intervenient" class="form-control" [disabled]='!_isEditing'>
+        <option value="" selected disabled hidden>Utilizador Eliminado</option>
+        <option *ngFor="let u of _users" [value]="u.id" [selected]="_datasheet?.ipt_intervenient == u.id">{{u.full_name}}</option>
+      </select>
     </div>
-</form>
-<form class="form-inline row">
-  <div class="form-group col-lg-6">
-    <label for="client_intervenient" class="col-lg-4">Cliente</label>
-    <select id="client_intervenient" class="form-control col-lg-8" [disabled]="!_isEditing"></select>
+    <div class="form-group col-lg-6">
+        <label for="proposal_date">Data da Informação da Proposta</label>
+        <input type="date" class="form-control text-center" [readonly]="!_isEditing" [value]="_datasheet?.proposal_date|date:'yyyy-MM-dd'"  name="proposal_date" id="proposal_date">
+      </div>
   </div>
-  <div class="form-group col-lg-6">
-      <label for="acceptation_date" class="col-lg-6">Data da Aceitação da Proposta</label>
-      <input type="date" class="form-control col-lg-6 text-center" [readonly]="!_isEditing" [value]="_datasheet?.acceptation_date|date:'yyyy-MM-dd'"  name="acceptation_date" id="acceptation_date">
+  <div class="form-group row">
+    <div class="form-group col-lg-6">
+      <label for="client_intervenient">Cliente</label>
+      <select name="client_intervenient" id="client_intervenient" class="form-control" [disabled]="!_isEditing">
+          <option value="" selected disabled hidden>Contacto Eliminado</option>
+          <option *ngFor="let contact of this._contacts" [value]="contact.id" [selected]="contact.id === _datasheet?.client_intervenient">{{contact.full_name}} | {{contact.phone}} | {{contact.email}}</option>    
+      </select>
     </div>
-</form>
-<br />
+    <div class="form-group col-lg-6">
+        <label for="acceptation_date">Data da Aceitação da Proposta</label>
+        <input type="date" class="form-control text-center" [readonly]="!_isEditing" [value]="_datasheet?.acceptation_date|date:'yyyy-MM-dd'"  name="acceptation_date" id="acceptation_date">
+    </div>
+  </div>
+  <div class="form-group row">
+      <div class="form-group col-lg-6">
+        <button type="button" class="form-control btn btn-outline-success" [disabled]='!_isEditing' data-toggle="modal" data-target="#modal_contacts2">Adicionar contacto <i
+        class="fa fa-file"></i></button>
+      </div>
+  </div>
+      
+</fieldset>
+
+<!-- Modal -->
+<div class="modal fade" id="modal_contacts2" tabindex="-1" role="dialog" aria-labelledby="modal_contacts__Title" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form (submit)="addNewContact($event)">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal_contacts__Title">Adicionar contacto</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div *ngIf='messageEditErrContact !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>{{messageEditErrContact}}</strong>
+                  <button type="button" class="close" aria-label="Close" (click)='messageEditErrContact=""'>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <!--mensage de alerta acaba aqui-->
+          
+                <div *ngIf='messageEditSuccessContact !== ""' class="alert alert-success alert-dismissible fade show" role="alert">
+                  <strong>{{messageEditSuccessContact}}</strong>
+                  <button type="button" class="close" aria-label="Close" (click)='messageEditSuccessContact=""'>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="row col-lg-12 form-group">
+                  <label for="contact_name">Nome</label>
+                  <input name="contact_name" id="contact_name" type="text" class="form-control" placeholder="Nome" />
+                </div>
+                <div class="row col-lg-12 form-group">
+                  <label for="contact_email">Email</label>
+                  <input name="contact_email" id="contact_email" type="email" class="form-control" placeholder="Email" />
+                </div>
+                <div class="row col-lg-12 form-group">
+                  <label for="contact_address">Morada</label>
+                  <input name="contact_address" id="contact_address" type="text" class="form-control" placeholder="Morada" />
+                </div>
+                <div class="row col-lg-12 form-group">
+                  <label for="contact_phone">Telemóvel</label>
+                  <input name="contact_phone" id="contact_phone" type="text" class="form-control" placeholder="Telemóvel" />
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Adiciona novo contacto</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
