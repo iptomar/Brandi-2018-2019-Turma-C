@@ -1947,3 +1947,204 @@
 	        }
 	    }
 	}
+	
+-------------------------------
+------------
+## POST/api/datasheet/tests/:id_object:
+	:id_object- id do obejto associado a fonte
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	nada
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 1,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se for listado com sucesso:
+	{
+    "error": 0,
+    "message": "Exames",
+    "res": {
+        "tests": [
+            {
+                "id": 5,
+                "object_id": 1,
+                "Q1": 1,
+                "Q2": 0,
+                "Q3": 1,
+                "Q4": 0,
+                "Q5": 0,
+                "Q6": 0,
+                "results": "daaddadaad",
+                "conclusions": "sasasa"
+            },
+            {
+                "id": 6,
+                "object_id": 1,
+                "Q1": 1,
+                "Q2": 0,
+                "Q3": 1,
+                "Q4": 0,
+                "Q5": 0,
+                "Q6": 0,
+                "results": "daaddadaad -abcd",
+                "conclusions": "sasasa"
+            }
+        ]
+    }
+}
+	
+------------
+## POST/api/datasheet/tests/change/:id
+	:id - id da fonte
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	Q1-questao 1
+	Q2-questao 2
+	Q3-questao 3
+	Q4-questao 4
+	Q5-questao 5
+	Q6-questao 6
+	results-resultados dos exames
+	conclusions-conclusões dos exames
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 3,
+		   "message": "Por favor efectue autenticação",
+		   "res": {}
+	 }
+##### se todos os campos que são obrigatórios não estiverem inseridos:
+	{
+		   "error": 2,
+		   "message": "Insira todos os campos obrigatórios",
+		   "res": {}
+	 }
+
+##### se algum dos campos estiver mal definido:
+	{
+		   "error": 1,
+		   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+		   "res": {}
+	 }
+##### se for alterado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Exame altearado com sucesso",
+	    "res": {}
+	    
+------------
+## POST/api/datasheet/tests/create
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	Q1-questao 1
+	Q2-questao 2
+	Q3-questao 3
+	Q4-questao 4
+	Q5-questao 5
+	Q6-questao 6
+	results-resultados dos exames
+	conclusions-conclusões dos exames
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 3,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se todos os campos que são obrigatórios não estiverem inseridos:
+	{
+		   "error": 2,
+		   "message": "Insira todos os campos obrigatórios",
+		   "res": {}
+	 }
+
+##### se algum dos campos estiver mal definido:
+	{
+		   "error": 1,
+		   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+		   "res": {}
+	 }
+##### se for criado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Exame criado com sucesso",
+	    "res": {
+			id: 5
+		}	 
+
+------------
+## POST/api/datasheet/tests/delete/:id
+	:id - id da fonte
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	nada
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 2,
+		   "message": "Por favor efectue autenticação",
+		   "res": {}
+	 }
+##### se ocorrer erro
+	{
+		   "error": 1,
+		   "message": "Ocorreu um erro, o exame pode já não existir",
+		   "res": {}
+	 }
+
+##### se for eliminado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Exame apagado com sucesso",
+	    "res": {}	 
+
+       
+ ------------
+## POST/api/datasheet/tests/:id
+	:id - id da fonte
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	nada
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 2,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se ocorrer erro
+	{
+		   "error": 1,
+		   "message": "Ocorreu um erro, o exame pode não existir",
+		   "res": {}
+	 }
+
+##### se for listado com sucesso:
+	{
+    "error": 0,
+    "message": "Exames",
+    "res": {
+        "tests": [
+            {
+                "id": 3,
+                "object_id": 2,
+                "Q1": 1,
+                "Q2": 0,
+                "Q3": 1,
+                "Q4": 0,
+                "Q5": 0,
+                "Q6": 1,
+                "results": "tuutututyt",
+                "conclusions": "tuuuttttiiiii"
+            }
+        ]
+    }
+}
