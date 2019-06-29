@@ -892,9 +892,12 @@ async function changeDataSheetP7(db, id, support, surface, elements, conclusions
     return result;
 }
 
+
+
+
 /**
- * 
- * 
+ *
+ *
  * @param {database.Database} db Class de ligação à base de dados
  * @param {number} id id da ficha técnica
  * @param {number} owner_preserve - Preservação Dono da Obra
@@ -913,12 +916,14 @@ async function changeDataSheetP7(db, id, support, surface, elements, conclusions
  * @param {String} observations - observações da proposta
  * @param {Date} proposal_date - Data da Informação da Proposta
  * @param {Date} acceptation_date - Data da Aceitação da Proposta
+ * @param {number} ipt_intervinient - interveniente do ipt
+ * @param {number} client_intervinient - cliente interveniente
  * @param {number} userId - id do utilizador autenticado
  */
-async function changeDataSheetP8(db, id, owner_preserve, owner_conserve, owner_restaure, specific_aspects, prop_preserve, prop_conserve, prop_restaure, support_proposal, support_resources, surface_proposal, surface_resources, elements_proposal, elements_resources, observations, proposal_date, acceptation_date, userId) {
+async function changeDataSheetP8(db, id, owner_preserve, owner_conserve, owner_restaure, specific_aspects, prop_preserve, prop_conserve, prop_restaure, support_proposal, support_resources, surface_proposal, surface_resources, elements_proposal, elements_resources, observations, proposal_date, acceptation_date, ipt_intervinient, client_intervinient, userId) {
     let result = false;
     //criação do novo objeto
-    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P8, [owner_preserve, owner_conserve, owner_restaure, specific_aspects, prop_preserve, prop_conserve, prop_restaure, support_proposal, support_resources, surface_proposal, surface_resources, elements_proposal, elements_resources, observations, proposal_date, acceptation_date, userId, id]);
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P8, [owner_preserve, owner_conserve, owner_restaure, specific_aspects, prop_preserve, prop_conserve, prop_restaure, support_proposal, support_resources, surface_proposal, surface_resources, elements_proposal, elements_resources, observations, proposal_date, acceptation_date, ipt_intervinient, client_intervinient, userId, id]);
     //se não ocorreu nenhum erro, devolve o id inserido
     if (!resultDb.error) {
         result = resultDb.res.affectedRows > 0;
@@ -1620,6 +1625,8 @@ exports.appendToExpress = function (app, _db, _prefix) {
                     req.body.observations = global.notRequiredField(req.body.observations);
                     req.body.proposal_date = global.notRequiredField(req.body.proposal_date);
                     req.body.acceptation_date = global.notRequiredField(req.body.acceptation_date);
+                    req.body.ipt_intervinient = global.notRequiredField(req.body.ipt_intervinient);
+                    req.body.client_intervinient = global.notRequiredField(req.body.client_intervinient);
                     //verifica se é para editar ou para criar
                     //tenta altearar um objeto e se este foi alterado
                     resultDb = await changeDataSheetP8(
@@ -1641,6 +1648,8 @@ exports.appendToExpress = function (app, _db, _prefix) {
                         req.body.observations,
                         req.body.proposal_date,
                         req.body.acceptation_date,
+                        req.body.ipt_intervinient,
+                        req.body.client_intervinient,
                         u.id
                         
                     );
