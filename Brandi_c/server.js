@@ -108,5 +108,5 @@ db.createAllTables()
     //});
 })
 .catch((error) => {
-    console.log(dbCreation.res);
+    console.log(error);
 })

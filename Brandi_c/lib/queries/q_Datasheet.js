@@ -89,8 +89,25 @@ exports.CHNAGE_CONTACT = "UPDATE " + infoDB.TBL_CONTACTS + " SET full_name=?, ad
 exports.CHECK_CONTACT_USUAGE = "SELECT id FROM " + infoDB.TBL_OBJECT + " WHERE owner = ? OR patron = ? OR object_owner = ? LIMIT 1";
 
 
+
+//Query de listagem de fontes
 exports.LIST_SOURCES = "SELECT id, object_id, source_type_set, source, source_type, source_site, source_quota FROM " + infoDB.TBL_SOURCES + " WHERE object_id = ? && source like ?";
+//Query de criação de uma fonte
 exports.CREATE_SOURCE = "INSERT INTO " + infoDB.TBL_SOURCES + "(object_id, source_type_set, source, source_type, source_site, source_quota) VALUES(?,?,?,?,?,?)";
+//Query de alteração de uma fonte
 exports.CHANGE_SOURCE = "UPDATE " + infoDB.TBL_SOURCES + " SET source_type_set=?, source=?, source_type=?, source_site=?, source_quota=? WHERE id=?";
+//Query para apagar uma fonte
 exports.DELETE_SOURCE = "DELETE FROM " + infoDB.TBL_SOURCES + " WHERE id=?";
 exports.GET_SOURCE = "SELECT id, object_id, source_type_set, source, source_type, source_site, source_quota FROM " + infoDB.TBL_SOURCES + " WHERE id=? LIMIT 1";
+
+
+//Query de listagem de Exames e análises
+exports.LIST_TESTS = "SELECT id, object_id, Q1, Q2, Q3, Q4, Q5, Q6, results, conclusions FROM " + infoDB.TBL_TESTS + " WHERE object_id = ?";
+//Query de criação de Exames e análises
+exports.CREATE_TESTS = "INSERT INTO " + infoDB.TBL_TESTS + "(object_id, Q1, Q2, Q3, Q4, Q5, Q6, results, conclusions) VALUES(?,?,?,?,?,?,?,?,?)";
+//Query de alteração de Exames e análises
+exports.CHANGE_TESTS = "UPDATE " + infoDB.TBL_TESTS + " SET Q1=?, Q2=?, Q3=?, Q4=?, Q5=?, Q6=?, results=?, conclusions=? WHERE id=?";
+//Query para apagar uma fonte
+exports.DELETE_TESTS = "DELETE FROM " + infoDB.TBL_TESTS + " WHERE id=?";
+exports.GET_TESTS = "SELECT id, object_id, Q1, Q2, Q3, Q4, Q5, Q6, results, conclusions FROM " + infoDB.TBL_TESTS + " WHERE id=? LIMIT 1";
+

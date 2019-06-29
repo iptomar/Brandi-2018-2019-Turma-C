@@ -16,6 +16,147 @@ const ROUTE_SUB_CATEGORIES_PREFIX = ROUTE_DATASHEET_PREFIX + "/sub_categories";
 
 const ROUTE_CONTACTS_PREFIX = ROUTE_DATASHEET_PREFIX + "/contacts";
 const ROUTE_SOURCES_PREFIX = ROUTE_DATASHEET_PREFIX + "/sources";
+const ROUTE_TESTS_PREFIX = ROUTE_DATASHEET_PREFIX + "/tests";
+
+
+/*
+ * testes -------------------------------------------------------------------------
+ * /
+
+
+/**
+ *
+ * lista Exames
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id_object id do objeto associado
+ * @param {string} search palavra pesquisa
+ * @returns {Array<Sourdces>} [<exames>]
+ */
+async function listTests(db, id_object) {
+    //lista tests
+    let resultDb = await db.doQuery(q_DataSheet.LIST_TESTS, [id_object]);
+    //se não ocorreu nenhum erro, devolve lista
+    if (!resultDb.error) {
+        return resultDb.res;
+    }
+    return [];
+}
+
+
+
+/**
+ * 
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} object_id id do objeto associado
+ * @param {number} Q1 questao 1
+ * @param {number} Q2 questao 2
+ * @param {number} Q3 questao 3
+ * @param {number} Q4 questao 4
+ * @param {number} Q5 questao 5
+ * @param {number} Q6 questao 6
+ * @param {string} results resultados dos exames
+ * @param {string} conclusions conclusões dos exames
+ * @returns {number} id do exame ou -1 caso ocorra erro, -2 caso o objeto nao exista
+ */
+async function createTests(db, object_id, Q1, Q2, Q3, Q4, Q5, Q6, results, conclusions) {
+    let result = -1;
+    //procura exame se existe
+    let checkObjecto = await db.doQuery(q_DataSheet.CHECK_OBJECT, [object_id]);
+    if (!checkObjecto.error) {
+        if (checkObjecto.res.length > 0) {
+            //criação do novo exame
+            let resultDb = await db.doQuery(q_DataSheet.CREATE_TESTS, [object_id, Q1, Q2, Q3, Q4, Q5, Q6, results, conclusions]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.insertId;
+            }
+        } else result = -2;
+    }
+    return result;
+}
+
+/**
+ * Edita o exame
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} object_id id do objeto associado
+ * @param {number} Q1 questao 1
+ * @param {number} Q2 questao 2
+ * @param {number} Q3 questao 3
+ * @param {number} Q4 questao 4
+ * @param {number} Q5 questao 5
+ * @param {number} Q6 questao 6
+ * @param {string} results resultados dos exames
+ * @param {string} conclusions conclusões dos exames
+ * @returns {number} id do exame ou -1 caso ocorra erro, -2 caso o objeto nao exista
+ */
+async function changeTests(db, id, Q1, Q2, Q3, Q4, Q5, Q6, results, conclusions) {
+    let result = -1;
+    //alteração do novo exame
+    let resultDb = await db.doQuery(q_DataSheet.CHANGE_TESTS, [Q1, Q2, Q3, Q4, Q5, Q6, results, conclusions, id]);
+    //se não ocorreu nenhum erro
+    if (!resultDb.error) {
+        result = 0;
+    }
+    return result;
+}
+  
+
+/**
+ * apaga exame
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id do exame
+ * @returns {number} 0 caso nao ocorra nenhum erro ou -1 caso ocorra erro
+ */
+async function deleteTests(db, id) {
+    let result = -1;
+    //criação do novo exame
+    let resultDb = await db.doQuery(q_DataSheet.DELETE_TESTS, [id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0 ? 0 : -1;
+    }
+    return result;
+}
+
+
+/**
+ * cria fonte
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id da fonte
+ * @returns {JSON} {<exame>}
+ */
+async function getTest(db, id) {
+    //procura Exame
+    let resultDb = await db.doQuery(q_DataSheet.GET_TESTS, [id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error && resultDb.res.length > 0) {
+        return resultDb.res[0];
+    }
+    return null;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ * FIM FIM  FIM FIM testes -------------------------------------------------------------------------
+ * /
 
 /**
  * lista super categorias
@@ -224,7 +365,7 @@ async function listContact(db, search) {
 
 
 /**
- * cria fonte
+ * apaga fonte
  * @param {database.Database} db Class de ligação à base de dados
  * @param {number} id da fonte
  * @returns {number} 0 caso nao ocorra nenhum erro ou -1 caso ocorra erro
@@ -939,7 +1080,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
     
 
     app.post(prefix + ROUTE_SOURCES_PREFIX + '/delete/:id', async function (req, res) {
-        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
         //verifica se utilizador está autenticado
         let u = auth.getUserFromSession(req);
         if (u) {
@@ -960,7 +1101,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
 
 
     app.get(prefix + ROUTE_SOURCES_PREFIX + '/:id', async function (req, res) {
-        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
         //verifica se utilizador está autenticado
         let u = auth.getUserFromSession(req);
         if (u) {
@@ -978,6 +1119,138 @@ exports.appendToExpress = function (app, _db, _prefix) {
         }
         res.json(result);
     }); 
+
+
+    app.get(prefix + ROUTE_TESTS_PREFIX + '/list/:id_object', async function (req, res) {
+        let result = { error: 1, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //lista fontes
+            let tests = await listTests(db, req.params.id_object);
+            result.error = 0;
+            result.message = "Exames";
+            result.res = { tests: tests };
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_TESTS_PREFIX + '/change/:id', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 2;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.Q1 && req.body.Q2 && req.body.Q3 && req.body.Q4 && req.body.Q5 && req.body.Q6 && req.body.results && req.body.conclusions) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //verifica se é para editar ou para criar
+                //tenta criar um novo objeto
+                let resultInsertId = await changeTests(
+                    db,
+                    req.params.id,
+                    req.body.Q1,
+                    req.body.Q2,
+                    req.body.Q3,
+                    req.body.Q4,
+                    req.body.Q5,
+                    req.body.Q6,
+                    req.body.results,
+                    req.body.conclusions
+
+                );
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Exame altearado com sucesso";
+                }
+
+            }
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_TESTS_PREFIX + '/create', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 2;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.object_id && req.body.Q1 && req.body.Q2 && req.body.Q3 && req.body.Q4 && req.body.Q5 && req.body.Q6 && req.body.results && req.body.conclusions) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //verifica se é para editar ou para criar
+                //tenta criar um novo objeto
+                let resultInsertId = await createTests(
+                    db,
+                    req.body.object_id,
+                    req.body.Q1,
+                    req.body.Q2,
+                    req.body.Q3,
+                    req.body.Q4,
+                    req.body.Q5,
+                    req.body.Q6,
+                    req.body.results,
+                    req.body.conclusions
+                );
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Exame criado com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId };
+                }
+
+            }
+        }
+        res.json(result);
+    });
+
+
+    app.post(prefix + ROUTE_TESTS_PREFIX + '/delete/:id', async function (req, res) {
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //define erro para o caso de algo correr mal
+            result.error = 1;
+            result.message = "Ocorreu um erro, o exame pode já não existir";
+            //tenta criar um novo objeto
+            let resultInsertId = await deleteTests(db, req.params.id);
+            //se este foi apagado
+            if (resultInsertId >= 0) {
+                result.error = 0;
+                result.message = "Exame apagado com sucesso";
+            }
+        }
+        res.json(result);
+    }); 
+    app.get(prefix + ROUTE_TESTS_PREFIX + '/:id', async function (req, res) {
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //define erro para o caso de algo correr mal
+            result.error = 1;
+            result.message = "Ocorreu um erro, o exame pode não existir";
+            //tenta buscar fonte
+            let resultInsertId = await getTest(db, req.params.id);
+            //se encontrou
+            if (resultInsertId !== null) {
+                result.error = 0;
+                result.message = "Exame";
+                result.res.source = resultInsertId;
+            }
+        }
+        res.json(result);
+    }); 
+
 
     app.post(prefix + ROUTE_DATASHEET_PREFIX + '/delete_image/:id/:image', async function (req, res) {
         let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
