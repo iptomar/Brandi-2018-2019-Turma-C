@@ -3,11 +3,88 @@
 </h5>
 
 <button type="button" class="btn btn-outline-success mt-2" [disabled]='!_isEditing'>Adicionar fonte <i
-  class="fa fa-book"></i>
+    class="fa fa-book"></i>
 </button>
 <br /><br />
 <div>
 
-Tabela com a lista de fontes adicionadas
+  <div class="col-lg-6 form-group">
+    <label for="patron">&nbsp;</label>
+    <button type="button" class="form-control btn btn-outline-success" [disabled]='!_isEditing' data-toggle="modal"
+      data-target="#modal_sources">Adicionar fonte <i class="fa fa-file"></i></button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="modal_sources" tabindex="-1" role="dialog" aria-labelledby="modal_sources__Title"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form (submit)="addNewSource($event)">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal_sources__Title">Adicionar fonte</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div *ngIf='messageEditErrSource !== ""' class="alert alert-warning alert-dismissible fade show"
+              role="alert">
+              <strong>{{messageEditErrSource}}</strong>
+              <button type="button" class="close" aria-label="Close" (click)='messageEditErrSource=""'>
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <!--mensage de alerta acaba aqui-->
+
+            <div *ngIf='messageEditSuccessSource !== ""' class="alert alert-success alert-dismissible fade show"
+              role="alert">
+              <strong>{{messageEditSuccessSource}}</strong>
+              <button type="button" class="close" aria-label="Close" (click)='messageEditSuccessSource=""'>
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="col-lg-12 form-group">
+              <label for="source_class">Categoria da Fonte</label>
+              <select class="form-control" id="source_class">
+                <option selected>Seleccione</option>
+                <option value="1">Arquivísticas/Documentais</option>
+                <option value="2">Iconográficas</option>
+                <option value="3">Bibliográficas</option>
+                <option value="4">Eletrónicas</option>
+                <option value="5">Outras</option>
+              </select>
+            </div>
+            <div class="col-lg-12 form-group">
+              <label for="source_author">Autor/Título/Local/Editor/Data/Página(s)</label>
+              <input name="source_author" id="source_author" type="text" class="form-control" placeholder="Autor/Título/Local/Editor/Data/Página(s)"/>
+            </div>
+            <div class="col-lg-12 form-group">
+              <label for="source_type">Tipo</label>
+              <input name="source_type" id="source_type" type="text" class="form-control" placeholder="Tipo" />
+            </div>
+            <div class="col-lg-12 form-group">
+              <label for="source_location">Localização (se aplicável)</label>
+              <input name="source_location" id="source_location" type="text" class="form-control"
+                placeholder="Localização"/>
+            </div>
+            <div class="col-lg-12 form-group">
+              <label for="source_quota">Cota (se aplicável)</label>
+              <input name="source_quota" id="source_quota" type="text" class="form-control" placeholder="Cota" />
+            </div>
+            <div class="col-lg-12 form-group">
+                <label for="source_date">Data da Consulta (para fontes eletrónicas)</label>
+                <input name="source_date" id="source_date" type="date" class="form-control" placeholder="Data da consulta " />
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Adiciona nova fonte</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  Tabela com a lista de fontes adicionadas
 
 </div>
