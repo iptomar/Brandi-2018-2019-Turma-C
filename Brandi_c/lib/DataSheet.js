@@ -3,11 +3,18 @@ const user = require('./User.js');
 const infoDB = require('./InfoDB.js');
 const auth = require('./Auth.js');
 const q_DataSheet = require('./queries/q_Datasheet.js');
+const path = require("path");
+const fs = require("fs");
+const global = require('./Global');
+const formidable = require('formidable');
 
 const ROUTE_DATASHEET_PREFIX = "/datasheet";
 const ROUTE_CATEGORIES_PREFIX = ROUTE_DATASHEET_PREFIX + "/categories";
 const ROUTE_SUPER_CATEGORIES_PREFIX = ROUTE_DATASHEET_PREFIX + "/super_categories";
 const ROUTE_SUB_CATEGORIES_PREFIX = ROUTE_DATASHEET_PREFIX + "/sub_categories";
+
+
+const ROUTE_CONTACTS_PREFIX = ROUTE_DATASHEET_PREFIX + "/contacts";
 
 /**
  * lista super categorias
@@ -24,6 +31,25 @@ async function listSuperCategories(db, search) {
         result.error = 0;
         //devolvemos a lista de fichas tecnicas
         result.list = resultDb.res;
+    }
+    return result;
+}
+
+/**
+ * lista super categorias
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da datasheet
+ * @returns {JSON} {error: <0 se não ocorrer erro, 1 se ocorrer erro>, datasheet:<objeto>}
+ */
+async function getDatasheet(db, id) {
+    let result = { error: 1, datasheet: null };
+    //get objeto
+    let resultDb = await db.doQuery(q_DataSheet.GET_OBJECT, [id]);
+    //se não ocorreu nenhum erro
+    if (!resultDb.error && resultDb.res.length > 0) {
+        result.error = 0;
+        //devolvemos a ficha tecnica
+        result.datasheet = resultDb.res[0];
     }
     return result;
 }
@@ -69,6 +95,131 @@ async function listSubCategories(db, id_category, search) {
     return result;
 }
 
+/**
+ * 
+ *
+ * cria um contacto
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {string} full_name nome da pessoa
+ * @param {string} address morada da pessoa
+ * @param {string} email email da pessoa
+ * @param {string} phone numero de telemovel da pessoa
+ * @returns {number} id do contacto ou -1 caso ocorra erro, -2 caso o email ja exista, -3 caso o contacto ja exista, -4 caso o nome ja exista
+ */
+async function createContact(db,full_name, address, email, phone) {
+    let result = -1;
+    //procura contacto se existe
+    let searchContact = await db.doQuery(q_DataSheet.SEARCH_CONTACT_1, [full_name, email, phone]);
+    if (!searchContact.error) {
+        if (searchContact.res.length === 0) {
+            //criação do novo contacto
+            let resultDb = await db.doQuery(q_DataSheet.CREATE_CONTACT, [full_name, address, email, phone]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.insertId;
+            }
+        } else {
+            if (searchContact.res[0].phone.toLowerCase() === phone.toLowerCase()) result = -3;
+            else if (searchContact.res[0].email.toLowerCase() === email.toLowerCase()) result = -2;
+            else if (searchContact.res[0].full_name.toLowerCase() === full_name.toLowerCase()) result = -4;
+        }
+    }
+    return result;
+}
+
+/**
+ * 
+ * altera um contacto
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id do contacto da pessoa
+ * @param {string} full_name nome da pessoa
+ * @param {string} address morada da pessoa
+ * @param {string} email email da pessoa
+ * @param {string} phone numero de telemovel da pessoa
+ * @returns {number} 0 se correr tudo como planeado ou -1 caso ocorra erro, -2 caso o email ja exista, -3 caso o contacto ja exista, -4 caso o nome ja exista
+ */
+async function changeContact(db, id, full_name, address, email, phone) {
+    let result = -1;
+    //procura contacto se existe
+    let searchContact = await db.doQuery(q_DataSheet.SEARCH_CONTACT_CHANGE_1, [full_name, email, phone, id]);
+    if (!searchContact.error) {
+        if (searchContact.res.length === 0) {
+            //altera contacto
+            let resultDb = await db.doQuery(q_DataSheet.CHNAGE_CONTACT, [full_name, address, email, phone, id]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.affectedRows > 0 ? 0 : -1;
+            }
+        } else {
+            if (searchContact.res[0].phone.toLowerCase() === phone.toLowerCase()) result = -3;
+            else if (searchContact.res[0].email.toLowerCase() === email.toLowerCase()) result = -2;
+            else if (searchContact.res[0].full_name.toLowerCase() === full_name.toLowerCase()) result = -4;
+        }
+    }
+    return result;
+}
+
+
+/**
+ * 
+ * elimina um contacto
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id do contacto da pessoa
+ * @returns {number} 0 se correr tudo como planeado ou -1 caso ocorra erro, -2 caso esteja a ser utilizado
+ */
+async function deleteContact(db, id) {
+    let result = -1;
+    //procura contacto se existe
+    let searchContact = await db.doQuery(q_DataSheet.CHECK_CONTACT_USUAGE, [id, id, id]);
+    if (!searchContact.error) {
+        if (searchContact.res.length === 0) {
+            //altera contacto
+            let resultDb = await db.doQuery(q_DataSheet.DELETE_CONTACT, [id]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.affectedRows > 0 ? 0 : -1;
+            }
+        } else {
+            result = -2;
+        }
+    }
+    return result;
+}
+
+/**
+ * 
+ * devolve um contacto
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id do contacto da pessoa
+ * @returns {JSON} {<contact>} ou null caso nao seja encontrado
+ */
+async function getContact(db, id) {
+    //altera contacto
+    let resultDb = await db.doQuery(q_DataSheet.GET_CONTACT, [id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error && resultDb.res.length > 0) {
+        return resultDb.res[0];
+    }
+    return null;
+}
+
+/**
+ * 
+ * lista contactos
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {string} search palavra pesquisa
+ * @returns {Array<Contacts>} [<contacts>]
+ */
+async function listContact(db, search) {
+    let s = "%" + search + "%";
+    //altera contacto
+    let resultDb = await db.doQuery(q_DataSheet.LIST_CONTACTS, [s, s, s, s]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        return resultDb.res;
+    }
+    return [];
+}
 
 /**
  * cria uma nova super categoria
@@ -321,19 +472,243 @@ async function listDataSheet(db, search) {
  * @param {string} lcrmprocdata data do processo LCRM
  * @param {string} lcrmentrancedata data de entrada LCRM
  * @param {number} coordinatorid id do coordenador
+ * @param {string} supercategory super categoria da ficha
+ * @param {string} category categoria da ficha
+ * @param {string} subcategory sub categoria da ficha
  * @param {number} userId id do utilizador autenticado
  * @returns {boolean} se foi atualizado alguma coisa
  */
-async function changeDataSheet(db, id, designation, cearcproc, cearcprocdata, cearcentrancedata, lcrmproc, lcrmprocdata, lcrmentrancedata, coordinatorid, userId) {
+async function changeDataSheetP1(db, id, designation, cearcproc, cearcprocdata, cearcentrancedata, lcrmproc, lcrmprocdata, lcrmentrancedata, coordinatorid, supercategory, category, subcategory, userId) {
     let result = false;
     //criação do novo objeto
-    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT, [designation, cearcproc, cearcprocdata, cearcentrancedata, lcrmproc, lcrmprocdata, lcrmentrancedata, coordinatorid, userId,id]);
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P1, [designation, cearcproc, cearcprocdata, cearcentrancedata, lcrmproc, lcrmprocdata, lcrmentrancedata, coordinatorid, userId, supercategory, category, subcategory, id]);
     //se não ocorreu nenhum erro, devolve o id inserido
     if (!resultDb.error) {
         result = resultDb.res.affectedRows > 0;
     }
     return result;
 }
+
+/**
+ * 
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da ficha técnica
+ * @param {string} dimensions dimensões do objeto
+ * @param {string} other_dimensions - outras dimensões
+ * @param {string} tipology - tipologia do objeto
+ * @param {string} site - localização
+ * @param {number} object_owner -proprietário
+ * @param {number} owner - dono da obra
+ * @param {number} patron - mecenas 
+ * @param {number} userId - id do utilizador autenticado
+ * @returns {boolean} se foi atualizado alguma coisa
+ */
+async function changeDataSheetP2(db, id, dimensions,other_dimensions,tipology,site,object_owner,owner,patron, userId) {
+    let result = false;
+    //criação do novo objeto
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P2, [dimensions,other_dimensions,tipology,site,object_owner,owner,patron, userId,id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0;
+    }
+    return result;
+}
+
+
+
+
+/**
+ * 
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da ficha técnica
+ * @param {number} object_is_a_set - informação respetiva a se existe ou nao bem integrado em conjunto
+ * @param {string} set_type - tipo de conjunto do objecto
+ * @param {string} set_elements - elementos do objeto
+ * @param {string} set_materials - materiais do objeto
+ * @param {string} set_inscriptions - inscrições no objeto
+ * @param {string} set_mount - inscrições de Montagem do objeto
+ * @param {string} set_build - inscrições de Construção
+ * @param {string} classification - classificação do objeto
+ * @param {number} period - época do objeto
+ * @param {number} quality - qualidade do objeto
+ * @param {number} style - estilo do objeto
+ * @param {string} materials_structure - materiais da estrutura do objeto
+ * @param {string} materials_surface - materiais da superficie do objeto
+ * @param {string} materials_elementsAccessories - materiais dos elementos acessórios do objeto
+ * @param {string} techniques_structure - técnicas da estrutura do objeto
+ * @param {string} techniques_surface - técnicas da superficie do objeto
+ * @param {string} techniques_elementsAccessories - técnicas dos elementos acessórios do objeto
+ * @param {string} small_description - pequena descrição do objeto
+ * @param {string} analogies - analogias 
+ * @param {string} conclusions - conclusões
+ * @param {string} author - autor 
+ * @param {string} dating - datação
+ * @param {string} origin - origem
+ * @param {number} userId id do utilizador autenticado
+ * @returns {boolean} se foi atualizado alguma coisa
+ * 
+ */
+
+async function changeDataSheetP3(db, id, object_is_a_set, set_type, set_elements, set_materials, set_inscriptions, set_mount, set_build, classification, period, quality, style, materials_structure, materials_surface, materials_elementsAccessories, techniques_structure, techniques_surface, techniques_elementsAccessories,small_description,analogies,conclusions,author,dating,origin,userId) {
+    let result = false;
+    //criação do novo objeto
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P3, [object_is_a_set, set_type, set_elements, set_materials, set_inscriptions, set_mount, set_build, classification, period, quality, style, materials_structure, materials_surface, materials_elementsAccessories, techniques_structure, techniques_surface, techniques_elementsAccessories, small_description, analogies, conclusions, author, dating, origin, userId, id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    console.log(resultDb);
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0;
+    }
+    return result;
+}
+
+
+/**
+ * 
+ * @param {database.Database} db Class de ligação à base de dados 
+ * @param {number} id id da ficha técnica
+ * @param {String} site_description descrição do local
+ * @param {String} cold_temp Frio- temperatura 
+ * @param {String} hot_temp Quente- temperatura
+ * @param {String} cold_humidity Frio-Humidade
+ * @param {String} hot_humidity Frio-Humidade
+ * @param {number} cold_start Frio- Início
+ * @param {number} cold_end Frio- Fim
+ * @param {number} hot_start Quente- Início
+ * @param {number} hot_end Quente- Fim
+ * @param {String} lightning_type_natural Radiação tipo natural
+ * @param {String} lightning_origin_artificial Radiação tipo artificial
+ * @param {String} artificial_lux Radiação artificial - valor Iluminância
+ * @param {String} natural_lux Radiação natural - valor Iluminância
+ * @param {String} artificial_uv Radiação artificial - Valor de U.V.
+ * @param {String} natural_uv Radiação natural - Valor de U.V.
+ * @param {String} natural_real_uv Radiação natural- Valor Real de U.V.
+ * @param {String} artificial_real_uv Radiação artificial- Valor Real de U.V.
+ * @param {String} poluting_agents Agentes Poluidores
+ * @param {String} poluting_sources Fontes de poluição
+ * @param {String} poluting_results Resultados de poluição
+ * @param {String} env_conclusions Resultados
+ * @param {number} userId id do utilizador autenticado
+ */
+async function changeDataSheetP4(db, id, site_description, cold_temp, hot_temp, cold_humidity, hot_humidity, cold_start, cold_end, hot_start, hot_end, lightning_type_natural, lightning_origin_artificial, artificial_lux, natural_lux, artificial_uv, natural_uv, artificial_real_uv, natural_real_uv, poluting_agents, poluting_sources, poluting_results, env_conclusions, userId) {
+    let result = false;
+    //criação do novo objeto
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P4, [site_description, cold_temp, hot_temp, cold_humidity, hot_humidity, cold_start, cold_end, hot_start, hot_end, lightning_type_natural, lightning_origin_artificial, artificial_lux, natural_lux, artificial_uv, natural_uv, artificial_real_uv, natural_real_uv, poluting_agents, poluting_sources, poluting_results, env_conclusions, userId, id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    console.log(resultDb);
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0;
+    }
+    return result;
+}
+
+/**
+ * 
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da ficha técnica
+ * @param {String} support_deterioration Deterioração da Estrutura
+ * @param {String} surface_deterioration Deterioração da Superfície
+ * @param {String} elements_deterioration Deterioração dos Elementos Acessórios
+ * @param {String} support_diagnostic Diagnóstico da Estrutura
+ * @param {String} surface_diagnostic Diagnóstico da Superfície
+ * @param {String} elements_diagnostic Diagnóstico dos Elementos Acessórios
+ * @param {String} conclusions_conservation Conclusões do estado de conservação
+ * @param {number} userId id do utilizador autenticado
+ */
+async function changeDataSheetP6(db, id, support_deterioration, surface_deterioration, elements_deterioration, support_diagnostic, surface_diagnostic, elements_diagnostic, conclusions_conservation, userId) {
+    let result = false;
+    //criação do novo objeto
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P6, [support_deterioration, surface_deterioration, elements_deterioration, support_diagnostic, surface_diagnostic, elements_diagnostic, conclusions_conservation, userId, id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0;
+    }
+    return result;
+}
+
+
+/**
+ * 
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da ficha técnica
+ * @param {String} support Estrutura da intervenção anterior
+ * @param {String} surface Superfície da intervenção anterior
+ * @param {String} elements Elementos Acessórios da intervenção anterior
+ * @param {String} conclusions_previous_interventions Conclusões de intervenções anteriores
+ * @param {number} userId id do utilizador autenticado
+ */
+async function changeDataSheetP7(db, id, support, surface, elements, conclusions_previous_interventions, userId) {
+    let result = false;
+    //criação do novo objeto
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P7, [support, surface, elements, conclusions_previous_interventions, userId, id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0;
+    }
+    return result;
+}
+
+/**
+ * 
+ * 
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da ficha técnica
+ * @param {number} owner_preserve - Preservação Dono da Obra
+ * @param {number} owner_conserve - Conservação Dono da Obra
+ * @param {number} owner_restaure - Restauro Dono da Obra
+ * @param {String} specific_aspects - Aspetos específicos - Dono da Obra
+ * @param {number} prop_preserve - Preservação Proposta
+ * @param {number} prop_conserve - Conservação Proposta
+ * @param {number} prop_restaure - Restauro Proposta
+ * @param {String} support_proposal - Estrutura Proposta
+ * @param {String} support_resources - Recursos Estrutura
+ * @param {String} surface_proposal - Superfície Proposta
+ * @param {String} surface_resources - Recursos Superfície
+ * @param {String} elements_proposal - Elementos Acessórios Proposta
+ * @param {String} elements_resources - Recursos Elementos Acessórios
+ * @param {String} observations - observações da proposta
+ * @param {Date} proposal_date - Data da Informação da Proposta
+ * @param {Date} acceptation_date - Data da Aceitação da Proposta
+ * @param {number} userId - id do utilizador autenticado
+ */
+async function changeDataSheetP8(db, id, owner_preserve, owner_conserve, owner_restaure, specific_aspects, prop_preserve, prop_conserve, prop_restaure, support_proposal, support_resources, surface_proposal, surface_resources, elements_proposal, elements_resources, observations, proposal_date, acceptation_date, userId) {
+    let result = false;
+    //criação do novo objeto
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P8, [owner_preserve, owner_conserve, owner_restaure, specific_aspects, prop_preserve, prop_conserve, prop_restaure, support_proposal, support_resources, surface_proposal, surface_resources, elements_proposal, elements_resources, observations, proposal_date, acceptation_date, userId, id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0;
+    }
+    return result;
+}
+
+/**
+ * 
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da ficha técnica
+ * @param {String} support_intervention - Estrutura da intervenção
+ * @param {String} support_resources_intervention - Recursos da estrutura
+ * @param {String} surface_intervention - Superfície da intervenção
+ * @param {String} surface_resources_intervention - Recursos da estrutura
+ * @param {String} elements_intervention - Elementos Acessórios da intervenção
+ * @param {String} elements_resources_intervention - Recursos dos Elementos Acessórios
+ * @param {String} observations_intervention - Observações da intervenção
+ * @param {number} userId - id do utilizador autenticado
+ */
+async function changeDataSheetP9(db, id, support_intervention, support_resources_intervention, surface_intervention, surface_resources_intervention, elements_intervention, elements_resources_intervention, observations_intervention, userId) {
+    let result = false;
+    //criação do novo objeto
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P9, [support_intervention, support_resources_intervention, surface_intervention, surface_resources_intervention, elements_intervention, elements_resources_intervention, observations_intervention, userId, id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0;
+    }
+    return result;
+}
+
+
+
+
+
 
 /**
  * 
@@ -346,13 +721,16 @@ async function changeDataSheet(db, id, designation, cearcproc, cearcprocdata, ce
  * @param {string} lcrmprocdata data do processo LCRM
  * @param {string} lcrmentrancedata data de entrada LCRM
  * @param {number} coordinatorid id do coordenador
+ * @param {number} super_category id da super categoria
+ * @param {number} category id da categoria
+ * @param {number} sub_category id da sub categoria
  * @param {number} userId id do utilizador autenticado
  * @returns {number} id da ficha técnica ou -1 caso ocorra erro
  */
-async function createDataSheet(db, designation, cearcproc, cearcprocdata, cearcentrancedata, lcrmproc, lcrmprocdata, lcrmentrancedata ,coordinatorid, userId) {
+async function createDataSheet(db, designation, cearcproc, cearcprocdata, cearcentrancedata, lcrmproc, lcrmprocdata, lcrmentrancedata, coordinatorid, super_category, category, sub_category, userId) {
     let result = -1;
     //criação do novo objeto
-    let resultDb = await db.doQuery(q_DataSheet.CREATE_OBJECT, [designation, cearcproc, cearcprocdata, cearcentrancedata, lcrmproc, lcrmprocdata, lcrmentrancedata, coordinatorid, userId]);
+    let resultDb = await db.doQuery(q_DataSheet.CREATE_OBJECT, [designation, cearcproc, cearcprocdata, cearcentrancedata, lcrmproc, lcrmprocdata, lcrmentrancedata, coordinatorid, super_category, category, sub_category, userId]);
     //se não ocorreu nenhum erro, devolve o id inserido
     if (!resultDb.error) {
         result = resultDb.res.insertId;
@@ -370,7 +748,77 @@ exports.appendToExpress = function (app, _db, _prefix) {
     let thiss = this;
     let db = _db;
     let prefix = _prefix;
-    app.post(prefix + ROUTE_DATASHEET_PREFIX + '/createandedit', async function (req, res) {
+    
+    app.post(prefix + ROUTE_DATASHEET_PREFIX + '/delete_image/:id/:image', async function (req, res) {
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se a imagem existe
+            result.error = 1;
+            result.message = "A imagem não existe";
+            let img = global.DATASHEET_IMAGES_FOLDER + path.sep + req.params.id + path.sep + req.params.image;
+            if (fs.existsSync(img)) {
+                fs.unlinkSync(img);
+                result.error = 0;
+                result.message = "Imagem apagada";
+            }
+        }
+        res.json(result);
+    });
+    app.get(prefix + ROUTE_DATASHEET_PREFIX + '/get_image/:id/:image', async function (req, res) {
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            let img = global.DATASHEET_IMAGES_FOLDER + path.sep + req.params.id + path.sep + req.params.image;
+            if (!fs.existsSync(img)) {
+                img = global.DATASHEET_IMAGES_FOLDER + path.sep + "no_photo.jpg";
+            }
+            var stat = fs.statSync(img);
+            res.writeHead(200, {
+                'Content-Type': 'image/*',
+                'Content-Length': stat.size
+            });
+            var readStream = fs.createReadStream(img);
+            // We replaced all the event handlers with a simple call to readStream.pipe()
+            readStream.pipe(res);
+        } else res.status(401).send();
+    });
+
+    app.post(prefix + ROUTE_DATASHEET_PREFIX + '/send_image/:id', async function (req, res) {
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 1;
+            result.message = "Insira todos os campos obrigatórios";
+            await new Promise(function (resolve, reject) {
+                new formidable.IncomingForm().parse(req, function (err, fields, files) {
+                    if (err) {
+                        reject();
+                    }
+                    if (files.length === 0) reject();
+                }).on('file', (name, file) => {
+                    //create folder for 
+                    var dir = global.DATASHEET_IMAGES_FOLDER + path.sep + req.params.id;
+                    if (!fs.existsSync(dir)) {
+                        fs.mkdirSync(dir);
+                    }
+                    let idfile = global.getLastIdImage(req.params.id) + 1;
+                    let file_ext = file.name.split('.').pop();
+                    fs.renameSync(file.path, dir + path.sep + idfile + "." + file_ext);
+                    result.res.file = idfile + "." + file_ext;
+                    result.error = 0;
+                    result.message = "Imagem enviada com sucesso";
+                    resolve();
+                    });
+            }).catch(() => {});
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_DATASHEET_PREFIX + '/create', async function (req, res) {
         let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
         //verifica se utilizador está autenticado
         let u = auth.getUserFromSession(req);
@@ -378,7 +826,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
             //verifica se todos os campos obrigatórios estão presentes
             result.error = 2;
             result.message = "Insira todos os campos obrigatórios";
-            if (/**req.body.idobject && **/ req.body.designation && /**req.body.lcrmproc && req.body.lcrmprocdata && req.body.cearcprocdata && req.body.cearcentrancedata**/ req.body.cearcproc && req.body.coordinatorid && req.body.lcrmentrancedata) {
+            if (/**req.body.idobject && **/ req.body.designation && /**req.body.lcrmproc && req.body.lcrmprocdata && req.body.cearcprocdata && req.body.cearcentrancedata**/ req.body.cearcproc && req.body.coordinatorid && req.body.lcrmentrancedata && req.body.super_category && req.body.category && req.body.sub_category) {
                 //define erro para o caso de algo correr mal
                 result.error = 1;
                 result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
@@ -388,28 +836,353 @@ exports.appendToExpress = function (app, _db, _prefix) {
                 req.body.lcrmproc = !req.body.lcrmproc ? null : req.body.lcrmproc;
                 req.body.lcrmprocdata = !req.body.lcrmprocdata ? null : req.body.lcrmprocdata;
                 //verifica se é para editar ou para criar
-                if (req.body.idobject) {//se o id estiver definido é porque é para criar
-                    //tenta altearar um objeto e se este foi alterado
-                    if (await changeDataSheet(db, req.body.idobject, req.body.designation, req.body.cearcproc, req.body.cearcprocdata, req.body.cearcentrancedata, req.body.lcrmproc, req.body.lcrmprocdata, req.body.lcrmentrancedata, req.body.coordinatorid, u.id)) {
-                        result.error = 0;
-                        result.message = "Ficha técnica atualizada com sucesso";
-                        //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
-                        result.res = { id: parseInt(req.body.idobject, 10), type: 1 };
-                    }
-                } else {
-                    //tenta criar um novo objeto
-                    let resultInsertId = await createDataSheet(db,req.body.designation, req.body.cearcproc, req.body.cearcprocdata, req.body.cearcentrancedata, req.body.lcrmproc, req.body.lcrmprocdata, req.body.lcrmentrancedata, req.body.coordinatorid, u.id);
-                    //se este foi criado
-                    if (resultInsertId !== -1) {
-                        result.error = 0;
-                        result.message = "Ficha técnica criada com sucesso";
-                        //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
-                        result.res = { id: resultInsertId, type: 0};
-                    }
+                //tenta criar um novo objeto
+                let resultInsertId = await createDataSheet(
+                    db,
+                    req.body.designation,
+                    req.body.cearcproc,
+                    req.body.cearcprocdata,
+                    req.body.cearcentrancedata,
+                    req.body.lcrmproc,
+                    req.body.lcrmprocdata,
+                    req.body.lcrmentrancedata,
+                    req.body.coordinatorid,
+                    req.body.super_category,
+                    req.body.category,
+                    req.body.sub_category,
+                    u.id);
+                //se este foi criado
+                if (resultInsertId !== -1) {
+                    result.error = 0;
+                    result.message = "Ficha técnica criada com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId };
                 }
                 
             }
         }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_DATASHEET_PREFIX + '/edit/:id/page/:page', async function (req, res) {
+        let result = { error: 4, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        let resultDb = null;
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 3;
+            result.message = "Insira todos os campos obrigatórios";
+            switch(req.params.page) {
+                case "1":
+                    	if (req.body.designation && /**req.body.lcrmproc && req.body.lcrmprocdata && req.body.cearcprocdata && req.body.cearcentrancedata**/ req.body.cearcproc && req.body.coordinatorid && req.body.lcrmentrancedata && req.body.category && req.body.super_category && req.body.sub_category) {
+                            //define erro para o caso de algo correr mal
+                            result.error = 1;
+                            result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                            //todos os campos não obrigatórios ficam como null caso não estejam definidos
+                            req.body.cearcprocdata = global.notRequiredField(req.body.cearcprocdata);
+                            req.body.cearcentrancedata = global.notRequiredField(req.body.cearcentrancedata);
+                            req.body.lcrmproc = global.notRequiredField(req.body.lcrmproc);
+                            req.body.lcrmprocdata = global.notRequiredField(req.body.lcrmprocdata);
+                            //verifica se é para editar ou para criar
+                            //tenta altearar um objeto e se este foi alterado
+                            resultDb=await changeDataSheetP1(
+                                db,
+                                req.params.id,
+                                req.body.designation,
+                                req.body.cearcproc,
+                                req.body.cearcprocdata,
+                                req.body.cearcentrancedata,
+                                req.body.lcrmproc,
+                                req.body.lcrmprocdata,
+                                req.body.lcrmentrancedata,
+                                req.body.coordinatorid,
+                                req.body.super_category,
+                                req.body.category,
+                                req.body.sub_category,
+                                u.id
+                            );
+                        }
+                        break;
+                    case "2":
+						//define erro para o caso de algo correr mal
+						result.error = 1;
+						result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+						//todos os campos não obrigatórios ficam como null caso não estejam definidos
+						req.body.dimensions = global.notRequiredField(req.body.dimensions);
+						req.body.other_dimensions = global.notRequiredField(req.body.other_dimensions);
+						req.body.tipology = global.notRequiredField(req.body.tipology);
+						req.body.site = global.notRequiredField(req.body.site);
+						req.body.object_owner = global.notRequiredField(req.body.object_owner);
+						req.body.owner = global.notRequiredField(req.body.owner);
+						req.body.patron = global.notRequiredField(req.body.patron);
+						//verifica se é para editar ou para criar
+						//tenta altearar um objeto e se este foi alterado
+						resultDb=await changeDataSheetP2(
+							db,
+							req.params.id,
+							req.body.dimensions,
+							req.body.other_dimensions,
+							req.body.tipology,
+							req.body.site,
+							req.body.object_owner,
+							req.body.owner,
+							req.body.patron,
+							u.id
+						);
+                        break;
+                    case "3":
+                    	if (req.body.object_is_a_set) {
+                            //define erro para o caso de algo correr mal
+                            result.error = 1;
+                            result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                            //todos os campos não obrigatórios ficam como null caso não estejam definidos
+                            req.body.set_type = global.notRequiredField(req.body.set_type);
+                            req.body.set_elements = global.notRequiredField(req.body.set_elements);
+                            req.body.set_materials = global.notRequiredField(req.body.set_materials);
+                            req.body.set_inscriptions = global.notRequiredField(req.body.set_inscriptions);
+                            req.body.set_mount = global.notRequiredField(req.body.set_mount);
+                            req.body.set_build = global.notRequiredField(req.body.set_build);
+                            req.body.classification = global.notRequiredField(req.body.classification);
+                            req.body.period = global.notRequiredField(req.body.period);
+                            req.body.quality = global.notRequiredField(req.body.quality);
+                            req.body.style = global.notRequiredField(req.body.style);
+                            req.body.materials_structure = global.notRequiredField(req.body.materials_structure);
+                            req.body.materials_surface = global.notRequiredField(req.body.materials_surface);
+                            req.body.materials_elementsAccessories = global.notRequiredField(req.body.materials_elementsAccessories);
+                            req.body.techniques_structure = global.notRequiredField(req.body.techniques_structure);
+                            req.body.techniques_surface = global.notRequiredField(req.body.techniques_surface);
+                            req.body.techniques_elementsAccessories = global.notRequiredField(req.body.techniques_elementsAccessories);
+                            req.body.small_description = global.notRequiredField(req.body.small_description);
+                            req.body.analogies = global.notRequiredField(req.body.analogies);
+                            req.body.conclusions = global.notRequiredField(req.body.conclusions);
+                            req.body.author = global.notRequiredField(req.body.author);
+                            req.body.dating = global.notRequiredField(req.body.dating);
+                            req.body.origin = global.notRequiredField(req.body.origin);
+                            //verifica se é para editar ou para criar
+                            //tenta altearar um objeto e se este foi alterado
+                            resultDb=await changeDataSheetP3(
+                                db,
+                                req.params.id,
+                                req.body.object_is_a_set,
+                                req.body.set_type,
+                                req.body.set_elements,
+                                req.body.set_materials,
+                                req.body.set_inscriptions,
+                                req.body.set_mount,
+                                req.body.set_build,
+                                req.body.classification,
+                                req.body.period,
+                                req.body.quality,
+                                req.body.style,
+                                req.body.materials_structure,
+                                req.body.materials_surface,
+                                req.body.materials_elementsAccessories,
+                                req.body.techniques_structure,
+                                req.body.techniques_surface,
+                                req.body.techniques_elementsAccessories,
+                                req.body.small_description,
+                                req.body.analogies,
+                                req.body.conclusions,
+                                req.body.author,
+                                req.body.dating,
+                                req.body.origin,
+                                u.id
+                            );
+                        }
+                    break;
+                case "4":
+                    //define erro para o caso de algo correr mal
+                    result.error = 1;
+                    result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                    //todos os campos não obrigatórios ficam como null caso não estejam definidos
+                    req.body.site_description = global.notRequiredField(req.body.site_description);
+                    req.body.cold_temp = global.notRequiredField(req.body.cold_temp);
+                    req.body.hot_temp = global.notRequiredField(req.body.hot_temp);
+                    req.body.cold_humidity = global.notRequiredField(req.body.cold_humidity);
+                    req.body.hot_humidity = global.notRequiredField(req.body.hot_humidity);
+                    req.body.cold_start = global.notRequiredField(req.body.cold_start);
+                    req.body.cold_end = global.notRequiredField(req.body.cold_end);
+                    req.body.hot_start = global.notRequiredField(req.body.hot_start);
+                    req.body.hot_end = global.notRequiredField(req.body.hot_end);
+                    req.body.lightning_type_natural = global.notRequiredField(req.body.lightning_type_natural);
+                    req.body.lightning_origin_artificial = global.notRequiredField(req.body.lightning_origin_artificial);
+                    req.body.artificial_lux = global.notRequiredField(req.body.artificial_lux);
+                    req.body.natural_lux = global.notRequiredField(req.body.natural_lux);
+                    req.body.artificial_uv = global.notRequiredField(req.body.artificial_uv);
+                    req.body.natural_uv = global.notRequiredField(req.body.natural_uv);
+                    req.body.artificial_real_uv = global.notRequiredField(req.body.artificial_real_uv);
+                    req.body.natural_real_uv = global.notRequiredField(req.body.natural_real_uv);
+                    req.body.poluting_agents = global.notRequiredField(req.body.poluting_agents);
+                    req.body.poluting_sources = global.notRequiredField(req.body.poluting_sources);
+                    req.body.poluting_results = global.notRequiredField(req.body.poluting_results);
+                    req.body.env_conclusions = global.notRequiredField(req.body.env_conclusions);
+                    //verifica se é para editar ou para criar
+                    //tenta altearar um objeto e se este foi alterado
+                    resultDb = await changeDataSheetP4(
+                        db,
+                        req.params.id,
+                        req.body.site_description,
+                        req.body.cold_temp,
+                        req.body.hot_temp,
+                        req.body.cold_humidity,
+                        req.body.hot_humidity,
+                        req.body.cold_start,
+                        req.body.cold_end,
+                        req.body.hot_start,
+                        req.body.hot_end,
+                        req.body.lightning_type_natural,
+                        req.body.lightning_origin_artificial,
+                        req.body.artificial_lux,
+                        req.body.natural_lux,
+                        req.body.artificial_uv,
+                        req.body.natural_uv,
+                        req.body.artificial_real_uv,
+                        req.body.natural_real_uv,
+                        req.body.poluting_agents,
+                        req.body.poluting_sources,
+                        req.body.poluting_results,
+                        req.body.env_conclusions,
+                        u.id
+                    );
+                    break;
+                case "6":
+                    //define erro para o caso de algo correr mal
+                    result.error = 1;
+                    result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                    //todos os campos não obrigatórios ficam como null caso não estejam definidos
+                    req.body.support_deterioration = global.notRequiredField(req.body.support_deterioration);
+                    req.body.surface_deterioration = global.notRequiredField(req.body.surface_deterioration);
+                    req.body.elements_deterioration = global.notRequiredField(req.body.elements_deterioration);
+                    req.body.support_diagnostic = global.notRequiredField(req.body.support_diagnostic);
+                    req.body.surface_diagnostic = global.notRequiredField(req.body.surface_diagnostic);
+                    req.body.elements_diagnostic = global.notRequiredField(req.body.elements_diagnostic);
+                    req.body.conclusions_conservation = global.notRequiredField(req.body.conclusions_conservation);
+                    //verifica se é para editar ou para criar
+                    //tenta altearar um objeto e se este foi alterado
+                    resultDb = await changeDataSheetP6(
+                        db,
+                        req.params.id,
+                        req.body.support_deterioration,
+                        req.body.surface_deterioration,
+                        req.body.elements_deterioration,
+                        req.body.support_diagnostic,
+                        req.body.surface_diagnostic,
+                        req.body.elements_diagnostic,
+                        req.body.conclusions_conservation,
+                        u.id
+                        
+                    );
+                    break;
+                case "7":
+                    //define erro para o caso de algo correr mal
+                    result.error = 1;
+                    result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                    //todos os campos não obrigatórios ficam como null caso não estejam definidos
+                    req.body.support = global.notRequiredField(req.body.support);
+                    req.body.surface = global.notRequiredField(req.body.surface);
+                    req.body.elements = global.notRequiredField(req.body.elements);
+                    req.body.conclusions_previous_interventions = global.notRequiredField(req.body.conclusions_previous_interventions);
+                    //verifica se é para editar ou para criar
+                    //tenta altearar um objeto e se este foi alterado
+                    resultDb = await changeDataSheetP7(
+                        db,
+                        req.params.id,
+                        req.body.support,
+                        req.body.surface,
+                        req.body.elements,
+                        req.body.conclusions_previous_interventions,
+                        u.id
+                        
+                    );
+                    break;
+                case "8":
+                    //define erro para o caso de algo correr mal
+                    result.error = 1;
+                    result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                    //todos os campos não obrigatórios ficam como null caso não estejam definidos
+                    req.body.owner_preserve = global.notRequiredField(req.body.owner_preserve);
+                    req.body.owner_conserve = global.notRequiredField(req.body.owner_conserve);
+                    req.body.owner_restaure = global.notRequiredField(req.body.owner_restaure);
+                    req.body.specific_aspects = global.notRequiredField(req.body.specific_aspects);
+                    req.body.prop_preserve = global.notRequiredField(req.body.prop_preserve);
+                    req.body.prop_conserve = global.notRequiredField(req.body.prop_conserve);
+                    req.body.prop_restaure = global.notRequiredField(req.body.prop_restaure);
+                    req.body.support_proposal = global.notRequiredField(req.body.support_proposal);
+                    req.body.support_resources = global.notRequiredField(req.body.support_resources);
+                    req.body.surface_proposal = global.notRequiredField(req.body.surface);
+                    req.body.surface_resources = global.notRequiredField(req.body.surface_resources);
+                    req.body.elements_proposal = global.notRequiredField(req.body.elements);
+                    req.body.elements_resources = global.notRequiredField(req.body.elements_resources);
+                    req.body.observations = global.notRequiredField(req.body.observations);
+                    req.body.proposal_date = global.notRequiredField(req.body.proposal_date);
+                    req.body.acceptation_date = global.notRequiredField(req.body.acceptation_date);
+                    //verifica se é para editar ou para criar
+                    //tenta altearar um objeto e se este foi alterado
+                    resultDb = await changeDataSheetP8(
+                        db,
+                        req.params.id,
+                        req.body.owner_preserve,
+                        req.body.owner_conserve,
+                        req.body.owner_restaure,
+                        req.body.specific_aspects,
+                        req.body.prop_preserve,
+                        req.body.prop_conserve,
+                        req.body.prop_restaure,
+                        req.body.support_proposal,
+                        req.body.support_resources,
+                        req.body.surface_proposal,
+                        req.body.surface_resources,
+                        req.body.elements_proposal,
+                        req.body.elements_resources,
+                        req.body.observations,
+                        req.body.proposal_date,
+                        req.body.acceptation_date,
+                        u.id
+                        
+                    );
+                    break;
+                case "9":
+                    //define erro para o caso de algo correr mal
+                    result.error = 1;
+                    result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                    //todos os campos não obrigatórios ficam como null caso não estejam definidos
+                    req.body.support_intervention = global.notRequiredField(req.body.support_intervention);
+                    req.body.support_resources_intervention = global.notRequiredField(req.body.support_resources_intervention);
+                    req.body.surface_intervention = global.notRequiredField(req.body.surface_intervention);
+                    req.body.surface_resources_intervention = global.notRequiredField(req.body.surface_resources_intervention);
+                    req.body.elements_intervention = global.notRequiredField(req.body.elements_intervention);
+                    req.body.elements_resources_intervention = global.notRequiredField(req.body.elements_resources_intervention);
+                    req.body.observations_intervention = global.notRequiredField(req.body.observations_intervention);
+                    //verifica se é para editar ou para criar
+                    //tenta altearar um objeto e se este foi alterado
+                    resultDb = await changeDataSheetP9(
+                        db,
+                        req.params.id,
+                        req.body.support_intervention,
+                        req.body.support_resources_intervention,
+                        req.body.surface_intervention,
+                        req.body.surface_resources_intervention,
+                        req.body.elements_intervention,
+                        req.body.elements_resources_intervention,
+                        req.body.observations_intervention,
+                        u.id
+                        
+                        
+                    );
+                    break;
+                    default:
+                        result.error=2;
+                        result.message="Pagina não existente";
+            };
+            if (resultDb) {
+                result.error = 0;
+                result.message = "Ficha técnica atualizada com sucesso";
+                //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                result.res = { id: parseInt(req.params.id, 10) };
+            }
+        }
+
         res.json(result);
     });
 
@@ -428,6 +1201,9 @@ exports.appendToExpress = function (app, _db, _prefix) {
                 result.error = 0;
                 result.message = "Lista de fichas técnicas";
                 result.res.datasheets = resultList.list;
+                result.res.datasheets.forEach((ds) => {
+                    ds.image = global.getFirstImage(ds.id);
+                });
             }
         }
         res.json(result);
@@ -503,6 +1279,133 @@ exports.appendToExpress = function (app, _db, _prefix) {
         res.json(result);
     });
 
+    app.post(prefix + ROUTE_CONTACTS_PREFIX + '/create', async function (req, res) {
+        let result = { error: 6, message: "Por favor efectue autenticação", res: { } };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 5;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.full_name && req.body.address &&  req.body.email && req.body.phone ) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //tenta criar um novo objeto
+                let resultInsertId = await createContact(db, req.body.full_name, req.body.address, req.body.email, req.body.phone);
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Contacto criado com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId };
+                } else if (resultInsertId === -2) {
+                    result.error = 4;
+                    result.message = "Já existe um contacto com esse email";
+                } else if (resultInsertId === -3) {
+                    result.error = 3;
+                    result.message = "Já existe um contacto com esse contacto";
+                } else if (resultInsertId === -4) {
+                    result.error = 2;
+                    result.message = "Já existe um contacto com esse nome";
+                }
+            }
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_CONTACTS_PREFIX + '/change/:id', async function (req, res) {
+        let result = { error: 6, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 5;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.full_name && req.body.address && req.body.email && req.body.phone) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido ou o conacto indicado não existe";
+                //tenta criar um novo objeto
+                let resultInsertId = await changeContact(db, req.params.id, req.body.full_name, req.body.address, req.body.email, req.body.phone);
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Contacto alterado com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId };
+                } else if (resultInsertId === -2) {
+                    result.error = 4;
+                    result.message = "Já existe um contacto com esse email";
+                } else if (resultInsertId === -3) {
+                    result.error = 3;
+                    result.message = "Já existe um contacto com esse contacto";
+                } else if (resultInsertId === -4) {
+                    result.error = 3;
+                    result.message = "Já existe um contacto com esse nome";
+                }
+            }
+        }
+        res.json(result);
+    }); 
+
+    app.post(prefix + ROUTE_CONTACTS_PREFIX + '/delete/:id', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //define erro para o caso de algo correr mal
+            result.error = 1;
+            result.message = "Ocorreu um erro, o contacto pode já não existir";
+            //tenta criar um novo objeto
+            let resultInsertId = await deleteContact(db, req.params.id);
+            //se este foi apagado
+            if (resultInsertId >= 0) {
+                result.error = 0;
+                result.message = "Contacto apagado com sucesso";
+                //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                result.res = { id: resultInsertId };
+            } else if (resultInsertId === -2) {
+                result.error = 2;
+                result.message = "O contacto está a ser utilizado, não pode ser apagado";
+            }
+        }
+        res.json(result);
+    });
+
+    app.get(prefix + ROUTE_CONTACTS_PREFIX + '/list', async function (req, res) {
+        let result = { error: 1, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //tenta criar um novo objeto
+            let contact = await listContact(db, !req.query.search ? "" : req.query.search);
+            result.error = 0;
+            result.message = "Contactos";
+            result.res = { contacts: contact };
+        }
+        res.json(result);
+    }); 
+
+    app.get(prefix + ROUTE_CONTACTS_PREFIX + '/:id', async function (req, res) {
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //tenta criar um novo objeto
+            let contact = await getContact(db, req.params.id);
+            //se este foi apagado
+            if (contact !== null) {
+                result.error = 0;
+                result.message = "Contacto";
+                result.res = { contact: contact };
+            } else if (contact === -2) {
+                result.error = 1;
+                result.message = "O contacto não foi encontrado";
+            }
+        }
+        res.json(result);
+    }); 
 
     app.post(prefix + ROUTE_SUPER_CATEGORIES_PREFIX + '/create', async function (req, res) {
         let result = { error: 4, message: "Não tem permissões para criar super categorias", res: {} };
@@ -524,7 +1427,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
                     result.message = "Super categoria criada com sucesso";
                     //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
                     result.res = { id: resultInsertId };
-                }else if(resultInsertId == -2) {
+                }else if(resultInsertId === -2) {
                     result.error=2;
                     result.message="Já existe uma super categoria com esse nome";
                 }
@@ -762,4 +1665,26 @@ exports.appendToExpress = function (app, _db, _prefix) {
         res.json(result);
     });
 
+
+    app.get(prefix + ROUTE_DATASHEET_PREFIX + '/:id', async function (req, res) {
+        let result = {
+            error: 2, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //caso ocorra algum tipo de erro
+            result.error = 1;
+            result.message = "Ocorreu um erro na aquisição do objeto, por favor tente novamente";
+            //lista fichas técnicas
+            let resultDb = await getDatasheet(db, req.params.id);
+            //verifica se ocorreu algum erro
+            if (!resultDb.error) {
+                result.error = 0;
+                result.message = "Objeto";
+                result.res.datasheet = resultDb.datasheet;
+                result.res.datasheet.images = global.getAllImagesFromDatasheet(result.res.datasheet.id);
+            }
+        }
+        res.json(result);
+    });
 };

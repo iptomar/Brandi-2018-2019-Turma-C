@@ -508,7 +508,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
         let u = thiss.getUserFromSession(req);
         //verifica se ja existe o utilizador autenticado
         if (u) {
-            if (u.type_user === infoDB.ADMIN_TYPE_NAME || !req.body.id || req.body.id === u.id+"") {
+            if (u.type_user === infoDB.ADMIN_TYPE_NAME || !req.body.id || req.body.id === u.id) {
                 result.error = 2;
                 result.message = "Insira todos os campos obrigatórios";
                 if (req.body.fullname && req.body.address && req.body.cellphone && req.body.title && req.body.qualifications) {
@@ -516,7 +516,12 @@ exports.appendToExpress = function (app, _db, _prefix) {
                     //indica que nãoi foi autenticado até verificar
                     result.message = "Ocorreu um erro na alteração do utilizador, verifique se todos os campos săo válidos";
                     let id = (u.type_user === infoDB.ADMIN_TYPE_NAME ? (!req.body.id ? u.id : req.body.id) : u.id) //se for admin pode ser o id que vem do cliente ou o id do proprio utilizador, se não for, só pode ser o id do próprio utilizador
-                    let u_type = (u.type_user === infoDB.ADMIN_TYPE_NAME ? (!req.body.usertypeid ? u.id_type_user : req.body.usertypeid) : u.id_type_user); //se for admin, pode escolher o tipo de utilizador, se não mé obrigatóriamente o tipo de utilizador que estava
+                    let u_type = (u.type_user === infoDB.ADMIN_TYPE_NAME ? (!req.body.usertypeid ? u.id_type_user : (u.id === req.body.id ? u.id_type_user : req.body.usertypeid)) : u.id_type_user); //se for admin, pode escolher o tipo de utilizador, se não mé obrigatóriamente o tipo de utilizador que estava
+                    console.log(u.id);
+                    console.log(req.body.id);
+                    console.log(u_type);
+                    console.log(req.body.usertypeid);
+                    console.log(u.id_type_user);
                     //verifica os dados de autenticação
                     let resDb = await thiss.changeUser(db,
                         id,
@@ -630,6 +635,29 @@ exports.appendToExpress = function (app, _db, _prefix) {
                     result.res.users.push(u.getJSON());
                 });
             }
+        }
+        //define a resposta
+        res.json(result);
+    });
+
+    app.get(prefix + ROUTE_USER_PREFIX + '/listNames', async function (req, res) {
+        //prepara resposta para cliente
+        let result = { error: 1, message: "Não tem permissões para listar utilizadores", res: { users: [] } };
+        //carrega os dados em sessão do utilizador
+        let u = thiss.getUserFromSession(req);
+        //verifica se está autenticado
+        if (u) {
+            //verifica se este é administrador
+            //if (u.type_user === infoDB.ADMIN_TYPE_NAME) {
+                let resultDb = await thiss.geUserList(db, !req.query.search ? "" : req.query.search);
+                result.error = 0;
+                result.message = "Lista de utilizadores";
+                //por cada utilizador pede o  json deste
+                resultDb.users.forEach(u => {
+                    let u2 = u.getJSON();
+                    result.res.users.push({id: u.id, full_name: u.full_name});
+                });
+            //}
         }
         //define a resposta
         res.json(result);

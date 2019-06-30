@@ -1,11 +1,30 @@
 ﻿const infoDB = require('../InfoDB.js');
 
 //Query DE CRIAÇÃO DE UM OBJETO
-exports.CREATE_OBJECT = "INSERT INTO " + infoDB.TBL_OBJECT + "(object_designation, CEARC_process, CEARC_process_date, CEARC_entry_date, LCRM_process, LCRM_process_date, LCRM_entry_date, coordinator, owner_intervention_type, object_is_a_set, super_category, category, sub_category, last_modified_user, object_created_date, last_modified_date) VALUES(?,?,?,?,?,?,?,?,1,1,1,1,1,?,NOW(),NOW())";
-//Query DE ATUALIZAÇÃO DE UM OBJETO
-exports.UPDATE_OBJECT = "UPDATE " + infoDB.TBL_OBJECT + " SET object_designation=?, CEARC_process=?, CEARC_process_date=?, CEARC_entry_date=?, LCRM_process=?, LCRM_process_date=?, LCRM_entry_date=?, coordinator=?, last_modified_user=?, last_modified_date=NOW() WHERE id=?";
+exports.CREATE_OBJECT = "INSERT INTO " + infoDB.TBL_OBJECT + "(object_designation, CEARC_process, CEARC_process_date, CEARC_entry_date, LCRM_process, LCRM_process_date, LCRM_entry_date, coordinator, owner_intervention_type, object_is_a_set, super_category, category, sub_category, last_modified_user, object_created_date, last_modified_date) VALUES(?,?,?,?,?,?,?,?,0,0,?,?,?,?,NOW(),NOW())";
+//Query DE ATUALIZAÇÃO DE UM OBJETO Pagina 1- Objecto
+exports.UPDATE_OBJECT_P1 = "UPDATE " + infoDB.TBL_OBJECT + " SET object_designation=?, CEARC_process=?, CEARC_process_date=?, CEARC_entry_date=?, LCRM_process=?, LCRM_process_date=?, LCRM_entry_date=?, coordinator=?, last_modified_user=?,super_category=?, category=?, sub_category=?, last_modified_date=NOW() WHERE id=?";
+//Query DE ATUALIZAÇÃO DE UM OBJETO Pagina 2- Parte 2
+exports.UPDATE_OBJECT_P2 = "UPDATE " + infoDB.TBL_OBJECT + " SET  dimensions=?,other_dimensions=?,tipology=?,site=?,object_owner=?,owner=?,patron=?,last_modified_user=?,last_modified_date=NOW() WHERE id=?";
+//Query DE ATUALIZAÇÃO DE UM OBJETO Pagina 3- Características
+exports.UPDATE_OBJECT_P3 = "UPDATE " + infoDB.TBL_OBJECT + " SET object_is_a_set=?,set_type=?,set_elements=?,set_materials=?,set_inscriptions=?,set_mount=?,set_build=?,classification=?,period=?,quality=?,style=?,materials_structure=?, materials_surface=?, materials_elementsAccessories=?, techniques_structure=?, techniques_surface=?, techniques_elementsAccessories=?,small_description=?,analogies=?,conclusions=?,author=?,dating=?,origin=?,last_modified_user=?,last_modified_date=NOW() WHERE id=?";
+//Query DE ATUALIZAÇÃO DE UM OBJETO Pagina 4- Local
+exports.UPDATE_OBJECT_P4 = "UPDATE " + infoDB.TBL_OBJECT + " SET site_description=?,cold_temp=?,hot_temp=?,cold_humidity=?,hot_humidity=?,cold_start=?,cold_end=?,hot_start=?,hot_end=?,lightning_type_natural=?,lightning_origin_artificial=?,artificial_lux=?, natural_lux=?, artificial_uv=?, natural_uv=?, artificial_real_uv=?, natural_real_uv=?,poluting_agents=?,poluting_sources=?,poluting_results=?,env_conclusions=?,last_modified_user=?,last_modified_date=NOW() WHERE id=?";
+//Query DE ATUALIZAÇÃO DE UM OBJETO Pagina 6- Estado de Conservação
+exports.UPDATE_OBJECT_P6 = "UPDATE " + infoDB.TBL_OBJECT + " SET support_deterioration=?, surface_deterioration=?, elements_deterioration=?, support_diagnostic=?, surface_diagnostic=?, elements_diagnostic=?, conclusions_conservation=?,last_modified_user=?,last_modified_date=NOW() WHERE id=?";
+//Query DE ATUALIZAÇÃO DE UM OBJETO Pagina 7- Intervenções Anteriores
+exports.UPDATE_OBJECT_P7 = "UPDATE " + infoDB.TBL_OBJECT + " SET support=?, surface=?, elements=?, conclusions_previous_interventions=?,last_modified_user=?,last_modified_date=NOW() WHERE id=?";
+//Query DE ATUALIZAÇÃO DE UM OBJETO Pagina 8- Proposta de Intervenção
+exports.UPDATE_OBJECT_P8 = "UPDATE " + infoDB.TBL_OBJECT + " SET owner_preserve=?, owner_conserve=?, owner_restaure=?, specific_aspects=?, prop_preserve=?, prop_conserve=?, prop_restaure=?, support_proposal=?, support_resources=?, surface_proposal=?, surface_resources=?, elements_proposal=?, elements_resources=?, observations=?, proposal_date=?, acceptation_date=?,last_modified_user=?,last_modified_date=NOW() WHERE id=?";
+//Query DE ATUALIZAÇÃO DE UM OBJETO Pagina 9- Intervenção Realizada
+exports.UPDATE_OBJECT_P9 = "UPDATE " + infoDB.TBL_OBJECT + " SET support_intervention=?, support_resources_intervention=?, surface_intervention=?, surface_resources_intervention=?, elements_intervention=?, elements_resources_intervention=?, observations_intervention=?,last_modified_user=?,last_modified_date=NOW() WHERE id=?";
+
+
 //Query DE listagem DE OBJETOS
-exports.LIST_OBJECT = "SELECT a.id,a.object_designation, a.CEARC_process, a.CEARC_process_date, a.CEARC_entry_date, a.LCRM_process, a.LCRM_process_date, a.LCRM_entry_date, a.coordinator, b.full_name AS coordinator_name, a.last_modified_user, c.full_name AS last_modified_user_name, a.last_modified_date,a.object_created_date FROM " + infoDB.TBL_OBJECT + " a, " + infoDB.TBL_USERS + " b, " + infoDB.TBL_USERS + " c WHERE a.coordinator=b.id AND a.last_modified_user=c.id AND object_designation like ?";
+exports.GET_OBJECT = "SELECT id,object_designation, CEARC_process, CEARC_process_date, CEARC_entry_date, LCRM_process, LCRM_process_date, LCRM_entry_date, coordinator, last_modified_user, last_modified_date,object_created_date, super_category, category, sub_category,dimensions,other_dimensions,tipology,site,object_owner,owner,patron,object_is_a_set,set_type,set_elements,set_materials,set_inscriptions,set_mount,set_build,classification,period,quality,style,small_description,analogies,conclusions,author,dating,origin,materials_structure, materials_surface, materials_elementsAccessories, techniques_structure, techniques_surface, techniques_elementsAccessories,site_description, cold_temp, hot_temp, cold_humidity, hot_humidity, cold_start, cold_end, hot_start, hot_end, lightning_type_natural, lightning_origin_artificial, artificial_lux, natural_lux, artificial_uv, natural_uv, artificial_real_uv, natural_real_uv, poluting_agents, poluting_sources, poluting_results, env_conclusions, support_deterioration, surface_deterioration, elements_deterioration, support_diagnostic, surface_diagnostic, elements_diagnostic, conclusions_conservation,support, surface, elements, conclusions_previous_interventions,owner_preserve, owner_conserve, owner_restaure, specific_aspects, prop_preserve, prop_conserve, prop_restaure, support_proposal, support_resources, surface_proposal, surface_resources, elements_proposal, elements_resources, observations, proposal_date,acceptation_date,support_intervention, support_resources_intervention, surface_intervention, surface_resources_intervention, elements_intervention, elements_resources_intervention, observations_intervention, acceptation_date FROM " + infoDB.TBL_OBJECT + " WHERE id = ? limit 1";
+
+//Query DE listagem DE OBJETOS
+exports.LIST_OBJECT = "SELECT id,object_designation FROM " + infoDB.TBL_OBJECT + " WHERE object_designation like ?";
 
 //Query DE listagem DE SUPER CATEGORIAS
 exports.LIST_SUPER_CATEGORY = "SELECT id,supercategory FROM " + infoDB.TBL_SUPERCATEGORIES + " WHERE supercategory like ?";
@@ -56,3 +75,13 @@ exports.DELETE_SUPER_CATEGORY = "DELETE FROM " + infoDB.TBL_SUPERCATEGORIES + " 
 exports.DELETE_CATEGORY = "DELETE FROM " + infoDB.TBL_CATEGORIES + " WHERE id=?";
 //Query DE listagem DE SUB CATEGORIAS
 exports.DELETE_SUB_CATEGORY = "DELETE FROM " + infoDB.TBL_SUBCATEGORIES + " WHERE id=?";
+
+
+exports.CREATE_CONTACT = "INSERT INTO " + infoDB.TBL_CONTACTS + "(full_name, address, email, phone) VALUES(?,?,?,?)";
+exports.DELETE_CONTACT = "DELETE FROM " + infoDB.TBL_CONTACTS + " WHERE id=?";
+exports.GET_CONTACT = "SELECT id, full_name, address, email, phone FROM " + infoDB.TBL_CONTACTS + " WHERE id=? LIMIT 1";
+exports.LIST_CONTACTS = "SELECT id, full_name, address, email, phone FROM " + infoDB.TBL_CONTACTS + " WHERE full_name like ? OR address like ? OR email like ? OR phone like ?";
+exports.SEARCH_CONTACT_1 = "SELECT id, full_name, address, email, phone FROM " + infoDB.TBL_CONTACTS + " WHERE full_name = ? OR email = ? OR phone = ? LIMIT 1";
+exports.SEARCH_CONTACT_CHANGE_1 = "SELECT id, full_name, address, email, phone FROM " + infoDB.TBL_CONTACTS + " WHERE (full_name = ? OR email = ? OR phone = ?) && id != ? LIMIT 1";
+exports.CHNAGE_CONTACT = "UPDATE " + infoDB.TBL_CONTACTS + " SET full_name=?, address=?, email=?, phone=? WHERE id = ?";
+exports.CHECK_CONTACT_USUAGE = "SELECT id FROM " + infoDB.TBL_OBJECT + " WHERE owner = ? OR patron = ? OR object_owner = ? LIMIT 1";
