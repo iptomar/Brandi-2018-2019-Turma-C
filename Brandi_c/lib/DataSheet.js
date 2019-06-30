@@ -17,6 +17,7 @@ const ROUTE_SUB_CATEGORIES_PREFIX = ROUTE_DATASHEET_PREFIX + "/sub_categories";
 const ROUTE_CONTACTS_PREFIX = ROUTE_DATASHEET_PREFIX + "/contacts";
 const ROUTE_SOURCES_PREFIX = ROUTE_DATASHEET_PREFIX + "/sources";
 const ROUTE_TESTS_PREFIX = ROUTE_DATASHEET_PREFIX + "/tests";
+const ROUTE_WORKSHEET_PREFIX = ROUTE_DATASHEET_PREFIX + "/worksheet";
 
 
 /*
@@ -120,7 +121,7 @@ async function deleteTests(db, id) {
 
 
 /**
- * cria fonte
+ * cria teste
  * @param {database.Database} db Class de ligação à base de dados
  * @param {number} id da fonte
  * @returns {JSON} {<exame>}
@@ -156,6 +157,62 @@ async function getTest(db, id) {
 
 /*
  * FIM FIM  FIM FIM testes -------------------------------------------------------------------------
+ * /
+
+/*
+ * Folha de Obra -------------------------------------------------------------------------
+ * /
+ 
+ 
+ 
+ 
+/**
+ * lista worksheet
+ * 
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id_object id do objeto associado
+ * @returns {Array<Sourdces>} [<Folhas de Obra>]
+ */
+async function listWorksheet(db, id_object) {
+    //lista folhas de obra
+    let resultDb = await db.doQuery(q_DataSheet.LIST_WORKSHEET, [id_object]);
+    //se não ocorreu nenhum erro, devolve lista
+    if (!resultDb.error) {
+        return resultDb.res;
+    }
+    return [];
+}
+
+
+/**
+ * Edita a folha
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} object_id id do objeto associado
+ * @param {Date} worksheet_date data da folha de obra
+ * @param {string} procedure_type tipo de procedimento
+ * @param {string} observations observações
+ * @param {string} materials materiais da obra
+ * @param {number} amount quantidades
+ * @param {number} duration duração do processo
+ * @param {number} technician técnico
+ * @returns {number} id do exame ou -1 caso ocorra erro, -2 caso o objeto nao exista
+ */
+async function changeWorksheet(db, id, worksheet_date, procedure_type, observations, materials, amount, duration, technician) {
+    let result = -1;
+    //alteração da folha
+    let resultDb = await db.doQuery(q_DataSheet.CHANGE_WORKSHEET, [worksheet_date, procedure_type, observations, materials, amount, duration, technician, id]);
+    //se não ocorreu nenhum erro
+    if (!resultDb.error) {
+        result = 0;
+    }
+    return result;
+}
+
+
+
+
+/*
+ * FIM FIM  FIM FIM Folha de Obra -------------------------------------------------------------------------
  * /
 
 /**
@@ -1140,6 +1197,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
         res.json(result);
     });
 
+
     app.post(prefix + ROUTE_TESTS_PREFIX + '/change/:id', async function (req, res) {
         let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
         //verifica se utilizador está autenticado
@@ -1254,7 +1312,60 @@ exports.appendToExpress = function (app, _db, _prefix) {
             }
         }
         res.json(result);
-    }); 
+    });
+
+
+    app.get(prefix + ROUTE_WORKSHEET_PREFIX + '/list/:id_object', async function (req, res) {
+        let result = { error: 1, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //lista folhas
+            let worksheet = await listWorksheet(db, req.params.id_object);
+            result.error = 0;
+            result.message = "Folhas de Obras";
+            result.res = { worksheet: worksheet };
+        }
+        res.json(result);
+    });
+
+
+    app.post(prefix + ROUTE_WORKSHEET_PREFIX + '/change/:id', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 2;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.worksheet_date && req.body.procedure_type && req.body.observations && req.body.materials && req.body.amount && req.body.duration && req.body.technician) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //verifica se é para editar ou para criar
+                //tenta criar um novo objeto
+                let resultInsertId = await changeWorksheet(
+                    db,
+                    req.params.id,
+                    req.body.worksheet_date,
+                    req.body.procedure_type,
+                    req.body.observations,
+                    req.body.materials,
+                    req.body.amount,
+                    req.body.duration,
+                    req.body.technician
+
+                );
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Folha de obra altearada com sucesso";
+                }
+
+            }
+        }
+        res.json(result);
+    });
 
 
     app.post(prefix + ROUTE_DATASHEET_PREFIX + '/delete_image/:id/:image', async function (req, res) {
