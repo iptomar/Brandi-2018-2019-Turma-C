@@ -31,11 +31,12 @@ const ROUTE_WORKSHEET_PREFIX = ROUTE_DATASHEET_PREFIX + "/worksheet";
  * @param {database.Database} db Class de ligação à base de dados
  * @param {number} id_object id do objeto associado
  * @param {string} search palavra pesquisa
- * @returns {Array<Sourdces>} [<exames>]
+ * @returns {Array<Sources>} [<exames>]
  */
-async function listTests(db, id_object) {
+async function listTests(db, id_object, search) {
+    let s = "%" + search + "%";
     //lista tests
-    let resultDb = await db.doQuery(q_DataSheet.LIST_TESTS, [id_object]);
+    let resultDb = await db.doQuery(q_DataSheet.LIST_TESTS, [id_object,s,s,s,s,s]);
     //se não ocorreu nenhum erro, devolve lista
     if (!resultDb.error) {
         return resultDb.res;
@@ -45,28 +46,26 @@ async function listTests(db, id_object) {
 
 
 
+
 /**
  * 
+ * Cria um exame
  * @param {database.Database} db Class de ligação à base de dados
  * @param {number} object_id id do objeto associado
- * @param {number} Q1 questao 1
- * @param {number} Q2 questao 2
- * @param {number} Q3 questao 3
- * @param {number} Q4 questao 4
- * @param {number} Q5 questao 5
- * @param {number} Q6 questao 6
- * @param {string} results resultados dos exames
- * @param {string} conclusions conclusões dos exames
- * @returns {number} id do exame ou -1 caso ocorra erro, -2 caso o objeto nao exista
+ * @param {string} type_reference tipo de referencia
+ * @param {string} location localização do exame
+ * @param {string} objectives objetivos do exame
+ * @param {number} technician técnico do exame
+ * @param {string} results resultados do exame
  */
-async function createTests(db, object_id, Q1, Q2, Q3, Q4, Q5, Q6, results, conclusions) {
+async function createTests(db, id_object, type_reference, location, objectives, technician, results) {
     let result = -1;
     //procura exame se existe
-    let checkObjecto = await db.doQuery(q_DataSheet.CHECK_OBJECT, [object_id]);
+    let checkObjecto = await db.doQuery(q_DataSheet.CHECK_OBJECT, [id_object]);
     if (!checkObjecto.error) {
         if (checkObjecto.res.length > 0) {
             //criação do novo exame
-            let resultDb = await db.doQuery(q_DataSheet.CREATE_TESTS, [object_id, Q1, Q2, Q3, Q4, Q5, Q6, results, conclusions]);
+            let resultDb = await db.doQuery(q_DataSheet.CREATE_TESTS, [id_object, type_reference, location, objectives, technician, results]);
             //se não ocorreu nenhum erro, devolve o id inserido
             if (!resultDb.error) {
                 result = resultDb.res.insertId;
@@ -80,20 +79,17 @@ async function createTests(db, object_id, Q1, Q2, Q3, Q4, Q5, Q6, results, concl
  * Edita o exame
  * @param {database.Database} db Class de ligação à base de dados
  * @param {number} object_id id do objeto associado
- * @param {number} Q1 questao 1
- * @param {number} Q2 questao 2
- * @param {number} Q3 questao 3
- * @param {number} Q4 questao 4
- * @param {number} Q5 questao 5
- * @param {number} Q6 questao 6
- * @param {string} results resultados dos exames
- * @param {string} conclusions conclusões dos exames
+ * @param {string} type_reference tipo de referencia
+ * @param {string} location localização do exame
+ * @param {string} objectives objetivos do exame
+ * @param {number} technician técnico do exame
+ * @param {string} results resultados do exame
  * @returns {number} id do exame ou -1 caso ocorra erro, -2 caso o objeto nao exista
  */
-async function changeTests(db, id, Q1, Q2, Q3, Q4, Q5, Q6, results, conclusions) {
+async function changeTests(db, id, type_reference, location, objectives, technician, results) {
     let result = -1;
     //alteração do novo exame
-    let resultDb = await db.doQuery(q_DataSheet.CHANGE_TESTS, [Q1, Q2, Q3, Q4, Q5, Q6, results, conclusions, id]);
+    let resultDb = await db.doQuery(q_DataSheet.CHANGE_TESTS, [type_reference, location, objectives, technician, results, id]);
     //se não ocorreu nenhum erro
     if (!resultDb.error) {
         result = 0;
@@ -121,9 +117,9 @@ async function deleteTests(db, id) {
 
 
 /**
- * cria teste
+ *busca exame
  * @param {database.Database} db Class de ligação à base de dados
- * @param {number} id da fonte
+ * @param {number} id do exame
  * @returns {JSON} {<exame>}
  */
 async function getTest(db, id) {
@@ -463,17 +459,18 @@ async function getSource(db, id) {
  * @param {string} source fonte
  * @param {string} source_type tipo de fonte
  * @param {string} source_site site da fonte
- * @param {string} source_quota 
+ * @param {string} source_quota quota da source
+ * @param {Date} source_date data de criação da fonte
  * @returns {number} id da foñte ou -1 caso ocorra erro, -2 caso o objeto nao exista
  */
-async function createSource(db, object_id, source_type_set, source, source_type, source_site, source_quota) {
+async function createSource(db, object_id, source_type_set, source, source_type, source_site, source_quota, source_date) {
     let result = -1;
     //procura contacto se existe
     let checkObjecto = await db.doQuery(q_DataSheet.CHECK_OBJECT, [object_id]);
     if (!checkObjecto.error) {
         if (checkObjecto.res.length > 0) {
             //criação do novo contacto
-            let resultDb = await db.doQuery(q_DataSheet.CREATE_SOURCE, [object_id, source_type_set, source, source_type, source_site, source_quota]);
+            let resultDb = await db.doQuery(q_DataSheet.CREATE_SOURCE, [object_id, source_type_set, source, source_type, source_site, source_quota, source_date]);
             //se não ocorreu nenhum erro, devolve o id inserido
             if (!resultDb.error) {
                 result = resultDb.res.insertId;
@@ -493,12 +490,13 @@ async function createSource(db, object_id, source_type_set, source, source_type,
  * @param {string} source_type tipo de fonte
  * @param {string} source_site site da fonte
  * @param {string} source_quota 
+ * @param {Date} source_date data de criação da fonte
  * @returns {number} 0 caso nao ocorra nenhum erro ou -1 caso ocorra erro
  */
-async function changeSource(db, id, source_type_set, source, source_type, source_site, source_quota) {
+async function changeSource(db, id, source_type_set, source, source_type, source_site, source_quota, source_date) {
     let result = -1;
     //alteração do novo contacto
-    let resultDb = await db.doQuery(q_DataSheet.CHANGE_SOURCE, [source_type_set, source, source_type, source_site, source_quota,id]);
+    let resultDb = await db.doQuery(q_DataSheet.CHANGE_SOURCE, [source_type_set, source, source_type, source_site, source_quota, source_date,id]);
     //se não ocorreu nenhum erro
     if (!resultDb.error) {
         result = 0;
@@ -905,6 +903,33 @@ async function changeDataSheetP4(db, id, site_description, cold_temp, hot_temp, 
 
 /**
  * 
+ *
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da ficha técnica
+ * @param {any} tests_Q1 pergunta 1, checkbox
+ * @param {any} tests_Q2 pergunta 2, checkbox
+ * @param {any} tests_Q3 pergunta 3, checkbox
+ * @param {any} tests_Q4 pergunta 4, checkbox
+ * @param {any} tests_Q5 pergunta 5, checkbox
+ * @param {any} tests_Q6 pergunta 6, checkbox
+ * @param {any} tests_results resultado dos testes
+ * @param {any} tests_conclusions conlcusão dos testes
+ * @param {any} userId id do utilizador autenticado
+ */
+async function changeDataSheetP5(db, id, tests_Q1, tests_Q2, tests_Q3, tests_Q4, tests_Q5, tests_Q6, tests_results, tests_conclusions, userId) {
+    let result = false;
+    //criação do novo objeto
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P5, [tests_Q1, tests_Q2, tests_Q3, tests_Q4, tests_Q5, tests_Q6, tests_results, tests_conclusions, userId, id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    console.log(resultDb);
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0;
+    }
+    return result;
+}
+
+/**
+ * 
  * @param {database.Database} db Class de ligação à base de dados
  * @param {number} id id da ficha técnica
  * @param {String} support_deterioration Deterioração da Estrutura
@@ -1078,7 +1103,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
             //verifica se todos os campos obrigatórios estão presentes
             result.error = 2;
             result.message = "Insira todos os campos obrigatórios";
-            if (req.body.source_type_set && req.body.source && req.body.source_type && req.body.source_site && req.body.source_quota) {
+            if (req.body.source_type_set && req.body.source && req.body.source_type && req.body.source_site && req.body.source_quota && req.body.source_date) {
                 //define erro para o caso de algo correr mal
                 result.error = 1;
                 result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
@@ -1091,7 +1116,8 @@ exports.appendToExpress = function (app, _db, _prefix) {
                     req.body.source,
                     req.body.source_type,
                     req.body.source_site,
-                    req.body.source_quota
+                    req.body.source_quota,
+                    req.body.source_date
                 );
                 //se este foi criado
                 if (resultInsertId >= 0) {
@@ -1112,7 +1138,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
             //verifica se todos os campos obrigatórios estão presentes
             result.error = 2;
             result.message = "Insira todos os campos obrigatórios";
-            if (req.body.object_id && req.body.source_type_set && req.body.source && req.body.source_type && req.body.source_site && req.body.source_quota) {
+            if (req.body.object_id && req.body.source_type_set && req.body.source && req.body.source_type && req.body.source_site && req.body.source_quota && req.body.source_date) {
                 //define erro para o caso de algo correr mal
                 result.error = 1;
                 result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
@@ -1125,7 +1151,8 @@ exports.appendToExpress = function (app, _db, _prefix) {
                     req.body.source,
                     req.body.source_type,
                     req.body.source_site,
-                    req.body.source_quota
+                    req.body.source_quota,
+                    req.body.source_date
                 );
                 //se este foi criado
                 if (resultInsertId >= 0) {
@@ -1188,8 +1215,8 @@ exports.appendToExpress = function (app, _db, _prefix) {
         //verifica se utilizador está autenticado
         let u = auth.getUserFromSession(req);
         if (u) {
-            //lista fontes
-            let tests = await listTests(db, req.params.id_object);
+            //lista exames
+            let tests = await listTests(db, req.params.id_object, !req.query.search ? "" : req.query.search);
             result.error = 0;
             result.message = "Exames";
             result.res = { tests: tests };
@@ -1206,7 +1233,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
             //verifica se todos os campos obrigatórios estão presentes
             result.error = 2;
             result.message = "Insira todos os campos obrigatórios";
-            if (req.body.Q1 && req.body.Q2 && req.body.Q3 && req.body.Q4 && req.body.Q5 && req.body.Q6 && req.body.results && req.body.conclusions) {
+            if (req.body.type_reference && req.body.location && req.body.objectives && req.body.technician && req.body.results) {
                 //define erro para o caso de algo correr mal
                 result.error = 1;
                 result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
@@ -1215,15 +1242,11 @@ exports.appendToExpress = function (app, _db, _prefix) {
                 let resultInsertId = await changeTests(
                     db,
                     req.params.id,
-                    req.body.Q1,
-                    req.body.Q2,
-                    req.body.Q3,
-                    req.body.Q4,
-                    req.body.Q5,
-                    req.body.Q6,
-                    req.body.results,
-                    req.body.conclusions
-
+                    req.body.type_reference,
+                    req.body.location,
+                    req.body.objectives,
+                    req.body.technician,
+                    req.body.results
                 );
                 //se este foi criado
                 if (resultInsertId >= 0) {
@@ -1244,7 +1267,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
             //verifica se todos os campos obrigatórios estão presentes
             result.error = 2;
             result.message = "Insira todos os campos obrigatórios";
-            if (req.body.object_id && req.body.Q1 && req.body.Q2 && req.body.Q3 && req.body.Q4 && req.body.Q5 && req.body.Q6 && req.body.results && req.body.conclusions) {
+            if (req.body.object_id && req.body.type_reference && req.body.location && req.body.objectives && req.body.technician && req.body.results) {
                 //define erro para o caso de algo correr mal
                 result.error = 1;
                 result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
@@ -1253,14 +1276,11 @@ exports.appendToExpress = function (app, _db, _prefix) {
                 let resultInsertId = await createTests(
                     db,
                     req.body.object_id,
-                    req.body.Q1,
-                    req.body.Q2,
-                    req.body.Q3,
-                    req.body.Q4,
-                    req.body.Q5,
-                    req.body.Q6,
-                    req.body.results,
-                    req.body.conclusions
+                    req.body.type_reference,
+                    req.body.location,
+                    req.body.objectives,
+                    req.body.technician,
+                    req.body.results
                 );
                 //se este foi criado
                 if (resultInsertId >= 0) {
@@ -1302,7 +1322,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
             //define erro para o caso de algo correr mal
             result.error = 1;
             result.message = "Ocorreu um erro, o exame pode não existir";
-            //tenta buscar fonte
+            //tenta buscar exame
             let resultInsertId = await getTest(db, req.params.id);
             //se encontrou
             if (resultInsertId !== null) {
@@ -1663,6 +1683,36 @@ exports.appendToExpress = function (app, _db, _prefix) {
                         req.body.poluting_results,
                         req.body.env_conclusions,
                         u.id
+                    );
+                    break;
+                case "5":
+                    //define erro para o caso de algo correr mal
+                    result.error = 1;
+                    result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                    //todos os campos não obrigatórios ficam como null caso não estejam definidos
+                    req.body.tests_Q1 = global.notRequiredField(req.body.tests_Q1);
+                    req.body.tests_Q2 = global.notRequiredField(req.body.tests_Q2);
+                    req.body.tests_Q3 = global.notRequiredField(req.body.tests_Q3);
+                    req.body.tests_Q4 = global.notRequiredField(req.body.tests_Q4);
+                    req.body.tests_Q5 = global.notRequiredField(req.body.tests_Q5);
+                    req.body.tests_Q6 = global.notRequiredField(req.body.tests_Q6);
+                    req.body.tests_results = global.notRequiredField(req.body.tests_results);
+                    req.body.tests_conclusions = global.notRequiredField(req.body.tests_conclusions);
+                    //verifica se é para editar ou para criar
+                    //tenta altearar um objeto e se este foi alterado
+                    resultDb = await changeDataSheetP5(
+                        db,
+                        req.params.id,
+                        req.body.tests_Q1,
+                        req.body.tests_Q2,
+                        req.body.tests_Q3,
+                        req.body.tests_Q4,
+                        req.body.tests_Q5,
+                        req.body.tests_Q6,
+                        req.body.tests_results,
+                        req.body.tests_conclusions,
+                        u.id
+
                     );
                     break;
                 case "6":
