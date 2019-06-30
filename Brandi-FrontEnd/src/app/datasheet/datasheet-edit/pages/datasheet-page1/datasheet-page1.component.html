@@ -1,0 +1,135 @@
+<div id="editDatasheetCarousel" class="carousel slide m-auto">
+  <div class="carousel-inner">
+    <div class="carousel-item" *ngFor="let image of _datasheet?.images; let i = index;" [class.active]="i === 0">
+      <div class="close-image" (click)="deleteImage(i)" *ngIf="_isEditing">
+        <i class="fa fa-times-circle"></i>
+      </div>
+      <img src="/api/datasheet/get_image/{{_datasheet.id}}/{{image}}">
+    </div>
+    <div class="carousel-item active" *ngIf="_datasheet == null || _datasheet?.images == null || _datasheet?.images.length === 0">
+        <img src="/api/datasheet/get_image/-1/-1">
+      </div>
+  </div>
+  <a class="carousel-control-prev" href="#editDatasheetCarousel" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#editDatasheetCarousel" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+
+<div *ngIf='messageEditErr !== ""' class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+  <strong>{{messageEditErr}}</strong>
+  <button type="button" class="close" aria-label="Close" (click)='messageEditErr=""'>
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!--mensage de alerta acaba aqui-->
+
+<div *ngIf='messageEditSuccess !== ""' class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+  <strong>{{messageEditSuccess}}</strong>
+  <button type="button" class="close" aria-label="Close" (click)='messageEditSuccess=""'>
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!--Inicio de campos-->
+<form (submit)="sendimage($event)" *ngIf="_isEditing">
+    <div class="form-group" (submit)="sendimage($event)">
+      <label for="design">Adicionar imagem</label>
+      <div class="row ml-0 mr-0">
+        <input name="image" type="file" required class="form-control col-md-10" placeholder="Imagem do objecto" />
+        <button type="submit" class="btn btn-primary col-md-2"><i class="fa fa-arrow-circle-up"></i></button>
+      </div>
+  </div>
+</form>
+<div class="form-group">
+  <label for="design">Designação</label>
+  <input name="design" id="design" type="text" class="form-control" placeholder="Designação de objecto" [readonly]="!_isEditing"
+    [value]="_datasheet?.object_designation" />
+</div>
+<div class="row">
+  <div class="col-lg-4">
+    <div class="form-group">
+      <label for="CEARC">Numero de Processo CEARC</label>
+      <input name="CEARC" id="CEARC" type="text" class="form-control" placeholder="Numero de Processo CEARC"
+        [readonly]="!_isEditing" [value]="_datasheet?.CEARC_process" />
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="form-group">
+      <label for="CEARCdate">Data do processo CEARC</label>
+      <input name="CEARCdate" id="CEARCdate" type="date" class="form-control" placeholder="Data de processo Cearc"
+        [readonly]="!_isEditing" [value]="_datasheet?.CEARC_process_date|date: 'yyyy-MM-dd'" />
+    </div>
+
+  </div>
+  <div class="col-lg-4">
+    <div class="form-group">
+      <label for="CEARCentrydate">Data de entrada do processo CEARC</label>
+      <input name="CEARCentrydate" id="CEARCentrydate" type="date" class="form-control" placeholder="Data de Entrada do processo CEARC"
+        [readonly]="!_isEditing" [value]="_datasheet?.CEARC_entry_date|date:'yyyy-MM-dd'" />
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-4">
+    <div class="form-group">
+      <label for="LCRM">Numero de Processo LCRM</label>
+      <input name="LCRM"  id="LCRM" type="text" class="form-control" placeholder="Numero de Processo LCRM" [readonly]="!_isEditing"
+        [value]="_datasheet?.LCRM_process" />
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="form-group">
+      <label for="LCRMdate">Data de processo LCRM</label>
+      <input name="LCRMdate" id="LCRMdate" type="date" class="form-control" placeholder="Data do Processo LCRM"
+        [readonly]="!_isEditing" [value]="_datasheet?.LCRM_process_date|date:'yyyy-MM-dd'" />
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="form-group">
+      <label for="LCRMentrydate">Data de entrada do processo LCRM</label>
+      <input name="LCRMentrydate" id="LCRMentrydate" type="date" class="form-control" placeholder="Numero de Processo LCRM"
+        [readonly]="!_isEditing" [value]="_datasheet?.LCRM_entry_date|date:'yyyy-MM-dd'" />
+    </div>
+  </div>
+</div>
+<div class="form-group">
+  <label for="coordinator">Coordenador</label>
+  <select name="coordinator"  id="coordinator" class="form-control" [disabled]='!_isEditing'
+    [value]="global.checkIfExistsId(_users,_datasheet?.coordinator) ? _datasheet?.coordinator : ''">
+    <option value="" selected disabled hidden>Utilizador Eliminado</option>
+    <option *ngFor="let u of _users" [value]="u.id">{{u.full_name}}</option>
+  </select>
+</div>
+
+<div class="row">
+  <div class="col-lg-6 form-group">
+    <label for="SuperCathegory">Super-Categoria</label>
+    <select class="form-control" name="supercategory"  id="supercategory" [disabled]='!_isEditing' (change)="resetSelect();super_category.next($event.target.value)">
+        <option value="" selected disabled hidden>Escolha uma super categoria</option>
+      <option *ngFor="let sc of super_categories$ | async" [value]="sc.id" [selected]="_datasheet?.super_category === sc.id">{{sc.supercategory}}</option>
+
+    </select>
+  </div>
+  <div class="col-lg-6 form-group">
+    <label for="Cathegory">Categoria</label>
+    <select class="form-control" name="category" id="category" [disabled]='!_isEditing' (change)="resetSelectCat();category.next($event.target.value)" #categorySelect>
+        <option value="" selected disabled hidden>Escolha uma categoria</option>
+      <option *ngFor="let c of categories" [value]="c.id" [selected]="_datasheet?.category === c.id">{{c.category}}</option>
+    </select>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6 form-group">
+    <label for="subCathegory">Sub-Categoria</label>
+    <select class="form-control" name="subcategory" id="subcategory" [disabled]='!_isEditing' #subcategorySelect>
+        <option value="" selected disabled hidden>Escolha uma sub categoria</option>
+      <option *ngFor="let subc of sub_categories" [value]="subc.id" [selected]="_datasheet?.sub_category === subc.id">{{subc.subcategory}}</option>
+    </select>
+  </div>
+</div>
+

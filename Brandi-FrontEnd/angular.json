@@ -29,6 +29,7 @@
             "styles": [
               "src/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/assets/includes/bootstrap-extension/css/bootstrap-extension.min.css",
               "node_modules/font-awesome/scss/font-awesome.scss"
             ],
             "scripts": [

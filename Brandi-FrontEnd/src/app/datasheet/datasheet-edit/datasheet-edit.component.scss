@@ -1,0 +1,24 @@
+.editButtons{
+    position: sticky;
+    top:50px;
+    z-index: 800;
+    border-bottom:0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+
+    .card-body {
+        padding-bottom: 0;
+    }
+}
+
+.editForm {
+    border-top:0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.flex-nlg-column {
+    @media screen and (max-width: 992px) {
+        flex-direction: column!important;
+    }
+}

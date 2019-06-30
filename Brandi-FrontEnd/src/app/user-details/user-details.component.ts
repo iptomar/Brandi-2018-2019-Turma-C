@@ -36,7 +36,7 @@ export class UserDetailsComponent implements OnInit {
     u.title=event.target.title.value;
     this.messageErr="";
     this.messageSuccess="";
-    this.users.changeUser(u).subscribe((result) => {
+    this.users.changeOwnUser(u).subscribe((result) => {
       if(!result.error) {
         this.auth.user=u;//atualizamos os dados para o cliente
         this.messageSuccess=result.message;

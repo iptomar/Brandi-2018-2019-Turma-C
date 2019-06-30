@@ -12,11 +12,17 @@ export interface UserType {
   name : string
 }
 
+export interface UserNames {
+  id: number,
+  full_name: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
   public static USER_LIST = "user/list";
+  public static USER_LIST_NAMES = "user/listNames";
 
   public static USER_TYPE_LIST = "user/type/list";
   public static USER_DELETE = "user/delete";
@@ -89,6 +95,18 @@ export class UsersService {
         });
         users = <Array<User>>data.res.users;
       } else if(this.auth.isAdmin()){
+        this.auth.forceLogout();
+      }
+      return users;
+    }));
+  }
+
+  public getUsersNames(pesquisa : string): Observable<Array<UserNames>> {
+    return this.http.get(Global.HOST_PREFIX + UsersService.USER_LIST_NAMES, {params: new HttpParams().set('search', pesquisa)} ).pipe(map((data: ReceivedData) => {
+      let users: Array<UserNames> = [];
+      if(!data.error) {
+        users = <Array<UserNames>>data.res.users;
+      } else {
         this.auth.forceLogout();
       }
       return users;

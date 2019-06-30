@@ -1,0 +1,137 @@
+<form (submit)="saveDatasheet($event)" #formEdit>
+  <div class="card editButtons">
+    <div class="card-body row">
+      <div class="form-group col-lg-2">
+        <button type="button" (click)="cancelar()" class="btn btn-outline-primary col-lg-12">Sair</button>
+      </div>
+      <div class="form-group col-lg-10" *ngIf="!isEditing; else editbuttons">
+        <div class="row">
+          <button type="button" (click)="setEditMode(true)"
+            class="btn btn-outline-success col-lg-8 mr-lg-2 ml-3 mr-3 mb-2 mb-lg-0">Editar</button>
+          <!-- <button type="button" (click)="deleteDatasheet()" -->
+          <!-- class="btn btn-outline-danger col-lg mr-3 ml-lg-2 ml-3">Eliminar</button> -->
+        </div>
+      </div>
+      <ng-template #editbuttons>
+        <div class="form-group col-lg-10">
+          <div class="row">
+            <button type="submit"
+              class="btn btn-outline-success col-lg-8 mr-lg-2 ml-3 mr-3 mb-2 mb-lg-0">Guardar</button>
+            <button type="button" (click)="reset()"
+              class="btn btn-outline-primary col-lg mr-3 ml-lg-2 ml-3">Cancelar</button>
+          </div>
+        </div>
+      </ng-template>
+      <!--Fim de campos-->
+    </div>
+  </div>
+  <div class="card editForm">
+    <div class="card-body">
+      <!--Mensagem de Sucesso acaba aqui-->
+      <ul class="nav nav-pills flex-nlg-column" id="datasheet-tabs" role="tablist" #datasheetTabs>
+        <li class="nav-item">
+          <a class="nav-link active" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part1"
+            target="_self" role="tab" aria-selected="true" data-id="0" #firstTab>Objecto</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part2" role="tab"
+            aria-selected="false" data-id="1">Descrição</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part3" role="tab"
+            aria-selected="false" data-id="2">Características</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part4" role="tab"
+            aria-selected="false" data-id="3">Local</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part5" role="tab"
+            aria-selected="false" data-id="4">Exames</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part6" role="tab"
+            aria-selected="false" data-id="5">Estado</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part7" role="tab"
+            aria-selected="false" data-id="6">Intervenções Anteriores</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part8" role="tab"
+            aria-selected="false" data-id="7">Proposta</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part9" role="tab"
+            aria-selected="false" data-id="8">Intervenção</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part10" role="tab"
+            aria-selected="false" data-id="9">Fontes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part11" role="tab"
+            aria-selected="false" data-id="10">Testes Solubilização</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part12" role="tab"
+            aria-selected="false" data-id="11">Folha de Obra</a>
+        </li>
+      </ul>
+      <div *ngIf='messageEditErr !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{messageEditErr}}</strong>
+        <button type="button" class="close" aria-label="Close" (click)='messageEditErr=""'>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!--mensage de alerta acaba aqui-->
+
+      <div *ngIf='messageEditSuccess !== ""' class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{messageEditSuccess}}</strong>
+        <button type="button" class="close" aria-label="Close" (click)='messageEditSuccess=""'>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!--Mensagem de Sucesso acaba aqui-->
+      <!-- Tab panes -->
+      <div class="tab-content" *ngIf="!clearFields" #datasheetTabsPages>
+        <div class="tab-pane active pt-2" id="datasheet_part1" role="tabpanel" aria-labelledby="home-tab">
+          <app-datasheet-page1></app-datasheet-page1>
+        </div>
+        <div class="tab-pane" id="datasheet_part2" role="tabpanel" aria-labelledby="profile-tab">
+          <app-datasheet-page2></app-datasheet-page2>
+        </div>
+        <div class="tab-pane" id="datasheet_part3" role="tabpanel" aria-labelledby="messages-tab">
+          <app-datasheet-page3></app-datasheet-page3>
+        </div>
+        <div class="tab-pane" id="datasheet_part4" role="tabpanel" aria-labelledby="settings-tab">
+          <app-datasheet-page4></app-datasheet-page4>
+        </div>
+        <div class="tab-pane" id="datasheet_part5" role="tabpanel" aria-labelledby="settings-tab">
+          <app-datasheet-page5></app-datasheet-page5>
+        </div>
+        <div class="tab-pane" id="datasheet_part6" role="tabpanel" aria-labelledby="settings-tab">
+          <app-datasheet-page6></app-datasheet-page6>
+        </div>
+        <div class="tab-pane" id="datasheet_part7" role="tabpanel" aria-labelledby="settings-tab">
+          <app-datasheet-page7></app-datasheet-page7>
+        </div>
+        <div class="tab-pane" id="datasheet_part8" role="tabpanel" aria-labelledby="settings-tab">
+          <app-datasheet-page8></app-datasheet-page8>
+        </div>
+        <div class="tab-pane" id="datasheet_part9" role="tabpanel" aria-labelledby="settings-tab">
+          <app-datasheet-page9></app-datasheet-page9>
+        </div>
+        <div class="tab-pane" id="datasheet_part10" role="tabpanel" aria-labelledby="settings-tab">
+          <app-datasheet-page10></app-datasheet-page10>
+        </div>
+        <div class="tab-pane" id="datasheet_part11" role="tabpanel" aria-labelledby="settings-tab">
+          <app-datasheet-page11></app-datasheet-page11>
+        </div>
+        <div class="tab-pane" id="datasheet_part12" role="tabpanel" aria-labelledby="settings-tab">
+          <app-datasheet-page12></app-datasheet-page12>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

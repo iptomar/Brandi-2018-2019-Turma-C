@@ -12,8 +12,19 @@ import { UserRegisterComponent } from './admin/user-register/user-register.compo
 import { DatasheetComponent } from './datasheet/datasheet.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
 import { DatasheetCreateComponent } from './datasheet/datasheet-create/datasheet-create.component';
-import { DatasheetPage1Component } from './datasheet/pages/datasheet-page1/datasheet-page1.component';
-import { DatasheetPage2Component } from './datasheet/pages/datasheet-page2/datasheet-page2.component';
+import { DatasheetPage1Component } from './datasheet/datasheet-edit/pages/datasheet-page1/datasheet-page1.component';
+import { DatasheetPage2Component } from './datasheet/datasheet-edit/pages/datasheet-page2/datasheet-page2.component';
+import { DatasheetPage3Component } from './datasheet/datasheet-edit/pages/datasheet-page3/datasheet-page3.component';
+import { DatasheetPage4Component } from './datasheet/datasheet-edit/pages/datasheet-page4/datasheet-page4.component';
+import { DatasheetPage5Component } from './datasheet/datasheet-edit/pages/datasheet-page5/datasheet-page5.component';
+import { DatasheetPage6Component } from './datasheet/datasheet-edit/pages/datasheet-page6/datasheet-page6.component';
+import { DatasheetPage7Component } from './datasheet/datasheet-edit/pages/datasheet-page7/datasheet-page7.component';
+import { DatasheetPage8Component } from './datasheet/datasheet-edit/pages/datasheet-page8/datasheet-page8.component';
+import { DatasheetPage9Component } from './datasheet/datasheet-edit/pages/datasheet-page9/datasheet-page9.component';
+import { DatasheetPage10Component } from './datasheet/datasheet-edit/pages/datasheet-page10/datasheet-page10.component';
+import { DatasheetEditComponent } from './datasheet/datasheet-edit/datasheet-edit.component';
+import { DatasheetPage11Component } from './datasheet/datasheet-edit/pages/datasheet-page11/datasheet-page11.component';
+import { DatasheetPage12Component } from './datasheet/datasheet-edit/pages/datasheet-page12/datasheet-page12.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +39,18 @@ import { DatasheetPage2Component } from './datasheet/pages/datasheet-page2/datas
     CategoriesComponent,
     DatasheetCreateComponent,
     DatasheetPage1Component,
-    DatasheetPage2Component
+    DatasheetPage2Component,
+    DatasheetPage3Component,
+    DatasheetPage4Component,
+    DatasheetPage5Component,
+    DatasheetPage6Component,
+    DatasheetPage7Component,
+    DatasheetPage8Component,
+    DatasheetPage9Component,
+    DatasheetPage10Component,
+    DatasheetEditComponent,
+    DatasheetPage11Component,
+    DatasheetPage12Component
   ],
   imports: [
     BrowserModule,
@@ -37,6 +59,6 @@ import { DatasheetPage2Component } from './datasheet/pages/datasheet-page2/datas
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
-  
+export class AppModule {
+
 }

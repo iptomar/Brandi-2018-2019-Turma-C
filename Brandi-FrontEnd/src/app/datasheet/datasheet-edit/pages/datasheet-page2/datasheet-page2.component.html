@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="col-lg-6 form-group">
+    <label for="Dimensions">Dimensões</label>
+    <input name="dimensions" id="dimensions" type="text" class="form-control" placeholder="(Comp. X Prof. X Alt.) | (Diâmetro)"
+      [readonly]="!_isEditing" [value]="_datasheet?.dimensions" />
+  </div>
+  <div class="col-lg-6 form-group">
+    <label for="OtherDimensions">Outras dimensões</label>
+    <input name="other_dimensions" id="other_dimensions" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.other_dimensions"/>
+  </div>
+</div>
+<div class="form-group">
+  <label for="tipology">Tipologia</label>
+  <input name="tipology" id="tipology" type="text" class="form-control" placeholder="" [readonly]="!_isEditing"  [value]="_datasheet?.tipology"/>
+</div>
+<div class="form-group">
+  <label for="site">Localização</label>
+  <input name="site" id="site" type="text" class="form-control" placeholder="Localização" [readonly]="!_isEditing"  [value]="_datasheet?.site" />
+</div>
+<hr>
+<div class="row">
+  <div class="form-group col-lg-6">
+    <label for="owner">Proprietário</label>
+    <select name="owner" id="owner" class="form-control" [disabled]='!_isEditing'>
+      <option value="" selected disabled hidden>Contacto Eliminado</option>
+      <option *ngFor="let contact of this._contacts" [value]="contact.id" [selected]="contact.id === _datasheet?.owner">{{contact.full_name}} | {{contact.phone}} | {{contact.email}}</option>
+    </select>
+  </div>
+  <div class="form-group col-lg-6">
+    <label for="objectOwner">Dono da Obra</label>
+    <select name="object_owner" id="object_owner" class="form-control" [disabled]='!_isEditing'>
+      <option value="" selected disabled hidden>Contacto Eliminado</option>
+      <option *ngFor="let contact of this._contacts" [value]="contact.id" [selected]="contact.id === _datasheet?.object_owner">{{contact.full_name}} | {{contact.phone}} | {{contact.email}}</option>
+    </select>
+  </div>
+</div>
+<div class="row">
+  <div class=" col-lg-6 form-group">
+    <label for="patron">Mecenas</label>
+    <select name="patron" id="patron" class="form-control" [disabled]='!_isEditing'>
+    <option value="" selected disabled hidden>Contacto Eliminado</option>
+    <option *ngFor="let contact of this._contacts" [value]="contact.id" [selected]="contact.id === _datasheet?.patron">{{contact.full_name}} | {{contact.phone}} | {{contact.email}}</option>
+  </select>
+   
+  </div>
+  <div class="col-lg-6 form-group">
+    <label for="patron">&nbsp;</label>
+    <button type="button" class="form-control btn btn-outline-success" [disabled]='!_isEditing' data-toggle="modal" data-target="#modal_contacts">Adicionar contacto <i
+        class="fa fa-file"></i></button>
+  </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal_contacts" tabindex="-1" role="dialog" aria-labelledby="modal_contacts__Title" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form (submit)="addNewContact($event)">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal_contacts__Title">Adicionar contacto</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div *ngIf='messageEditErrContact !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>{{messageEditErrContact}}</strong>
+                  <button type="button" class="close" aria-label="Close" (click)='messageEditErrContact=""'>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <!--mensage de alerta acaba aqui-->
+          
+                <div *ngIf='messageEditSuccessContact !== ""' class="alert alert-success alert-dismissible fade show" role="alert">
+                  <strong>{{messageEditSuccessContact}}</strong>
+                  <button type="button" class="close" aria-label="Close" (click)='messageEditSuccessContact=""'>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="row col-lg-12 form-group">
+                  <label for="contact_name">Nome</label>
+                  <input name="contact_name" id="contact_name" type="text" class="form-control" placeholder="Nome" />
+                </div>
+                <div class="row col-lg-12 form-group">
+                  <label for="contact_email">Email</label>
+                  <input name="contact_email" id="contact_email" type="email" class="form-control" placeholder="Email" />
+                </div>
+                <div class="row col-lg-12 form-group">
+                  <label for="contact_address">Morada</label>
+                  <input name="contact_address" id="contact_address" type="text" class="form-control" placeholder="Morada" />
+                </div>
+                <div class="row col-lg-12 form-group">
+                  <label for="contact_phone">Telemóvel</label>
+                  <input name="contact_phone" id="contact_phone" type="text" class="form-control" placeholder="Telemóvel" />
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Adiciona novo contacto</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>

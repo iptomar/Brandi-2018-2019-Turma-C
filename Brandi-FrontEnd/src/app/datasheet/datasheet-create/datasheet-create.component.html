@@ -19,13 +19,13 @@
           <!--Mensagem de Sucesso acaba aqui-->
           <!--Inicio de campos-->
           <div class="form-group">
-            <label for="design">Designação</label>
-            <input name="design" type="text" class="form-control" placeholder="Designação de objecto" />
+            <label for="design">Designação (*)</label>
+            <input name="design" type="text" required class="form-control" placeholder="Designação de objecto" />
           </div>
           <div class="row">
             <div class="col-lg-4">
               <div class="form-group">
-                <label for="CEARC">Numero de Processo CEARC</label>
+                <label for="CEARC">Número de Processo CEARC</label>
                 <input name="CEARC" type="text" class="form-control" placeholder="Numero de Processo CEARC" />
               </div>
             </div>
@@ -47,7 +47,7 @@
           <div class="row">
             <div class="col-lg-4">
               <div class="form-group">
-                <label for="LCRM">Numero de Processo LCRM</label>
+                <label for="LCRM">Número de Processo LCRM (*)</label>
                 <input name="LCRM" type="text" class="form-control" placeholder="Numero de Processo LCRM" />
               </div>
             </div>
@@ -59,7 +59,7 @@
             </div>
             <div class="col-lg-4">
               <div class="form-group">
-                <label for="LCRMentrydate">Data de entrada do processo LCRM</label>
+                <label for="LCRMentrydate">Data de entrada do processo LCRM (*)</label>
                 <input name="LCRMentrydate" type="date" class="form-control" placeholder="Numero de Processo LCRM" />
               </div>
             </div>
@@ -71,7 +71,34 @@
                 <option *ngFor="let u of _users" value="{{u.id}}">{{u.full_name}}</option>
               </select>
             </div>
-
+            
+<div class="row">
+    <div class="col-lg-6 form-group">
+      <label for="SuperCathegory">Super-Categoria</label>
+      <select class="form-control" name="supercategory" (change)="resetSelect();id_super_category.next($event.target.value)">
+        <option value="" selected disabled hidden>Escolha uma super categoria</option>
+        <option *ngFor="let sc of super_categories$ | async" [value]="sc.id">{{sc.supercategory}}</option>
+  
+      </select>
+    </div>
+    <div class="col-lg-6 form-group">
+      <label for="Cathegory">Categoria</label>
+      <select class="form-control" name="category" (change)="resetSelectCat();id_category.next($event.target.value)" #categorySelect>
+        <option value="" selected disabled hidden>Escolha uma categoria</option>
+        <option *ngFor="let c of categories" [value]="c.id">{{c.category}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 form-group">
+      <label for="subCathegory">Sub-Categoria</label>
+      <select class="form-control" name="subcategory" #subcategorySelect>
+          <option value="" selected disabled hidden>Escolha uma sub categoria</option>
+        <option *ngFor="let subc of sub_categories" [value]="subc.id">{{subc.subcategory}}</option>
+      </select>
+    </div>
+  </div>
+<p>(*) Campos Obrigatórios</p>
           <div class="form-group">
               <button type="submit" class="btn btn-outline-success form-control">Criar <i
                     class="fa fa-file"></i></button>

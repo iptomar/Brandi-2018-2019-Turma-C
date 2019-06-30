@@ -14,6 +14,7 @@ import { DatasheetComponent } from './datasheet/datasheet.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
 import { DatePipe } from '@angular/common';
 import { DatasheetCreateComponent } from './datasheet/datasheet-create/datasheet-create.component';
+import { DatasheetEditComponent } from './datasheet/datasheet-edit/datasheet-edit.component';
 
 //caminhos de routerLink e permissoes (guards) necessárias para os poder abrir
 const routes: Routes = [
@@ -56,10 +57,15 @@ const routes: Routes = [
     component: DatasheetCreateComponent,
     canActivate: [ AuthGuard ]
   },
+  {
+    path: "datasheet/edit/:id",
+    component: DatasheetEditComponent,
+    canActivate: [ AuthGuard ]
+  },
 ];
 
 @NgModule({
-  imports: [HttpClientModule, RouterModule.forRoot(routes)],
+  imports: [HttpClientModule, RouterModule.forRoot(routes,{useHash: true})],
   exports: [RouterModule]  ,
   providers: [ Global,DatePipe ]
 })
