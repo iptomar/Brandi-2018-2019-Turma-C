@@ -2228,7 +2228,7 @@
 	    }
 	}
 ------------
-## GET /api/datasheet/worksheet/list/:id_object:
+## GET /api/datasheet/worksheet/list/:id_object :
 	:id_object- id do obejto associado a worksheet
 ### Condições:
 	Tem que estar autenticado
@@ -2447,8 +2447,8 @@
 	}
 
 ------------
-## GET /api/datasheet/solubility/list/:id_object:
-	:id_object - id do obejto associado a fonte
+## GET /api/datasheet/solubility/list/:id_object :
+	:id_object - id do obejto associado ao teste
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
@@ -2525,3 +2525,84 @@
 	        "id": 3
 	    }
 	}	 
+------------
+## GET /api/datasheet/solvent/list/:id_object :
+	:id_object - id do obejto associado ao teste
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	nada
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 1,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se for listado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Testes de solvente",
+	    "res": {
+	        "solvents": [
+	            {
+	                "id": 1,
+	                "tbl_solubilityid": 1,
+	                "solvent": "Ácido cítrico a 25% (62,5 g em 250 ml)",
+	                "efficiency": 2,
+	                "observations": "Aparentemen"
+	            },
+	            {
+	                "id": 2,
+	                "tbl_solubilityid": 1,
+	                "solvent": "Ácido muriático ou clorídrico, diluído a 2%",
+	                "efficiency": 2,
+	                "observations": "A imersão d"
+	            },
+	            {
+	                "id": 3,
+	                "tbl_solubilityid": 1,
+	                "solvent": "Ácido hidroclorídrico a 37% + água a 5% (125:2375 ml)",
+	                "efficiency": 1,
+	                "observations": "A sua utili"
+	            }
+	        ]
+	    }
+	}
+------------
+## POST /api/datasheet/solvent/create
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	tbl_solubilityid - id do objeto associado
+	solvent - solvente utilizado no teste de solvente
+	efficiency - eficiência do teste de solvente
+	observations - observações do teste de solvente
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 3,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se todos os campos que são obrigatórios não estiverem inseridos:
+	{
+		   "error": 2,
+		   "message": "Insira todos os campos obrigatórios",
+		   "res": {}
+	 }
+
+##### se algum dos campos estiver mal definido:
+	{
+		   "error": 1,
+		   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+		   "res": {}
+	 }
+##### se for criado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Teste de solvente criado com sucesso",
+	    "res": {
+	        "id": 3
+	    }
+	}
