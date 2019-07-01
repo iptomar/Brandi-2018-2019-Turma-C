@@ -35,6 +35,25 @@ export class DatasheetPage11Component implements OnInit, DatasheetPage {
 
   public addNewSolvent(event){
     event.preventDefault();
+    if(!confirm("Tema  certeza? depois de adicionado, este não pode ser alterado.")) return;
+    let solvent = event.target.solvent.value;
+    let test_efficiency = event.target.test_efficiency.value;
+    let solvent_observations = event.target.solvent_observations.value;
+    this.messageEditSuccessSolvent="";
+    this.messageEditErrSolvent="";
+    this.testsSolubilityService.addSolvent(this.lastIdSolubility,solvent,test_efficiency, solvent_observations).subscribe((res: ReceivedData) => {
+      if(!res.error) {
+        this.newSolvent.nativeElement.reset();
+        this.updtTestsSolvent(this.lastIdSolubility, this.lastSearchSolvent);
+        this.messageEditSuccessSolvent=res.message;
+        setTimeout(function() {
+          this.messageEditSuccessSolvent="";
+          this.messageEditErrSolvent="";
+        },3 * 1000);
+      }else {
+        this.messageEditErrSolvent=res.message;
+      }
+    },take(1));
   }
 
   public addNewSolubTest(event){
@@ -97,6 +116,7 @@ export class DatasheetPage11Component implements OnInit, DatasheetPage {
   }
 
   public updtTestsSolvent(idSolubility: number, search: string) {
+    this._testsSolvent$=this.testsSolubilityService.getSolvents(idSolubility, search);
   }
 
   public openSolventTab(idSolubility: number) {

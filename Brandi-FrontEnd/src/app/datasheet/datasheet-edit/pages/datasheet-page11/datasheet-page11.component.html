@@ -54,8 +54,8 @@
                   </div>
                   <div class="col-lg-12 form-group">
                     <label for="solvent_observations">Observações</label>
-                    <select name="solvent_observations" id="solvent_observations" type="text" class="form-control"
-                      placeholder="Observações"></select>
+                    <input name="solvent_observations" id="solvent_observations" type="text" class="form-control"
+                      placeholder="Observações" />
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -87,16 +87,15 @@
     
                   <tbody>
                     <tr *ngFor="let ts of _testsSolvent$ | async">
-                      
-                      <td [ngSwitch]="ts.source_type_set">
-                          <span *ngSwitchCase="0">Arquivísticas/Documentais</span>
-                          <span *ngSwitchCase="1">Iconográficas</span>
-                          <span *ngSwitchCase="2">Bibliográficas</span>
-                          <span *ngSwitchCase="3">Eletrónicas</span>
-                          <span *ngSwitchCase="4">Outras</span>
+                      <td [ngSwitch]="ts.efficiency">
+                          <span *ngSwitchCase="0">Muito Eficaz</span>
+                          <span *ngSwitchCase="1">Eficaz</span>
+                          <span *ngSwitchCase="2">Eficácia Média</span>
+                          <span *ngSwitchCase="3">Pouco Eficaz</span>
+                          <span *ngSwitchCase="4">Eficácia Nula</span>
                       </td>
-                      <td>{{ts.source_type}}</td>
-                      <td>{{ts.source_site}}</td>
+                      <td>{{ts.solvent}}</td>
+                      <td>{{ts.observations}}</td>
                     </tr>
                   </tbody>
                 </table>

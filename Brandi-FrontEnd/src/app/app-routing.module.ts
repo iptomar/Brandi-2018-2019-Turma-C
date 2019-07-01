@@ -19,10 +19,6 @@ import { DatasheetEditComponent } from './datasheet/datasheet-edit/datasheet-edi
 //caminhos de routerLink e permissoes (guards) necessárias para os poder abrir
 const routes: Routes = [
   {
-    path: "",
-    component: HomeComponent //o unico que pode não conter canActivate
-  },
-  {
     path: "login",
     component: LoginComponent,
     canActivate: [ NoAuthGuard ]
@@ -61,6 +57,10 @@ const routes: Routes = [
     path: "datasheet/edit/:id",
     component: DatasheetEditComponent,
     canActivate: [ AuthGuard ]
+  },
+  {
+    path: "**",
+    component: HomeComponent //o unico que pode não conter canActivate
   },
 ];
 
