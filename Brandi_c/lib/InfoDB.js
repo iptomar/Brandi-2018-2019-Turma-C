@@ -10,6 +10,7 @@ exports.PASSWORD = "brandic";
 exports.DB = "brandi";
 //--------------------------DEFAULT USER TYPES--------------------------
 exports.ADMIN_TYPE_NAME = "Admin";
+exports.TECHNITIAN_TYPE_NAME = "Técnico";
 //--------------------------DEFAULT USER--------------------------
 exports.ADMIN_EMAIL = "admin@admin.admin";
 exports.ADMIN_PW = "admin";

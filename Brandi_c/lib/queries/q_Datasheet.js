@@ -131,3 +131,10 @@ exports.GET_WORKSHEET = "SELECT id, object_id, worksheet_date, procedure_type, o
 exports.LIST_SOLUBILITY = "SELECT a.id, a.object_id, a.description, a.features, a.technician, a.solub_date, b.full_name as technician_name FROM " + infoDB.TBL_SOLUBILITY+ " a, " + infoDB.TBL_USERS + " b  WHERE a.object_id = ? and b.id=a.technician and (a.description like ? or a.features like ?)";
 //Query de criação de um teste de solubilidade
 exports.CREATE_SOLUBILITY = "INSERT INTO " + infoDB.TBL_SOLUBILITY + "(object_id, description, features, technician, solub_date) VALUES(?,?,?,?,?)";
+//Query DE listagem DE OBJETOS
+exports.CHECK_SOLUBILITY = "SELECT id FROM " + infoDB.TBL_SOLUBILITY + " WHERE id = ? limit 1";
+
+//Query de listagem de um teste de solvente
+exports.LIST_SOLUBTESTS = "SELECT id, tbl_solubilityid, solvent, efficiency, observations FROM " + infoDB.TBL_SOLUBTESTS + " WHERE tbl_solubilityid = ? and (solvent like ? or observations like ?)";
+//Query de criação de um teste de solvente
+exports.CREATE_SOLUBTESTS = "INSERT INTO " + infoDB.TBL_SOLUBTESTS + "(tbl_solubilityid, solvent, efficiency, observations) VALUES(?,?,?,?)";

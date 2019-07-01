@@ -43,12 +43,18 @@ exports.validatePassword = function (password, passwordComp, salt) {
  * Devolve lista de utilizadores no sistema
  * @param {database.Database} db Class de ligação à base de dados
  * @param {string} searchWord palavra de pesquisa de email ou nome
+ * @param {string} userType nome do tipo de utilizador
  * @returns {JSON} {error: <se autenticado ? 0 sim : 1 nao>, users: [<lista de utilizadores(User)>]}
  */
-exports.geUserList = async function (db,searchWord) {
+exports.geUserList = async function (db,searchWord, userType) {
     let result = { error: 1, users: [] };
     let search = "%" + searchWord + "%";
-    let res = await db.doQuery(q_Auth.GET_USER_AND_TYPE_LIST, [search, search, search]);
+    let res;
+    if (userType == null || userType === "") {
+        res = await db.doQuery(q_Auth.GET_USER_AND_TYPE_LIST, [search, search, search]);
+    } else {
+        res = await db.doQuery(q_Auth.GET_USER_AND_TYPE_LIST_FILTER_BY_TYPE, [userType, search, search]);
+    }
     //se nao ocorreu nenhum erro a adquirir o resultado
     if (res.error === 0) {
         //se existem resultados
@@ -230,6 +236,7 @@ exports.setNewLastLogin = async function (db, id) {
 
 
 exports.addFirstUserAndUserType = async function (db) {
+    await this.addNewUserType(db, infoDB.TECHNITIAN_TYPE_NAME);
     await this.addNewUserType(db, infoDB.ADMIN_TYPE_NAME);
     await this.addNewUser(db, infoDB.ADMIN_EMAIL, infoDB.ADMIN_PW, infoDB.ADMIN_EMAIL, "", "", "", (await this.getUserTypeByName(db, infoDB.ADMIN_TYPE_NAME)).user_type.id,"Admin","Admin");
 };
@@ -627,7 +634,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
         if (u) {
             //verifica se este é administrador
             if (u.type_user === infoDB.ADMIN_TYPE_NAME) {
-                let resultDb = await thiss.geUserList(db, !req.query.search ? "" : req.query.search);
+                let resultDb = await thiss.geUserList(db, !req.query.search ? "" : req.query.search, null);
                 result.error = 0;
                 result.message = "Lista de utilizadores";
                 //por cada utilizador pede o  json deste
@@ -649,7 +656,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
         if (u) {
             //verifica se este é administrador
             //if (u.type_user === infoDB.ADMIN_TYPE_NAME) {
-                let resultDb = await thiss.geUserList(db, !req.query.search ? "" : req.query.search);
+                let resultDb = await thiss.geUserList(db, !req.query.search ? "" : req.query.search, null);
                 result.error = 0;
                 result.message = "Lista de utilizadores";
                 //por cada utilizador pede o  json deste
@@ -657,6 +664,29 @@ exports.appendToExpress = function (app, _db, _prefix) {
                     let u2 = u.getJSON();
                     result.res.users.push({id: u.id, full_name: u.full_name});
                 });
+            //}
+        }
+        //define a resposta
+        res.json(result);
+    });
+
+    app.get(prefix + ROUTE_USER_PREFIX + '/listTechnitNames', async function (req, res) {
+        //prepara resposta para cliente
+        let result = { error: 1, message: "Não tem permissões para listar utilizadores", res: { technitians: [] } };
+        //carrega os dados em sessão do utilizador
+        let u = thiss.getUserFromSession(req);
+        //verifica se está autenticado
+        if (u) {
+            //verifica se este é administrador
+            //if (u.type_user === infoDB.ADMIN_TYPE_NAME) {
+            let resultDb = await thiss.geUserList(db, !req.query.search ? "" : req.query.search, infoDB.TECHNITIAN_TYPE_NAME);
+            result.error = 0;
+            result.message = "Lista de técnicos";
+            //por cada utilizador pede o  json deste
+            resultDb.users.forEach(u => {
+                let u2 = u.getJSON();
+                result.res.technitians.push({ id: u.id, full_name: u.full_name });
+            });
             //}
         }
         //define a resposta
