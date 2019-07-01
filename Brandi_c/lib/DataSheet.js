@@ -18,6 +18,7 @@ const ROUTE_CONTACTS_PREFIX = ROUTE_DATASHEET_PREFIX + "/contacts";
 const ROUTE_SOURCES_PREFIX = ROUTE_DATASHEET_PREFIX + "/sources";
 const ROUTE_TESTS_PREFIX = ROUTE_DATASHEET_PREFIX + "/tests";
 const ROUTE_WORKSHEET_PREFIX = ROUTE_DATASHEET_PREFIX + "/worksheet";
+const ROUTE_SOLUBILITY_PREFIX = ROUTE_DATASHEET_PREFIX + "/solubility";
 
 
 /*
@@ -191,7 +192,7 @@ async function listWorksheet(db, id_object, search) {
  * @param {string} materials materiais da obra
  * @param {number} amount quantidades
  * @param {number} duration duração do processo
- * @param {number} technician técnico
+ * @param {number} technician técnico da obra
  * @returns {number} id do exame ou -1 caso ocorra erro, -2 caso o objeto nao exista
  */
 async function changeWorksheet(db, id, worksheet_date, procedure_type, observations, materials, amount, duration, technician) {
@@ -275,6 +276,78 @@ async function getWorksheet(db, id) {
 /*
  * FIM FIM  FIM FIM Folha de Obra -------------------------------------------------------------------------
  * /
+
+
+/*
+ * Testes de solubilidade -------------------------------------------------------------------------
+ * /
+
+/**
+ * lista worksheet
+ *
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id_object id do objeto associado
+ * @returns {Array<Sourdces>} [<Testes de solubilidade>]
+ */
+async function listSolubility(db, object_id, search) {
+    let s = "%" + search + "%";
+    //lista Testes de solubilidade
+    let resultDb = await db.doQuery(q_DataSheet.LIST_SOLUBILITY, [object_id, s, s]);
+    //se não ocorreu nenhum erro, devolve lista
+    if (!resultDb.error) {
+        return resultDb.res;
+    }
+    return [];
+}
+
+
+
+/**
+ * 
+ * Cria uma folha de obra
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} object_id id do objeto associado
+ * @param {Date} worksheet_date data da folha de obra
+ * @param {string} procedure_type tipo de procedimento
+ * @param {string} observations observações 
+ * @param {string} materials materiais da obra
+ * @param {number} amount quantidades
+ * @param {number} duration duração do processo
+ * @param {number} technician técnico da obra
+ */
+
+/**
+ * 
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} object_id - id do objeto associado
+ * @param {any} description - descrição do teste
+ * @param {any} features 
+ * @param {any} technician técnico do teste
+ * @param {any} solub_date data do teste
+ */
+async function createSolubility(db, object_id, description, features, technician, solub_date) {
+    let result = -1;
+    //procura teste se existe
+    let checkObjecto = await db.doQuery(q_DataSheet.CHECK_OBJECT, [object_id]);
+    if (!checkObjecto.error) {
+        if (checkObjecto.res.length > 0) {
+            //criação do novo teste
+            let resultDb = await db.doQuery(q_DataSheet.CREATE_SOLUBILITY, [object_id, description, features, technician, solub_date]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.insertId;
+            }
+        } else result = -2;
+    }
+    return result;
+}
+
+/*
+ * FIM  Testes de solubilidade -------------------------------------------------------------------------
+ * /
+
+
+
 
 /**
  * lista super categorias
@@ -1410,7 +1483,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
             //lista folhas
             let worksheet = await listWorksheet(db, req.params.id_object, !req.query.search ? "" : req.query.search);
             result.error = 0;
-            result.message = "Folhas de Obras";
+            result.message = "Folha de Obra";
             result.res = { worksheets: worksheet };
         }
         res.json(result);
@@ -1499,13 +1572,13 @@ exports.appendToExpress = function (app, _db, _prefix) {
         if (u) {
             //define erro para o caso de algo correr mal
             result.error = 1;
-            result.message = "Ocorreu um erro, o exame pode já não existir";
+            result.message = "Ocorreu um erro, a folha de obra pode já não existir";
             //tenta criar um novo objeto
             let resultInsertId = await deleteWorksheet(db, req.params.id);
             //se este foi apagado
             if (resultInsertId >= 0) {
                 result.error = 0;
-                result.message = "Exame apagado com sucesso";
+                result.message = "Folha de obra apagada com sucesso";
             }
         }
         res.json(result);
@@ -1519,7 +1592,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
         if (u) {
             //define erro para o caso de algo correr mal
             result.error = 1;
-            result.message = "Ocorreu um erro, o exame pode não existir";
+            result.message = "Ocorreu um erro, a folha de obra pode não existir";
             //tenta buscar exame
             let resultInsertId = await getWorksheet(db, req.params.id);
             //se encontrou
@@ -1527,6 +1600,57 @@ exports.appendToExpress = function (app, _db, _prefix) {
                 result.error = 0;
                 result.message = "Folha de obra";
                 result.res.source = resultInsertId;
+            }
+        }
+        res.json(result);
+    });
+
+
+    app.get(prefix + ROUTE_SOLUBILITY_PREFIX + '/list/:id_object', async function (req, res) {
+        let result = { error: 1, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //lista testes de solubilidade
+            let solubility = await listSolubility(db, req.params.id_object, !req.query.search ? "" : req.query.search);
+            result.error = 0;
+            result.message = "Teste de solubilidade";
+            result.res = { solubilities: solubility };
+        }
+        res.json(result);
+    });
+
+
+    app.post(prefix + ROUTE_SOLUBILITY_PREFIX + '/create', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 2;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.description && req.body.features && req.body.technician && req.body.solub_date) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //verifica se é para editar ou para criar
+                //tenta criar um novo objeto
+                let resultInsertId = await createSolubility(
+                    db,
+                    req.body.object_id,
+                    req.body.description,
+                    req.body.features,
+                    req.body.technician,
+                    req.body.solub_date
+                );
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Teste de solubilidade foi criado com sucesso";
+                    //devolve o id do Teste de solubilidade e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId };
+                }
+
             }
         }
         res.json(result);

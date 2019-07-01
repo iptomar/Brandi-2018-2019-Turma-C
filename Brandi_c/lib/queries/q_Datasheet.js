@@ -124,3 +124,10 @@ exports.CHANGE_WORKSHEET = "UPDATE " + infoDB.TBL_WORKSHEET + " SET worksheet_da
 exports.DELETE_WORKSHEET = "DELETE FROM " + infoDB.TBL_WORKSHEET + " WHERE id=?";
 //Query para ir buscar detalhes de apenas uma folha de obra 
 exports.GET_WORKSHEET = "SELECT id, object_id, worksheet_date, procedure_type, observations, materials, amount, duration, technician FROM " + infoDB.TBL_WORKSHEET + " WHERE id=? LIMIT 1";
+
+
+
+//Query de listagem de um teste de solubilidade
+exports.LIST_SOLUBILITY = "SELECT a.id, a.object_id, a.description, a.features, a.technician, a.solub_date, b.full_name as technician_name FROM " + infoDB.TBL_SOLUBILITY+ " a, " + infoDB.TBL_USERS + " b  WHERE a.object_id = ? and b.id=a.technician and (a.description like ? or a.features like ?)";
+//Query de criação de um teste de solubilidade
+exports.CREATE_SOLUBILITY = "INSERT INTO " + infoDB.TBL_SOLUBILITY + "(object_id, description, features, technician, solub_date) VALUES(?,?,?,?,?)";
