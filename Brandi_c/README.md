@@ -2176,6 +2176,201 @@
 	    "error": 0,
 	    "message": "Folhas de Obras",
 	    "res": {
-	        "worksheet": []
+	        "worksheets": [
+	            {
+	                "id": 2,
+	                "object_id": 1,
+	                "worksheet_date": "2019-01-02T00:00:00.000Z",
+	                "procedure_type": " asddsd",
+	                "observations": " sdsadsdsa",
+	                "materials": " dda-- new text",
+	                "amount": 9,
+	                "duration": 5,
+	                "technician": 1,
+	                "technician_name": "admin@admin.admin"
+	            },
+	            {
+	                "id": 3,
+	                "object_id": 1,
+	                "worksheet_date": "2019-01-03T00:00:00.000Z",
+	                "procedure_type": " asddsd",
+	                "observations": " sdsadsdsa",
+	                "materials": " dda-- new text",
+	                "amount": 9,
+	                "duration": 5,
+	                "technician": 1,
+	                "technician_name": "admin@admin.admin"
+	            },
+	            {
+	                "id": 4,
+	                "object_id": 1,
+	                "worksheet_date": "2019-01-06T00:00:00.000Z",
+	                "procedure_type": " asddsd",
+	                "observations": " sdsadsdsa",
+	                "materials": " dda-- new text second",
+	                "amount": 9,
+	                "duration": 5,
+	                "technician": 1,
+	                "technician_name": "admin@admin.admin"
+	            },
+	            {
+	                "id": 5,
+	                "object_id": 1,
+	                "worksheet_date": "2019-01-06T00:00:00.000Z",
+	                "procedure_type": " asddsd",
+	                "observations": " sdsadsdsa",
+	                "materials": " dda-- new text second",
+	                "amount": 9,
+	                "duration": 5,
+	                "technician": 1,
+	                "technician_name": "admin@admin.admin"
+	            }
+	        ]
+	    }
+	}
+## POST/api/datasheet/worksheet/change/:id
+	:id - id da fonte
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	worksheet_date-data da folha de obra
+	 procedure_type-tipo de procedimento
+	 observations-observações
+	 materials-materiais da obra
+	 amount-quantidades
+	 duration-duração do processo
+	 technician-técnico da obra
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 3,
+		   "message": "Por favor efectue autenticação",
+		   "res": {}
+	 }
+##### se todos os campos que são obrigatórios não estiverem inseridos:
+	{
+		   "error": 2,
+		   "message": "Insira todos os campos obrigatórios",
+		   "res": {}
+	 }
+
+##### se algum dos campos estiver mal definido:
+	{
+		   "error": 1,
+		   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+		   "res": {}
+	 }
+##### se for alterado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Folha de obra altearada com sucesso",
+	    "res": {}
+	    
+------------
+## POST/api/datasheet/worksheet/create
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	 worksheet_date-data da folha de obra
+	 procedure_type-tipo de procedimento
+	 observations-observações
+	 materials-materiais da obra
+	 amount-quantidades
+	 duration-duração do processo
+	 technician-técnico da obra
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 3,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se todos os campos que são obrigatórios não estiverem inseridos:
+	{
+		   "error": 2,
+		   "message": "Insira todos os campos obrigatórios",
+		   "res": {}
+	 }
+
+##### se algum dos campos estiver mal definido:
+	{
+		   "error": 1,
+		   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+		   "res": {}
+	 }
+##### se for criado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Folha de obra criada com sucesso",
+	    "res": {
+	        "id": 3
+	    }
+	}	 
+
+------------
+## POST/api/datasheet/worksheet/delete/:id
+	:id - id da fonte
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	nada
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 2,
+		   "message": "Por favor efectue autenticação",
+		   "res": {}
+	 }
+##### se ocorrer erro
+	{
+		   "error": 1,
+		   "message": "Ocorreu um erro, a folha de obra pode já não existir",
+		   "res": {}
+	 }
+
+##### se for eliminado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Folha de obra apagada com sucesso",
+	    "res": {}	 
+
+       
+ ------------
+## POST/api/datasheet/worksheet/:id
+	:id - id da fonte
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	nada
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 2,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se ocorrer erro
+	{
+		   "error": 1,
+		   "message": "Ocorreu um erro, a ficha de obra pode não existir",
+		   "res": {}
+	 }
+
+##### se for listado com sucesso:
+		{
+	    "error": 0,
+	    "message": "Folha de obra",
+	    "res": {
+	        "source": {
+	            "id": 5,
+	            "object_id": 1,
+	            "worksheet_date": "2019-01-06T00:00:00.000Z",
+	            "procedure_type": " asddsd",
+	            "observations": " sdsadsdsa",
+	            "materials": " dda-- new text second",
+	            "amount": 9,
+	            "duration": 5,
+	            "technician": 1
+	        }
 	    }
 	}
