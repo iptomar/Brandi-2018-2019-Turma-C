@@ -236,8 +236,10 @@ exports.setNewLastLogin = async function (db, id) {
 
 
 exports.addFirstUserAndUserType = async function (db) {
-    await this.addNewUserType(db, infoDB.TECHNITIAN_TYPE_NAME);
     await this.addNewUserType(db, infoDB.ADMIN_TYPE_NAME);
+    //await this.addNewUserType(db, infoDB.TECHNITIAN_TYPE_NAME);
+    //await this.addNewUserType(db, infoDB.STUDENT_TYPE_NAME);
+    await this.addNewUserType(db, infoDB.USER_TYPE_NAME);
     await this.addNewUser(db, infoDB.ADMIN_EMAIL, infoDB.ADMIN_PW, infoDB.ADMIN_EMAIL, "", "", "", (await this.getUserTypeByName(db, infoDB.ADMIN_TYPE_NAME)).user_type.id,"Admin","Admin");
 };
 
@@ -524,11 +526,6 @@ exports.appendToExpress = function (app, _db, _prefix) {
                     result.message = "Ocorreu um erro na alteração do utilizador, verifique se todos os campos săo válidos";
                     let id = (u.type_user === infoDB.ADMIN_TYPE_NAME ? (!req.body.id ? u.id : req.body.id) : u.id) //se for admin pode ser o id que vem do cliente ou o id do proprio utilizador, se não for, só pode ser o id do próprio utilizador
                     let u_type = (u.type_user === infoDB.ADMIN_TYPE_NAME ? (!req.body.usertypeid ? u.id_type_user : (u.id === req.body.id ? u.id_type_user : req.body.usertypeid)) : u.id_type_user); //se for admin, pode escolher o tipo de utilizador, se não mé obrigatóriamente o tipo de utilizador que estava
-                    console.log(u.id);
-                    console.log(req.body.id);
-                    console.log(u_type);
-                    console.log(req.body.usertypeid);
-                    console.log(u.id_type_user);
                     //verifica os dados de autenticação
                     let resDb = await thiss.changeUser(db,
                         id,
@@ -670,28 +667,28 @@ exports.appendToExpress = function (app, _db, _prefix) {
         res.json(result);
     });
 
-    app.get(prefix + ROUTE_USER_PREFIX + '/listTechnitNames', async function (req, res) {
-        //prepara resposta para cliente
-        let result = { error: 1, message: "Não tem permissões para listar utilizadores", res: { technitians: [] } };
-        //carrega os dados em sessão do utilizador
-        let u = thiss.getUserFromSession(req);
-        //verifica se está autenticado
-        if (u) {
-            //verifica se este é administrador
-            //if (u.type_user === infoDB.ADMIN_TYPE_NAME) {
-            let resultDb = await thiss.geUserList(db, !req.query.search ? "" : req.query.search, infoDB.TECHNITIAN_TYPE_NAME);
-            result.error = 0;
-            result.message = "Lista de técnicos";
-            //por cada utilizador pede o  json deste
-            resultDb.users.forEach(u => {
-                let u2 = u.getJSON();
-                result.res.technitians.push({ id: u.id, full_name: u.full_name });
-            });
-            //}
-        }
-        //define a resposta
-        res.json(result);
-    });
+    //app.get(prefix + ROUTE_USER_PREFIX + '/listTechnitNames', async function (req, res) {
+    //    //prepara resposta para cliente
+    //    let result = { error: 1, message: "Não tem permissões para listar utilizadores", res: { technitians: [] } };
+    //    //carrega os dados em sessão do utilizador
+    //    let u = thiss.getUserFromSession(req);
+    //    //verifica se está autenticado
+    //    if (u) {
+    //        //verifica se este é administrador
+    //        //if (u.type_user === infoDB.ADMIN_TYPE_NAME) {
+    //        let resultDb = await thiss.geUserList(db, !req.query.search ? "" : req.query.search, infoDB.TECHNITIAN_TYPE_NAME);
+    //        result.error = 0;
+    //        result.message = "Lista de técnicos";
+    //        //por cada utilizador pede o  json deste
+    //        resultDb.users.forEach(u => {
+    //            let u2 = u.getJSON();
+    //            result.res.technitians.push({ id: u.id, full_name: u.full_name });
+    //        });
+    //        //}
+    //    }
+    //    //define a resposta
+    //    res.json(result);
+    //});
 
     app.get(prefix + ROUTE_USER_TYPE_PREFIX +'/list', async function (req, res) {
         //prepara resposta para cliente

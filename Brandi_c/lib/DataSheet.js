@@ -306,10 +306,10 @@ async function listSolubility(db, object_id, search) {
  * cria Teste de solubilidade
  * @param {database.Database} db Class de ligação à base de dados
  * @param {number} object_id - id do objeto associado
- * @param {any} description - descrição do teste
- * @param {any} features características 
- * @param {any} technician técnico do teste
- * @param {any} solub_date data do teste
+ * @param {string} description - descrição do teste
+ * @param {string} features características
+ * @param {number} technician técnico do teste
+ * @param {Date} solub_date data do teste
  */
 async function createSolubility(db, object_id, description, features, technician, solub_date) {
     let result = -1;
@@ -349,9 +349,8 @@ async function createSolubility(db, object_id, description, features, technician
  */
 async function listSolvent(db, tbl_solubilityid, search) {
     let s = "%" + search + "%";
-    //lista Testes de solubilidade
+    //lista Testes de solvente
     let resultDb = await db.doQuery(q_DataSheet.LIST_SOLUBTESTS, [tbl_solubilityid, s, s]);
-    console.log(resultDb);
     //se não ocorreu nenhum erro, devolve lista
     if (!resultDb.error) {
         return resultDb.res;
@@ -362,22 +361,12 @@ async function listSolvent(db, tbl_solubilityid, search) {
 
 /**
  * cria Teste de solvente
+ * 
  * @param {database.Database} db Class de ligação à base de dados
- * @param {number} object_id - id do objeto associado
- * @param {any} description - descrição do teste
- * @param {any} features características 
- * @param {any} technician técnico do teste
- * @param {any} solub_date data do teste
- */
-
-/**
- * 
- * 
- * @param {any} db
- * @param {any} tbl_solubilityid
- * @param {any} solvent
- * @param {any} efficiency
- * @param {any} observations
+ * @param {number} tbl_solubilityid - id do objeto associado
+ * @param {string} solvent - solvente utilizado no teste
+ * @param {number} efficiency - eficiência do teste
+ * @param {string} observations - observações do teste de solvente
  */
 async function createSolvent(db, tbl_solubilityid, solvent, efficiency, observations) {
     let result = -1;
@@ -1085,7 +1074,6 @@ async function changeDataSheetP4(db, id, site_description, cold_temp, hot_temp, 
     //criação do novo objeto
     let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P4, [site_description, cold_temp, hot_temp, cold_humidity, hot_humidity, cold_start, cold_end, hot_start, hot_end, lightning_type_natural, lightning_origin_artificial, artificial_lux, natural_lux, artificial_uv, natural_uv, artificial_real_uv, natural_real_uv, poluting_agents, poluting_sources, poluting_results, env_conclusions, userId, id]);
     //se não ocorreu nenhum erro, devolve o id inserido
-    console.log(resultDb);
     if (!resultDb.error) {
         result = resultDb.res.affectedRows > 0;
     }
@@ -1112,7 +1100,6 @@ async function changeDataSheetP5(db, id, tests_Q1, tests_Q2, tests_Q3, tests_Q4,
     //criação do novo objeto
     let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P5, [tests_Q1, tests_Q2, tests_Q3, tests_Q4, tests_Q5, tests_Q6, tests_results, tests_conclusions, userId, id]);
     //se não ocorreu nenhum erro, devolve o id inserido
-    console.log(resultDb);
     if (!resultDb.error) {
         result = resultDb.res.affectedRows > 0;
     }
