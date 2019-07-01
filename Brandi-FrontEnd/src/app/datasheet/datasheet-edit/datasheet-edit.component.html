@@ -28,7 +28,7 @@
   <div class="card editForm">
     <div class="card-body">
       <!--Mensagem de Sucesso acaba aqui-->
-      <ul class="nav nav-pills flex-nlg-column" id="datasheet-tabs" role="tablist" #datasheetTabs>
+      <ul class="nav nav-pills flex-nlg-column mb-2" id="datasheet-tabs" role="tablist" #datasheetTabs>
         <li class="nav-item">
           <a class="nav-link active" [class.disabled]="isEditing" data-toggle="tab" href="#datasheet_part1"
             target="_self" role="tab" aria-selected="true" data-id="0" #firstTab>Objecto</a>
@@ -94,7 +94,7 @@
       </div>
       <!--Mensagem de Sucesso acaba aqui-->
       <!-- Tab panes -->
-      <div class="tab-content" *ngIf="!clearFields" #datasheetTabsPages>
+      <div class="tab-content mt-1" *ngIf="!clearFields" #datasheetTabsPages>
         <div class="tab-pane active pt-2" id="datasheet_part1" role="tabpanel" aria-labelledby="home-tab">
           <app-datasheet-page1></app-datasheet-page1>
         </div>

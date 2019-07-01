@@ -2,12 +2,130 @@
   Fontes
 </h5>
 
-<button type="button" class="btn btn-outline-success mt-2" [disabled]='!_isEditing'>Adicionar fonte <i
+<button type="button" class="form-control btn btn-outline-success mt-2" [disabled]='!_isEditing' data-toggle="modal"
+data-target="#modal_sources" (click)="addNewFontBt()">Adicionar fonte <i
   class="fa fa-book"></i>
 </button>
-<br /><br />
-<div>
+<br />
+<br />
+    <div class="table-responsive">
+      <form class="input-group mb-3" (submit)="searchSource($event)">
+        <input type="text" name="searchBox" class="form-control" placeholder="Pesquisar por" aria-label="Pesquisar por">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i> Pesquisar</button>
+        </div>
+      </form>
+      <div style="overflow-x:auto">
+        <div class="form-group" style="min-width: 1000px;">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="width: 15%">Categoria</th>
+                <th [ngStyle]="{'width': _isEditing ? '30%' : '45%'}">Autor/Título/Local/Editor/Data/Página (s)</th>
+                <th style="width: 10%">Tipo</th>
+                <th style="width: 10%">Localização</th>
+                <th style="width: 10%">Cota</th>
+                <th style="width: 10%">Data</th>
+                <th style="width: 15%" *ngIf="_isEditing"></th>
+              </tr>
+            </thead>
 
-Tabela com a lista de fontes adicionadas
+            <tbody>
+              <tr *ngFor="let f of _fonts$ | async">
+                <td [ngSwitch]="f.source_type_set">
+                    <span *ngSwitchCase="0">Arquivísticas/Documentais</span>
+                    <span *ngSwitchCase="1">Iconográficas</span>
+                    <span *ngSwitchCase="2">Bibliográficas</span>
+                    <span *ngSwitchCase="3">Eletrónicas</span>
+                    <span *ngSwitchCase="4">Outras</span>
+                </td>
+                <td class="sourceText">{{f.source}}</td>
+                <td>{{f.source_type}}</td>
+                <td>{{f.source_site}}</td>
+                <td>{{f.source_quota}}</td>
+                <td><input type="date" class="form-control" [value]="f.source_date | date: 'yyyy-MM-dd'" readOnly="readOnly" /></td>
+                <td *ngIf="_isEditing">
+                    <div class="row" style="margin: 0;">
+                        <button type="button" data-toggle="modal"
+                        data-target="#modal_sources" (click)="editSource(f.id, f.source_type_set,f.source,f.source_type,f.source_site,f.source_quota,f.source_date)"
+                          class="btn btn-warning form-control col-xl mr-xl-2 mr-0 mb-xl-0 mb-2"><i class="fa fa-edit"></i></button>
+                        <button type="button" (click)="deleteSource(f.id)" class="btn btn-danger form-control col-xl"><i class="fa fa-minus"></i></button>
+                      </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
+    <!-- Modal -->
+  <div class="modal fade" id="modal_sources" tabindex="-1" role="dialog" aria-labelledby="modal_sources__Title"
+  aria-hidden="true" #modal_sources>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form (submit)="addNewSource($event)" #newSource>
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal_sources__Title">Adicionar fonte</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div *ngIf='messageEditErrSource !== ""' class="alert alert-warning alert-dismissible fade show"
+            role="alert">
+            <strong>{{messageEditErrSource}}</strong>
+            <button type="button" class="close" aria-label="Close" (click)='messageEditErrSource=""'>
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!--mensage de alerta acaba aqui-->
+
+          <div *ngIf='messageEditSuccessSource !== ""' class="alert alert-success alert-dismissible fade show"
+            role="alert">
+            <strong>{{messageEditSuccessSource}}</strong>
+            <button type="button" class="close" aria-label="Close" (click)='messageEditSuccessSource=""'>
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label for="source_type_set">Categoria da Fonte</label>
+            <select class="form-control" id="source_type_set">
+              <option selected>Seleccione</option>
+              <option value="0">Arquivísticas/Documentais</option>
+              <option value="1">Iconográficas</option>
+              <option value="2">Bibliográficas</option>
+              <option value="3">Eletrónicas</option>
+              <option value="4">Outras</option>
+            </select>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label for="source">Autor/Título/Local/Editor/Data/Página(s)</label>
+            <textarea name="source" id="source" type="text" class="form-control" placeholder="Autor/Título/Local/Editor/Data/Página(s)"></textarea>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label for="source_type">Tipo</label>
+            <input name="source_type" id="source_type" type="text" class="form-control" placeholder="Tipo" />
+          </div>
+          <div class="col-lg-12 form-group">
+            <label for="source_site">Localização (se aplicável)</label>
+            <input name="source_site" id="source_site" type="text" class="form-control"
+              placeholder="Localização"/>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label for="source_quota">Cota (se aplicável)</label>
+            <input name="source_quota" id="source_quota" type="text" class="form-control" placeholder="Cota" />
+          </div>
+          <div class="col-lg-12 form-group">
+              <label for="source_date">Data da Consulta (para fontes eletrónicas)</label>
+              <input name="source_date" id="source_date" type="date" class="form-control" placeholder="Data da consulta " />
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Guardar fonte</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

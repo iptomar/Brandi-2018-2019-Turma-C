@@ -50,7 +50,7 @@ export class DatasheetPage1Component implements OnInit, DatasheetPage, OnDestroy
     this._datasheet = datasheet; 
     this.firstload=true;
     this.super_category.next(this._datasheet.super_category);
-    this.category.next(this._datasheet.category);
+    //this.category.next(this._datasheet.category);
   }
   isEditing(isEditing: boolean): void {
     this._isEditing = isEditing;
@@ -91,6 +91,7 @@ export class DatasheetPage1Component implements OnInit, DatasheetPage, OnDestroy
     this.id_category$ = this.super_category.asObservable().subscribe((id_super:number) =>  this.categoriesService.getCategories(id_super,"").subscribe((data : Categories[]) => {
       this.categories = data;
       this.sub_categories = [];
+      if(this._datasheet.sub_category> 0)this.category.next(this._datasheet.category)
     }, take(1)
     ));
     this.super_categories$ = this.categoriesService.getSuperCategories("");

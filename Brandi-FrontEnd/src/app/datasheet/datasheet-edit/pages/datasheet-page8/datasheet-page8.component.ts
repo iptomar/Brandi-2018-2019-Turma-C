@@ -71,7 +71,9 @@ export class DatasheetPage8Component implements OnInit, DatasheetPage {
     datasheet.observations= event.target.observations.value;
     datasheet.proposal_date= Global.stringToDate(event.target.proposal_date.value);
     datasheet.acceptation_date= Global.stringToDate(event.target.acceptation_date.value);
-    
+    datasheet.ipt_intervinient=event.target.ipt_intervinient.value;
+    datasheet.client_intervinient=event.target.client_intervinient.value;
+
     return datasheet;
   }
 

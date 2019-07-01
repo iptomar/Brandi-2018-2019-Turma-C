@@ -1,103 +1,209 @@
 <div class="card">
   <div class="card-body">
-    <button (click)="cenas();" type="button">yay</button> <!-- Cenas à Duque, arranjar sff  -->
     <div *ngIf="_verTeste; else testlist">
-        <div class="form-group">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th style="width: 30%">Solvente ou Mistura de Solventes</th>
-                  <th style="width: 15%">Grau de Eficácia</th>
-                  <th style="width: 35%">Observações</th>
-                  <th style="width: 20%"></th>
-                </tr>
-                <tr>
-                  <th class="align-middle">
-                    <input type="text" class="form-control " placeholder="Identificação do Estrato" />
-                  </th>
-                  <th>
-                  <select class="form-control" name="period" id="period" [disabled]='!_isEditing' >
-                      <option selected hidden >Seleccione</option>
-                      <option value="1">Muito Eficaz</option>
-                      <option value="2">Eficaz</option>
-                      <option value="3">Eficácia Média</option>
-                      <option value="4">Pouco Eficaz</option>
-                      <option value="5">Eficácia Nula</option>
-                    </select>
-                  </th>
-                  <th class="align-middle">
-                    <textarea type="text" class="form-control" placeholder="Características"></textarea>
-                  </th>
-                  <th class="align-middle">
-                      <button type="submit" class="btn btn-outline-success mt-2" [disabled]='!_isEditing'>Adicionar teste <i
-                        class="fa fa-flask"></i>
-                    </button>
-                  </th>
-                </tr>
+        <button class="btn btn-primary mb-2" (click)="toggleSolventTestsAndSolubilityTests();" type="button" >Voltar</button>
+      <h3>Lista de Testes de Solventes</h3>
+      <button type="button" class="form-control btn btn-outline-success mt-2" [disabled]='!_isEditing'
+        data-toggle="modal" data-target="#modal_solvents" *ngIf="_verTeste">Adicionar teste de solvente<i
+          class="fa fa-flask"></i></button>
 
-              </thead>
+      <!-- Modal -->
+      <div class="modal fade" id="modal_solvents" tabindex="-1" role="dialog" aria-labelledby="modal_solvents__Title"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form (submit)="addNewSolvent($event)">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modal_solvents__Title">Adicionar teste <i class="fa fa-flask"></i></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div *ngIf='messageEditErrSolvent !== ""' class="alert alert-warning alert-dismissible fade show"
+                  role="alert">
+                  <strong>{{messageEditErrSolvent}}</strong>
+                  <button type="button" class="close" aria-label="Close" (click)='messageEditErrSolvent=""'>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <!--mensage de alerta acaba aqui-->
 
-              <tbody>
-              </tbody>
-            </table>
+                <div *ngIf='messageEditSuccessSolvent !== ""' class="alert alert-success alert-dismissible fade show"
+                  role="alert">
+                  <strong>{{messageEditSuccessSolvent}}</strong>
+                  <button type="button" class="close" aria-label="Close" (click)='messageEditSuccessSolvent=""'>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="col-lg-12 form-group">
+                  <label for="solvent">Solvente ou Mistura de solventes</label>
+                  <input name="solvent" id="solvent" type="text" class="form-control"
+                    placeholder="Solvente ou Mistura de solventes" />
+                </div>
+                <div class="col-lg-12 form-group">
+                  <label for="test_efficiency">Características</label>
+                  <select class="form-control" name="test_efficiency" id="test_efficiency">
+                    <option selected>Seleccione</option>
+                    <option value="0">Muito Eficaz</option>
+                    <option value="1">Eficaz</option>
+                    <option value="2">Eficácia Média</option>
+                    <option value="3">Pouco Eficaz</option>
+                    <option value="4">Eficácia Nula</option>
+                  </select>
+                </div>
+                <div class="col-lg-12 form-group">
+                  <label for="solvent_observations">Observações</label>
+                  <select name="solvent_observations" id="solvent_observations" type="text" class="form-control"
+                    placeholder="Observações"></select>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Adiciona novo teste</button>
+              </div>
+            </form>
           </div>
+        </div>
+      </div>
+      <div class="table-responsive mt-2">
+          <form class="input-group mb-3" (submit)="searchSource($event)">
+            <input type="text" name="searchBox" class="form-control" placeholder="Pesquisar por"
+              aria-label="Pesquisar por">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i> Pesquisar</button>
+            </div>
+          </form>
+          <div style="overflow-x:auto">
+            <div class="form-group" style="min-width: 1000px;">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th style="width: 33%">Solvente ou Mistura de solventes</th>
+                    <th style="width: 33%">Características</th>
+                    <th style="width: 33%">Observações</th>
+                  </tr>
+                </thead>
+  
+                <tbody>
+                  <tr *ngFor="let ts of _testsSolvent$ | async">
+                    
+                    <td [ngSwitch]="ts.source_type_set">
+                        <span *ngSwitchCase="0">Arquivísticas/Documentais</span>
+                        <span *ngSwitchCase="1">Iconográficas</span>
+                        <span *ngSwitchCase="2">Bibliográficas</span>
+                        <span *ngSwitchCase="3">Eletrónicas</span>
+                        <span *ngSwitchCase="4">Outras</span>
+                    </td>
+                    <td>{{ts.source_type}}</td>
+                    <td>{{ts.source_site}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
 
     </div>
     <ng-template #testlist>
       <h3>Lista de Testes de Solubilização</h3>
-      <form class="table-responsive">
-        <div class="input-group mb-3">
+      <button type="button" class="form-control btn btn-outline-success mt-2" [disabled]='!_isEditing'
+        data-toggle="modal" data-target="#modal_solubTests">Adicionar Teste de Solubilidade <i
+          class="fa fa-file"></i></button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="modal_solubTests" tabindex="-1" role="dialog"
+        aria-labelledby="modal_solubTests__Title" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form (submit)="addNewSolubTest($event)">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modal_solubTests__Title">Adicionar teste</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div *ngIf='messageEditErrSolubTest !== ""' class="alert alert-warning alert-dismissible fade show"
+                  role="alert">
+                  <strong>{{messageEditErrSolubTest}}</strong>
+                  <button type="button" class="close" aria-label="Close" (click)='messageEditErrSolubTest=""'>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <!--mensage de alerta acaba aqui-->
+
+                <div *ngIf='messageEditSuccessSolubTest !== ""' class="alert alert-success alert-dismissible fade show"
+                  role="alert">
+                  <strong>{{messageEditSuccessSolubTest}}</strong>
+                  <button type="button" class="close" aria-label="Close" (click)='messageEditSuccessSolubTest=""'>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="col-lg-12 form-group">
+                  <label for="test_description">Identificação do Estrato/Sujidade</label>
+                  <input name="test_description" id="test_description" type="text" class="form-control"
+                    placeholder="Identificação do Estrato/Sujidade" />
+                </div>
+                <div class="col-lg-12 form-group">
+                  <label for="test_features">Características</label>
+                  <textarea name="test_features" id="test_features" type="text" class="form-control"
+                    placeholder="Características"></textarea>
+                </div>
+                <div class="col-lg-12 form-group">
+                  <label for="test_technician">Técnico Responsável</label>
+                    <select name="Responsável"  id="Responsável" class="form-control">
+                        <option value="" selected disabled hidden>Utilizador Eliminado</option>
+                        <option *ngFor="let u of _users$ | async" [value]="u.id">{{u.full_name}}</option>
+                      </select>
+                </div>
+                <div class="col-lg-12 form-group">
+                  <label for="test_date">Data</label>
+                  <input name="test_date" id="test_date" type="date" class="form-control" placeholder="Data" />
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Adiciona novo Teste de Solubilidade</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive mt-2">
+        <form class="input-group mb-3" (submit)="searchSource($event)">
           <input type="text" name="searchBox" class="form-control" placeholder="Pesquisar por"
             aria-label="Pesquisar por">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i> Pesquisar</button>
           </div>
+        </form>
+        <div style="overflow-x:auto">
+          <div class="form-group" style="min-width: 1000px;">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th style="width: 25%">Identificação do Estrato/Sujidade</th>
+                  <th style="width: 25%">Características</th>
+                  <th style="width: 25%">Técnico Responsável</th>
+                  <th style="width: 25%">Data</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let ts of _testsSolubility$ | async">
+                  <td>{{ts.source_type}}</td>
+                  <td class="bigText">{{ts.source_site}}</td>
+                  <td>{{ts.source_quota}}</td>
+                  <td><input type="date" class="form-control" [value]="ts.source_date | date: 'yyyy-MM-dd'"
+                      readOnly="readOnly" /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div class="form-group">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th style="width: 40%">Identificação do Estrato/Sujidade</th>
-                <th style="width: 50%">Características</th>
-                <th style="width: 10%"></th>
-              </tr>
-              <tr>
-                <th class="align-middle">
-                  <input type="text" class="form-control " placeholder="Identificação do Estrato" />
-                </th>
-                <th class="align-middle">
-                  <textarea type="text" class="form-control" placeholder="Características"></textarea>
-                </th>
-                <th class="align-middle">
-                    <button type="submit" class="btn btn-outline-success mt-2" [disabled]='!_isEditing'>Adicionar teste <i
-                      class="fa fa-flask"></i>
-                  </button>
-                </th>
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              <!-- <tr *ngFor="let u of _users; let i = index">
-                <td>{{u.id}}</td>
-                <td>{{u.full_name}}</td>
-                <td>{{u.email}}</td>
-                <td>{{u.last_login | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
-                <td>
-                  <div class="row" style="margin: 0;">
-                    <button (click)="editMode(i)"
-                      class="btn btn-warning form-control col-xl mr-xl-2 mr-0 mb-xl-0 mb-2"><i class="fa fa-user"></i>
-                      Editar</button>
-                    <button (click)="deleteUser(i)" class="btn btn-danger form-control col-xl"><i
-                        class="fa fa-minus"></i> Eliminar</button>
-                  </div>
-                </td>
-              </tr> -->
-            </tbody>
-          </table>
-        </div>
-      </form>
+      </div>
     </ng-template>
   </div>
 </div>

@@ -1,6 +1,4 @@
-.mainContainer {
-    padding-bottom: 20px;
-}
+
 
 #navbar {
     position: sticky;
@@ -9,3 +7,15 @@
     z-index: 1000;
 }
 
+
+.mainContainer {
+    padding-bottom: 20px;
+    max-width: 100%;
+    margin:auto;
+}
+
+@media screen and (min-width: 600px){
+    .mainContainer {
+        max-width: 90%;
+    }
+}
