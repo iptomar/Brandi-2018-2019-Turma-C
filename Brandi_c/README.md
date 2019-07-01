@@ -1117,7 +1117,7 @@
 	}
 
 ------------
-## POST/api/datasheet/super_categories/create:
+## POST /api/datasheet/super_categories/create:
 
 ### Condições:
 	Tem que estar autenticado
@@ -1159,7 +1159,7 @@
 	}
 
 ------------
-## POST/api/datasheet/categories/create:
+## POST /api/datasheet/categories/create:
 
 ### Condições:
 	Tem que estar autenticado
@@ -1202,7 +1202,7 @@
 	}
 	
 ------------
-## POST/api/datasheet/sub_categories/create:
+## POST /api/datasheet/sub_categories/create:
 
 ### Condições:
 	Tem que estar autenticado
@@ -1245,7 +1245,7 @@
 	}
 
 ------------
-## POST/api/datasheet/super_categories/change:
+## POST /api/datasheet/super_categories/change:
 
 ### Condições:
 	Tem que estar autenticado
@@ -1286,7 +1286,7 @@
 	}
 	
 ------------
-## POST/api/datasheet/categories/change:
+## POST /api/datasheet/categories/change:
 
 ### Condições:
 	Tem que estar autenticado
@@ -1327,7 +1327,7 @@
 	}
 	
 ------------
-## POST/api/datasheet/sub_categories/change:
+## POST /api/datasheet/sub_categories/change:
 
 ### Condições:
 	Tem que estar autenticado
@@ -1368,7 +1368,7 @@
 	}
 	
 ------------
-## POST/api/datasheet/sub_categories/delete:
+## POST /api/datasheet/sub_categories/delete:
 
 ### Condições:
 	Tem que estar autenticado
@@ -1408,7 +1408,7 @@
 	}
 	
 ------------
-## POST/api/datasheet/categories/delete:
+## POST /api/datasheet/categories/delete:
 
 ### Condições:
 	Tem que estar autenticado
@@ -1448,7 +1448,7 @@
 	}
 	
 ------------
-## POST/api/datasheet/super_categories/delete:
+## POST /api/datasheet/super_categories/delete:
 
 ### Condições:
 	Tem que estar autenticado
@@ -1488,7 +1488,7 @@
 	}
 
 ------------
-## POST/api/datasheet/delete_image/:id/:image :
+## POST /api/datasheet/delete_image/:id/:image :
 	:id -> id do objeto
 	:image -> nome da imagem
 
@@ -1517,7 +1517,7 @@
 	}
 
 ------------
-## POST/api/datasheet/get_image/:id/:image :
+## POST /api/datasheet/get_image/:id/:image :
 	:id -> id do objeto
 	:image -> nome da imagem
 
@@ -1534,7 +1534,7 @@
 	devovle a imagem pedida
 
 ------------
-## POST/api/datasheet/send_image/:id :
+## POST /api/datasheet/send_image/:id :
 	:id -> id do objeto
 ### Condições:
 	Tem que estar autenticado
@@ -1561,7 +1561,7 @@
 	}
 
 ------------
-## POST/api/datasheet/contacts/create:
+## POST /api/datasheet/contacts/create:
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
@@ -1613,7 +1613,7 @@
 	    "res": {id: 23}
 	}
 ------------
-## POST/api/datasheet/contacts/change/:id :
+## POST /api/datasheet/contacts/change/:id :
 	:id - id do contacto a alterar
 ### Condições:
 	Tem que estar autenticado
@@ -1667,7 +1667,7 @@
 	}
 
 ------------
-## POST/api/datasheet/contacts/delete/:id :
+## POST /api/datasheet/contacts/delete/:id :
 	:id - id do contacto a eliminar
 ### Condições:
 	Tem que estar autenticado
@@ -1700,7 +1700,7 @@
 	}
 
 ------------
-## POST/api/datasheet/contacts/list :
+## GET /api/datasheet/contacts/list :
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
@@ -1758,7 +1758,7 @@
 	}
 
 ------------
-## POST/api/datasheet/contacts/:id :
+## GET /api/datasheet/contacts/:id :
 	:id - id do contacto a que se quer as informações
 ### Condições:
 	Tem que estar autenticado
@@ -1793,7 +1793,7 @@
 	}
 
 ------------
-## POST/api/datasheet/sources/list/:id_object:
+## GET /api/datasheet/sources/list/:id_object :
 	:id_object- id do obejto associado a fonte
 ### Condições:
 	Tem que estar autenticado
@@ -1836,7 +1836,7 @@
 	    }
 	}
 ------------
-## POST/api/datasheet/sources/change/:id
+## POST /api/datasheet/sources/change/:id
 	:id - id da fonte
 ### Condições:
 	Tem que estar autenticado
@@ -1874,10 +1874,11 @@
 	    "res": {}
 	    
 ------------
-## POST/api/datasheet/sources/create
+## POST /api/datasheet/sources/create
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
+	object_id - id do objeto associado
 	source_type_set - se é um set
 	source - source
 	source_type - typo de source
@@ -1913,7 +1914,7 @@
 		}	 
 
 ------------
-## POST/api/datasheet/sources/delete/:id
+## POST /api/datasheet/sources/delete/:id
 	:id - id da fonte
 ### Condições:
 	Tem que estar autenticado
@@ -1941,7 +1942,7 @@
 
        
  ------------
-## POST/api/datasheet/sources/:id
+## GET /api/datasheet/sources/:id
 	:id - id da fonte
 ### Condições:
 	Tem que estar autenticado
@@ -1980,8 +1981,8 @@
 	}
 
 ------------
-## POST/api/datasheet/tests/list/:id_object:
-	:id_object- id do obejto associado a fonte
+## GET /api/datasheet/tests/list/:id_object :
+	:id_object- id do obejto associado ao teste
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
@@ -2016,8 +2017,8 @@
 	}
 	
 ------------
-## POST/api/datasheet/tests/change/:id
-	:id - id da fonte
+## POST /api/datasheet/tests/change/:id
+	:id - id do teste
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
@@ -2053,10 +2054,11 @@
 	    "res": {}
 	    
 ------------
-## POST/api/datasheet/tests/create
+## POST /api/datasheet/tests/create
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
+	object_id - id do objeto associado
 	type_reference-tipo de referencia
 	location-localização do exame
 	objectives-objetivos do exame
@@ -2092,8 +2094,8 @@
 	}	 
 
 ------------
-## POST/api/datasheet/tests/delete/:id
-	:id - id da fonte
+## POST /api/datasheet/tests/delete/:id
+	:id - id do teste
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
@@ -2120,8 +2122,8 @@
 
        
  ------------
-## POST/api/datasheet/tests/:id
-	:id - id da fonte
+## GET /api/datasheet/tests/:id
+	:id - id do teste
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
@@ -2158,8 +2160,8 @@
 	    }
 	}
 ------------
-## POST/api/datasheet/worksheet/list/:id_object:
-	:id_object- id do obejto associado a fonte
+## GET /api/datasheet/worksheet/list/:id_object:
+	:id_object- id do obejto associado a worksheet
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
@@ -2228,18 +2230,18 @@
 	        ]
 	    }
 	}
-## POST/api/datasheet/worksheet/change/:id
-	:id - id da fonte
+## POST /api/datasheet/worksheet/change/:id
+	:id - id do worksheet
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
-	worksheet_date-data da folha de obra
-	 procedure_type-tipo de procedimento
-	 observations-observações
-	 materials-materiais da obra
-	 amount-quantidades
-	 duration-duração do processo
-	 technician-técnico da obra
+	worksheet_date - data da folha de obra
+	procedure_type - tipo de procedimento
+	observations - observações
+	materials - materiais da obra
+	amount - quantidades
+	duration - duração do processo
+	technician - técnico da obra
 ### devolve:
 ##### se não estiver autenticado:
 	{
@@ -2267,17 +2269,18 @@
 	    "res": {}
 	    
 ------------
-## POST/api/datasheet/worksheet/create
+## POST /api/datasheet/worksheet/create
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
-	 worksheet_date-data da folha de obra
-	 procedure_type-tipo de procedimento
-	 observations-observações
-	 materials-materiais da obra
-	 amount-quantidades
-	 duration-duração do processo
-	 technician-técnico da obra
+	object_id - id do objeto associado
+	worksheet_date - data da folha de obra
+	procedure_type - tipo de procedimento
+	observations - observações
+	materials - materiais da obra
+	amount - quantidades
+	duration - duração do processo
+	technician - técnico da obra
 ### devolve:
 ##### se não estiver autenticado:
 	{
@@ -2308,8 +2311,8 @@
 	}	 
 
 ------------
-## POST/api/datasheet/worksheet/delete/:id
-	:id - id da fonte
+## POST /api/datasheet/worksheet/delete/:id
+	:id - id do worksheet
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
@@ -2336,8 +2339,8 @@
 
        
  ------------
-## POST/api/datasheet/worksheet/:id
-	:id - id da fonte
+## GET /api/datasheet/worksheet/:id
+	:id - id do worksheet
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
@@ -2376,8 +2379,8 @@
 	}
 
 ------------
-## POST/api/datasheet/solubility/list/:id_object:
-	:id_object- id do obejto associado a fonte
+## GET /api/datasheet/solubility/list/:id_object:
+	:id_object - id do obejto associado a fonte
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
@@ -2417,14 +2420,15 @@
 	    }
 	}
 ------------
-## POST/api/datasheet/solubility/create
+## POST /api/datasheet/solubility/create
 ### Condições:
 	Tem que estar autenticado
 ### recebe:
-	  description - descrição do teste
-	 features - características 
-	 technician técnico do teste
-	 solub_date data do teste
+	object_id - id do objeto associado
+	description - descrição do teste
+	features - características 
+	technician - técnico do teste
+	solub_date - data do teste
 ### devolve:
 ##### se não estiver autenticado:
 	{
