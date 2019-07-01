@@ -2374,3 +2374,82 @@
 	        }
 	    }
 	}
+
+------------
+## POST/api/datasheet/solubility/list/:id_object:
+	:id_object- id do obejto associado a fonte
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	nada
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 1,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se for listado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Teste de solubilidade",
+	    "res": {
+	        "solubilities": [
+	            {
+	                "id": 1,
+	                "object_id": 1,
+	                "description": "sddsds ",
+	                "features": "sdsa ",
+	                "technician": 2,
+	                "solub_date": "2017-09-07T23:00:00.000Z",
+	                "technician_name": "Nuno Marques"
+	            },
+	            {
+	                "id": 2,
+	                "object_id": 1,
+	                "description": "sddsds ",
+	                "features": "sdsa new",
+	                "technician": 2,
+	                "solub_date": "2017-09-07T23:00:00.000Z",
+	                "technician_name": "Nuno Marques"
+	            }
+	        ]
+	    }
+	}
+------------
+## POST/api/datasheet/solubility/create
+### Condições:
+	Tem que estar autenticado
+### recebe:
+	  description - descrição do teste
+	 features - características 
+	 technician técnico do teste
+	 solub_date data do teste
+### devolve:
+##### se não estiver autenticado:
+	{
+		   "error": 3,
+		   "message": "Por favor efectue autenticaçãos",
+		   "res": {}
+	 }
+##### se todos os campos que são obrigatórios não estiverem inseridos:
+	{
+		   "error": 2,
+		   "message": "Insira todos os campos obrigatórios",
+		   "res": {}
+	 }
+
+##### se algum dos campos estiver mal definido:
+	{
+		   "error": 1,
+		   "message": "Ocorreu um erro, algum dos campos pode estar mal definido",
+		   "res": {}
+	 }
+##### se for criado com sucesso:
+	{
+	    "error": 0,
+	    "message": "Teste de solubilidade criada com sucesso",
+	    "res": {
+	        "id": 3
+	    }
+	}	 
