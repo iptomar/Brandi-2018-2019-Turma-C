@@ -99,6 +99,7 @@ exports.CREATE_SOURCE = "INSERT INTO " + infoDB.TBL_SOURCES + "(object_id, sourc
 exports.CHANGE_SOURCE = "UPDATE " + infoDB.TBL_SOURCES + " SET source_type_set=?, source=?, source_type=?, source_site=?, source_quota=?, source_date=? WHERE id=?";
 //Query para apagar uma fonte
 exports.DELETE_SOURCE = "DELETE FROM " + infoDB.TBL_SOURCES + " WHERE id=?";
+//Query para ir buscar detalhes de uma fonte
 exports.GET_SOURCE = "SELECT id, object_id, source_type_set, source, source_type, source_site, source_quota, source_date FROM " + infoDB.TBL_SOURCES + " WHERE id=? LIMIT 1";
 
 
@@ -108,9 +109,18 @@ exports.LIST_TESTS = "SELECT a.id, a.id_object, a.type_reference, a.location, a.
 exports.CREATE_TESTS = "INSERT INTO " + infoDB.TBL_ANALYSIS + "(id_object, type_reference, location, objectives, technician, analysis_DATE, results) VALUES(?,?,?,?,?,NOW(),?)";
 //Query de alteração de Exames e análises
 exports.CHANGE_TESTS = "UPDATE " + infoDB.TBL_ANALYSIS + " SET type_reference=?, location=?, objectives=?, technician=?, analysis_DATE=NOW(), results=? WHERE id=?";
-//Query para apagar uma fonte
+//Query para apagar um exame
 exports.DELETE_TESTS = "DELETE FROM " + infoDB.TBL_ANALYSIS + " WHERE id=?";
+//Query para ir buscar detalhes de um exame
 exports.GET_TESTS = "SELECT id, id_object, type_reference, location, objectives, technician, analysis_DATE, results FROM " + infoDB.TBL_ANALYSIS + " WHERE id=? LIMIT 1";
 
-//Query de listagem de Exames e análises
-exports.LIST_WORKSHEET = "SELECT id, object_id, worksheet_date, procedure_type, observations, materials, amount, duration, technician FROM " + infoDB.TBL_WORKSHEET + " WHERE object_id = ?";
+//Query de listagem de uma folha de obra
+exports.LIST_WORKSHEET = "SELECT a.id, a.object_id, a.worksheet_date, a.procedure_type, a.observations, a.materials, a.amount, a.duration, a.technician, b.full_name as technician_name FROM " + infoDB.TBL_WORKSHEET + " a, " + infoDB.TBL_USERS + " b  WHERE a.object_id = ? and b.id=a.technician and (a.procedure_type like ? or a.observations like ?)";
+//Query de criação de uma folha de obra
+exports.CREATE_WORKSHEET = "INSERT INTO " + infoDB.TBL_WORKSHEET + "(object_id, worksheet_date, procedure_type, observations, materials, amount, duration, technician) VALUES(?,?,?,?,?,?,?,?)";
+//Query de alteração de uma folha de obra
+exports.CHANGE_WORKSHEET = "UPDATE " + infoDB.TBL_WORKSHEET + " SET worksheet_date=?, procedure_type=?, observations=?, materials=?, amount=?, duration=?, technician=? WHERE id=?";
+//Query para apagar uma folha de obra 
+exports.DELETE_WORKSHEET = "DELETE FROM " + infoDB.TBL_WORKSHEET + " WHERE id=?";
+//Query para ir buscar detalhes de apenas uma folha de obra 
+exports.GET_WORKSHEET = "SELECT id, object_id, worksheet_date, procedure_type, observations, materials, amount, duration, technician FROM " + infoDB.TBL_WORKSHEET + " WHERE id=? LIMIT 1";

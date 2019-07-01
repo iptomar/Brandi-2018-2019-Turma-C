@@ -169,9 +169,10 @@ async function getTest(db, id) {
  * @param {number} id_object id do objeto associado
  * @returns {Array<Sourdces>} [<Folhas de Obra>]
  */
-async function listWorksheet(db, id_object) {
+async function listWorksheet(db, id_object, search) {
+    let s = "%" + search + "%";
     //lista folhas de obra
-    let resultDb = await db.doQuery(q_DataSheet.LIST_WORKSHEET, [id_object]);
+    let resultDb = await db.doQuery(q_DataSheet.LIST_WORKSHEET, [id_object,s,s]);
     //se não ocorreu nenhum erro, devolve lista
     if (!resultDb.error) {
         return resultDb.res;
@@ -205,6 +206,70 @@ async function changeWorksheet(db, id, worksheet_date, procedure_type, observati
 }
 
 
+
+/**
+ * 
+ * Cria uma folha de obra
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} object_id id do objeto associado
+ * @param {Date} worksheet_date data da folha de obra
+ * @param {string} procedure_type tipo de procedimento
+ * @param {string} observations observações 
+ * @param {string} materials materiais da obra
+ * @param {number} amount quantidades
+ * @param {number} duration duração do processo
+ * @param {number} technician técnico da obra
+ */
+async function createWorksheet(db, id_object, worksheet_date, procedure_type, observations, materials, amount, duration, technician) {
+    let result = -1;
+    //procura exame se existe
+    let checkObjecto = await db.doQuery(q_DataSheet.CHECK_OBJECT, [id_object]);
+    if (!checkObjecto.error) {
+        if (checkObjecto.res.length > 0) {
+            //criação do novo exame
+            let resultDb = await db.doQuery(q_DataSheet.CREATE_WORKSHEET, [id_object, worksheet_date, procedure_type, observations, materials, amount, duration, technician]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.insertId;
+            }
+        } else result = -2;
+    }
+    return result;
+}
+
+
+/**
+ * apaga folha de obra
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id da folha de obra
+ * @returns {number} 0 caso nao ocorra nenhum erro ou -1 caso ocorra erro
+ */
+async function deleteWorksheet(db, id) {
+    let result = -1;
+    //criação do novo exame
+    let resultDb = await db.doQuery(q_DataSheet.DELETE_WORKSHEET, [id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0 ? 0 : -1;
+    }
+    return result;
+}
+
+/**
+ *busca folha de obra
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id da folha de obra
+ * @returns {JSON} {<Folhas de Obra>}
+ */
+async function getWorksheet(db, id) {
+    //procura Exame
+    let resultDb = await db.doQuery(q_DataSheet.GET_WORKSHEET, [id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error && resultDb.res.length > 0) {
+        return resultDb.res[0];
+    }
+    return null;
+}
 
 
 /*
@@ -1087,10 +1152,10 @@ exports.appendToExpress = function (app, _db, _prefix) {
         let u = auth.getUserFromSession(req);
         if (u) {
             //lista fontes
-            let sources = await listSources(db, req.params.id_object, !req.query.search ? "" : req.query.search);
+            let source = await listSources(db, req.params.id_object, !req.query.search ? "" : req.query.search);
             result.error = 0;
             result.message = "Fontes";
-            result.res = { sources: sources };
+            result.res = { sources: source };
         }
         res.json(result);
     }); 
@@ -1216,10 +1281,10 @@ exports.appendToExpress = function (app, _db, _prefix) {
         let u = auth.getUserFromSession(req);
         if (u) {
             //lista exames
-            let tests = await listTests(db, req.params.id_object, !req.query.search ? "" : req.query.search);
+            let test = await listTests(db, req.params.id_object, !req.query.search ? "" : req.query.search);
             result.error = 0;
             result.message = "Exames";
-            result.res = { tests: tests };
+            result.res = { tests: test };
         }
         res.json(result);
     });
@@ -1314,6 +1379,8 @@ exports.appendToExpress = function (app, _db, _prefix) {
         }
         res.json(result);
     }); 
+
+
     app.get(prefix + ROUTE_TESTS_PREFIX + '/:id', async function (req, res) {
         let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
         //verifica se utilizador está autenticado
@@ -1341,10 +1408,10 @@ exports.appendToExpress = function (app, _db, _prefix) {
         let u = auth.getUserFromSession(req);
         if (u) {
             //lista folhas
-            let worksheet = await listWorksheet(db, req.params.id_object);
+            let worksheet = await listWorksheet(db, req.params.id_object, !req.query.search ? "" : req.query.search);
             result.error = 0;
             result.message = "Folhas de Obras";
-            result.res = { worksheet: worksheet };
+            result.res = { worksheets: worksheet };
         }
         res.json(result);
     });
@@ -1382,6 +1449,84 @@ exports.appendToExpress = function (app, _db, _prefix) {
                     result.message = "Folha de obra altearada com sucesso";
                 }
 
+            }
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_WORKSHEET_PREFIX + '/create', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 2;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.worksheet_date && req.body.procedure_type && req.body.observations && req.body.materials && req.body.amount && req.body.duration && req.body.technician) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //verifica se é para editar ou para criar
+                //tenta criar um novo objeto
+                let resultInsertId = await createWorksheet(
+                    db,
+                    req.body.object_id,
+                    req.body.worksheet_date,
+                    req.body.procedure_type,
+                    req.body.observations,
+                    req.body.materials,
+                    req.body.amount,
+                    req.body.duration,
+                    req.body.technician
+                );
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Folha de obra criada com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId };
+                }
+
+            }
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_WORKSHEET_PREFIX + '/delete/:id', async function (req, res) {
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //define erro para o caso de algo correr mal
+            result.error = 1;
+            result.message = "Ocorreu um erro, o exame pode já não existir";
+            //tenta criar um novo objeto
+            let resultInsertId = await deleteWorksheet(db, req.params.id);
+            //se este foi apagado
+            if (resultInsertId >= 0) {
+                result.error = 0;
+                result.message = "Exame apagado com sucesso";
+            }
+        }
+        res.json(result);
+    }); 
+
+
+    app.get(prefix + ROUTE_WORKSHEET_PREFIX + '/:id', async function (req, res) {
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //define erro para o caso de algo correr mal
+            result.error = 1;
+            result.message = "Ocorreu um erro, o exame pode não existir";
+            //tenta buscar exame
+            let resultInsertId = await getWorksheet(db, req.params.id);
+            //se encontrou
+            if (resultInsertId !== null) {
+                result.error = 0;
+                result.message = "Folha de obra";
+                result.res.source = resultInsertId;
             }
         }
         res.json(result);
