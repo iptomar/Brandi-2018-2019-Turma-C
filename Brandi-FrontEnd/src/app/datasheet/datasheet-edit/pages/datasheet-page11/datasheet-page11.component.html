@@ -1,3 +1,143 @@
+<h5 class="mt-2 mb-4">
+  Testes de Solubilidade
+</h5>
+
+
+<div class="col-lg-6 form-group">
+  <button type="button" class="form-control btn btn-outline-success" [disabled]='!_isEditing' data-toggle="modal"
+    data-target="#modal_solubTests">Adicionar Teste de Solubilidade <i class="fa fa-file"></i></button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal_solubTests" tabindex="-1" role="dialog" aria-labelledby="modal_solubTests__Title"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form (submit)="addNewSolubTest($event)">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal_solubTests__Title">Adicionar teste</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div *ngIf='messageEditErrSolubTest !== ""' class="alert alert-warning alert-dismissible fade show"
+            role="alert">
+            <strong>{{messageEditErrSolubTest}}</strong>
+            <button type="button" class="close" aria-label="Close" (click)='messageEditErrSolubTest=""'>
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!--mensage de alerta acaba aqui-->
+
+          <div *ngIf='messageEditSuccessSolubTest !== ""' class="alert alert-success alert-dismissible fade show"
+            role="alert">
+            <strong>{{messageEditSuccessSolubTest}}</strong>
+            <button type="button" class="close" aria-label="Close" (click)='messageEditSuccessSolubTest=""'>
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label for="test_description">Identificação do Estrato/Sujidade</label>
+            <input name="test_description" id="test_description" type="text" class="form-control"
+              placeholder="Identificação do Estrato/Sujidade" />
+          </div>
+          <div class="col-lg-12 form-group">
+            <label for="test_features">Características</label>
+            <input name="test_features" id="test_features" type="text" class="form-control"
+              placeholder="Características" />
+          </div>
+          <div class="col-lg-12 form-group">
+            <label for="test_technician">Técnico Responsável</label>
+            <select name="test_technician" id="test_technician" type="text" class="form-control"
+              placeholder="Técnico Responsável"></select>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label for="test_date">Data</label>
+            <input name="test_date" id="test_date" type="date" class="form-control" placeholder="Data" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Adiciona novo Teste de Solubilidade</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-6 form-group">
+  <button type="button" class="form-control btn btn-outline-success" [disabled]='!_isEditing' data-toggle="modal"
+    data-target="#modal_solvents">Adicionar teste de solvente<i class="fa fa-flask"></i></button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal_solvents" tabindex="-1" role="dialog" aria-labelledby="modal_solvents__Title"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form (submit)="addNewSolvent($event)">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal_solvents__Title">Adicionar teste <i class="fa fa-flask"></i></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div *ngIf='messageEditErrSolvent !== ""' class="alert alert-warning alert-dismissible fade show"
+            role="alert">
+            <strong>{{messageEditErrSolvent}}</strong>
+            <button type="button" class="close" aria-label="Close" (click)='messageEditErrSolvent=""'>
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!--mensage de alerta acaba aqui-->
+
+          <div *ngIf='messageEditSuccessSolvent !== ""' class="alert alert-success alert-dismissible fade show"
+            role="alert">
+            <strong>{{messageEditSuccessSolvent}}</strong>
+            <button type="button" class="close" aria-label="Close" (click)='messageEditSuccessSolvent=""'>
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label for="solvent">Solvente ou Mistura de solventes</label>
+            <input name="solvent" id="solvent" type="text" class="form-control"
+              placeholder="Solvente ou Mistura de solventes" />
+          </div>
+          <div class="col-lg-12 form-group">
+            <label for="test_efficiency">Características</label>
+            <select class="form-control" name="test_efficiency" id="test_efficiency">
+              <option selected>Seleccione</option>
+              <option value="1">Muito Eficaz</option>
+              <option value="2">Eficaz</option>
+              <option value="3">Eficácia Média</option>
+              <option value="4">Pouco Eficaz</option>
+              <option value="5">Eficácia Nula</option>
+            </select>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label for="solvent_observations">Observações</label>
+            <select name="solvent_observations" id="solvent_observations" type="text" class="form-control"
+              placeholder="Observações"></select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Adiciona novo teste</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
 <div class="card">
   <div class="card-body">
     <div *ngIf="_verTeste; else testlist">
