@@ -1,3 +1,12 @@
 .bigText {
     white-space: pre-wrap;
 }
+
+.buttonClick {
+    color: blue;
+    cursor: pointer;
+}
+
+.buttonClick:hover {
+    text-decoration: underline;
+}

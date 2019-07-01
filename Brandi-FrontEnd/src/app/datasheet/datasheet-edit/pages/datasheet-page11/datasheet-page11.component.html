@@ -67,7 +67,7 @@
         </div>
       </div>
       <div class="table-responsive mt-2">
-          <form class="input-group mb-3" (submit)="searchSource($event)">
+          <form class="input-group mb-3" (submit)="searchSolvent($event)">
             <input type="text" name="searchBox" class="form-control" placeholder="Pesquisar por"
               aria-label="Pesquisar por">
             <div class="input-group-append">
@@ -117,7 +117,7 @@
         aria-labelledby="modal_solubTests__Title" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <form (submit)="addNewSolubTest($event)">
+            <form (submit)="addNewSolubTest($event)" #newSolubility>
               <div class="modal-header">
                 <h5 class="modal-title" id="modal_solubTests__Title">Adicionar teste</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -152,8 +152,8 @@
                     placeholder="Características"></textarea>
                 </div>
                 <div class="col-lg-12 form-group">
-                  <label for="test_technician">Técnico Responsável</label>
-                    <select name="Responsável"  id="Responsável" class="form-control">
+                  <label for="technician">Técnico Responsável</label>
+                    <select name="technician"  id="technician" class="form-control">
                         <option value="" selected disabled hidden>Utilizador Eliminado</option>
                         <option *ngFor="let u of _users$ | async" [value]="u.id">{{u.full_name}}</option>
                       </select>
@@ -172,7 +172,7 @@
         </div>
       </div>
       <div class="table-responsive mt-2">
-        <form class="input-group mb-3" (submit)="searchSource($event)">
+        <form class="input-group mb-3" (submit)="searchSolubility($event)">
           <input type="text" name="searchBox" class="form-control" placeholder="Pesquisar por"
             aria-label="Pesquisar por">
           <div class="input-group-append">
@@ -193,10 +193,10 @@
 
               <tbody>
                 <tr *ngFor="let ts of _testsSolubility$ | async">
-                  <td>{{ts.source_type}}</td>
-                  <td class="bigText">{{ts.source_site}}</td>
-                  <td>{{ts.source_quota}}</td>
-                  <td><input type="date" class="form-control" [value]="ts.source_date | date: 'yyyy-MM-dd'"
+                  <td (click)="openSolventTab(ts.id)" class="buttonClick">{{ts.description}}</td>
+                  <td class="bigText">{{ts.features}}</td>
+                  <td>{{ts.technician_name}}</td>
+                  <td><input type="date" class="form-control" [value]="ts.solub_date | date: 'yyyy-MM-dd'"
                       readOnly="readOnly" /></td>
                 </tr>
               </tbody>

@@ -35,10 +35,11 @@ export class WorksheetService {
       .pipe(
         map((data: ReceivedData) => {
           if(!data.error) {
-            let element = data.res.worksheets;
-            element.worksheet_date = Global.stringToDate(
-              element.worksheet_date
-            );
+            data.res.worksheets.forEach(element => {
+              element.worksheet_date = Global.stringToDate(
+                element.worksheet_date
+              );
+            });
             return <Worksheet[]>data.res.worksheets;
           }else if (data.error === 1) {
             this.auth.forceLogout();

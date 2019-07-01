@@ -33,10 +33,11 @@ export class TestsService {
       .pipe(
         map((data: ReceivedData) => {
           if(!data.error) {
-            let element = data.res.tests;
-            element.analysis_DATE = Global.stringToDate(
-              element.analysis_DATE
-            );
+            data.res.tests.forEach(element => {
+              element.analysis_DATE = Global.stringToDate(
+                element.analysis_DATE
+              );
+            });
             return <Tests[]>data.res.tests;
           }else if (data.error === 1) {
             this.auth.forceLogout();
