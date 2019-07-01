@@ -79,6 +79,6 @@ export class DatasheetPage12Component implements OnInit, DatasheetPage {
     this._worksheets$=this.worksheetService.getWorksheets(this._datasheet.id,search);
   }
   ngOnInit() {
-    this._users$=this.users.getUsersNames("");
+    this._users$=this.users.getUsersTechnitiansNames("");
   }
 }

@@ -105,7 +105,7 @@ export class DatasheetPage11Component implements OnInit, DatasheetPage {
   }
 
   ngOnInit() {
-    this._users$=this.users.getUsersNames("");
+    this._users$=this.users.getUsersTechnitiansNames("");
   }
 
 

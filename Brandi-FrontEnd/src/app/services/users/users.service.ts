@@ -23,6 +23,7 @@ export interface UserNames {
 export class UsersService {
   public static USER_LIST = "user/list";
   public static USER_LIST_NAMES = "user/listNames";
+  public static USER_LIST_NAMES_TECHNITIANS = "user/listTechnitNames";
 
   public static USER_TYPE_LIST = "user/type/list";
   public static USER_DELETE = "user/delete";
@@ -112,6 +113,19 @@ export class UsersService {
       return users;
     }));
   }
+  
+  public getUsersTechnitiansNames(pesquisa : string): Observable<Array<UserNames>> {
+    return this.http.get(Global.HOST_PREFIX + UsersService.USER_LIST_NAMES_TECHNITIANS, {params: new HttpParams().set('search', pesquisa)} ).pipe(map((data: ReceivedData) => {
+      let technitians: Array<UserNames> = [];
+      if(!data.error) {
+        technitians = <Array<UserNames>>data.res.technitians;
+      } else {
+        this.auth.forceLogout();
+      }
+      return technitians;
+    }));
+  }
+  
 
   public userExists(users : User[], id : number) : boolean{
     for(let i = 0; i < users.length; i++) if(users[i].id === id) return true;

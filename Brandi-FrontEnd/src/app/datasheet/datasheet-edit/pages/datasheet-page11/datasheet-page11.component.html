@@ -153,7 +153,7 @@
                   <div class="col-lg-12 form-group">
                     <label for="technician">Técnico Responsável</label>
                       <select name="technician"  id="technician" class="form-control">
-                          <option value="" selected disabled hidden>Utilizador Eliminado</option>
+                          <option value="" selected disabled hidden>Escolha um técnico</option>
                           <option *ngFor="let u of _users$ | async" [value]="u.id">{{u.full_name}}</option>
                         </select>
                   </div>
