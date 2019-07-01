@@ -42,7 +42,7 @@
                       placeholder="Solvente ou Mistura de solventes" />
                   </div>
                   <div class="col-lg-12 form-group">
-                    <label for="test_efficiency">Características</label>
+                    <label for="test_efficiency">Eficácia Na Solubilização</label>
                     <select class="form-control" name="test_efficiency" id="test_efficiency">
                       <option selected>Seleccione</option>
                       <option value="0">Muito Eficaz</option>
@@ -80,13 +80,14 @@
                   <thead>
                     <tr>
                       <th style="width: 33%">Solvente ou Mistura de solventes</th>
-                      <th style="width: 33%">Características</th>
+                      <th style="width: 33%">Eficácia Na Solubilização</th>
                       <th style="width: 33%">Observações</th>
                     </tr>
                   </thead>
     
                   <tbody>
                     <tr *ngFor="let ts of _testsSolvent$ | async">
+                      <td>{{ts.solvent}}</td>
                       <td [ngSwitch]="ts.efficiency">
                           <span *ngSwitchCase="0">Muito Eficaz</span>
                           <span *ngSwitchCase="1">Eficaz</span>
@@ -94,7 +95,6 @@
                           <span *ngSwitchCase="3">Pouco Eficaz</span>
                           <span *ngSwitchCase="4">Eficácia Nula</span>
                       </td>
-                      <td>{{ts.solvent}}</td>
                       <td>{{ts.observations}}</td>
                     </tr>
                   </tbody>

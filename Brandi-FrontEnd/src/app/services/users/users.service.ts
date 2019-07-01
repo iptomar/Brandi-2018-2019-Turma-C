@@ -115,7 +115,8 @@ export class UsersService {
   }
   
   public getUsersTechnitiansNames(pesquisa : string): Observable<Array<UserNames>> {
-    return this.http.get(Global.HOST_PREFIX + UsersService.USER_LIST_NAMES_TECHNITIANS, {params: new HttpParams().set('search', pesquisa)} ).pipe(map((data: ReceivedData) => {
+    return this.getUsersNames(pesquisa);
+    /*return this.http.get(Global.HOST_PREFIX + UsersService.USER_LIST_NAMES_TECHNITIANS, {params: new HttpParams().set('search', pesquisa)} ).pipe(map((data: ReceivedData) => {
       let technitians: Array<UserNames> = [];
       if(!data.error) {
         technitians = <Array<UserNames>>data.res.technitians;
@@ -123,7 +124,7 @@ export class UsersService {
         this.auth.forceLogout();
       }
       return technitians;
-    }));
+    }));*/
   }
   
 
