@@ -14,6 +14,7 @@ import { ReceivedData } from 'src/app/Global';
 })
 export class DatasheetPage11Component implements OnInit, DatasheetPage {
   @ViewChild("newSolubility") newSolubility:ElementRef;
+  @ViewChild("newSolvent") newSolvent:ElementRef;
   _datasheet: Datasheet;
   _isEditing: boolean;
   _verTeste: boolean;
@@ -32,6 +33,9 @@ export class DatasheetPage11Component implements OnInit, DatasheetPage {
     return this._datasheet;
   }
 
+  public addNewSolvent(event){
+    event.preventDefault();
+  }
 
   public addNewSolubTest(event){
     event.preventDefault();
