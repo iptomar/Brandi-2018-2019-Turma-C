@@ -1,0 +1,1564 @@
+{
+	"id": "9cfafdc4-675a-4972-bd32-6f11286fc380",
+	"name": "02.PM-Brandi-C_Testes_API_USER_TYPE",
+	"allTests": [],
+	"timestamp": "2019-07-02T00:42:53.219Z",
+	"collection_id": "f2b198d2-af63-445a-a2c4-824de1b859ef",
+	"folder_id": 0,
+	"target_type": "collection",
+	"environment_id": "94fcbf32-16f5-4206-9220-87cece466959",
+	"data": [],
+	"delay": 0,
+	"count": 1,
+	"collection": {
+		"id": "f2b198d2-af63-445a-a2c4-824de1b859ef",
+		"name": "02.PM-Brandi-C_Testes_API_USER_TYPE",
+		"description": "Testes Webservices Projeto Brandi_C - Alteração dos api/user/type\n\nTestes efetuados a partir de:\n\nDATA: 12-06-2019\nHORA: 23:00\n\nUSER: Quintino\nUSER: Filipe",
+		"auth": null,
+		"events": [
+			{
+				"listen": "prerequest",
+				"script": {
+					"id": "fe11b7df-504b-44d0-babc-7c81af113a57",
+					"type": "text/javascript",
+					"exec": [
+						""
+					]
+				}
+			},
+			{
+				"listen": "test",
+				"script": {
+					"id": "20a425e4-1dec-4878-ae33-4a5ef26dfab7",
+					"type": "text/javascript",
+					"exec": [
+						""
+					]
+				}
+			}
+		],
+		"variables": null,
+		"order": [],
+		"folders_order": [
+			"b915b227-b758-4c57-81b5-f2ac2606e743",
+			"6cf8a225-0782-48ef-9ce7-122bd25ace52",
+			"4b933cd9-90d6-4154-97e5-360adffa5b8e",
+			"14c392e3-1c82-49a8-b69e-0600b8035151"
+		],
+		"owner": "6806043",
+		"favorite": false,
+		"isFavorite": true
+	},
+	"folder": null,
+	"environment": null,
+	"globals": [
+		{
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			},
+			"value": "testes123456@ipt.pt",
+			"key": "email",
+			"enabled": true
+		},
+		{
+			"value": "8efa7760-269f-4186-b640-c38dbe289433",
+			"key": "newToken",
+			"enabled": true
+		},
+		{
+			"value": "user-1",
+			"key": "filter",
+			"enabled": true
+		}
+	],
+	"results": [
+		{
+			"name": "../api/user/type/list - obter lista de tipos de utilizadores sem login ERROR:1",
+			"id": "84f4c5f2-cefb-4224-9ea9-7c8d77715aa0",
+			"url": "http://brandic.devll.eu:61080/api/user/type/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para obter lista de tipo de utilizadores sem login.": true,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para obter lista de tipo de utilizadores sem login.": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"242"
+			],
+			"allTests": [
+				{
+					"Teste para obter lista de tipo de utilizadores sem login.": true,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "242",
+			"totalRequestTime": "242",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/list - obter lista de tipos de utilizadores com login usertype 2 ERROR:1",
+			"id": "56a0ea10-1744-49fd-9601-0113093f64ba",
+			"url": "http://brandic.devll.eu:61080/api/user/type/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para obter lista de tipo de utilizadores com login de usertypeid 2.": true,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para obter lista de tipo de utilizadores com login de usertypeid 2.": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"238"
+			],
+			"allTests": [
+				{
+					"Teste para obter lista de tipo de utilizadores com login de usertypeid 2.": true,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "238",
+			"totalRequestTime": "238",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/list - obter lista de tipos de utilizadores com login usertype 1 ERROR:0",
+			"id": "913e03f2-5664-45a3-bd4b-2dc859633eca",
+			"url": "http://brandic.devll.eu:61080/api/user/type/list",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para obter lista de tipo de utilizadores com login de usertypeid 1.": false,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para obter lista de tipo de utilizadores com login de usertypeid 1.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"234"
+			],
+			"allTests": [
+				{
+					"Teste para obter lista de tipo de utilizadores com login de usertypeid 1.": false,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "234",
+			"totalRequestTime": "234",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/create - tentativa de adicionar tipo de utilizador sem autenticação ERROR:3",
+			"id": "73b863fe-4f2a-40b4-a6f9-fb9c6091b098",
+			"url": "http://brandic.devll.eu:61080/api/user/type/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para adicionar tipo de utilizador sem autenticação.": true,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para adicionar tipo de utilizador sem autenticação.": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"230"
+			],
+			"allTests": [
+				{
+					"Teste para adicionar tipo de utilizador sem autenticação.": true,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "230",
+			"totalRequestTime": "230",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/create - tentativa de adicionar tipo de utilizador com usertypeid 2 ERROR:3",
+			"id": "84d1ab97-4a28-4c9e-beb7-1b9822b23ffb",
+			"url": "http://brandic.devll.eu:61080/api/user/type/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para adicionar tipo de utilizador com login de utilizxador do tipo usertypeid 2.": true,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para adicionar tipo de utilizador com login de utilizxador do tipo usertypeid 2.": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"227"
+			],
+			"allTests": [
+				{
+					"Teste para adicionar tipo de utilizador com login de utilizxador do tipo usertypeid 2.": true,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "227",
+			"totalRequestTime": "227",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/create - tentativa de adicionar tipo de utilizador com usertypeid 1 sem campos obrigatórios ERROR:2",
+			"id": "5ba488e9-5064-45cd-80b1-770528755f54",
+			"url": "http://brandic.devll.eu:61080/api/user/type/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para adicionar tipo de utilizador com login de utilizador do tipo usertypeid 1 sem campos obrigatórios.": false,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para adicionar tipo de utilizador com login de utilizador do tipo usertypeid 1 sem campos obrigatórios.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"241"
+			],
+			"allTests": [
+				{
+					"Teste para adicionar tipo de utilizador com login de utilizador do tipo usertypeid 1 sem campos obrigatórios.": false,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "241",
+			"totalRequestTime": "241",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/create - adicionar tipo de utilizador com usertypeid 1 ERROR:0",
+			"id": "22999888-32cd-4a32-948a-e0368db69943",
+			"url": "http://brandic.devll.eu:61080/api/user/type/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para adicionar tipo de utilizador com login de utilizador do tipo usertypeid 1.": false,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para adicionar tipo de utilizador com login de utilizador do tipo usertypeid 1.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"229"
+			],
+			"allTests": [
+				{
+					"Teste para adicionar tipo de utilizador com login de utilizador do tipo usertypeid 1.": false,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "229",
+			"totalRequestTime": "229",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/create - tentativa de adicionar tipo de utilizador com usertypeid 1 de tipo de user já existente ERROR:1",
+			"id": "6dcd2fbf-a2db-40f6-a732-ffc924579304",
+			"url": "http://brandic.devll.eu:61080/api/user/type/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para adicionar tipo de utilizador já existente.": false,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para adicionar tipo de utilizador já existente.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"230"
+			],
+			"allTests": [
+				{
+					"Teste para adicionar tipo de utilizador já existente.": false,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "230",
+			"totalRequestTime": "230",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/change - tentativa de alterar tipo de utilizador sem autenticação ERROR:3",
+			"id": "18001d88-17ae-4551-94d6-c55dfe750711",
+			"url": "http://brandic.devll.eu:61080/api/user/type/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para alterar tipo de utilizador sem autenticação.": true,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para alterar tipo de utilizador sem autenticação.": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"227"
+			],
+			"allTests": [
+				{
+					"Teste para alterar tipo de utilizador sem autenticação.": true,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "227",
+			"totalRequestTime": "227",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/change - tentativa de alterar tipo de utilizador com autenticação sem ser administrador ERROR:3",
+			"id": "c69bfdb4-64d3-462d-8b8a-3447347423cc",
+			"url": "http://brandic.devll.eu:61080/api/user/type/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para alterar tipo de utilizador com autenticação sem ser administrador.": true,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para alterar tipo de utilizador com autenticação sem ser administrador.": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"231"
+			],
+			"allTests": [
+				{
+					"Teste para alterar tipo de utilizador com autenticação sem ser administrador.": true,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "231",
+			"totalRequestTime": "231",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/change - tentativa de alterar tipo de utilizador faltando campos obrigatórios ERROR:2",
+			"id": "821a42a8-9da4-4419-89f0-cf1b6f64b9b6",
+			"url": "http://brandic.devll.eu:61080/api/user/type/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para alterar tipo de utilizador faltando campos obrigatórios.": false,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para alterar tipo de utilizador faltando campos obrigatórios.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"226"
+			],
+			"allTests": [
+				{
+					"Teste para alterar tipo de utilizador faltando campos obrigatórios.": false,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "226",
+			"totalRequestTime": "226",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/change - tentativa de alterar tipo de utilizador para nome já existente ERROR:1",
+			"id": "45aa234a-7253-4794-add9-527adda5c3d1",
+			"url": "http://brandic.devll.eu:61080/api/user/type/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para alterar tipo de utilizador para nome já existente.": false,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para alterar tipo de utilizador para nome já existente.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"229"
+			],
+			"allTests": [
+				{
+					"Teste para alterar tipo de utilizador para nome já existente.": false,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "229",
+			"totalRequestTime": "229",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/change - alterar tipo de utilizador com sucesso ERROR:0",
+			"id": "94f6a975-2250-40db-bd21-40f368c64d22",
+			"url": "http://brandic.devll.eu:61080/api/user/type/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para alterar tipo de utilizador com sucesso.": false,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para alterar tipo de utilizador com sucesso.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"233"
+			],
+			"allTests": [
+				{
+					"Teste para alterar tipo de utilizador com sucesso.": false,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "233",
+			"totalRequestTime": "233",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/change - alterar novamente tipo de utilizador para o mesmo nome ERROR:0",
+			"id": "55b12e34-787a-47d0-84c9-1637681a9422",
+			"url": "http://brandic.devll.eu:61080/api/user/type/change",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para alterar tipo de utilizador com sucesso.": false,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para alterar tipo de utilizador com sucesso.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"234"
+			],
+			"allTests": [
+				{
+					"Teste para alterar tipo de utilizador com sucesso.": false,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "234",
+			"totalRequestTime": "234",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/delete - tentativa de eliminar tipo de utilizador sem autenticação ERROR:4",
+			"id": "c340b1ed-40f7-43ca-8c3f-c01807986015",
+			"url": "http://brandic.devll.eu:61080/api/user/type/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para eliminar tipo de utilizador sem autenticação.": true,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para eliminar tipo de utilizador sem autenticação.": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"240"
+			],
+			"allTests": [
+				{
+					"Teste para eliminar tipo de utilizador sem autenticação.": true,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "240",
+			"totalRequestTime": "240",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/delete - tentativa de eliminar tipo de utilizador com autenticação sem ser administrador ERROR:4",
+			"id": "a79289f5-b523-4f15-9089-4d69283f3eba",
+			"url": "http://brandic.devll.eu:61080/api/user/type/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para eliminar tipo de utilizador com autenticação sem ser administrador.": true,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para eliminar tipo de utilizador com autenticação sem ser administrador.": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"228"
+			],
+			"allTests": [
+				{
+					"Teste para eliminar tipo de utilizador com autenticação sem ser administrador.": true,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "228",
+			"totalRequestTime": "228",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/delete - tentativa de eliminar tipo de utilizador faltando campos obrigatórios ERROR:3",
+			"id": "42e4f0cc-51f4-4e46-a6f9-7e18eb78a662",
+			"url": "http://brandic.devll.eu:61080/api/user/type/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para eliminar tipo de utilizador faltando campos obrigatórios.": false,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para eliminar tipo de utilizador faltando campos obrigatórios.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"232"
+			],
+			"allTests": [
+				{
+					"Teste para eliminar tipo de utilizador faltando campos obrigatórios.": false,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "232",
+			"totalRequestTime": "232",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/delete - tentativa de eliminar tipo de utilizador inexistente ERROR:1",
+			"id": "23cddaca-2aba-4826-92a4-a9a56d433861",
+			"url": "http://brandic.devll.eu:61080/api/user/type/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para eliminar tipo de utilizador inexistente.": false,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para eliminar tipo de utilizador inexistente.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"234"
+			],
+			"allTests": [
+				{
+					"Teste para eliminar tipo de utilizador inexistente.": false,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "234",
+			"totalRequestTime": "234",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/delete - tentativa de eliminar tipo de utilizador associado a uma pelo menos uma conta de utilizador ERROR:2",
+			"id": "4cc1342c-52cb-420d-9521-ed9c58258592",
+			"url": "http://brandic.devll.eu:61080/api/user/type/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para eliminar tipo de utilizador associado a pelo menos uma conta de utilizador.": false,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para eliminar tipo de utilizador associado a pelo menos uma conta de utilizador.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"242"
+			],
+			"allTests": [
+				{
+					"Teste para eliminar tipo de utilizador associado a pelo menos uma conta de utilizador.": false,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "242",
+			"totalRequestTime": "242",
+			"iterationResults": {}
+		},
+		{
+			"name": "../api/user/type/delete - eliminar tipo de utilizador com  sucesso ERROR:0",
+			"id": "04222d0a-b428-4f00-a40b-b6ab62c15dd8",
+			"url": "http://brandic.devll.eu:61080/api/user/type/delete",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Teste para eliminar tipo de utilizador com sucesso.": false,
+				"Verificar se tem o estado 200": true,
+				"Verificar se responde em menos de 200ms": false
+			},
+			"testPassFailCounts": {
+				"Teste para eliminar tipo de utilizador com sucesso.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"237"
+			],
+			"allTests": [
+				{
+					"Teste para eliminar tipo de utilizador com sucesso.": false,
+					"Verificar se tem o estado 200": true,
+					"Verificar se responde em menos de 200ms": false
+				}
+			],
+			"time": "237",
+			"totalRequestTime": "237",
+			"iterationResults": {}
+		}
+	],
+	"totalPass": 28,
+	"totalFail": 32,
+	"totalTime": 4664,
+	"lifecycle": "done",
+	"requests": [
+		{
+			"name": "../api/user/type/list - obter lista de tipos de utilizadores sem login ERROR:1",
+			"id": "84f4c5f2-cefb-4224-9ea9-7c8d77715aa0",
+			"url": "http://brandic.devll.eu:61080/api/user/type/list",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para obter lista de tipo de utilizadores sem login.": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/list - obter lista de tipos de utilizadores com login usertype 2 ERROR:1",
+			"id": "56a0ea10-1744-49fd-9601-0113093f64ba",
+			"url": "http://brandic.devll.eu:61080/api/user/type/list",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para obter lista de tipo de utilizadores com login de usertypeid 2.": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/list - obter lista de tipos de utilizadores com login usertype 1 ERROR:0",
+			"id": "913e03f2-5664-45a3-bd4b-2dc859633eca",
+			"url": "http://brandic.devll.eu:61080/api/user/type/list",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para obter lista de tipo de utilizadores com login de usertypeid 1.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/create - tentativa de adicionar tipo de utilizador sem autenticação ERROR:3",
+			"id": "73b863fe-4f2a-40b4-a6f9-fb9c6091b098",
+			"url": "http://brandic.devll.eu:61080/api/user/type/create",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para adicionar tipo de utilizador sem autenticação.": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/create - tentativa de adicionar tipo de utilizador com usertypeid 2 ERROR:3",
+			"id": "84d1ab97-4a28-4c9e-beb7-1b9822b23ffb",
+			"url": "http://brandic.devll.eu:61080/api/user/type/create",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para adicionar tipo de utilizador com login de utilizxador do tipo usertypeid 2.": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/create - tentativa de adicionar tipo de utilizador com usertypeid 1 sem campos obrigatórios ERROR:2",
+			"id": "5ba488e9-5064-45cd-80b1-770528755f54",
+			"url": "http://brandic.devll.eu:61080/api/user/type/create",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para adicionar tipo de utilizador com login de utilizador do tipo usertypeid 1 sem campos obrigatórios.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/create - adicionar tipo de utilizador com usertypeid 1 ERROR:0",
+			"id": "22999888-32cd-4a32-948a-e0368db69943",
+			"url": "http://brandic.devll.eu:61080/api/user/type/create",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para adicionar tipo de utilizador com login de utilizador do tipo usertypeid 1.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/create - tentativa de adicionar tipo de utilizador com usertypeid 1 de tipo de user já existente ERROR:1",
+			"id": "6dcd2fbf-a2db-40f6-a732-ffc924579304",
+			"url": "http://brandic.devll.eu:61080/api/user/type/create",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para adicionar tipo de utilizador já existente.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/change - tentativa de alterar tipo de utilizador sem autenticação ERROR:3",
+			"id": "18001d88-17ae-4551-94d6-c55dfe750711",
+			"url": "http://brandic.devll.eu:61080/api/user/type/change",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para alterar tipo de utilizador sem autenticação.": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/change - tentativa de alterar tipo de utilizador com autenticação sem ser administrador ERROR:3",
+			"id": "c69bfdb4-64d3-462d-8b8a-3447347423cc",
+			"url": "http://brandic.devll.eu:61080/api/user/type/change",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para alterar tipo de utilizador com autenticação sem ser administrador.": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/change - tentativa de alterar tipo de utilizador faltando campos obrigatórios ERROR:2",
+			"id": "821a42a8-9da4-4419-89f0-cf1b6f64b9b6",
+			"url": "http://brandic.devll.eu:61080/api/user/type/change",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para alterar tipo de utilizador faltando campos obrigatórios.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/change - tentativa de alterar tipo de utilizador para nome já existente ERROR:1",
+			"id": "45aa234a-7253-4794-add9-527adda5c3d1",
+			"url": "http://brandic.devll.eu:61080/api/user/type/change",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para alterar tipo de utilizador para nome já existente.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/change - alterar tipo de utilizador com sucesso ERROR:0",
+			"id": "94f6a975-2250-40db-bd21-40f368c64d22",
+			"url": "http://brandic.devll.eu:61080/api/user/type/change",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para alterar tipo de utilizador com sucesso.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/change - alterar novamente tipo de utilizador para o mesmo nome ERROR:0",
+			"id": "55b12e34-787a-47d0-84c9-1637681a9422",
+			"url": "http://brandic.devll.eu:61080/api/user/type/change",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para alterar tipo de utilizador com sucesso.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/delete - tentativa de eliminar tipo de utilizador sem autenticação ERROR:4",
+			"id": "c340b1ed-40f7-43ca-8c3f-c01807986015",
+			"url": "http://brandic.devll.eu:61080/api/user/type/delete",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para eliminar tipo de utilizador sem autenticação.": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/delete - tentativa de eliminar tipo de utilizador com autenticação sem ser administrador ERROR:4",
+			"id": "a79289f5-b523-4f15-9089-4d69283f3eba",
+			"url": "http://brandic.devll.eu:61080/api/user/type/delete",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para eliminar tipo de utilizador com autenticação sem ser administrador.": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/delete - tentativa de eliminar tipo de utilizador faltando campos obrigatórios ERROR:3",
+			"id": "42e4f0cc-51f4-4e46-a6f9-7e18eb78a662",
+			"url": "http://brandic.devll.eu:61080/api/user/type/delete",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para eliminar tipo de utilizador faltando campos obrigatórios.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/delete - tentativa de eliminar tipo de utilizador inexistente ERROR:1",
+			"id": "23cddaca-2aba-4826-92a4-a9a56d433861",
+			"url": "http://brandic.devll.eu:61080/api/user/type/delete",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para eliminar tipo de utilizador inexistente.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/delete - tentativa de eliminar tipo de utilizador associado a uma pelo menos uma conta de utilizador ERROR:2",
+			"id": "4cc1342c-52cb-420d-9521-ed9c58258592",
+			"url": "http://brandic.devll.eu:61080/api/user/type/delete",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para eliminar tipo de utilizador associado a pelo menos uma conta de utilizador.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "../api/user/type/delete - eliminar tipo de utilizador com  sucesso ERROR:0",
+			"id": "04222d0a-b428-4f00-a40b-b6ab62c15dd8",
+			"url": "http://brandic.devll.eu:61080/api/user/type/delete",
+			"time": "2019-07-02T00:42:53.219Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Teste para eliminar tipo de utilizador com sucesso.": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verificar se tem o estado 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verificar se responde em menos de 200ms": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		}
+	],
+	"synced": false
+}
