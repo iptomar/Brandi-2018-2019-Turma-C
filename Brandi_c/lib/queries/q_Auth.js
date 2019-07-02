@@ -10,6 +10,8 @@ exports.GET_USER_AND_TYPE_BY_ID = "SELECT a.id,a.email, a.password,a.salt,a.full
 exports.GET_USERS_ID_LIST_BY_USER_TYPE = "SELECT a.id FROM " + infoDB.TBL_USERS + " a, " + infoDB.TBL_USER_TYPES + " b WHERE a.id_type_user=b.id AND b.id = ?";
 //Query de obter todos os dados de todos os utilizadores com o seu tipo pesquisando por NOME ou EMAIL ou TIPO DE UTILIZADOR
 exports.GET_USER_AND_TYPE_LIST = "SELECT a.id,a.email, a.password,a.salt,a.full_name,a.address,DATE_FORMAT(a.birthday, '%Y-%m-%d') as birthday,a.cellphone,a.id_type_user,a.register_date,a.title,a.qualifications,b.type_user,a.last_login FROM " + infoDB.TBL_USERS + " a, " + infoDB.TBL_USER_TYPES + " b WHERE a.id_type_user=b.id AND a.deleted = 0 AND (a.full_name like ? OR a.email like ? OR b.type_user LIKE ?)";
+//Query de obter todos os dados de todos os utilizadores com o seu tipo pesquisando por NOME ou EMAIL ou TIPO DE UTILIZADOR
+exports.GET_USER_AND_TYPE_LIST_FILTER_BY_TYPE = "SELECT a.id,a.email, a.password,a.salt,a.full_name,a.address,DATE_FORMAT(a.birthday, '%Y-%m-%d') as birthday,a.cellphone,a.id_type_user,a.register_date,a.title,a.qualifications,b.type_user,a.last_login FROM " + infoDB.TBL_USERS + " a, " + infoDB.TBL_USER_TYPES + " b WHERE a.id_type_user=b.id AND a.deleted = 0 AND b.type_user = ? AND (a.full_name like ? OR a.email like ?)";
 //Query para eliminar um utilizador (NÃO ELIMINA, DEFINE o campo deleted como 1)
 exports.DELETE_USER = "UPDATE " + infoDB.TBL_USERS + " SET deleted = 1 WHERE id = ?";
 //Query para listar todos os tipos de utilizador pesquisando por NOME

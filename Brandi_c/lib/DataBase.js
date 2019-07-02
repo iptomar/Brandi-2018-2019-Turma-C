@@ -32,6 +32,7 @@ class Database {
             let res = await this.doQuery(infoDB.CREATE_OREDER[i], []);
             //cano haja um erro
             if (res.error !== 0) {
+                console.log(res);
                 //n�o continuamos a cria��o de tabelas devido a que estas possam estar interligadas
                 return Promise.reject(res.res);
             }

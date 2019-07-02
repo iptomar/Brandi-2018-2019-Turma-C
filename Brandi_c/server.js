@@ -15,7 +15,7 @@ const datasheet = require('./lib/DataSheet');
 
 //----------------------------------- END LIBS -----------------------------------
 //porta do servidor
-const PORT = 8080;
+const PORT = 80;
 const PREFIX_ROUTE = '/api';
 //diretória de ficheiros html estáticos
 console.log("STATIC HTML PATH=\"" + global.PUBLIC_DIR + "\"");
@@ -108,5 +108,5 @@ db.createAllTables()
     //});
 })
 .catch((error) => {
-    console.log(dbCreation.res);
-})
+    console.log(error);
+});

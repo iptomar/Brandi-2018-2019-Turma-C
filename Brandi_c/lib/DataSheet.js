@@ -15,6 +15,381 @@ const ROUTE_SUB_CATEGORIES_PREFIX = ROUTE_DATASHEET_PREFIX + "/sub_categories";
 
 
 const ROUTE_CONTACTS_PREFIX = ROUTE_DATASHEET_PREFIX + "/contacts";
+const ROUTE_SOURCES_PREFIX = ROUTE_DATASHEET_PREFIX + "/sources";
+const ROUTE_TESTS_PREFIX = ROUTE_DATASHEET_PREFIX + "/tests";
+const ROUTE_WORKSHEET_PREFIX = ROUTE_DATASHEET_PREFIX + "/worksheet";
+const ROUTE_SOLUBILITY_PREFIX = ROUTE_DATASHEET_PREFIX + "/solubility";
+const ROUTE_SOLUBTESTS_PREFIX = ROUTE_DATASHEET_PREFIX + "/solvent";
+
+
+/*
+ * testes -------------------------------------------------------------------------
+ * /
+
+
+/**
+ *
+ * lista Exames
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id_object id do objeto associado
+ * @param {string} search palavra pesquisa
+ * @returns {Array<Sources>} [<exames>]
+ */
+async function listTests(db, id_object, search) {
+    let s = "%" + search + "%";
+    //lista tests
+    let resultDb = await db.doQuery(q_DataSheet.LIST_TESTS, [id_object,s,s,s,s,s]);
+    //se não ocorreu nenhum erro, devolve lista
+    if (!resultDb.error) {
+        return resultDb.res;
+    }
+    return [];
+}
+
+
+
+
+/**
+ * 
+ * Cria um exame
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} object_id id do objeto associado
+ * @param {string} type_reference tipo de referencia
+ * @param {string} location localização do exame
+ * @param {string} objectives objetivos do exame
+ * @param {number} technician técnico do exame
+ * @param {string} results resultados do exame
+ */
+async function createTests(db, id_object, type_reference, location, objectives, technician, results) {
+    let result = -1;
+    //procura exame se existe
+    let checkObjecto = await db.doQuery(q_DataSheet.CHECK_OBJECT, [id_object]);
+    if (!checkObjecto.error) {
+        if (checkObjecto.res.length > 0) {
+            //criação do novo exame
+            let resultDb = await db.doQuery(q_DataSheet.CREATE_TESTS, [id_object, type_reference, location, objectives, technician, results]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.insertId;
+            }
+        } else result = -2;
+    }
+    return result;
+}
+
+/**
+ * Edita o exame
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} object_id id do objeto associado
+ * @param {string} type_reference tipo de referencia
+ * @param {string} location localização do exame
+ * @param {string} objectives objetivos do exame
+ * @param {number} technician técnico do exame
+ * @param {string} results resultados do exame
+ * @returns {number} id do exame ou -1 caso ocorra erro, -2 caso o objeto nao exista
+ */
+async function changeTests(db, id, type_reference, location, objectives, technician, results) {
+    let result = -1;
+    //alteração do novo exame
+    let resultDb = await db.doQuery(q_DataSheet.CHANGE_TESTS, [type_reference, location, objectives, technician, results, id]);
+    //se não ocorreu nenhum erro
+    if (!resultDb.error) {
+        result = 0;
+    }
+    return result;
+}
+  
+
+/**
+ * apaga exame
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id do exame
+ * @returns {number} 0 caso nao ocorra nenhum erro ou -1 caso ocorra erro
+ */
+async function deleteTests(db, id) {
+    let result = -1;
+    //criação do novo exame
+    let resultDb = await db.doQuery(q_DataSheet.DELETE_TESTS, [id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0 ? 0 : -1;
+    }
+    return result;
+}
+
+
+/**
+ *busca exame
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id do exame
+ * @returns {JSON} {<exame>}
+ */
+async function getTest(db, id) {
+    //procura Exame
+    let resultDb = await db.doQuery(q_DataSheet.GET_TESTS, [id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error && resultDb.res.length > 0) {
+        return resultDb.res[0];
+    }
+    return null;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ * FIM FIM  FIM FIM testes -------------------------------------------------------------------------
+ * /
+
+/*
+ * Folha de Obra -------------------------------------------------------------------------
+ * /
+ 
+ 
+ 
+ 
+/**
+ * lista worksheet
+ * 
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id_object id do objeto associado
+ * @returns {Array<Sourdces>} [<Folhas de Obra>]
+ */
+async function listWorksheet(db, id_object, search) {
+    let s = "%" + search + "%";
+    //lista folhas de obra
+    let resultDb = await db.doQuery(q_DataSheet.LIST_WORKSHEET, [id_object,s,s]);
+    //se não ocorreu nenhum erro, devolve lista
+    if (!resultDb.error) {
+        return resultDb.res;
+    }
+    return [];
+}
+
+
+/**
+ * Edita a folha
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} object_id id do objeto associado
+ * @param {Date} worksheet_date data da folha de obra
+ * @param {string} procedure_type tipo de procedimento
+ * @param {string} observations observações
+ * @param {string} materials materiais da obra
+ * @param {number} amount quantidades
+ * @param {number} duration duração do processo
+ * @param {number} technician técnico da obra
+ * @returns {number} id do exame ou -1 caso ocorra erro, -2 caso o objeto nao exista
+ */
+async function changeWorksheet(db, id, worksheet_date, procedure_type, observations, materials, amount, duration, technician) {
+    let result = -1;
+    //alteração da folha
+    let resultDb = await db.doQuery(q_DataSheet.CHANGE_WORKSHEET, [worksheet_date, procedure_type, observations, materials, amount, duration, technician, id]);
+    //se não ocorreu nenhum erro
+    if (!resultDb.error) {
+        result = 0;
+    }
+    return result;
+}
+
+
+
+/**
+ * 
+ * Cria uma folha de obra
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} object_id id do objeto associado
+ * @param {Date} worksheet_date data da folha de obra
+ * @param {string} procedure_type tipo de procedimento
+ * @param {string} observations observações 
+ * @param {string} materials materiais da obra
+ * @param {number} amount quantidades
+ * @param {number} duration duração do processo
+ * @param {number} technician técnico da obra
+ */
+async function createWorksheet(db, id_object, worksheet_date, procedure_type, observations, materials, amount, duration, technician) {
+    let result = -1;
+    //procura exame se existe
+    let checkObjecto = await db.doQuery(q_DataSheet.CHECK_OBJECT, [id_object]);
+    if (!checkObjecto.error) {
+        if (checkObjecto.res.length > 0) {
+            //criação do novo exame
+            let resultDb = await db.doQuery(q_DataSheet.CREATE_WORKSHEET, [id_object, worksheet_date, procedure_type, observations, materials, amount, duration, technician]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.insertId;
+            }
+        } else result = -2;
+    }
+    return result;
+}
+
+
+/**
+ * apaga folha de obra
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id da folha de obra
+ * @returns {number} 0 caso nao ocorra nenhum erro ou -1 caso ocorra erro
+ */
+async function deleteWorksheet(db, id) {
+    let result = -1;
+    //criação do novo exame
+    let resultDb = await db.doQuery(q_DataSheet.DELETE_WORKSHEET, [id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0 ? 0 : -1;
+    }
+    return result;
+}
+
+/**
+ *busca folha de obra
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id da folha de obra
+ * @returns {JSON} {<Folhas de Obra>}
+ */
+async function getWorksheet(db, id) {
+    //procura Exame
+    let resultDb = await db.doQuery(q_DataSheet.GET_WORKSHEET, [id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error && resultDb.res.length > 0) {
+        return resultDb.res[0];
+    }
+    return null;
+}
+
+
+/*
+ * FIM FIM  FIM FIM Folha de Obra -------------------------------------------------------------------------
+ * /
+
+
+/*
+ * Testes de solubilidade -------------------------------------------------------------------------
+ * /
+
+/**
+ * lista Teste de solubilidade
+ *
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id_object id do objeto associado
+ * @returns {Array<Sourdces>} [<Testes de solubilidade>]
+ */
+async function listSolubility(db, object_id, search) {
+    let s = "%" + search + "%";
+    //lista Testes de solubilidade
+    let resultDb = await db.doQuery(q_DataSheet.LIST_SOLUBILITY, [object_id, s, s]);
+    //se não ocorreu nenhum erro, devolve lista
+    if (!resultDb.error) {
+        return resultDb.res;
+    }
+    return [];
+}
+
+
+/**
+ * cria Teste de solubilidade
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} object_id - id do objeto associado
+ * @param {string} description - descrição do teste
+ * @param {string} features características
+ * @param {number} technician técnico do teste
+ * @param {Date} solub_date data do teste
+ */
+async function createSolubility(db, object_id, description, features, technician, solub_date) {
+    let result = -1;
+    //procura teste se existe
+    let checkObjecto = await db.doQuery(q_DataSheet.CHECK_OBJECT, [object_id]);
+    if (!checkObjecto.error) {
+        if (checkObjecto.res.length > 0) {
+            //criação do novo teste
+            let resultDb = await db.doQuery(q_DataSheet.CREATE_SOLUBILITY, [object_id, description, features, technician, solub_date]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.insertId;
+            }
+        } else result = -2;
+    }
+    return result;
+}
+
+/*
+ * FIM  Testes de solubilidade -------------------------------------------------------------------------
+ * /
+
+
+
+/*
+ * Testes de solvente -------------------------------------------------------------------------
+ /
+
+
+
+/**
+ * lista Teste de solvente
+ *
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id_object id do objeto associado
+ * @returns {Array<Sourdces>} [<Testes de solvente>]
+ */
+async function listSolvent(db, tbl_solubilityid, search) {
+    let s = "%" + search + "%";
+    //lista Testes de solvente
+    let resultDb = await db.doQuery(q_DataSheet.LIST_SOLUBTESTS, [tbl_solubilityid, s, s]);
+    //se não ocorreu nenhum erro, devolve lista
+    if (!resultDb.error) {
+        return resultDb.res;
+    }
+    return [];
+}
+
+
+/**
+ * cria Teste de solvente
+ * 
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} tbl_solubilityid - id do objeto associado
+ * @param {string} solvent - solvente utilizado no teste
+ * @param {number} efficiency - eficiência do teste
+ * @param {string} observations - observações do teste de solvente
+ */
+async function createSolvent(db, tbl_solubilityid, solvent, efficiency, observations) {
+    let result = -1;
+    //procura teste se existe
+    let checkObjecto = await db.doQuery(q_DataSheet.CHECK_SOLUBILITY, [tbl_solubilityid]);
+    if (!checkObjecto.error) {
+        if (checkObjecto.res.length > 0) {
+            //criação do novo teste
+            let resultDb = await db.doQuery(q_DataSheet.CREATE_SOLUBTESTS, [tbl_solubilityid, solvent, efficiency, observations]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.insertId;
+            }
+        } else result = -2;
+    }
+    return result;
+}
+
+/*
+ * FIM  Testes de solvente -------------------------------------------------------------------------
+ * /
+
+
 
 /**
  * lista super categorias
@@ -215,6 +590,112 @@ async function listContact(db, search) {
     //altera contacto
     let resultDb = await db.doQuery(q_DataSheet.LIST_CONTACTS, [s, s, s, s]);
     //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        return resultDb.res;
+    }
+    return [];
+}
+
+
+/**
+ * apaga fonte
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id da fonte
+ * @returns {number} 0 caso nao ocorra nenhum erro ou -1 caso ocorra erro
+ */
+async function deleteSource(db, id) {
+    let result = -1;
+    //criação do novo contacto
+    let resultDb = await db.doQuery(q_DataSheet.DELETE_SOURCE, [id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0 ? 0 : -1;
+    }
+    return result;
+}
+
+/**
+ * cria fonte
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id da fonte
+ * @returns {JSON} {<fonte>}
+ */
+async function getSource(db, id) {
+    //procura fonte
+    let resultDb = await db.doQuery(q_DataSheet.GET_SOURCE, [id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
+    if (!resultDb.error && resultDb.res.length > 0) {
+        return resultDb.res[0];
+    }
+    return null;
+}
+
+
+/**
+ * cria fonte
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} object_id id do objeto associado
+ * @param {number} source_type_set se é um set
+ * @param {string} source fonte
+ * @param {string} source_type tipo de fonte
+ * @param {string} source_site site da fonte
+ * @param {string} source_quota quota da source
+ * @param {Date} source_date data de criação da fonte
+ * @returns {number} id da foñte ou -1 caso ocorra erro, -2 caso o objeto nao exista
+ */
+async function createSource(db, object_id, source_type_set, source, source_type, source_site, source_quota, source_date) {
+    let result = -1;
+    //procura contacto se existe
+    let checkObjecto = await db.doQuery(q_DataSheet.CHECK_OBJECT, [object_id]);
+    if (!checkObjecto.error) {
+        if (checkObjecto.res.length > 0) {
+            //criação do novo contacto
+            let resultDb = await db.doQuery(q_DataSheet.CREATE_SOURCE, [object_id, source_type_set, source, source_type, source_site, source_quota, source_date]);
+            //se não ocorreu nenhum erro, devolve o id inserido
+            if (!resultDb.error) {
+                result = resultDb.res.insertId;
+            }
+        } else result = -2;
+    }
+    return result;
+}
+
+
+/**
+ * edita fonte
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da fonte
+ * @param {number} source_type_set se é um set
+ * @param {string} source fonte
+ * @param {string} source_type tipo de fonte
+ * @param {string} source_site site da fonte
+ * @param {string} source_quota 
+ * @param {Date} source_date data de criação da fonte
+ * @returns {number} 0 caso nao ocorra nenhum erro ou -1 caso ocorra erro
+ */
+async function changeSource(db, id, source_type_set, source, source_type, source_site, source_quota, source_date) {
+    let result = -1;
+    //alteração do novo contacto
+    let resultDb = await db.doQuery(q_DataSheet.CHANGE_SOURCE, [source_type_set, source, source_type, source_site, source_quota, source_date,id]);
+    //se não ocorreu nenhum erro
+    if (!resultDb.error) {
+        result = 0;
+    }
+    return result;
+}
+
+/**
+ * 
+ * lista fontes
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id_object id do objeto associado
+ * @param {string} search palavra pesquisa
+ * @returns {Array<Sourdces>} [<fontes>]
+ */
+async function listSources(db, id_object, search) {
+    //lista sources
+    let resultDb = await db.doQuery(q_DataSheet.LIST_SOURCES, [id_object, "%" + search + "%"]);
+    //se não ocorreu nenhum erro, devolve lista
     if (!resultDb.error) {
         return resultDb.res;
     }
@@ -554,7 +1035,6 @@ async function changeDataSheetP3(db, id, object_is_a_set, set_type, set_elements
     //criação do novo objeto
     let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P3, [object_is_a_set, set_type, set_elements, set_materials, set_inscriptions, set_mount, set_build, classification, period, quality, style, materials_structure, materials_surface, materials_elementsAccessories, techniques_structure, techniques_surface, techniques_elementsAccessories, small_description, analogies, conclusions, author, dating, origin, userId, id]);
     //se não ocorreu nenhum erro, devolve o id inserido
-    console.log(resultDb);
     if (!resultDb.error) {
         result = resultDb.res.affectedRows > 0;
     }
@@ -594,7 +1074,32 @@ async function changeDataSheetP4(db, id, site_description, cold_temp, hot_temp, 
     //criação do novo objeto
     let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P4, [site_description, cold_temp, hot_temp, cold_humidity, hot_humidity, cold_start, cold_end, hot_start, hot_end, lightning_type_natural, lightning_origin_artificial, artificial_lux, natural_lux, artificial_uv, natural_uv, artificial_real_uv, natural_real_uv, poluting_agents, poluting_sources, poluting_results, env_conclusions, userId, id]);
     //se não ocorreu nenhum erro, devolve o id inserido
-    console.log(resultDb);
+    if (!resultDb.error) {
+        result = resultDb.res.affectedRows > 0;
+    }
+    return result;
+}
+
+/**
+ * 
+ *
+ * @param {database.Database} db Class de ligação à base de dados
+ * @param {number} id id da ficha técnica
+ * @param {any} tests_Q1 pergunta 1, checkbox
+ * @param {any} tests_Q2 pergunta 2, checkbox
+ * @param {any} tests_Q3 pergunta 3, checkbox
+ * @param {any} tests_Q4 pergunta 4, checkbox
+ * @param {any} tests_Q5 pergunta 5, checkbox
+ * @param {any} tests_Q6 pergunta 6, checkbox
+ * @param {any} tests_results resultado dos testes
+ * @param {any} tests_conclusions conlcusão dos testes
+ * @param {any} userId id do utilizador autenticado
+ */
+async function changeDataSheetP5(db, id, tests_Q1, tests_Q2, tests_Q3, tests_Q4, tests_Q5, tests_Q6, tests_results, tests_conclusions, userId) {
+    let result = false;
+    //criação do novo objeto
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P5, [tests_Q1, tests_Q2, tests_Q3, tests_Q4, tests_Q5, tests_Q6, tests_results, tests_conclusions, userId, id]);
+    //se não ocorreu nenhum erro, devolve o id inserido
     if (!resultDb.error) {
         result = resultDb.res.affectedRows > 0;
     }
@@ -647,9 +1152,12 @@ async function changeDataSheetP7(db, id, support, surface, elements, conclusions
     return result;
 }
 
+
+
+
 /**
- * 
- * 
+ *
+ *
  * @param {database.Database} db Class de ligação à base de dados
  * @param {number} id id da ficha técnica
  * @param {number} owner_preserve - Preservação Dono da Obra
@@ -668,12 +1176,14 @@ async function changeDataSheetP7(db, id, support, surface, elements, conclusions
  * @param {String} observations - observações da proposta
  * @param {Date} proposal_date - Data da Informação da Proposta
  * @param {Date} acceptation_date - Data da Aceitação da Proposta
+ * @param {number} ipt_intervinient - interveniente do ipt
+ * @param {number} client_intervinient - cliente interveniente
  * @param {number} userId - id do utilizador autenticado
  */
-async function changeDataSheetP8(db, id, owner_preserve, owner_conserve, owner_restaure, specific_aspects, prop_preserve, prop_conserve, prop_restaure, support_proposal, support_resources, surface_proposal, surface_resources, elements_proposal, elements_resources, observations, proposal_date, acceptation_date, userId) {
+async function changeDataSheetP8(db, id, owner_preserve, owner_conserve, owner_restaure, specific_aspects, prop_preserve, prop_conserve, prop_restaure, support_proposal, support_resources, surface_proposal, surface_resources, elements_proposal, elements_resources, observations, proposal_date, acceptation_date, ipt_intervinient, client_intervinient, userId) {
     let result = false;
     //criação do novo objeto
-    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P8, [owner_preserve, owner_conserve, owner_restaure, specific_aspects, prop_preserve, prop_conserve, prop_restaure, support_proposal, support_resources, surface_proposal, surface_resources, elements_proposal, elements_resources, observations, proposal_date, acceptation_date, userId, id]);
+    let resultDb = await db.doQuery(q_DataSheet.UPDATE_OBJECT_P8, [owner_preserve, owner_conserve, owner_restaure, specific_aspects, prop_preserve, prop_conserve, prop_restaure, support_proposal, support_resources, surface_proposal, surface_resources, elements_proposal, elements_resources, observations, proposal_date, acceptation_date, ipt_intervinient, client_intervinient, userId, id]);
     //se não ocorreu nenhum erro, devolve o id inserido
     if (!resultDb.error) {
         result = resultDb.res.affectedRows > 0;
@@ -748,7 +1258,493 @@ exports.appendToExpress = function (app, _db, _prefix) {
     let thiss = this;
     let db = _db;
     let prefix = _prefix;
+
+    app.get(prefix + ROUTE_SOURCES_PREFIX + '/list/:id_object', async function (req, res) {
+        let result = { error: 1, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //lista fontes
+            let source = await listSources(db, req.params.id_object, !req.query.search ? "" : req.query.search);
+            result.error = 0;
+            result.message = "Fontes";
+            result.res = { sources: source };
+        }
+        res.json(result);
+    }); 
+
+    app.post(prefix + ROUTE_SOURCES_PREFIX + '/change/:id', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 2;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.source_type_set && req.body.source && req.body.source_type && req.body.source_site && req.body.source_quota && req.body.source_date) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //verifica se é para editar ou para criar
+                //tenta criar um novo objeto
+                let resultInsertId = await changeSource(
+                    db,
+                    req.params.id,
+                    req.body.source_type_set,
+                    req.body.source,
+                    req.body.source_type,
+                    req.body.source_site,
+                    req.body.source_quota,
+                    req.body.source_date
+                );
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Fonte altearada com sucesso";
+                }
+
+            }
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_SOURCES_PREFIX + '/create', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 2;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.object_id && req.body.source_type_set && req.body.source && req.body.source_type && req.body.source_site && req.body.source_quota && req.body.source_date) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //verifica se é para editar ou para criar
+                //tenta criar um novo objeto
+                let resultInsertId = await createSource(
+                    db,
+                    req.body.object_id,
+                    req.body.source_type_set,
+                    req.body.source,
+                    req.body.source_type,
+                    req.body.source_site,
+                    req.body.source_quota,
+                    req.body.source_date
+                );
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Fonte criada com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId };
+                }
+
+            }
+        }
+        res.json(result);
+    });
     
+
+    app.post(prefix + ROUTE_SOURCES_PREFIX + '/delete/:id', async function (req, res) {
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //define erro para o caso de algo correr mal
+            result.error = 1;
+            result.message = "Ocorreu um erro, a fonte pode já não existir";
+            //tenta criar um novo objeto
+            let resultInsertId = await deleteSource(db, req.params.id);
+            //se este foi apagado
+            if (resultInsertId >= 0) {
+                result.error = 0;
+                result.message = "Fonte apagada com sucesso";
+            } 
+        }
+        res.json(result);
+    }); 
+
+
+
+    app.get(prefix + ROUTE_SOURCES_PREFIX + '/:id', async function (req, res) {
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //define erro para o caso de algo correr mal
+            result.error = 1;
+            result.message = "Ocorreu um erro, a fonte pode não existir";
+            //tenta buscar fonte
+            let resultInsertId = await getSource(db, req.params.id);
+            //se encontrou
+            if (resultInsertId !== null) {
+                result.error = 0;
+                result.message = "Fonte";
+                result.res.source = resultInsertId;
+            }
+        }
+        res.json(result);
+    }); 
+
+
+    app.get(prefix + ROUTE_TESTS_PREFIX + '/list/:id_object', async function (req, res) {
+        let result = { error: 1, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //lista exames
+            let test = await listTests(db, req.params.id_object, !req.query.search ? "" : req.query.search);
+            result.error = 0;
+            result.message = "Exames";
+            result.res = { tests: test };
+        }
+        res.json(result);
+    });
+
+
+    app.post(prefix + ROUTE_TESTS_PREFIX + '/change/:id', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 2;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.type_reference && req.body.location && req.body.objectives && req.body.technician && req.body.results) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //verifica se é para editar ou para criar
+                //tenta criar um novo objeto
+                let resultInsertId = await changeTests(
+                    db,
+                    req.params.id,
+                    req.body.type_reference,
+                    req.body.location,
+                    req.body.objectives,
+                    req.body.technician,
+                    req.body.results
+                );
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Exame altearado com sucesso";
+                }
+
+            }
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_TESTS_PREFIX + '/create', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 2;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.object_id && req.body.type_reference && req.body.location && req.body.objectives && req.body.technician && req.body.results) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //verifica se é para editar ou para criar
+                //tenta criar um novo objeto
+                let resultInsertId = await createTests(
+                    db,
+                    req.body.object_id,
+                    req.body.type_reference,
+                    req.body.location,
+                    req.body.objectives,
+                    req.body.technician,
+                    req.body.results
+                );
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Exame criado com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId };
+                }
+
+            }
+        }
+        res.json(result);
+    });
+
+
+    app.post(prefix + ROUTE_TESTS_PREFIX + '/delete/:id', async function (req, res) {
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //define erro para o caso de algo correr mal
+            result.error = 1;
+            result.message = "Ocorreu um erro, o exame pode já não existir";
+            //tenta criar um novo objeto
+            let resultInsertId = await deleteTests(db, req.params.id);
+            //se este foi apagado
+            if (resultInsertId >= 0) {
+                result.error = 0;
+                result.message = "Exame apagado com sucesso";
+            }
+        }
+        res.json(result);
+    }); 
+
+
+    app.get(prefix + ROUTE_TESTS_PREFIX + '/:id', async function (req, res) {
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //define erro para o caso de algo correr mal
+            result.error = 1;
+            result.message = "Ocorreu um erro, o exame pode não existir";
+            //tenta buscar exame
+            let resultInsertId = await getTest(db, req.params.id);
+            //se encontrou
+            if (resultInsertId !== null) {
+                result.error = 0;
+                result.message = "Exame";
+                result.res.source = resultInsertId;
+            }
+        }
+        res.json(result);
+    });
+
+
+    app.get(prefix + ROUTE_WORKSHEET_PREFIX + '/list/:id_object', async function (req, res) {
+        let result = { error: 1, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //lista folhas
+            let worksheet = await listWorksheet(db, req.params.id_object, !req.query.search ? "" : req.query.search);
+            result.error = 0;
+            result.message = "Folhas de Obra";
+            result.res = { worksheets: worksheet };
+        }
+        res.json(result);
+    });
+
+
+    app.post(prefix + ROUTE_WORKSHEET_PREFIX + '/change/:id', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 2;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.worksheet_date && req.body.procedure_type && req.body.observations && req.body.materials && req.body.amount && req.body.duration && req.body.technician) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //verifica se é para editar ou para criar
+                //tenta criar um novo objeto
+                let resultInsertId = await changeWorksheet(
+                    db,
+                    req.params.id,
+                    req.body.worksheet_date,
+                    req.body.procedure_type,
+                    req.body.observations,
+                    req.body.materials,
+                    req.body.amount,
+                    req.body.duration,
+                    req.body.technician
+
+                );
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Folha de obra altearada com sucesso";
+                }
+
+            }
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_WORKSHEET_PREFIX + '/create', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 2;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.worksheet_date && req.body.procedure_type && req.body.observations && req.body.materials && req.body.amount && req.body.duration && req.body.technician) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //verifica se é para editar ou para criar
+                //tenta criar um novo objeto
+                let resultInsertId = await createWorksheet(
+                    db,
+                    req.body.object_id,
+                    req.body.worksheet_date,
+                    req.body.procedure_type,
+                    req.body.observations,
+                    req.body.materials,
+                    req.body.amount,
+                    req.body.duration,
+                    req.body.technician
+                );
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Folha de obra criada com sucesso";
+                    //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId };
+                }
+
+            }
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_WORKSHEET_PREFIX + '/delete/:id', async function (req, res) {
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //define erro para o caso de algo correr mal
+            result.error = 1;
+            result.message = "Ocorreu um erro, a folha de obra pode já não existir";
+            //tenta criar um novo objeto
+            let resultInsertId = await deleteWorksheet(db, req.params.id);
+            //se este foi apagado
+            if (resultInsertId >= 0) {
+                result.error = 0;
+                result.message = "Folha de obra apagada com sucesso";
+            }
+        }
+        res.json(result);
+    }); 
+
+
+    app.get(prefix + ROUTE_WORKSHEET_PREFIX + '/:id', async function (req, res) {
+        let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //define erro para o caso de algo correr mal
+            result.error = 1;
+            result.message = "Ocorreu um erro, a folha de obra pode não existir";
+            //tenta buscar exame
+            let resultInsertId = await getWorksheet(db, req.params.id);
+            //se encontrou
+            if (resultInsertId !== null) {
+                result.error = 0;
+                result.message = "Folha de obra";
+                result.res.source = resultInsertId;
+            }
+        }
+        res.json(result);
+    });
+
+
+    app.get(prefix + ROUTE_SOLUBILITY_PREFIX + '/list/:id_object', async function (req, res) {
+        let result = { error: 1, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //lista testes de solubilidade
+            let solubility = await listSolubility(db, req.params.id_object, !req.query.search ? "" : req.query.search);
+            result.error = 0;
+            result.message = "Testes de solubilidade";
+            result.res = { solubilities: solubility };
+        }
+        res.json(result);
+    });
+
+
+    app.post(prefix + ROUTE_SOLUBILITY_PREFIX + '/create', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 2;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.description && req.body.features && req.body.technician && req.body.solub_date) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //verifica se é para editar ou para criar
+                //tenta criar um novo objeto
+                let resultInsertId = await createSolubility(
+                    db,
+                    req.body.object_id,
+                    req.body.description,
+                    req.body.features,
+                    req.body.technician,
+                    req.body.solub_date
+                );
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Teste de solubilidade foi criado com sucesso";
+                    //devolve o id do Teste de solubilidade e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId };
+                }
+
+            }
+        }
+        res.json(result);
+    });
+
+
+    app.get(prefix + ROUTE_SOLUBTESTS_PREFIX + '/list/:id_solubility', async function (req, res) {
+        let result = { error: 1, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //lista testes de solvente
+            let solvent = await listSolvent(db, req.params.id_solubility, !req.query.search ? "" : req.query.search);
+            result.error = 0;
+            result.message = "Testes de solvente";
+            result.res = { solvents: solvent };
+        }
+        res.json(result);
+    });
+
+    app.post(prefix + ROUTE_SOLUBTESTS_PREFIX + '/create', async function (req, res) {
+        let result = { error: 3, message: "Por favor efectue autenticação", res: {} };
+        //verifica se utilizador está autenticado
+        let u = auth.getUserFromSession(req);
+        if (u) {
+            //verifica se todos os campos obrigatórios estão presentes
+            result.error = 2;
+            result.message = "Insira todos os campos obrigatórios";
+            if (req.body.tbl_solubilityid && req.body.solvent && req.body.efficiency && req.body.observations) {
+                //define erro para o caso de algo correr mal
+                result.error = 1;
+                result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                //verifica se é para editar ou para criar
+                //tenta criar um novo objeto
+                let resultInsertId = await createSolvent(
+                    db,
+                    req.body.tbl_solubilityid,
+                    req.body.solvent,
+                    req.body.efficiency,
+                    req.body.observations
+                );
+                //se este foi criado
+                if (resultInsertId >= 0) {
+                    result.error = 0;
+                    result.message = "Teste de solvente foi criado com sucesso";
+                    //devolve o id do Teste de solvente e o tipo = 0 se criado ou 1 se editado
+                    result.res = { id: resultInsertId };
+                }
+
+            }
+        }
+        res.json(result);
+    });
+
     app.post(prefix + ROUTE_DATASHEET_PREFIX + '/delete_image/:id/:image', async function (req, res) {
         let result = { error: 2, message: "Por favor efectue autenticação", res: {} };
         //verifica se utilizador está autenticado
@@ -932,7 +1928,7 @@ exports.appendToExpress = function (app, _db, _prefix) {
 						);
                         break;
                     case "3":
-                    	if (req.body.object_is_a_set) {
+                    	if (req.body.object_is_a_set != null) {
                             //define erro para o caso de algo correr mal
                             result.error = 1;
                             result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
@@ -1046,6 +2042,36 @@ exports.appendToExpress = function (app, _db, _prefix) {
                         u.id
                     );
                     break;
+                case "5":
+                    //define erro para o caso de algo correr mal
+                    result.error = 1;
+                    result.message = "Ocorreu um erro, algum dos campos pode estar mal definido";
+                    //todos os campos não obrigatórios ficam como null caso não estejam definidos
+                    req.body.tests_Q1 = global.notRequiredField(req.body.tests_Q1);
+                    req.body.tests_Q2 = global.notRequiredField(req.body.tests_Q2);
+                    req.body.tests_Q3 = global.notRequiredField(req.body.tests_Q3);
+                    req.body.tests_Q4 = global.notRequiredField(req.body.tests_Q4);
+                    req.body.tests_Q5 = global.notRequiredField(req.body.tests_Q5);
+                    req.body.tests_Q6 = global.notRequiredField(req.body.tests_Q6);
+                    req.body.tests_results = global.notRequiredField(req.body.tests_results);
+                    req.body.tests_conclusions = global.notRequiredField(req.body.tests_conclusions);
+                    //verifica se é para editar ou para criar
+                    //tenta altearar um objeto e se este foi alterado
+                    resultDb = await changeDataSheetP5(
+                        db,
+                        req.params.id,
+                        req.body.tests_Q1,
+                        req.body.tests_Q2,
+                        req.body.tests_Q3,
+                        req.body.tests_Q4,
+                        req.body.tests_Q5,
+                        req.body.tests_Q6,
+                        req.body.tests_results,
+                        req.body.tests_conclusions,
+                        u.id
+
+                    );
+                    break;
                 case "6":
                     //define erro para o caso de algo correr mal
                     result.error = 1;
@@ -1117,6 +2143,8 @@ exports.appendToExpress = function (app, _db, _prefix) {
                     req.body.observations = global.notRequiredField(req.body.observations);
                     req.body.proposal_date = global.notRequiredField(req.body.proposal_date);
                     req.body.acceptation_date = global.notRequiredField(req.body.acceptation_date);
+                    req.body.ipt_intervinient = global.notRequiredField(req.body.ipt_intervinient);
+                    req.body.client_intervinient = global.notRequiredField(req.body.client_intervinient);
                     //verifica se é para editar ou para criar
                     //tenta altearar um objeto e se este foi alterado
                     resultDb = await changeDataSheetP8(
@@ -1138,6 +2166,8 @@ exports.appendToExpress = function (app, _db, _prefix) {
                         req.body.observations,
                         req.body.proposal_date,
                         req.body.acceptation_date,
+                        req.body.ipt_intervinient,
+                        req.body.client_intervinient,
                         u.id
                         
                     );
@@ -1363,8 +2393,6 @@ exports.appendToExpress = function (app, _db, _prefix) {
             if (resultInsertId >= 0) {
                 result.error = 0;
                 result.message = "Contacto apagado com sucesso";
-                //devolve o id da ficha tecnica e o tipo = 0 se criado ou 1 se editado
-                result.res = { id: resultInsertId };
             } else if (resultInsertId === -2) {
                 result.error = 2;
                 result.message = "O contacto está a ser utilizado, não pode ser apagado";
