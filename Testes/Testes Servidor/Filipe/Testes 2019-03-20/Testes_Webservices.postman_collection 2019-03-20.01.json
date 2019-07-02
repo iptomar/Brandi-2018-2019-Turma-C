@@ -1,0 +1,540 @@
+{
+	"info": {
+		"_postman_id": "228409e2-73a0-4e95-8f67-38197f447d7d",
+		"name": "Testes_Webservices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "../api/auth  - sem autenticação",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/auth",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "../api/auth - password errada",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "teste123456@ipt.pt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1234560000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/auth",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "../api/auth - sem todos os campos",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "password",
+							"value": "12345",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/auth",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "../api/auth - campos inválidos",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "email",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/auth",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "../api/auth - autenticação com sucesso",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "teste123456@ipt.pt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/auth",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "../api/auth - repetir a atenticação",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "be900ad2-94b1-446d-922c-aed12581a642",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d2aa11b3-9350-40d7-943c-4052354d4aae",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "teste123456@ipt.pt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/auth",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "../api/auth - após autenticação",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/auth",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "../api/logout - realizar logout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/logout",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "../api/logout - realizar logout sem autenticação",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/logout",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "../api/userlist - obter lista de utilizadores sem autenticação",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/userlist",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"userlist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "../api/auth - realizar autenticação",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "be900ad2-94b1-446d-922c-aed12581a642",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d2aa11b3-9350-40d7-943c-4052354d4aae",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "teste123456@ipt.pt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/auth",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "../api/userlist - obter lista de utilizadores com autenticação",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "teste123456@ipt.pt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/userlist",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"userlist"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "a9f616ac-b262-4b9a-a196-9a1915711b3a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "01b66b61-e2a8-4d09-851e-f28742784dba",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

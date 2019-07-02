@@ -1,0 +1,1929 @@
+{
+	"info": {
+		"_postman_id": "1cc0f8f8-b9a1-4e08-b00a-9b463933b078",
+		"name": "05.PM-Brandi-C_Testes_API_DATASHEET_CATEGORIES",
+		"description": "Testes Webservices Projeto Brandi_C - Alteração dos api/datasheet/categories\n\nTestes efetuados a partir de:\n\nDATA: 12-06-2019\nHORA: 23:00\n\nUSER: Quintino\nUSER: Filipe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/datasheet/categories/list - Lista categorias",
+			"item": [
+				{
+					"name": "../api/datasheet/categories/list - Tentativa de obter lista de categorias de uma super-categoria sem autenticação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste de obter dados de categorias sem autenticação.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(3);",
+									"    pm.expect(jsonData.message).to.eql(\"Por favor efectue autenticação\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/list",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"list"
+							]
+						},
+						"description": "GET /api/datasheet/categories/list:\n\tLista categorias\n\t\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n\tsuper_category - id da super categoria\n\tsearch - palavra utilizada na pesquisa por nome\n\ndevolve:\n\tse não tiver autenticado:\n\n{\n    \"error\": 3,\n    \"message\": \"Por favor efectue autenticação\",\n    \"res\": {\n        \"categories\": []\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/categories/list - Tentativa de obter lista de categorias de uma super-categoria sem valor de id de super-categoria",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste de obter lista de categorias sem campos de pesquisa.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(2);",
+									"    pm.expect(jsonData.message).to.eql(\"O id da super categoria é obrigatório\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/list?",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"list"
+							],
+							"query": [
+								{
+									"key": "super_category",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						},
+						"description": "GET /api/datasheet/categories/list:\n\tLista categorias\n\t\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n\tsuper_category - id da super categoria\n\tsearch - palavra utilizada na pesquisa por nome\n\ndevolve:\n\tse não for introduzido o id da super categoria:\n\n{\n    \"error\": 2,\n    \"message\": \"O id da super categoria é obrigatório\",\n    \"res\": {\n        \"categories\": []\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/categories/list - Obter lista de categorias de uma super-categoria com campo id de super-categoria",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste de obter lista de categorias com campo id de pesquisa.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Lista de categorias\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/list?super_category=1",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"list"
+							],
+							"query": [
+								{
+									"key": "super_category",
+									"value": "1"
+								}
+							]
+						},
+						"description": "GET /api/datasheet/categories/list:\n\tLista categorias\n\t\nCondições:\n\tTem que estar autenticado\n\nrecebe:\n\tsuper_category - id da super categoria\n\tsearch - palavra utilizada na pesquisa por nome\n\ndevolve:\n\tse for listado com sucesso:\n\n{\n    \"error\": 0,\n    \"message\": \"Lista de categorias\",\n    \"res\": {\n        \"categories\": [\n            {\n                \"id\": 1,\n                \"category\": \"Bens Culturais Móveis\",\n                \"id_super_category\": 1\n            },\n            {\n                \"id\": 4,\n                \"category\": \"Bens Culturais Móveis integrados\",\n                \"id_super_category\": 1\n            },\n            {\n                \"id\": 7,\n                \"category\": \"Loucos\",\n                \"id_super_category\": 1\n            },\n            {\n                \"id\": 8,\n                \"category\": \"Brinquedo\",\n                \"id_super_category\": 1\n            },\n            {\n                \"id\": 9,\n                \"category\": \"Memes\",\n                \"id_super_category\": 1\n            }\n        ]\n    }\n}"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c989b72f-d2dd-4f9f-9a14-5884e8a38909",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "cb2d7f8b-1507-4f08-b889-398758614cc8",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "/api/datasheet/categories/create - Criar categorias",
+			"item": [
+				{
+					"name": "../api/datasheet/categories/create - Tentativa de criar categoria sem autenticação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para criar categorias sem autenticação.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(4);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para criar categorias\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_category",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "nova categoria",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"create"
+							]
+						},
+						"description": "POST/api/datasheet/categories/create:\n\tCriar categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_super_category - id da super categoria a que a categoria \t\tira pertencer\n\tname - nome da categoria\n\ndevolve:\n\tse não tiver autenticado:\n\n{\n    \"error\": 4,\n    \"message\": \"Não tem permissões para criar categorias\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/categories/create - Tentativa de criar categoria sem conta admin",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"nobody@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para criar categorias sem autenticação de conta admin.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(4);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para criar categorias\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_category",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "nova categoria",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"create"
+							]
+						},
+						"description": "POST/api/datasheet/categories/create:\n\tCriar categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_super_category - id da super categoria a que a categoria \t\tira pertencer\n\tname - nome da categoria\n\ndevolve:\n\tse não tiver autenticado:\n\n\n{\n    \"error\": 4,\n    \"message\": \"Não tem permissões para criar categorias\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/categories/create - Tentativa de criar categoria sem campos obrigatórios",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para criar categorias sem campos obrigatórios.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(3);",
+									"    pm.expect(jsonData.message).to.eql(\"Insira todos os campos obrigatórios\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_super_category",
+									"value": "100",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "nova categoria",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"create"
+							]
+						},
+						"description": "POST/api/datasheet/categories/create:\n\tCriar categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_super_category - id da super categoria a que a categoria \t\tira pertencer\n\tname - nome da categoria\n\ndevolve:\n\tse não não for introduzido todos os campos obrigatórios:\n\n\n{\n    \"error\": 3,\n    \"message\": \"Insira todos os campos obrigatórios\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/categories/create - Criar categoria com sucesso",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "41f8c862-55c7-4c2b-9937-c4c06707327b",
+								"exec": [
+									" pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d53bf1c3-44ac-46bd-a0d8-4e826eeffbad",
+								"exec": [
+									"pm.test(\"Teste para criar categorias com sucesso.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Categoria criada com sucesso\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_super_category",
+									"value": "15",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "nova categoria",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"create"
+							]
+						},
+						"description": "POST/api/datasheet/categories/create:\n\tCriar categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_super_category - id da super categoria a que a categoria \t\tira pertencer\n\tname - nome da categoria\n\ndevolve:\n\tse for criado com sucesso:\n\n{\n    \"error\": 0,\n    \"message\": \"Categoria criada com sucesso\",\n    \"res\": {\n        \"id\": 29\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/categories/create - Tentativa de criar categoria existente para a mesma super categoria",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para criar categorias existentes para as mesmas super categorias.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(2);",
+									"    pm.expect(jsonData.message).to.eql(\"Já existe uma categoria com esse nome associada a super categoria indicada\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_super_category",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "nova categoria",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"create"
+							]
+						},
+						"description": "POST/api/datasheet/categories/create:\n\tCriar categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_super_category - id da super categoria a que a categoria \t\tira pertencer\n\tname - nome da categoria\n\ndevolve:\n\tse não for introduzido o id da super categoria:\n\n{\n    \"error\": 2,\n    \"message\": \"Já existe uma categoria com esse nome associada a super categoria indicada\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/categories/create - Tentativa de criar categoria para uma super categoria inexistente",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para criar categorias para super categorias inexistentes.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Ocorreu um erro, algum dos campos pode estar mal definido\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_super_category",
+									"value": "1000",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "nova categoria",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/create",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"create"
+							]
+						},
+						"description": "POST/api/datasheet/categories/create:\n\tCriar categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_super_category - id da super categoria a que a categoria \t\tira pertencer\n\tname - nome da categoria\n\ndevolve:\n\tse ocorrer um erro:\n\n{\n    \"error\": 1,\n    \"message\": \"Ocorreu um erro, algum dos campos pode estar mal definido\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c989b72f-d2dd-4f9f-9a14-5884e8a38909",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "cb2d7f8b-1507-4f08-b889-398758614cc8",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "/api/datasheet/categories/change - Alterar categorias",
+			"item": [
+				{
+					"name": "../api/datasheet/categories/change - Tentativa de alterar categoria sem autenticação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para alterar categorias sem autenticação.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(4);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para alterar categorias\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_category",
+									"value": "10",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "novo nome",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/change",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"change"
+							]
+						},
+						"description": "POST/api/datasheet/categories/change:\n\tAltera categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_category - id da categoria a alterar\n\tname - nome da categoria\n\ndevolve:\n\tse não tiver autenticado:\n\n{\n    \"error\": 4,\n    \"message\": \"Não tem permissões para alterar categorias\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/categories/change - Tentativa de alterar categoria sem conta admin",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"nobody@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para alterar categorias sem autenticação com conta admin.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(4);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para alterar categorias\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_category",
+									"value": "10",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "novo nome",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/change",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"change"
+							]
+						},
+						"description": "POST/api/datasheet/categories/change:\n\tAltera categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_category - id da categoria a alterar\n\tname - nome da categoria\n\ndevolve:\n\tse não tiver autenticado:\n\n{\n    \"error\": 4,\n    \"message\": \"Não tem permissões para alterar categorias\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/categories/change - Tentativa de alterar categoria sem campos obrigatórios",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para alterar categorias sem campos obrigatórios.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(3);",
+									"    pm.expect(jsonData.message).to.eql(\"Insira todos os campos obrigatórios\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_category",
+									"value": "10",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "novo nome",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/change",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"change"
+							]
+						},
+						"description": "POST/api/datasheet/categories/change:\n\tAltera categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_category - id da categoria a alterar\n\tname - nome da categoria\n\ndevolve:\n\tse não não for introduzido todos os campos obrigatórios:\n\n{\n    \"error\": 3,\n    \"message\": \"Insira todos os campos obrigatórios\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/categories/change - Tentativa de alterar categoria para um id inexistente",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para alterar categorias para um id inexistente.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Ocorreu um erro, algum dos campos pode estar mal definido\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_category",
+									"value": "10000000",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "novo nome",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/change",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"change"
+							]
+						},
+						"description": "POST/api/datasheet/categories/change:\n\tAltera categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_category - id da categoria a alterar\n\tname - nome da categoria\n\ndevolve:\n\tse ocorrer um erro:\n\n{\n    \"error\": 1,\n    \"message\": \"Ocorreu um erro, algum dos campos pode estar mal definido\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/categories/change - Alterar categoria com sucesso",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "491a32e5-ddd8-460e-9563-2c6efca2f375",
+								"exec": [
+									"pm.test(\"Teste para alterar categorias com sucesso.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Categoria alterada com sucesso\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "83d06ca3-af7d-410f-bf3f-7444ffda1696",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_category",
+									"value": "9",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "novo nome",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/change",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"change"
+							]
+						},
+						"description": "POST/api/datasheet/categories/change:\n\tAltera categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_category - id da categoria a alterar\n\tname - nome da categoria\n\ndevolve:\n\tse for alterado com sucesso:\n\n{\n    \"error\": 0,\n    \"message\": \"Categoria alterada com sucesso\",\n    \"res\": {\n        \"id\": \"9\"\n    }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/categories/change - Tentativa de alterar uma categoria para um nome já existente noutra categoria",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "491a32e5-ddd8-460e-9563-2c6efca2f375",
+								"exec": [
+									"pm.test(\"Teste para alterar categorias para um nome já existente.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(2);",
+									"    pm.expect(jsonData.message).to.eql(\"Já existe uma Categoria com esse nome associada a super categoria indicada\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "83d06ca3-af7d-410f-bf3f-7444ffda1696",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_category",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "novo nome",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/change",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"change"
+							]
+						},
+						"description": "POST/api/datasheet/categories/change:\n\tAltera categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_category - id da categoria a alterar\n\tname - nome da categoria\n\ndevolve:\n\tse já existir uma categoria com o mesmo nome e com a mesma super categoria associada:\n\n{\n    \"error\": 2,\n    \"message\": \"Já existe uma Categoria com esse nome associada a super categoria indicada\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c989b72f-d2dd-4f9f-9a14-5884e8a38909",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "cb2d7f8b-1507-4f08-b889-398758614cc8",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "/api/datasheet/categories/delete - Eliminar categorias",
+			"item": [
+				{
+					"name": "../api/datasheet/categories/delete - Tentativa de eliminar categoria sem autenticação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para eliminar categorias sem autenticação.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(4);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para eliminar categorias\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_category",
+									"value": "9",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/delete",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"delete"
+							]
+						},
+						"description": "POST/api/datasheet/categories/delete:\n\tElimina categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_category - id da categoria a eliminar\n\ndevolve:\n\tse não tiver autenticado:\n\n{\n    \"error\": 4,\n    \"message\": \"Não tem permissões para eliminar categorias\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/categories/delete - Tentativa de eliminar categoria sem conta admin",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"nobody@ipt.pt\"},",
+									"            {\"key\":\"password\",\"value\":\"123456\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para eliminar categorias sem autenticação com conta admin.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(4);",
+									"    pm.expect(jsonData.message).to.eql(\"Não tem permissões para eliminar categorias\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_category",
+									"value": "9",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/delete",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"delete"
+							]
+						},
+						"description": "POST/api/datasheet/categories/delete:\n\tElimina categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_category - id da categoria a eliminar\n\ndevolve:\n\tse não tiver autenticado:\n\n{\n    \"error\": 4,\n    \"message\": \"Não tem permissões para eliminar categorias\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/categories/delete - Tentativa de eliminar categoria sem campos obrigatórios",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para eliminar categorias sem campos obrigatórios.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(3);",
+									"    pm.expect(jsonData.message).to.eql(\"Insira todos os campos obrigatórios\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_category",
+									"value": "9",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/delete",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"delete"
+							]
+						},
+						"description": "POST/api/datasheet/categories/delete:\n\tElimina categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_category - id da categoria a eliminar\n\ndevolve:\n\tse não for introduzido todos os campos obrigatórios:\n\n{\n    \"error\": 3,\n    \"message\": \"Insira todos os campos obrigatórios\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/categories/delete - Eliminar categoria com sucesso",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para eliminar categorias com sucesso.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(0);",
+									"    pm.expect(jsonData.message).to.eql(\"Categoria eliminada com sucesso\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_category",
+									"value": "38",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/delete",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"delete"
+							]
+						},
+						"description": "POST/api/datasheet/categories/delete:\n\tElimina categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_category - id da categoria a eliminar\n\ndevolve:\n\tse ocorrer um erro:\n\n{\n    \"error\": 1,\n    \"message\": \"Ocorreu um erro, algum dos campos pode estar mal definido\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/categories/delete - Tentativa de eliminar categoria com ligação a processos",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para eliminar categorias com ligação a processos.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(2);",
+									"    pm.expect(jsonData.message).to.eql(\"Essa categoria está ja em utilização, é impossivel de eliminar a mesma\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_category",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/delete",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"delete"
+							]
+						},
+						"description": "POST/api/datasheet/categories/delete:\n\tElimina categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_category - id da categoria a eliminar\n\ndevolve:\n\tse a sub categoria estiver a ser utilizada num objeto:\n\n{\n    \"error\": 2,\n    \"message\": \"Essa categoria está ja em utilização, é impossivel de eliminar a mesma\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "../api/datasheet/categories/delete - Tentativa de eliminar categoria inexistente",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "23eacd4e-cf75-4050-8f62-ac7456c5b849",
+								"exec": [
+									"pm.sendRequest(\"http://brandic.devll.eu:61080/api/user/logout\", function (err, response) {",
+									"    console.log(response.json());",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'http://brandic.devll.eu:61080/api/user/auth',",
+									"    method: 'POST',",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {\"key\":\"email\",\"value\":\"admin@admin.admin\"},",
+									"            {\"key\":\"password\",\"value\":\"admin\"}",
+									"        ]",
+									"    }",
+									"}, function (errr, res) {",
+									"    console.log(res);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3902702-bee7-4141-82f4-ee0f2a479aa4",
+								"exec": [
+									"pm.test(\"Teste para eliminar categorias inexistentes.\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.error).to.eql(1);",
+									"    pm.expect(jsonData.message).to.eql(\"Ocorreu um erro, algum dos campos pode estar mal definido\");",
+									"});",
+									"",
+									"pm.test(\"Verificar se tem o estado 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Verificar se responde em menos de 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_category",
+									"value": "100000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://brandic.devll.eu:61080/api/datasheet/categories/delete",
+							"protocol": "http",
+							"host": [
+								"brandic",
+								"devll",
+								"eu"
+							],
+							"port": "61080",
+							"path": [
+								"api",
+								"datasheet",
+								"categories",
+								"delete"
+							]
+						},
+						"description": "POST/api/datasheet/categories/delete:\n\tElimina categorias\n\t\nCondições:\n\tTem que estar autenticado\n\tTem que ser Admin\n\nrecebe:\n\tid_category - id da categoria a eliminar\n\ndevolve:\n\tse ocorrer um erro:\n\n{\n    \"error\": 1,\n    \"message\": \"Ocorreu um erro, algum dos campos pode estar mal definido\",\n    \"res\": {}\n}"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c989b72f-d2dd-4f9f-9a14-5884e8a38909",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "cb2d7f8b-1507-4f08-b889-398758614cc8",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "5de71193-a4ac-4fa3-bf13-0553e00d1669",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "9b20f037-2e6c-4aeb-aadb-b90366eb3c5f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

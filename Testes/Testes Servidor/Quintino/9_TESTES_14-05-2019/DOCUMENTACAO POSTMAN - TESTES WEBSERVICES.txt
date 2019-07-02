@@ -1,0 +1,8 @@
+
+***************************** DOCUMENTAÇÃO POSTMAN COLLECTION TESTES WEBSERVICES 14-05-2019 ****************************
+
+
+https://winter-firefly-3272.postman.co/collections/6806043-fadb6fad-64fe-43a9-bc2d-85d3d8cc0791?version=latest&workspace=86237016-29f4-4fdf-8f68-4ea3fc372353~
+
+
+************************************************************************************************* BY QUINTINO **********

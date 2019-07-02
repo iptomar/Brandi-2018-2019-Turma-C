@@ -1,0 +1,1202 @@
+{
+	"info": {
+		"_postman_id": "9985d316-aa18-49f2-94b2-2a117f4bcf16",
+		"name": "PM-05-WEBSERVICES_BRANDI-C_17-04-2019",
+		"description": "Testes webservices Projeto Brandi_C\n\nTestes efetuados em:\n\nDATA: 15-04-2019\nHORA: 23:50\n\nUSER: Quintino\nUSER: Filipe\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://brandic.devll.eu:61080/api/user/info - validar se autenticado - ERROR:0 - com sucesso",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/user/info",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"user",
+						"info"
+					]
+				},
+				"description": "GET /api/user/info\n\tpara ver se autenticado\n\nCondições:\n\tnada\nRecebe:\n\tnada\nDevolve:\n\tse com sucesso\n\t\n{\n   \"error\": 0,\n   \"message\": \"Bem-vindo Teste Teste\",\n   \"res\": {\n\t   \"full_name\": \"Teste Teste\",\n\t   \"email\": \"teste123456@ipt.pt\",\n\t   \"address\": \"Teste\",\n\t   \"birthday\": \"02/04/1992\",\n\t   \"cellphone\": \"910123456\",\n\t   \"type_user\": \"User\",\n\t   \"id_type_user\": 2\n   }\n}\n\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "http://brandic.devll.eu:61080/api/user/info - validar se autenticado - ERROR:1 - sem sucesso",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/user/info",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"user",
+						"info"
+					]
+				},
+				"description": "GET /api/user/info\npara ver se autenticado\n\nCondições:\n\tnada\nRecebe:\n\tnada\nDevolve:\n\tse sem sucesso:\n{\n   \"error\": 1,\n   \"message\": \"Por favor efectue autenticação\",\n   \"res\": {}\n}\n"
+			},
+			"response": []
+		},
+		{
+			"name": "http://brandic.devll.eu:61080/api/auth Copy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "66e7ff52-d825-4f2d-89b4-33890ea73cd9",
+						"exec": [
+							"pm.sendRequest({",
+							"   url: pm.environment.get(\"http://brandic.devll.eu:61080/api/auth\") + 'v1/authenticate',",
+							"   method: 'POST',",
+							"   header: {",
+							"       'content-type': 'application/json',",
+							"       'x-site-code': pm.environment.get(\"x-site-code\")",
+							"   },",
+							"   body: {",
+							"       mode: 'x-www-form-urlencoded',",
+							"       raw: JSON.stringify({ email: pm.environment.get(\"teste123456@ipt.pt\"), password: pm.environment.get(\"123456\") })",
+							"   }",
+							"}, function (err, res) {",
+							"   pm.environment.set(\"authorization\", \"Bearer \" + res.json().token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "89aaeff0-a41a-42ca-a1ce-5347c941146b",
+						"exec": [
+							"pm.sendRequest({",
+							"   url: pm.environment.get(\"http://brandic.devll.eu:61080/api/auth\") + 'v1/authenticate',",
+							"   method: 'POST',",
+							"   header: {",
+							"       'content-type': 'application/json',",
+							"       'x-site-code': pm.environment.get(\"x-site-code\")",
+							"   },",
+							"   body: {",
+							"       mode: 'x-www-form-urlencoded',",
+							"       raw: JSON.stringify({ email: pm.environment.get(\"teste123456@ipt.pt\"), password: pm.environment.get(\"123456\") })",
+							"   }",
+							"}, function (err, res) {",
+							"   pm.environment.set(\"authorization\", \"Bearer \" + res.json().token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "teste123456@ipt.pt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/auth",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://brandic.devll.eu:61080/api/user/auth - para se autenticar - ERROR:0 - com sucesso",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "teste123456@ipt.pt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/user/auth",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"user",
+						"auth"
+					]
+				},
+				"description": "POST /api/user/auth\r\n\tpara se autenticar\r\nCondições:\r\n\tNão pode estar autenticado\r\nrecebe:\r\n\temail - email do utilizador a autenticar\r\n\tpassword - password do utilizador a autenticar\r\ndevolve:\r\n\tse com sucesso\r\n\t\r\n{\r\n\t\"error\": 0,\r\n\t\"message\": \"Autenticado com sucesso\",\r\n\t\"res\": {\r\n\t\t\"id\": 2,\r\n\t\t\"full_name\": \"Teste2 Teste\",\r\n\t\t\"email\": \"teste123456@ipt.pt\",\r\n\t\t\"address\": \"Teste2\",\r\n\t\t\"birthday\": \"02/04/1992\",\r\n\t\t\"cellphone\": \"987654321\",\r\n\t\t\"type_user\": \"User\",\r\n\t\t\"id_type_user\": 2,\r\n\t\t\"last_login\": \"2019-04-08T01:35:56.456Z\",\r\n\t\t\"register_date\": \"2019-04-08T01:35:56.456Z\",\r\n\t\t\"title\": \"dont6\",\r\n\t\t\"qualifications\": \"have6\"\r\n\t}\r\n}\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "http://brandic.devll.eu:61080/api/user/auth - para se autenticar - ERROR:0 - com sucesso mas ja autenticado",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "teste123456@ipt.pt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/user/auth",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"user",
+						"auth"
+					]
+				},
+				"description": "POST /api/user/auth\r\n\tpara se autenticar\r\nCondições:\r\n\tNão pode estar autenticado\r\nrecebe:\r\n\temail - email do utilizador a autenticar\r\n\tpassword - password do utilizador a autenticar\r\ndevolve:\r\n\tse com sucesso\r\n\t\r\n{\r\n    \"error\": 0,\r\n    \"message\": \"Utilizador já se encontra autenticado\",\r\n    \"res\": {\r\n        \"id\": 2,\r\n        \"full_name\": \"Teste2 Teste\",\r\n        \"email\": \"teste123456@ipt.pt\",\r\n        \"address\": \"Teste2\",\r\n        \"birthday\": \"02/04/1992\",\r\n        \"cellphone\": \"987654321\",\r\n        \"type_user\": \"User\",\r\n        \"id_type_user\": 2,\r\n        \"last_login\": \"2019-04-16T01:01:22.649Z\",\r\n        \"register_date\": null,\r\n        \"title\": \"dont6\",\r\n        \"qualifications\": \"have6\"\r\n    }\r\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "http://brandic.devll.eu:61080/api/user/auth - para se autenticar - ERROR:1 - sem sucesso",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "teste123456@ipt.pt",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/user/auth",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"user",
+						"auth"
+					]
+				},
+				"description": "POST /api/user/auth\r\n\tpara se autenticar\r\n\r\nCondições:\r\n\tNão pode estar autenticado\r\n\r\nrecebe:\r\n\temail - email do utilizador a autenticar\r\n\tpassword - password do utilizador a autenticar\r\n\r\ndevolve:\r\n\tse sem sucesso:\r\n\r\n{\r\n    \"error\": 1,\r\n    \"message\": \"Todos os campos săo obrigatórios\",\r\n    \"res\": {}\r\n}\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "http://brandic.devll.eu:61080/api/user/auth - para se autenticar - ERROR:1 - sem sucesso2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "teste123456@ipt.pt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "esta_mal_a _senha",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/user/auth",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"user",
+						"auth"
+					]
+				},
+				"description": "POST /api/user/auth\r\n\tpara se autenticar\r\n\r\nCondições:\r\n\tNão pode estar autenticado\r\n\r\nrecebe:\r\n\temail - email do utilizador a autenticar\r\n\tpassword - password do utilizador a autenticar\r\n\r\ndevolve:\r\n\tse sem sucesso:\r\n\r\n{\r\n    \"error\": 1,\r\n    \"message\": \"Ocorreu um erro na autenticaçăo, verifique se todos os campos săo válidos\",\r\n    \"res\": {}\r\n}\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Testar autenticação - Efetuar logout ERROR:0 Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/logout",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"logout"
+					]
+				},
+				"description": "Devolveu o ERROR:0\n\nEM: 18-03-2019\n\nGET /api/logout -> para fazer logout\n\nRECEBE: \nnada\n\nDEVOLVE:\n\n{\n    \"error\": 0,\n    \"message\": \"Sessão terminada com sucesso\",\n    \"res\": {}\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "http://brandic.devll.eu:61080/api/user/logout - para sair",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/user/logout",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"user",
+						"logout"
+					]
+				},
+				"description": "GET /api/user/logout- para sair\r\n\r\npara efetuar o logout\r\n\r\nCondições:\r\n\tTem que estar autenticado\r\n\r\nrecebe:\r\n\tnada\r\n\r\ndevolve:\r\n\tsempre:\r\n{\r\n   \"error\": 0,\r\n   \"message\": \"Sessão terminada com sucesso\",\r\n   \"res\": {}\r\n}\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Testar registo - Com todos campos OK - TESTS-DATA Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6aace605-cdee-4da9-88e4-4510cbce4dad",
+						"exec": [
+							"var responseJSON;",
+							"",
+							"try { ",
+							"    responseJSON = JSON.parse(responseBody); ",
+							"    tests['response is valid JSON'] = true;",
+							"}",
+							"catch (e) { ",
+							"    responseJSON = {}; ",
+							"    tests['response is valid JSON'] = false;",
+							"}",
+							"",
+							"",
+							"//tests['response has post data'] = _.has(responseJSON, 'email');",
+							"//tests['response matches the email posted'] = (responseJSON.form && responseJSON.email === 'quintino14@ipt.pt');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "quintino14@ipt.pt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "qwerty123456",
+							"type": "text"
+						},
+						{
+							"key": "fullname",
+							"value": "Virgilio Quintino",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "Rua dos Nabos, 123",
+							"type": "text"
+						},
+						{
+							"key": "birthday",
+							"value": "1975-01-01",
+							"type": "text"
+						},
+						{
+							"key": "cellphone",
+							"value": "123123123",
+							"type": "text"
+						},
+						{
+							"key": "usertypeid",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/register",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"register"
+					]
+				},
+				"description": "Devolveu o ERROR:0\nEM: 18-03-2019\n\nPOST /api/register -> para fazer registo\n\nRECEBE: \nemail - email a registar (obrigatório) \npassword - password do utilizador (obrigatório) \nfullname - nome total do utilizador (obrigatório) \naddress - morada do utilizador \nbirthday - data de nascimento do utilizador deve conter esta estrutura: (yyyy-mm-dd) \ncellphone - número de telemovel do utilizador \nusertypeid - id do tipo de utilizador referente aos tipos de utilizador(neste momento 1 - Admin, 2 - User) \n\nDEVOLVE: (se for registado com sucesso)\n{\n    \"error\": 0,\n    \"message\": \"Registado com sucesso\",\n    \"res\": {\n        \"id\": 4,\n        \"full_name\": \"Virgilio Quintino\",\n        \"email\": \"quintino@ipt.pt\",\n        \"address\": \"Rua dos Nabos, 123\",\n        \"birthday\": \"1975-01-01\",\n        \"cellphone\": \"123123123\",\n        \"type_user\": \"User\",\n        \"id_type_user\": 2,\n        \"last_login\": \"2019-03-18T01:01:48.791Z\"\n    }\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "http://brandic.devll.eu:61080/api/user/register - efetuar registo - ERROR:3 - sem permissoes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6aace605-cdee-4da9-88e4-4510cbce4dad",
+						"exec": [
+							"var responseJSON;",
+							"",
+							"try { ",
+							"    responseJSON = JSON.parse(responseBody); ",
+							"    tests['response is valid JSON'] = true;",
+							"}",
+							"catch (e) { ",
+							"    responseJSON = {}; ",
+							"    tests['response is valid JSON'] = false;",
+							"}",
+							"",
+							"",
+							"//tests['response has post data'] = _.has(responseJSON, 'email');",
+							"//tests['response matches the email posted'] = (responseJSON.form && responseJSON.email === 'quintino14@ipt.pt');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "quintino14@ipt.pt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "qwerty123456",
+							"type": "text"
+						},
+						{
+							"key": "fullname",
+							"value": "Virgilio Quintino",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "Rua dos Nabos, 123",
+							"type": "text"
+						},
+						{
+							"key": "birthday",
+							"value": "1975-01-01",
+							"type": "text"
+						},
+						{
+							"key": "cellphone",
+							"value": "123123123",
+							"type": "text"
+						},
+						{
+							"key": "usertypeid",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/user/register",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"user",
+						"register"
+					]
+				},
+				"description": "POST /api/user/register:\r\n\r\npara efetuar o registo de um utilizador\r\n\r\nCondições:\r\n\tTem que estar autenticado\r\n\tTem que ser Admin\r\n\r\nrecebe:\r\n\r\nemail - email a registar (obrigatório)\r\npassword - password do utilizador (obrigatório)\r\nfullname - nome total do utilizador (obrigatório)\r\naddress - morada do utilizador\r\nbirthday - data de nascimento do utilizador deve conter esta estrutura: (yyyy-mm-dd)\r\ncellphone - número de telemovel do utilizador\r\nusertypeid - id do tipo de utilizador referente aos tipos de utilizador (neste momento 1 - Admin, 2 - User)\r\ntitle - titulo\r\nqualifications - qualificações\r\ndevolve:\r\nse não tiver permissões:\r\n{\r\n\t   \"error\": 3,\r\n\t   \"message\": \"Não tem permissões para registar utilizadores\",\r\n\t   \"res\": {}\r\n }\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "http://brandic.devll.eu:61080/api/user/register - efetuar registo - ERROR:2 - falta campos obrigatorios",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6aace605-cdee-4da9-88e4-4510cbce4dad",
+						"exec": [
+							"var responseJSON;",
+							"",
+							"try { ",
+							"    responseJSON = JSON.parse(responseBody); ",
+							"    tests['response is valid JSON'] = true;",
+							"}",
+							"catch (e) { ",
+							"    responseJSON = {}; ",
+							"    tests['response is valid JSON'] = false;",
+							"}",
+							"",
+							"",
+							"//tests['response has post data'] = _.has(responseJSON, 'email');",
+							"//tests['response matches the email posted'] = (responseJSON.form && responseJSON.email === 'quintino14@ipt.pt');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "quintino14@ipt.pt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "qwerty123456",
+							"type": "text"
+						},
+						{
+							"key": "fullname",
+							"value": "Virgilio Quintino",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "Rua dos Nabos, 123",
+							"type": "text"
+						},
+						{
+							"key": "birthday",
+							"value": "1975-01-01",
+							"type": "text"
+						},
+						{
+							"key": "cellphone",
+							"value": "123123123",
+							"type": "text"
+						},
+						{
+							"key": "usertypeid",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/user/register",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"user",
+						"register"
+					]
+				},
+				"description": "POST /api/user/register:\r\n\r\npara efetuar o registo de um utilizador\r\n\r\nCondições:\r\n\tTem que estar autenticado\r\n\tTem que ser Admin\r\n\r\nrecebe:\r\n\r\nemail - email a registar (obrigatório)\r\npassword - password do utilizador (obrigatório)\r\nfullname - nome total do utilizador (obrigatório)\r\naddress - morada do utilizador\r\nbirthday - data de nascimento do utilizador deve conter esta estrutura: (yyyy-mm-dd)\r\ncellphone - número de telemovel do utilizador\r\nusertypeid - id do tipo de utilizador referente aos tipos de utilizador (neste momento 1 - Admin, 2 - User)\r\ntitle - titulo\r\nqualifications - qualificações\r\n\r\ndevolve:\r\n\tse não forem dados todos os campos obrigatórios:\r\n\r\n{\r\n   \"error\": 2,\r\n   \"message\": \"Insira todos os campos obrigatórios\",\r\n   \"res\": {}\r\n}\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "http://brandic.devll.eu:61080/api/user/register - efetuar registo - ERROR:1 - falta campos obrigatorios",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6aace605-cdee-4da9-88e4-4510cbce4dad",
+						"exec": [
+							"var responseJSON;",
+							"",
+							"try { ",
+							"    responseJSON = JSON.parse(responseBody); ",
+							"    tests['response is valid JSON'] = true;",
+							"}",
+							"catch (e) { ",
+							"    responseJSON = {}; ",
+							"    tests['response is valid JSON'] = false;",
+							"}",
+							"",
+							"",
+							"//tests['response has post data'] = _.has(responseJSON, 'email');",
+							"//tests['response matches the email posted'] = (responseJSON.form && responseJSON.email === 'quintino14@ipt.pt');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "quintino14@ipt.pt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "qwerty123456",
+							"type": "text"
+						},
+						{
+							"key": "fullname",
+							"value": "Virgilio Quintino",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "Rua dos Nabos, 123",
+							"type": "text"
+						},
+						{
+							"key": "birthday",
+							"value": "1975-01-01",
+							"type": "text"
+						},
+						{
+							"key": "cellphone",
+							"value": "123123123",
+							"type": "text"
+						},
+						{
+							"key": "usertypeid",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/user/register",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"user",
+						"register"
+					]
+				},
+				"description": "POST /api/user/register:\r\n\r\npara efetuar o registo de um utilizador\r\n\r\nCondições:\r\n\tTem que estar autenticado\r\n\tTem que ser Admin\r\n\r\nrecebe:\r\n\r\nemail - email a registar (obrigatório)\r\npassword - password do utilizador (obrigatório)\r\nfullname - nome total do utilizador (obrigatório)\r\naddress - morada do utilizador\r\nbirthday - data de nascimento do utilizador deve conter esta estrutura: (yyyy-mm-dd)\r\ncellphone - número de telemovel do utilizador\r\nusertypeid - id do tipo de utilizador referente aos tipos de utilizador (neste momento 1 - Admin, 2 - User)\r\ntitle - titulo\r\nqualifications - qualificações\r\n\r\ndevolve:\r\n\tse ocorrer um erro ou introduzirem campos inválidos (ex: não respeitar formato da data):\r\n\r\n{\r\n   \"error\": 1,\r\n   \"message\": \"Ocorreu um erro no registo, verifique se todos os campos săo válidos\",\r\n   \"res\": {}\r\n}\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "http://brandic.devll.eu:61080/api/user/register - efetuar registo - ERROR:0 - registo com sucesso",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6aace605-cdee-4da9-88e4-4510cbce4dad",
+						"exec": [
+							"var responseJSON;",
+							"",
+							"try { ",
+							"    responseJSON = JSON.parse(responseBody); ",
+							"    tests['response is valid JSON'] = true;",
+							"}",
+							"catch (e) { ",
+							"    responseJSON = {}; ",
+							"    tests['response is valid JSON'] = false;",
+							"}",
+							"",
+							"",
+							"//tests['response has post data'] = _.has(responseJSON, 'email');",
+							"//tests['response matches the email posted'] = (responseJSON.form && responseJSON.email === 'quintino14@ipt.pt');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "quintino14@ipt.pt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "qwerty123456",
+							"type": "text"
+						},
+						{
+							"key": "fullname",
+							"value": "Virgilio Quintino",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "Rua dos Nabos, 123",
+							"type": "text"
+						},
+						{
+							"key": "birthday",
+							"value": "1975-01-01",
+							"type": "text"
+						},
+						{
+							"key": "cellphone",
+							"value": "123123123",
+							"type": "text"
+						},
+						{
+							"key": "usertypeid",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/user/register",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"user",
+						"register"
+					]
+				},
+				"description": "POST /api/user/register:\r\n\r\npara efetuar o registo de um utilizador\r\n\r\nCondições:\r\n\tTem que estar autenticado\r\n\tTem que ser Admin\r\n\r\nrecebe:\r\n\r\nemail - email a registar (obrigatório)\r\npassword - password do utilizador (obrigatório)\r\nfullname - nome total do utilizador (obrigatório)\r\naddress - morada do utilizador\r\nbirthday - data de nascimento do utilizador deve conter esta estrutura: (yyyy-mm-dd)\r\ncellphone - número de telemovel do utilizador\r\nusertypeid - id do tipo de utilizador referente aos tipos de utilizador (neste momento 1 - Admin, 2 - User)\r\ntitle - titulo\r\nqualifications - qualificações\r\n\r\ndevolve:\r\n\tse for registado com sucesso:\r\n\t\r\n{\r\n   \"error\": 0,\r\n   \"message\": \"Registado com sucesso\",\r\n\t\"res\": {\r\n\t\t\"id\": 2,\r\n\t\t\"full_name\": \"Teste2 Teste\",\r\n\t\t\"email\": \"teste123456@ipt.pt\",\r\n\t\t\"address\": \"Teste2\",\r\n\t\t\"birthday\": \"02/04/1992\",\r\n\t\t\"cellphone\": \"987654321\",\r\n\t\t\"type_user\": \"User\",\r\n\t\t\"id_type_user\": 2,\r\n\t\t\"last_login\": \"2019-04-08T01:35:56.456Z\",\r\n\t\t\"register_date\": \"2019-04-08T01:35:56.456Z\",\r\n\t\t\"title\": \"dont6\",\r\n\t\t\"qualifications\": \"have6\"\r\n\t}\r\n}\r\n\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "http://brandic.devll.eu:61080/api/user/register - efetuar registo - ERROR:1 - email ja usado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6aace605-cdee-4da9-88e4-4510cbce4dad",
+						"exec": [
+							"var responseJSON;",
+							"",
+							"try { ",
+							"    responseJSON = JSON.parse(responseBody); ",
+							"    tests['response is valid JSON'] = true;",
+							"}",
+							"catch (e) { ",
+							"    responseJSON = {}; ",
+							"    tests['response is valid JSON'] = false;",
+							"}",
+							"",
+							"",
+							"//tests['response has post data'] = _.has(responseJSON, 'email');",
+							"//tests['response matches the email posted'] = (responseJSON.form && responseJSON.email === 'quintino14@ipt.pt');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "quintino14@ipt.pt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "qwerty123456",
+							"type": "text"
+						},
+						{
+							"key": "fullname",
+							"value": "Virgilio Quintino",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "Rua dos Nabos, 123",
+							"type": "text"
+						},
+						{
+							"key": "birthday",
+							"value": "1975-01-01",
+							"type": "text"
+						},
+						{
+							"key": "cellphone",
+							"value": "123123123",
+							"type": "text"
+						},
+						{
+							"key": "usertypeid",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/user/register",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"user",
+						"register"
+					]
+				},
+				"description": "POST /api/user/register:\r\n\r\npara efetuar o registo de um utilizador\r\n\r\nCondições:\r\n\tTem que estar autenticado\r\n\tTem que ser Admin\r\n\r\nrecebe:\r\n\r\nemail - email a registar (obrigatório)\r\npassword - password do utilizador (obrigatório)\r\nfullname - nome total do utilizador (obrigatório)\r\naddress - morada do utilizador\r\nbirthday - data de nascimento do utilizador deve conter esta estrutura: (yyyy-mm-dd)\r\ncellphone - número de telemovel do utilizador\r\nusertypeid - id do tipo de utilizador referente aos tipos de utilizador (neste momento 1 - Admin, 2 - User)\r\ntitle - titulo\r\nqualifications - qualificações\r\n\r\ndevolve:\r\n\tse já estiver a ser utilizado esse email:\r\n\t\r\n{\r\n   \"error\": 1,\r\n   \"message\": \"Esse email já se encontra em utilização\",\r\n   \"res\": {}\r\n}\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "http://brandic.devll.eu:61080/api/user/register - efetuar registo - ERROR:0 - user ja autenticado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6aace605-cdee-4da9-88e4-4510cbce4dad",
+						"exec": [
+							"var responseJSON;",
+							"",
+							"try { ",
+							"    responseJSON = JSON.parse(responseBody); ",
+							"    tests['response is valid JSON'] = true;",
+							"}",
+							"catch (e) { ",
+							"    responseJSON = {}; ",
+							"    tests['response is valid JSON'] = false;",
+							"}",
+							"",
+							"",
+							"//tests['response has post data'] = _.has(responseJSON, 'email');",
+							"//tests['response matches the email posted'] = (responseJSON.form && responseJSON.email === 'quintino14@ipt.pt');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "quintino14@ipt.pt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "qwerty123456",
+							"type": "text"
+						},
+						{
+							"key": "fullname",
+							"value": "Virgilio Quintino",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "Rua dos Nabos, 123",
+							"type": "text"
+						},
+						{
+							"key": "birthday",
+							"value": "1975-01-01",
+							"type": "text"
+						},
+						{
+							"key": "cellphone",
+							"value": "123123123",
+							"type": "text"
+						},
+						{
+							"key": "usertypeid",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/user/register",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"user",
+						"register"
+					]
+				},
+				"description": "POST /api/user/register:\r\n\r\npara efetuar o registo de um utilizador\r\n\r\nCondições:\r\n\tTem que estar autenticado\r\n\tTem que ser Admin\r\n\r\nrecebe:\r\n\r\nemail - email a registar (obrigatório)\r\npassword - password do utilizador (obrigatório)\r\nfullname - nome total do utilizador (obrigatório)\r\naddress - morada do utilizador\r\nbirthday - data de nascimento do utilizador deve conter esta estrutura: (yyyy-mm-dd)\r\ncellphone - número de telemovel do utilizador\r\nusertypeid - id do tipo de utilizador referente aos tipos de utilizador (neste momento 1 - Admin, 2 - User)\r\ntitle - titulo\r\nqualifications - qualificações\r\n\r\ndevolve:\r\n\tse já se encontra autenticado neste momento:\r\n\r\n{\r\n   \"error\": 0,\r\n   \"message\": \"Utilizador já se encontra autenticado\",\r\n\t\t\"res\": {\r\n\t\t\t\"id\": 2,\r\n\t\t\t\"full_name\": \"Teste2 Teste\",\r\n\t\t\t\"email\": \"teste123456@ipt.pt\",\r\n\t\t\t\"address\": \"Teste2\",\r\n\t\t\t\"birthday\": \"02/04/1992\",\r\n\t\t\t\"cellphone\": \"987654321\",\r\n\t\t\t\"type_user\": \"User\",\r\n\t\t\t\"id_type_user\": 2,\r\n\t\t\t\"last_login\": \"2019-04-08T01:35:56.456Z\",\r\n\t\t\t\"register_date\": \"2019-04-08T01:35:56.456Z\",\r\n\t\t\t\"title\": \"dont6\",\r\n\t\t\t\"qualifications\": \"have6\"\r\n\t\t}\r\n}\r\n\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Testar registo - Listar registos efetuados ERROR:0 Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/userlist",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"userlist"
+					]
+				},
+				"description": "Devolveu o ERROR:0\nEM: 18-03-2019\n\nGET /api/userlist -> para listar registos efetuados com sucesso\n\nRECEBE: \nnada\n\nDEVOLVE:\n\n{\n    \"error\": 0,\n    \"message\": \"\",\n    \"res\": {\n        \"users\": [\n            {\n                \"id\": 1,\n                \"full_name\": \"Luís Lopes\",\n                \"email\": \"aluno19055@ipt.pt\",\n                \"address\": \"Entroncamento\",\n                \"birthday\": \"00/00/0000\",\n                \"cellphone\": \"NULL\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": \"2019-03-11T17:19:42.000Z\"\n            },\n            {\n                \"id\": 2,\n                \"full_name\": \"Teste Teste\",\n                \"email\": \"teste123456@ipt.pt\",\n                \"address\": \"Teste\",\n                \"birthday\": \"02/04/1992\",\n                \"cellphone\": \"910123456\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": \"2019-03-18T00:49:04.000Z\"\n            },\n            {\n                \"id\": 3,\n                \"full_name\": \"Nuno\",\n                \"email\": \"aluno20235@ipt.pt\",\n                \"address\": \"Entroncamento\",\n                \"birthday\": \"18/02/1973\",\n                \"cellphone\": \"NULL\",\n                \"type_user\": \"Admin\",\n                \"id_type_user\": 1,\n                \"last_login\": null\n            },\n            {\n                \"id\": 4,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"quintino@ipt.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"123123123\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null\n            },\n            {\n                \"id\": 5,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"quintino123@ipt.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"01/01/1975\",\n                \"cellphone\": \"123123123456\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null\n            },\n            {\n                \"id\": 6,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"quintino12@ipt.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"00/00/0000\",\n                \"cellphone\": \"123123123456\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null\n            },\n            {\n                \"id\": 7,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"quintino1@ipt.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"00/00/0000\",\n                \"cellphone\": \"123123123456\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null\n            },\n            {\n                \"id\": 8,\n                \"full_name\": \"Virgilio Quintino\",\n                \"email\": \"quintino2@ipt.pt\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"00/00/0000\",\n                \"cellphone\": \"123123123456\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null\n            },\n            {\n                \"id\": 9,\n                \"full_name\": \"Virgilio Quintino123\",\n                \"email\": \"quintino3\",\n                \"address\": \"Rua dos Nabos, 123\",\n                \"birthday\": \"00/00/0000\",\n                \"cellphone\": \"123123123456\",\n                \"type_user\": \"User\",\n                \"id_type_user\": 2,\n                \"last_login\": null\n            }\n        ]\n    }\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "http://brandic.devll.eu:61080/api/userlist - listar registos efetuados - ERROR:0 - com sucesso",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/user/list",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"user",
+						"list"
+					]
+				},
+				"description": "GET /api/user/list:\r\n\r\n\tpara ver a lista de utilizadores\r\n\r\nCondições:\r\n\tTem que estar autenticado\r\n\tTem que ser Admin\r\n\r\nrecebe:\r\n\tsearch - palavra a ser utilizada na pesquisa (esta pesquisa no nome e no email)\r\n\r\ndevolve:\r\n\tse com sucesso:\r\n\r\n{\r\n\t\"error\": 0,\r\n\t\"message\": \"Lista de utilizadores\",\r\n\t\"res\": {\r\n\t\t\"users\": [\r\n\t\t\t{\r\n\t\t\t\t\"id\": 1,\r\n\t\t\t\t\"full_name\": \"Luís Lopes\",\r\n\t\t\t\t\"email\": \"aluno19055@ipt.pt\",\r\n\t\t\t\t\"address\": \"qwerty\",\r\n\t\t\t\t\"birthday\": \"10/04/1995\",\r\n\t\t\t\t\"cellphone\": \"123456780\",\r\n\t\t\t\t\"type_user\": \"Admin\",\r\n\t\t\t\t\"id_type_user\": 1,\r\n\t\t\t\t\"last_login\": \"2019-04-08T01:41:48.000Z\",\r\n\t\t\t\t\"register_date\": \"2019-04-07T20:12:10.000Z\",\r\n\t\t\t\t\"title\": \"dont2\",\r\n\t\t\t\t\"qualifications\": \"have2\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"id\": 3,\r\n\t\t\t\t\"full_name\": \"Nuno\",\r\n\t\t\t\t\"email\": \"aluno20235@ipt.pt\",\r\n\t\t\t\t\"address\": \"Entroncamento\",\r\n\t\t\t\t\"birthday\": \"18/02/1973\",\r\n\t\t\t\t\"cellphone\": \"NULL\",\r\n\t\t\t\t\"type_user\": \"Admin\",\r\n\t\t\t\t\"id_type_user\": 1,\r\n\t\t\t\t\"last_login\": \"2019-04-07T12:03:52.000Z\",\r\n\t\t\t\t\"register_date\": \"2019-04-07T12:03:52.000Z\",\r\n\t\t\t\t\"title\": \"dont\",\r\n\t\t\t\t\"qualifications\": \"have\"\r\n\t\t\t}\r\n\t\t]\r\n\t}\r\n}\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "http://brandic.devll.eu:61080/api/userlist - listar registos efetuados - ERROR:1 - sem permissoes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://brandic.devll.eu:61080/api/userlist",
+					"protocol": "http",
+					"host": [
+						"brandic",
+						"devll",
+						"eu"
+					],
+					"port": "61080",
+					"path": [
+						"api",
+						"userlist"
+					]
+				},
+				"description": "GET /api/user/list:\r\n\r\n\tpara ver a lista de utilizadores\r\n\r\nCondições:\r\n\tTem que estar autenticado\r\n\tTem que ser Admin\r\n\r\nrecebe:\r\n\tsearch - palavra a ser utilizada na pesquisa (esta pesquisa no nome e no email)\r\n\r\ndevolve:\r\n\tse não tiver permissões:\r\n\t\r\n{\r\n\t   \"error\": 1,\r\n\t   \"message\": \"Não tem permissões para listar utilizadores\",\r\n\t   \"res\": {}\r\n }\r\n"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "ad408ab9-b399-4a4b-8011-33f4ff1dc29d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f531426b-13ca-4533-ba1b-fb903557a9fb",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
