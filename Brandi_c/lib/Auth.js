@@ -240,7 +240,7 @@ exports.addFirstUserAndUserType = async function (db) {
     //await this.addNewUserType(db, infoDB.TECHNITIAN_TYPE_NAME);
     //await this.addNewUserType(db, infoDB.STUDENT_TYPE_NAME);
     await this.addNewUserType(db, infoDB.USER_TYPE_NAME);
-    await this.addNewUser(db, infoDB.ADMIN_EMAIL, infoDB.ADMIN_PW, infoDB.ADMIN_EMAIL, "", "", "", (await this.getUserTypeByName(db, infoDB.ADMIN_TYPE_NAME)).user_type.id,"Admin","Admin");
+    await this.addNewUser(db, infoDB.ADMIN_EMAIL, infoDB.ADMIN_PW, infoDB.ADMIN_EMAIL, "", "1990-01-01", "", (await this.getUserTypeByName(db, infoDB.ADMIN_TYPE_NAME)).user_type.id,"Admin","Admin");
 };
 
 /**
