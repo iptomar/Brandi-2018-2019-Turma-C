@@ -32,8 +32,7 @@ public class Administrador_Registar {
      public void home() throws Exception{
              driver = new ChromeDriver();
            
-               driver.get("http://localhost:8080/#/");
-        // driver.get("http://brandic.devll.eu:61080/");
+         driver.get("http://brandic.devll.eu:61080/");
          driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
          Thread.sleep(1000);
   
@@ -48,53 +47,12 @@ public class Administrador_Registar {
        
 }
      
-     @Test 
-      public void admin_RegistarUtilizador() throws Exception {
- 
-            driver.get("http://localhost:8080/#/");
-       // driver.get("http://brandic.devll.eu:61080/");
-       
-        //driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
-       // Thread.sleep(1000);
-        driver.findElement(By.id("navbarDropdownAdmin")).click();
-       Thread.sleep(1000);
-     //driver.findElement(By.linkText("/admin/user/register")).click();
-
-       driver.findElement(By.xpath(" //*[@id=\"navbarSupportedContent\"]/ul/li[3]/div/a[2]")).click();
-      Thread.sleep(1000);
-    driver.findElement(By.name("email")).sendKeys("teste123456@ipt.pt"); 
-    driver.findElement(By.name("full_name")).sendKeys("marcio");
-    driver.findElement(By.name("address")).sendKeys("rua do ipt"); 
-       driver.findElement(By.name("birthday")).sendKeys("123456789"); 
-       driver.findElement(By.name("cellphone")).sendKeys("912365478"); 
-       driver.findElement(By.name("qualifications")).sendKeys("11");
-       driver.findElement(By.name("title")).sendKeys("empregado");
-            Select select = new Select(driver.findElement(By.name("id_type_user")));
-       select.selectByValue("2");
-                   Thread.sleep(3000);
-       driver.findElement(By.name("passwordNew")).sendKeys("123456"); 
-       driver.findElement(By.name("passwordNewConf")).sendKeys("123456");
-       driver.findElement(By.xpath("/html/body/app-root/div/app-user-register/div/div/form/div[6]/button")).click();
-     Thread.sleep(1000);
-     
-   //  WebElement msg = driver.findElement(By.xpath("/html/body/app-root/div/app-user-register/div/div/form/div[1]"));
-   //  assertEquals("Ocorreu um erro no registo, verifique se todos os campos săo válidos", msg.getText());
-    
-//  WebElement msg= driver.findElement(By.xpath("/html/body/app-root/div/app-user-register/div/div/form/div[1]/strong"));
-    //assertEquals("Esse email já se encontra em utilização",msg.getText());
-             WebElement msg = driver.findElement(By.className("alert-warning"));
-         if (!msg.isDisplayed())
-         fail("not save");
-    
-}
-    
-        @Test 
+             @Test
       public void admin_RegistarUtilizadorComSucesso() throws Exception {
           
-           driver.get("http://localhost:8080/#/");
-        //driver.get("http://brandic.devll.eu:61080/");
-        //driver.findElement(By.xpath("//*[@id=\"navbar\"]/button/span")).click();
-       // Thread.sleep(1000);
+        driver.get("http://brandic.devll.eu:61080/");
+        driver.findElement(By.xpath("//*[@id=\"navbar\"]/button/span")).click();
+       Thread.sleep(1000);
         driver.findElement(By.id("navbarDropdownAdmin")).click();
        Thread.sleep(1000);
        driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[3]/div/a[2]")).click();
@@ -120,13 +78,48 @@ public class Administrador_Registar {
          
 }
      
+     
+     
+     @After
+      public void admin_RegistarUtilizador() throws Exception {
+ 
+        driver.get("http://brandic.devll.eu:61080/");
+       
+        driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
+        Thread.sleep(1000);
+        driver.findElement(By.id("navbarDropdownAdmin")).click();
+       Thread.sleep(1000);
+       driver.findElement(By.xpath(" //*[@id=\"navbarSupportedContent\"]/ul/li[3]/div/a[2]")).click();
+      Thread.sleep(1000);
+    driver.findElement(By.name("email")).sendKeys("teste123456@ipt.pt"); 
+    driver.findElement(By.name("full_name")).sendKeys("marcio");
+    driver.findElement(By.name("address")).sendKeys("rua do ipt"); 
+       driver.findElement(By.name("birthday")).sendKeys("123456789"); 
+       driver.findElement(By.name("cellphone")).sendKeys("912365478"); 
+       driver.findElement(By.name("qualifications")).sendKeys("11");
+       driver.findElement(By.name("title")).sendKeys("empregado");
+            Select select = new Select(driver.findElement(By.name("id_type_user")));
+       select.selectByValue("2");
+                   Thread.sleep(3000);
+       driver.findElement(By.name("passwordNew")).sendKeys("123456"); 
+       driver.findElement(By.name("passwordNewConf")).sendKeys("123456");
+       driver.findElement(By.xpath("/html/body/app-root/div/app-user-register/div/div/form/div[6]/button")).click();
+     Thread.sleep(1000);
+     
+             WebElement msg = driver.findElement(By.className("alert-warning"));
+         if (!msg.isDisplayed())
+         fail("not save");
+    
+}
+    
+
+     
       
-     @Test 
+     @After
       public void admin_RegistarUtilizador_Password_NãoCoincide() throws Exception {
-   driver.get("http://localhost:8080/#/");
-       // driver.get("http://brandic.devll.eu:61080/");
-        //driver.findElement(By.xpath("//*[@id=\"navbar\"]/button/span")).click();
-      //  Thread.sleep(1000);
+        driver.get("http://brandic.devll.eu:61080/");
+        driver.findElement(By.xpath("//*[@id=\"navbar\"]/button/span")).click();
+        Thread.sleep(1000);
              driver.findElement(By.id("navbarDropdownAdmin")).click();
        Thread.sleep(1000);
        driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[3]/div/a[2]")).click();

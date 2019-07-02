@@ -28,8 +28,8 @@ public class Admin_FichaTecnica {
   
      public void home() throws Exception{
              driver = new ChromeDriver();
-           driver.get("http://localhost:8080/#/");
-         //driver.get("http://brandic.devll.eu:61080/");
+        
+         driver.get("http://brandic.devll.eu:61080/");
          driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
          Thread.sleep(1000);
   
@@ -44,15 +44,15 @@ public class Admin_FichaTecnica {
 }
      @Test
      public void Utilizador_FichaTecnica_Registar() throws Exception {
-        driver.get("http://localhost:8080/#/");
-      //  driver.get("http://brandic.devll.eu:61080/");
-        //   driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
-        //   Thread.sleep(1000);
+       
+        driver.get("http://brandic.devll.eu:61080/");
+          driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
+          Thread.sleep(1000);
         driver.findElement(By.xpath("//*[@id=\"navbarDropdownDatasheet\"]")).click();
        Thread.sleep(1000);
        driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[2]/div/a[1]")).click();
       Thread.sleep(1000);
-    driver.findElement(By.name("design")).sendKeys("Objeto");
+    driver.findElement(By.name("design")).sendKeys("Mesa");
     driver.findElement(By.name("CEARC")).sendKeys("15633"); 
        driver.findElement(By.name("CEARCdate")).sendKeys("123456789"); 
        driver.findElement(By.name("CEARCentrydate")).sendKeys("12052018"); 
@@ -60,53 +60,47 @@ public class Admin_FichaTecnica {
        driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-create/div/div/form/div[3]/div[2]/div/input")).sendKeys("22052018");
       driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-create/div/div/form/div[3]/div[3]/div/input")).sendKeys("24052018");
       Select coord = new Select (driver.findElement(By.name("coordinator")));
-       coord.selectByValue("2");
+       coord.selectByValue("4");
          Thread.sleep(1000);
          Select select = new Select(driver.findElement(By.name("supercategory")));
-                 select.selectByValue("29"); 
+                 select.selectByValue("1"); 
                  Thread.sleep(1000);
-   //   Não apresenta categoria e sub categoria  
-            /*    Select categ = new Select(driver.findElement(By.name("category")));
-           categ.selectByValue("8"); 
+ 
+             Select categ = new Select(driver.findElement(By.name("category")));
+           categ.selectByValue("4"); 
           Thread.sleep(1000);
          
           Select sub = new Select(driver.findElement(By.name("subcategory")));
-          sub.selectByValue("13"); 
+          sub.selectByValue("10"); 
           Thread.sleep(1000);
-   */
+   
        driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-create/div/div/form/div[7]/button")).click();
      Thread.sleep(1000);
-     
-     //Era o que era suposto aparecer 
-         /*   WebElement msg = driver.findElement(By.className("alert-success"));
+    
+           WebElement msg = driver.findElement(By.className("alert-success"));
             if (!msg.isDisplayed())
                 fail("not save");
-         */   
-            //Mas aparece isto 
-        WebElement msg = driver.findElement(By.className("alert-warning"));
-            if (!msg.isDisplayed())
-                fail("not save");
-            
+         
      }
     
     @Test
      public void Utilizador_FichaTecnica_Registar_Incompleto() throws Exception {
-         driver.get("http://localhost:8080/#/");
-                // driver.get("http://brandic.devll.eu:61080/");
-        //   driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
-        //   Thread.sleep(1000);
+         
+                driver.get("http://brandic.devll.eu:61080/");
+          driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
+          Thread.sleep(1000);
         driver.findElement(By.xpath("//*[@id=\"navbarDropdownDatasheet\"]")).click();
        Thread.sleep(1000);
-     //driver.findElement(By.linkText("/admin/user/register")).click();
+     
        driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[2]/div/a[1]")).click();
       Thread.sleep(1000);
-    driver.findElement(By.name("design")).sendKeys("Objeto");
+    driver.findElement(By.name("design")).sendKeys("Test");
     driver.findElement(By.name("CEARC")).sendKeys("15633");  
              driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-create/div/div/form/div[3]/div[2]/div/input")).sendKeys("22052018");
       driver.findElement(By.xpath("/html/body/app-root/div/app-datasheet-create/div/div/form/div[3]/div[3]/div/input")).sendKeys("24052018");  
        driver.findElement(By.name("coordinator")).click();
         Select select = new Select(driver.findElement(By.name("supercategory")));
-                 select.selectByValue("29"); 
+                 select.selectByValue("3"); 
                  Thread.sleep(1000);
        driver.findElement(By.name("category")).click();
           Thread.sleep(1000);

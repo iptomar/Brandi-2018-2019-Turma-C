@@ -1,0 +1,8 @@
+#surefire
+#Tue Jul 02 12:45:34 BST 2019
+maven.ext.class.path=C\:\\Program Files\\NetBeans 8.2\\java\\maven-nblib\\netbeans-eventspy.jar
+user.dir=C\:\\Users\\vanes\\Desktop\\PSI-T\\Brandi-2018-2019-Turma-C\\Brandi-2018-2019-Turma-C\\Testes\\Testes Cliente\\mavenproject1
+file.encoding=UTF-8
+localRepository=C\:\\Users\\vanes\\.m2\\repository
+basedir=C\:\\Users\\vanes\\Desktop\\PSI-T\\Brandi-2018-2019-Turma-C\\Brandi-2018-2019-Turma-C\\Testes\\Testes Cliente\\mavenproject1
+test=Administrador_Registar

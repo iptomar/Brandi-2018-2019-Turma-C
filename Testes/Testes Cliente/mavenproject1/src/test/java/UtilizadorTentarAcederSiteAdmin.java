@@ -22,8 +22,7 @@ public class UtilizadorTentarAcederSiteAdmin {
     @Test
     public void UtilizadorTentarAcederAdmin() throws Exception {
         driver = new ChromeDriver();
-        
-      //   driver.get("http://localhost:8080/#/");
+       
        driver.get("http://brandic.devll.eu:61080/");
         driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
         Thread.sleep(1000);
@@ -31,8 +30,8 @@ public class UtilizadorTentarAcederSiteAdmin {
         driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/a")).click();
         Thread.sleep(1000);
 
-        driver.findElement(By.name("email")).sendKeys("teste123456@ipt.pt");
-        driver.findElement(By.name("password")).sendKeys("123456");
+        driver.findElement(By.name("email")).sendKeys("gertrudes@ipt.pt");
+        driver.findElement(By.name("password")).sendKeys("gertrudes");
 
         driver.findElement(By.xpath("/html/body/app-root/div/app-login/div/div/form/button")).click();
         Thread.sleep(1000);

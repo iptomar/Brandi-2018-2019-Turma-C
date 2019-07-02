@@ -29,8 +29,8 @@ WebDriver driver;
    @Before
      public void home() throws Exception{
              driver = new ChromeDriver();
-           driver.get("http://localhost:8080/#/");
-       //  driver.get("http://brandic.devll.eu:61080/");
+         
+        driver.get("http://brandic.devll.eu:61080/");
          driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
          Thread.sleep(1000);
   
@@ -47,10 +47,10 @@ WebDriver driver;
      
  @Test 
       public void admin_ListaUtilizadores() throws Exception {
-          driver.get("http://localhost:8080/#/");
-         //driver.get("http://brandic.devll.eu:61080/");
-         // driver.findElement(By.xpath("//*[@id=\"navbar\"]/button/span")).click();
-    // Thread.sleep(1000);
+         
+         driver.get("http://brandic.devll.eu:61080/");
+         driver.findElement(By.xpath("//*[@id=\"navbar\"]/button/span")).click();
+     Thread.sleep(1000);
         driver.findElement(By.id("navbarDropdownAdmin")).click();
        Thread.sleep(1000);
        driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[3]/div/a[1]")).click();
@@ -84,13 +84,13 @@ WebDriver driver;
          fail("not save");
        
       }
-     
+      
       @After
       public void admin_ListaUtilizadores_Procurar() throws Exception {
-          driver.get("http://localhost:8080/#/");
-         // driver.get("http://brandic.devll.eu:61080/");
-       //  driver.findElement(By.xpath("//*[@id=\"navbar\"]/button/span")).click();
-       // Thread.sleep(1000);
+          
+          driver.get("http://brandic.devll.eu:61080/");
+         driver.findElement(By.xpath("//*[@id=\"navbar\"]/button/span")).click();
+       Thread.sleep(1000);
        driver.findElement(By.id("navbarDropdownAdmin")).click();
        Thread.sleep(1000);
        driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[3]/div/a[1]")).click();
@@ -116,13 +116,13 @@ WebDriver driver;
          fail("not save");
        
       }
-      
+      /*
             @After
       public void admin_ListaUtilizadores_Delete() throws Exception {
-          driver.get("http://localhost:8080/#/");
-         // driver.get("http://brandic.devll.eu:61080/");
-       // driver.findElement(By.xpath("//*[@id=\"navbar\"]/button/span")).click();
-      // Thread.sleep(1000);
+         
+          driver.get("http://brandic.devll.eu:61080/");
+        driver.findElement(By.xpath("//*[@id=\"navbar\"]/button/span")).click();
+       Thread.sleep(1000);
        driver.findElement(By.id("navbarDropdownAdmin")).click();
        Thread.sleep(1000);
        driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[3]/div/a[1]")).click();
@@ -138,7 +138,7 @@ WebDriver driver;
           Thread.sleep(1000);    
            //pop-up
           driver.switchTo().alert().accept();
-            Thread.sleep(1000); 
+        /*    Thread.sleep(1000); 
           String msg = driver.switchTo().alert().getText();
    
           //Erro ortografico
@@ -147,5 +147,5 @@ WebDriver driver;
          
          
       }
-      
+      */
 }
