@@ -28,8 +28,6 @@ exports.getLastIdImage = (id) => {
 exports.getFirstImage = (id) => {
     let lid = -1;
     let f = "NaN";
-    console.log(fs.existsSync(this.DATASHEET_IMAGES_FOLDER + path.sep + id));
-    console.log(this.DATASHEET_IMAGES_FOLDER + path.sep + id);
     if (fs.existsSync(this.DATASHEET_IMAGES_FOLDER + path.sep + id)) {
         fs.readdirSync(this.DATASHEET_IMAGES_FOLDER + path.sep + id).forEach(file => {
             let fid = parseInt(file.split('.').slice(0, -1).join('.'), 10);
