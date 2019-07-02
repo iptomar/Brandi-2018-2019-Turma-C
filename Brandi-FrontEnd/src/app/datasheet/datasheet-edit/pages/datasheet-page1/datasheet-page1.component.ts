@@ -35,6 +35,8 @@ export class DatasheetPage1Component implements OnInit, DatasheetPage, OnDestroy
   constructor(public users: UsersService,public categoriesService : CategoriesService, public datasheetService : DatasheetService, public global : Global) {
     this._isEditing = false;
     this._users = [];
+    this.sub_categories = [];
+    this.categories = [];
     this.users.getUsersNames("").subscribe((users_list) => {
       this._users = users_list;
     },take(1));
@@ -47,10 +49,9 @@ export class DatasheetPage1Component implements OnInit, DatasheetPage, OnDestroy
 
   datasheet(datasheet: Datasheet): void {
     if(datasheet == null) return;
-    this._datasheet = datasheet; 
-    this.firstload=true;
+    this._datasheet = datasheet;
     this.super_category.next(this._datasheet.super_category);
-    this.category.next(this._datasheet.category);
+    //this.category.next(this._datasheet.category);
   }
   isEditing(isEditing: boolean): void {
     this._isEditing = isEditing;
@@ -75,22 +76,28 @@ export class DatasheetPage1Component implements OnInit, DatasheetPage, OnDestroy
   public resetSelect() {
     this.categorySelect.nativeElement.value="";
     this._datasheet.category=0;
+    this.categories = [];
     this.resetSelectCat();
   }
 
   public resetSelectCat() {
+    this.sub_categories = [];
     this.subcategorySelect.nativeElement.value="";
     this._datasheet.sub_category=0;
   }
 
   ngOnInit() {    
     this.id_sub_category$ = this.category.asObservable().subscribe((id_cat:number) => this.categoriesService.getSubCategories(id_cat,"").subscribe((data : SubCategories[]) => {
+      if(this.sub_categories.length ===0 && data.length === 0) return;
       this.sub_categories = data;
     }, take(1)
     ));
     this.id_category$ = this.super_category.asObservable().subscribe((id_super:number) =>  this.categoriesService.getCategories(id_super,"").subscribe((data : Categories[]) => {
+      if(this.categories.length ===0 && data.length=== 0) return;
       this.categories = data;
-      this.sub_categories = [];
+      if(this._datasheet.sub_category> 0){
+        this.category.next(this._datasheet.category);
+      }
     }, take(1)
     ));
     this.super_categories$ = this.categoriesService.getSuperCategories("");

@@ -13,7 +13,7 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDatasheet" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Fichas Técnicas
         </a>
-        <div class="dropdown-menu" zaria-labelledby="navbarDropdownDatasheet">
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownDatasheet">
           <a class="dropdown-item" routerLink="/datasheet/create" >Criar fichas técnicas</a>
           <a class="dropdown-item" routerLink="/datasheet" >Lista de fichas técnicas</a>
         </div>
@@ -29,6 +29,9 @@
           <a class="dropdown-item" routerLink="/admin/categories">Categorias</a>
         </div>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/about">Sobre</a>
+      </li>
     </ul>
       <a *ngIf="!auth.isAuthenticated(); else logoutbt" class="btn btn-outline-success" routerLink="/login">Login <i class="fa fa-connectdevelop"></i></a>
       <ng-template #logoutbt>
@@ -38,6 +41,15 @@
   </div>
 </nav>
 
-<div class="container mainContainer">
+<div class="mainContainer">
   <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
 </div>
+
+
+<footer id="footer"class=" mainContainer" >
+    <div class="d-m-flex justify-content-between  text-center">
+        <img src="../../assets/images/logoipt.png">
+        <div class="d-flex justify-content-center flex-column" ><small>Laboratório de Conservação e Restauro</small></div>
+        <img src="../../assets/images/lcr_ipt.19d61825.png" >
+    </div>
+  </footer>

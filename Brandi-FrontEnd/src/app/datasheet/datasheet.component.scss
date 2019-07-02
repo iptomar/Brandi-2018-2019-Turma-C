@@ -1,4 +1,19 @@
 
 .datasheetClick {
     cursor: pointer;
+    height: auto;
+}
+
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+@media only screen and (min-width: 768px) {
+    
+    .datasheetClick {
+        height: 400px;
+    }
+
 }

@@ -1,91 +1,148 @@
 <h5 class="mt-2 mb-4">
-  Exames e análises
-</h5>
-
-<fieldset class="border p-2">
-  <legend class="w-auto">Objectivos Gerais</legend>
-
-  <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" name="testsQ1" [disabled]="!_isEditing">
-    <label class="form-check-label" for="testsQ1">Identificação de materiais, técnicas e tecnologias de produção</label>
-  </div>
-  <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" name="testsQ2" [disabled]="!_isEditing">
-    <label class="form-check-label" for="testsQ2">Identificação de intervenções efectuadas no objecto</label>
-  </div>
-  <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" name="testsQ3" [disabled]="!_isEditing">
-    <label class="form-check-label" for="testsQ3">Caraterização do estado de conservação </label>
-  </div>
-  <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" name="testsQ4" [disabled]="!_isEditing">
-    <label class="form-check-label" for="testsQ4">Identificação de patologias e agentes de biodeterioração</label>
-  </div>
-  <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" name="testsQ5" [disabled]="!_isEditing">
-    <label class="form-check-label" for="testsQ5">Datação do objecto e das eventuais intervenções de que tenha sido
-      alvo</label>
-  </div>
-  <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" name="testsQ6" [disabled]="!_isEditing">
-    <label class="form-check-label" for="testsQ6">Ensaio de produtos e materiais a empregar na intervenção</label>
-  </div>
-</fieldset>
-
-<button type="button" class="btn btn-outline-success mt-2" [disabled]='!_isEditing'>Adicionar exame/análise 
-</button>
-
-<div>
-<!--
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th style="width: 10%">Tipo</th>
-        <th style="width: 15%">Localização</th>
-        <th style="width: 13%">Objectivos</th>
-        <th style="width: 15%">Resultados</th>
-        <th style="width: 15%">Responsável</th>
-        <th style="width: 10%">data</th>
-      </tr>
+    Exames e análises
+  </h5>
+  
+  <fieldset class="border p-2">
+    <legend class="w-auto">Objectivos Gerais</legend>
+  
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" name="testsQ1" [disabled]="!_isEditing" [checked]="_datasheet?.tests_Q1 == '1'">
+      <label class="form-check-label" for="testsQ1">Identificação de materiais, técnicas e tecnologias de produção</label>
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" name="testsQ2" [disabled]="!_isEditing" [checked]="_datasheet?.tests_Q2 == '1'">
+      <label class="form-check-label" for="testsQ2">Identificação de intervenções efectuadas no objecto</label>
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" name="testsQ3" [disabled]="!_isEditing" [checked]="_datasheet?.tests_Q3 == '1'">
+      <label class="form-check-label" for="testsQ3">Caraterização do estado de conservação </label>
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" name="testsQ4" [disabled]="!_isEditing" [checked]="_datasheet?.tests_Q4 == '1'">
+      <label class="form-check-label" for="testsQ4">Identificação de patologias e agentes de biodeterioração</label>
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" name="testsQ5" [disabled]="!_isEditing" [checked]="_datasheet?.tests_Q5 == '1'">
+      <label class="form-check-label" for="testsQ5">Datação do objecto e das eventuais intervenções de que tenha sido
+        alvo</label>
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" name="testsQ6" [disabled]="!_isEditing" [checked]="_datasheet?.tests_Q6 == '1'">
+      <label class="form-check-label" for="testsQ6">Ensaio de produtos e materiais a empregar na intervenção</label>
+    </div>
+  </fieldset>
+  <br/>
+  <div class="form-group row">
+      <label for="testsResults" class="col-lg-2 col-form-label">Interpretação dos Resultados</label>
+      <div class="col-lg-10">
+        <textarea class="form-control" name="testsResults" rows="3" [readonly]="!_isEditing">{{_datasheet?.tests_results}}</textarea>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="testsConclusions" class="col-lg-2 col-form-label">Conclusões</label>
+      <div class="col-lg-10">
+        <textarea class="form-control" name="testsConclusions" rows="3" [readonly]="!_isEditing">{{_datasheet?.tests_conclusions}}</textarea>
+      </div>
+    </div>
+    <button type="button" class="form-control btn btn-outline-success mt-2" [disabled]='!_isEditing' data-toggle="modal" data-target="#modal_tests">Adicionar exame/análise <i class="fa fa-flask"></i></button>
+  <br />
+  <br />
+  
+  <div class="table-responsive">
+      <form class="input-group mb-3" (submit)="searchSource($event)">
+        <input type="text" name="searchBox" class="form-control" placeholder="Pesquisar por" aria-label="Pesquisar por">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i> Pesquisar</button>
+        </div>
+      </form>
       
-    </thead>
-
-    <tbody>
-        <tr *ngFor="let item of _datasheet.array">
-            <th>
-                item.ref
-            </th>
-            <th>
-                item.area
-            </th>
-            <th>
-                item.objective
-            </th>
-            <th>
-                item.result
-            </th>
-            <th>
-                item.entity
-            </th><th>
-                item.timestamp
-            </th>  
-        </tr>    
-    </tbody>
-  </table>-->
-
-</div>
-<br/>
-
-
-<div class="form-group row">
-  <label for="testsResults" class="col-lg-2 col-form-label">Interpretação dos Resultados</label>
-  <div class="col-lg-10">
-    <textarea class="form-control" name="testsResults" rows="3" [readonly]="!_isEditing"></textarea>
-  </div>
-</div>
-<div class="form-group row">
-  <label for="testsConclusions" class="col-lg-2 col-form-label">Conclusões</label>
-  <div class="col-lg-10">
-    <textarea class="form-control" name="testsConclusions" rows="3" [readonly]="!_isEditing"></textarea>
-  </div>
-</div>
+      <div style="overflow-x:auto">
+        <div class="form-group" style="min-width: 1000px;">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                  <th style="width: 10%">Tipo</th>
+                  <th style="width: 15%">Localização</th>
+                  <th style="width: 30%">Objectivos</th>
+                  <th style="width: 15%">Resultados</th>
+                  <th style="width: 15%">Responsável</th>
+                  <th style="width: 15%">data</th>
+              </tr>
+            </thead>
+    
+            <tbody>
+              <tr *ngFor="let t of _tests$ | async">
+                <td>{{t.type_reference}}</td>
+                <td>{{t.location}}</td>
+                <td>{{t.objectives}}</td>
+                <td>{{t.results}}</td>
+                <td>{{t.technician_name}}</td>
+                <td><input type="date" class="form-control" value="{{t.analysis_DATE | date: 'yyyy-MM-dd'}}" readOnly="readOnly" /></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Modal -->
+    <div class="modal fade" id="modal_tests" tabindex="-1" role="dialog" aria-labelledby="modal_tests__Title" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form (submit)="addNewExame($event)" #newExame>
+              <div class="modal-header">
+                <h5 class="modal-title" id="modal_tests__Title">Adicionar exame/análise</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <div *ngIf='messageEditErrTests !== ""' class="alert alert-warning alert-dismissible fade show" role="alert">
+                      <strong>{{messageEditErrTests}}</strong>
+                      <button type="button" class="close" aria-label="Close" (click)='messageEditErrTests=""'>
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <!--mensage de alerta acaba aqui-->
+              
+                    <div *ngIf='messageEditSuccessTests !== ""' class="alert alert-success alert-dismissible fade show" role="alert">
+                      <strong>{{messageEditSuccessTests}}</strong>
+                      <button type="button" class="close" aria-label="Close" (click)='messageEditSuccessTests=""'>
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="row col-lg-12 form-group">
+                      <label for="type_reference">Tipo</label>
+                      <input name="type_reference" id="type_reference" type="text" class="form-control" placeholder="Tipo" />
+                    </div>
+                    <div class="row col-lg-12 form-group">
+                      <label for="location">Localização</label>
+                      <input name="location" id="location" type="text" class="form-control" placeholder="Localização" />
+                    </div>
+                    <div class="row col-lg-12 form-group">
+                      <label for="objectives">Objectivos</label>
+                      <input name="objectives" id="objectives" type="text" class="form-control" placeholder="Objectivos" />
+                    </div>
+                    <div class="row col-lg-12 form-group">
+                      <label for="results">Resultados</label>
+                      <textarea name="results" id="results" type="text" class="form-control" placeholder="Resultados"></textarea>
+                    </div>
+                    <div class="row col-lg-12 form-group">
+                      <label for="results">Resultados</label>
+                      <select name="technician"  id="technician" class="form-control">
+                          <option value="" selected disabled hidden>Escolha um técnico</option>
+                          <option *ngFor="let u of _users$ | async" [value]="u.id">{{u.full_name}}</option>
+                        </select>
+                    </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Adicionar exame/análise</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  
+  
+  

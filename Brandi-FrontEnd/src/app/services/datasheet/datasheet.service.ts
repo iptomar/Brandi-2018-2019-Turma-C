@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Global, ReceivedData } from "src/app/Global";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { AuthService } from "../auth/auth.service";
 import { DatePipe } from "@angular/common";
@@ -78,20 +78,15 @@ export interface Datasheet {
   poluting_sources: string;
   poluting_results: string;
   env_conclusions: string;
-
-/** 
- * falta a 5
- * : number;
- * : number;
- * : number;
- * : number;
- * : number;
- * : number;
- * : string;
- * : string;
- * 
-*/
-//
+  //dados folha 5
+  tests_Q1 : number;
+  tests_Q2 : number;
+  tests_Q3 : number;
+  tests_Q4 : number;
+  tests_Q5 : number;
+  tests_Q6 : number;
+  tests_results : string;
+  tests_conclusions : string;
   //dados folha 6
   support_deterioration: string;
 	surface_deterioration: string;
@@ -122,6 +117,8 @@ export interface Datasheet {
 	observations: string;
 	proposal_date: string;
   acceptation_date: string;
+  ipt_intervinient: string;
+  client_intervinient: string;
   //dados folha 9
   support_intervention: string;
 	support_resources_intervention: string;
@@ -156,7 +153,7 @@ export class DatasheetService {
     private auth: AuthService,
     private datePipe: DatePipe
   ) {}
-
+  
   public deleteImage(id : number, image : string): Observable<ReceivedData> {
     return this.http
       .post(Global.HOST_PREFIX + DatasheetService.DELETE_IMAGE + "/" + id + "/" + image ,{})
@@ -333,12 +330,15 @@ export class DatasheetService {
         };
         break;
         case(4):
-        dados=  {
-
-          /**
-           * 
-           * FALTA FOLHA 5
-           */
+        dados=  {          
+          tests_Q1: data.tests_Q1,
+          tests_Q2 : data.tests_Q2,
+          tests_Q3 : data.tests_Q3,
+          tests_Q4 :  data.tests_Q4,
+          tests_Q5 : data.tests_Q5,
+          tests_Q6 :  data.tests_Q6,
+          tests_results : data.tests_results,
+          tests_conclusions : data.tests_conclusions
         };
         break;
         case(5):
@@ -384,6 +384,8 @@ export class DatasheetService {
             data.acceptation_date,
             "yyyy-MM-dd"
           ),
+          ipt_intervinient: data.ipt_intervinient,
+          client_intervinient: data.client_intervinient
         };
         break; 
         case(8):
@@ -403,7 +405,7 @@ export class DatasheetService {
         
         default:
         dados=  {};
-        
+        return of(<ReceivedData>{error: 0, message: "Ficha técnica atualizada com sucesso",res:{}});
         break;
 
     }

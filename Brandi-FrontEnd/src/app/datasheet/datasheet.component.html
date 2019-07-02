@@ -12,13 +12,17 @@
       <div class="row">
         <div class="col-md-3 mb-4" *ngFor="let u of _datasheetlist">
           <div class="card datasheetClick" (click)="openFicha(u.id)">
-            <div style="height: 250px;min-height: 250px;max-height: 250px;" class="d-flex flex-column justify-content-center">
-              <img src="/api/datasheet/get_image/{{u.id}}/{{u.image}}" class="card-img-top" style="max-height: 250px;">
+            <div style="max-height: 250px; height: 250px;" class="text-center">
+                <span class="helper"></span>
+              <img src="/api/datasheet/get_image/{{u.id}}/{{u.image}}" class="card-img-top" style="max-height: 250px; height: auto; width: auto; max-width: 100%; vertical-align:middle;">
             </div>
             <div class="card-body">
               <p class="card-title">{{u.object_designation}}</p>
             </div>
           </div>
+        </div>
+        <div *ngIf="_datasheetlist?.length === 0" style="text-align: center;" class="w-100 mt-2">
+          <h5>Não existem objetos, crie um objeto primeiro.</h5>
         </div>
       </div>
   </div>

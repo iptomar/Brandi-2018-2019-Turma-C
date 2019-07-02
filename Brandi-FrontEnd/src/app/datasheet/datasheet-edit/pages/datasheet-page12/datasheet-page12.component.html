@@ -2,39 +2,98 @@
   Folha de Obra
 </h5>
 
-<button type="button" class="btn btn-outline-success mt-2" [disabled]='!_isEditing'>Adicionar procedimento <i
-    class="fa fa-paint-brush"></i>
-</button>
-<br /><br />
-<div>
-
-  Tabela com a lista de intervenções realizadas
-
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th class="align-middle" style="width: 10%">Data</th>
-        <th class="align-middle" style="width: 30%">Designação do procedimento</th>
-        <th class="align-middle" style="width: 15%">Materiais e Produtos</th>
-        <th class="align-middle" style="width: 10%">Quantidades</th>
-        <th class="align-middle" style="width: 10%">Duração (h:m)</th>
-        <th class="align-middle" style="width: 10%">Técnico</th>
-        <th class="align-middle" style="width: 15%">Observações</th>
-      </tr>
-    </thead>
-
-    <tbody></tbody>
-    </table>
-
-  <ng-template #worksheet>
-
-    <form class="table-responsive">
-      <div class="input-group mb-3">
-        <input type="text" name="searchBox" class="form-control" placeholder="Pesquisar por" aria-label="Pesquisar por">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i> Pesquisar</button>
+     <!-- <label for="patron">&nbsp;</label> Não sei de onde veio isto... -->
+        <button type="button" class="form-control btn btn-outline-success mt-2" [disabled]='!_isEditing' data-toggle="modal"
+          data-target="#modal_worksheet">Adicionar procedimento <i class="fa fa-paint-brush"></i>
+    </button>
+    
+      <br /><br />
+    
+      <!-- Modal -->
+      <div class="modal fade" id="modal_worksheet" tabindex="-1" role="dialog" aria-labelledby="modal_worksheet__Title"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form (submit)="addNewProcedure($event)" #newProcedure>
+              <div class="modal-header">
+                <h5 class="modal-title" id="modal_worksheet__Title">Adicionar procedimento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div *ngIf='messageEditErrWorksheet !== ""' class="alert alert-warning alert-dismissible fade show"
+                  role="alert">
+                  <strong>{{messageEditErrWorksheet}}</strong>
+                  <button type="button" class="close" aria-label="Close" (click)='messageEditErrWorksheet=""'>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <!--mensage de alerta acaba aqui-->
+    
+                <div *ngIf='messageEditSuccessWorksheet !== ""' class="alert alert-success alert-dismissible fade show"
+                  role="alert">
+                  <strong>{{messageEditSuccessWorksheet}}</strong>
+                  <button type="button" class="close" aria-label="Close" (click)='messageEditSuccessWorksheet=""'>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="col-lg-12 form-group">
+                  <label for="procedure_date">Data</label>
+                  <input name="procedure_date" id="procedure_date" type="date" class="form-control" placeholder="Data" />
+                </div>
+                <div class="col-lg-12 form-group">
+                  <label for="procedure_designation">Designação do Procedimento</label>
+                  <input name="procedure_designation" id="procedure_designation" type="text" class="form-control"
+                    placeholder="Designação do Procedimento" />
+                </div>
+                <div class="col-lg-12 form-group">
+                  <label for="procedure_materials">Materiais e produtos</label>
+                  <input name="procedure_materials" id="procedure_materials" type="text" class="form-control"
+                    placeholder="Materiais e produtos" />
+                </div>
+                <div class="col-lg-12 form-group">
+                  <label for="procedure_amount">Quantidades</label>
+                  <input name="procedure_amount" id="procedure_amount" type="text" class="form-control"
+                    placeholder="Quantidades" />
+                </div>
+                <div class="col-lg-12 form-group">
+                  <label for="procedure_duration">Duração (min)</label>
+                  <input name="procedure_duration" id="procedure_duration" type="number" class="form-control"
+                    placeholder="Duração" />
+                </div>
+                <div class="col-lg-12 form-group">
+                    <label for="procedure_technician">Técnico </label>
+                    <select name="procedure_technician"  id="procedure_technician" class="form-control">
+                        <option value="" selected disabled hidden>Escolha um técnico</option>
+                        <option *ngFor="let u of _users$ | async" [value]="u.id">{{u.full_name}}</option>
+                      </select>
+                  </div>
+                <div class="col-lg-12 form-group">
+                  <label for="procedure_observations">Observações</label>
+                  <input name="procedure_observations" id="procedure_observations" type="text" class="form-control"
+                    placeholder="Observações" />
+                </div>
+    
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Adiciona novo procedimento</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
+
+
+    <div class="table-responsive">
+      <form class="input-group mb-3" (submit)="searchWorksheet($event)">
+          <input type="text" name="searchBox" class="form-control" placeholder="Pesquisar por"
+            aria-label="Pesquisar por">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i> Pesquisar</button>
+          </div>
+        </form>
       <div class="form-group">
         <table class="table table-bordered">
           <thead>
@@ -43,33 +102,24 @@
               <th style="width: 30%">Designação do procedimento</th>
               <th style="width: 15%">Materiais e Produtos</th>
               <th style="width: 10%">Quantidades</th>
-              <th style="width: 10%">Duração</th>
+              <th style="width: 10%">Duração(min)</th>
               <th style="width: 10%">Técnico</th>
               <th style="width: 15%">Observações</th>
             </tr>
           </thead>
 
           <tbody>
-
-            <!-- <tr *ngFor="let u of _users; let i = index">
-            <td>{{u.id}}</td>
-            <td>{{u.full_name}}</td>
-            <td>{{u.email}}</td>
-            <td>{{u.last_login | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
-            <td>
-              <div class="row" style="margin: 0;">
-                <button (click)="editMode(i)"
-                  class="btn btn-warning form-control col-xl mr-xl-2 mr-0 mb-xl-0 mb-2"><i class="fa fa-user"></i>
-                  Editar</button>
-                <button (click)="deleteUser(i)" class="btn btn-danger form-control col-xl"><i
-                    class="fa fa-minus"></i> Eliminar</button>
-              </div>
-            </td>
-          </tr> -->
+            <tr *ngFor="let w of _worksheets$ | async">
+              <td><input type="date" class="form-control" [value]="w.worksheet_date | date: 'yyyy-MM-dd'"
+                readOnly="readOnly" /></td>
+                <td>{{w.procedure_type}}</td>
+                <td>{{w.materials}}</td>
+                <td>{{w.amount}}</td>
+                <td>{{w.duration}}</td>
+                <td>{{w.technician_name}}</td>
+                <td>{{w.observations}}</td>
+            </tr>
           </tbody>
         </table>
       </div>
-    </form>
-  </ng-template>
-
-</div>
+    </div>

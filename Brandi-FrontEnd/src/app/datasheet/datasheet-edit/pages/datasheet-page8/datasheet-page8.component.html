@@ -10,15 +10,15 @@
     <label>Tipo de Intervenção:</label>
     <div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing" [checked]="_datasheet?.owner_preserve != '0'"  name="owner_preserve" id="owner_preserve">
+        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing" [checked]="_datasheet?.owner_preserve == '1'"  name="owner_preserve" id="owner_preserve">
         <label class="form-check-label" for="owner_preserve">Preservação</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing" [checked]="_datasheet?.owner_conserve  != '0'" name="owner_conserve" id="owner_conserve">
+        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing" [checked]="_datasheet?.owner_conserve  == '1'" name="owner_conserve" id="owner_conserve">
         <label class="form-check-label" for="owner_conserve">Conservação</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing"  [checked]="_datasheet?.owner_restaure  != '0'"  name="owner_restaure" id="owner_restaure">
+        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing"  [checked]="_datasheet?.owner_restaure  == '1'"  name="owner_restaure" id="owner_restaure">
         <label class="form-check-label" for="owner_restaure">Restauro</label>
       </div>
     </div>
@@ -42,15 +42,15 @@
     <label>Tipo de Intervenção:</label>
     <div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing" [checked]="_datasheet?.prop_preserve  != '0'"   name="prop_preserve" id="prop_preserve">
+        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing" [checked]="_datasheet?.prop_preserve  == '1'"   name="prop_preserve" id="prop_preserve">
         <label class="form-check-label" for="prop_preserve">Preservação</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing" [checked]="_datasheet?.prop_conserve   != '0'"   name="prop_conserve" id="prop_conserve">
+        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing" [checked]="_datasheet?.prop_conserve   == '1'"   name="prop_conserve" id="prop_conserve">
         <label class="form-check-label" for="prop_conserve">Conservação</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing" [checked]="_datasheet?.prop_restaure    != '0'"   name="prop_restaure" id="prop_restaure">
+        <input class="form-check-input" type="checkbox"  [disabled]="!_isEditing" [checked]="_datasheet?.prop_restaure    == '1'"   name="prop_restaure" id="prop_restaure">
         <label class="form-check-label" for="prop_restaure">Restauro</label>
       </div>
     </div>
@@ -106,10 +106,10 @@
   <legend _ngcontent-iia-c9="" class="w-auto">Interlocutores do Processo</legend>
   <div class="form-group row">
     <div class="form-group col-lg-6">
-      <label for="ipt_intervenient">I.P.T</label>
-      <select name="ipt_intervenient"  id="ipt_intervenient" class="form-control" [disabled]='!_isEditing'>
+      <label for="ipt_intervinient">I.P.T</label>
+      <select name="ipt_intervinient"  id="ipt_intervinient" class="form-control" [disabled]='!_isEditing'>
         <option value="" selected disabled hidden>Utilizador Eliminado</option>
-        <option *ngFor="let u of _users" [value]="u.id" [selected]="_datasheet?.ipt_intervenient == u.id">{{u.full_name}}</option>
+        <option *ngFor="let u of _users" [value]="u.id" [selected]="_datasheet?.ipt_intervinient == u.id">{{u.full_name}}</option>
       </select>
     </div>
     <div class="form-group col-lg-6">
@@ -119,10 +119,10 @@
   </div>
   <div class="form-group row">
     <div class="form-group col-lg-6">
-      <label for="client_intervenient">Cliente</label>
-      <select name="client_intervenient" id="client_intervenient" class="form-control" [disabled]="!_isEditing">
+      <label for="client_intervinient">Cliente</label>
+      <select name="client_intervinient" id="client_intervinient" class="form-control" [disabled]="!_isEditing">
           <option value="" selected disabled hidden>Contacto Eliminado</option>
-          <option *ngFor="let contact of this._contacts" [value]="contact.id" [selected]="contact.id === _datasheet?.client_intervenient">{{contact.full_name}} | {{contact.phone}} | {{contact.email}}</option>    
+          <option *ngFor="let contact of this._contacts" [value]="contact.id" [selected]="contact.id === _datasheet?.client_intervinient">{{contact.full_name}} | {{contact.phone}} | {{contact.email}}</option>    
       </select>
     </div>
     <div class="form-group col-lg-6">

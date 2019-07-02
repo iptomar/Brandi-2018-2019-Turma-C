@@ -25,6 +25,7 @@ import { DatasheetPage10Component } from './datasheet/datasheet-edit/pages/datas
 import { DatasheetEditComponent } from './datasheet/datasheet-edit/datasheet-edit.component';
 import { DatasheetPage11Component } from './datasheet/datasheet-edit/pages/datasheet-page11/datasheet-page11.component';
 import { DatasheetPage12Component } from './datasheet/datasheet-edit/pages/datasheet-page12/datasheet-page12.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { DatasheetPage12Component } from './datasheet/datasheet-edit/pages/datas
     DatasheetPage10Component,
     DatasheetEditComponent,
     DatasheetPage11Component,
-    DatasheetPage12Component
+    DatasheetPage12Component,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
