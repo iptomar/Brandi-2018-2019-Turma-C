@@ -86,6 +86,9 @@ export class DatasheetEditComponent implements OnInit {
 
   ngOnInit() {
     (<HTMLElement>this.firstTab.nativeElement).classList.add("active");
+  }
+
+  ngAfterViewInit(){
     this.datasheetService.getDatasheet(parseInt(this.route.snapshot.paramMap.get('id'),10)).subscribe((datasheet : Datasheet) => {
       this._datasheet = datasheet;
 
@@ -95,7 +98,6 @@ export class DatasheetEditComponent implements OnInit {
     take(1)
     );
   }
-
 
 
   public get isEditing() {
