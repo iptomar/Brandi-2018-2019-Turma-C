@@ -26,7 +26,8 @@ public class Editar_ListaFichasTecnicas_Admin {
     public void home() throws Exception {
         driver = new ChromeDriver();
 
-        driver.get("http://brandic.devll.eu:61080/");
+        driver.get("http://localhost:8080/#/");
+        //driver.get("http://brandic.devll.eu:61080/");
         driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
         Thread.sleep(1000);
 
@@ -41,12 +42,12 @@ public class Editar_ListaFichasTecnicas_Admin {
         
 
     }
-/*
+
     @Test
     public void ListaFichasTecnicas_procurar_EditarErro() throws Exception {
-
-        driver.get("http://brandic.devll.eu:61080/");
-        driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
+        driver.get("http://localhost:8080/#/");
+     //   driver.get("http://brandic.devll.eu:61080/");
+      //  driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
         Thread.sleep(1000);
         driver.findElement(By.xpath("//*[@id=\"navbarDropdownDatasheet\"]")).click();
         Thread.sleep(1000);
@@ -107,14 +108,14 @@ public class Editar_ListaFichasTecnicas_Admin {
            if (!msg.isDisplayed())
            fail("not save");
     }
-   // }
-  */
-    /*
+   
+  
+    
     @Test
     public void ListaFichasTecnicas_procurar_Editarcorreto() throws Exception {
-
-        driver.get("http://brandic.devll.eu:61080/");
-        driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
+        driver.get("http://localhost:8080/#/");
+       // driver.get("http://brandic.devll.eu:61080/");
+   //     driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
         Thread.sleep(1000);
         driver.findElement(By.xpath("//*[@id=\"navbarDropdownDatasheet\"]")).click();
         Thread.sleep(1000);
@@ -180,12 +181,12 @@ public class Editar_ListaFichasTecnicas_Admin {
   
 }
     
-    */
+    
     @Test 
     public void ListaFichasTecnicas_EditarCaracteristicas() throws Exception{
-        
-        driver.get("http://brandic.devll.eu:61080/");
-             driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
+        driver.get("http://localhost:8080/#/");
+      //  driver.get("http://brandic.devll.eu:61080/");
+        //     driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
         Thread.sleep(1000);
         driver.findElement(By.xpath("//*[@id=\"navbarDropdownDatasheet\"]")).click();
         Thread.sleep(1000);
@@ -233,7 +234,9 @@ public class Editar_ListaFichasTecnicas_Admin {
        epoca.selectByValue("4");
          Thread.sleep(1000);
          
-    driver.findElement(By.name("style")).sendKeys("estilo nacional");
+     WebElement estilo = driver.findElement(By.name("style"));
+        estilo.clear();
+        estilo.sendKeys("estilo nacional");
             
     Select qualidade = new Select (driver.findElement(By.name("quality")));
        qualidade.selectByValue("5");

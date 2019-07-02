@@ -22,8 +22,9 @@ public class UtilizadorTentarAcederSiteAdmin {
     @Test
     public void UtilizadorTentarAcederAdmin() throws Exception {
         driver = new ChromeDriver();
-
-        driver.get("http://brandic.devll.eu:61080/");
+        
+      //   driver.get("http://localhost:8080/#/");
+       driver.get("http://brandic.devll.eu:61080/");
         driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
         Thread.sleep(1000);
 

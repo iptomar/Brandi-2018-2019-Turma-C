@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import org.junit.Before;
@@ -28,8 +29,8 @@ public class Categorias_Admin {
   
      public void home() throws Exception{
              driver = new ChromeDriver();
-           
-         driver.get("http://brandic.devll.eu:61080/");
+             driver.get("http://localhost:8080/#/");
+      //   driver.get("http://brandic.devll.eu:61080/");
          driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
          Thread.sleep(1000);
   
@@ -46,40 +47,46 @@ public class Categorias_Admin {
     }
    
      
-           @Test 
-     public void admin_Editar() throws Exception {
-          driver.get("http://brandic.devll.eu:61080/#/admin/categories"); 
+
+     
+         @Test
+         public void admin_CriarCategoria() throws Exception {
+                driver.get("http://localhost:8080/#/admin/categories");
+       //  driver.get("http://brandic.devll.eu:61080/#/admin/categories");
+         driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/form[1]/input")).sendKeys("Teste1234");
+         driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/form[1]/button")).click();
           Thread.sleep(1000);
-      driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/div[2]/form[1]/button[2]")).click();
-      Thread.sleep(1000);
+           WebElement msg= driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div[1]/strong"));
+         assertEquals("Super categoria criada com sucesso",msg.getText());
+     
+                  
+     }
+      @After
+     public void admin_Editar() throws Exception {
+           driver.get("http://localhost:8080/#/admin/categories");
+       //   driver.get("http://brandic.devll.eu:61080/#/admin/categories"); 
+          Thread.sleep(1000);
+         driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div[2]/div[1]/div[2]/form/button[2]")).click();
+        Thread.sleep(1000);
           WebElement edit = driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/div[2]/form[1]/input"));
            edit.clear();
            edit.sendKeys("Artes Plásticas/Artes Decorativas");
         driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/div[2]/form[1]/button[1]")).click();
         Thread.sleep(1000);
-            WebElement msg = driver.findElement(By.className("alert-danger"));
+    
+         WebElement msg = driver.findElement(By.className("alert-success"));
             if (!msg.isDisplayed())
                 fail("not save");
           
                   
       }
      
-     
-         @Test
-         public void admin_CriarCategoria() throws Exception {
-         driver.get("http://brandic.devll.eu:61080/#/admin/categories");
-         driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/form[1]/input")).sendKeys("Teste1234");
-         driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/form[1]/button")).click();
-          Thread.sleep(1000);
-           WebElement msg= driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div[1]/strong"));
-         assertEquals("Super categoria criada com sucesso",msg.getText());
-      
-     }
         
-                  @Test
+          @After
          public void admin_CriarCategoria_Já_Criada() throws Exception {
-         driver.get("http://brandic.devll.eu:61080/#/admin/categories");
-         driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/form[1]/input")).sendKeys("Teste");
+                driver.get("http://localhost:8080/#/admin/categories");
+         //driver.get("http://brandic.devll.eu:61080/#/admin/categories");
+         driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/form[1]/input")).sendKeys("Artes Plásticas/Artes Decorativas");
          driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/form[1]/button")).click();
           Thread.sleep(1000);
          WebElement msg= driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div[1]/strong"));
@@ -87,11 +94,12 @@ public class Categorias_Admin {
       
       
      }
-        
-        @Test
+      
+         @After
          public void admin_ProcurarEncontrado () throws Exception {
-         driver.get("http://brandic.devll.eu:61080/#/admin/categories");
-         driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/form[2]/input")).sendKeys("Teste");
+                driver.get("http://localhost:8080/#/admin/categories");
+         //driver.get("http://brandic.devll.eu:61080/#/admin/categories");
+         driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/form[2]/input")).sendKeys("Artes Plásticas/Artes Decorativas");
          WebElement enter = driver.findElement(By.xpath("html/body/app-root/div/app-categories/div/div/div/div[1]/form[2]/input"));
          enter.sendKeys(Keys.ENTER);
                      WebElement msg = driver.findElement(By.className("list-group-item-action"));
@@ -99,11 +107,12 @@ public class Categorias_Admin {
                 fail("not found");
     
       } 
-      
+     
          
-         @Test
+       /* @After
          public void Admin_NaoEncontrado() throws Exception {
-         driver.get("http://brandic.devll.eu:61080/#/admin/categories");
+                driver.get("http://localhost:8080/#/admin/categories");
+        // driver.get("http://brandic.devll.eu:61080/#/admin/categories");
          WebElement procurar = driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/form[2]/input"));
          procurar.clear();
          procurar.sendKeys("admin");
@@ -112,24 +121,34 @@ public class Categorias_Admin {
         WebElement msg = driver.findElement(By.className("alert-warning"));
          assertEquals("Não exitem Super Categorias",msg.getText());
          }
-         
-         
-        /*      @Test
+         */
+           
+         @After
          public void Admin_ApagarCategoria() throws Exception {
-          driver.get("http://brandic.devll.eu:61080/#/admin/categories");
+               driver.get("http://localhost:8080/#/admin/categories");
+         // driver.get("http://brandic.devll.eu:61080/#/admin/categories");
           Thread.sleep(1000);
-        driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/div[2]/form[9]/button[3]")).click();
+        driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/div[2]/form/button[3]")).click();
           Thread.sleep(1000); 
          
-         //ainda nao consegui chegar a parte do pop up
-        // WebElement Alert = driver.findElement(By.id(""))
-          
+           //pop-up
+          driver.switchTo().alert().accept();
          
-         WebElement msg = driver.findElement(By.className("alert-success"));
-         assertEquals("Super Categoria eliminada com sucesso",msg.getText());
+       WebElement msg = driver.findElement(By.className("alert-success"));
+            if (!msg.isDisplayed())
+                fail("not save");
+          
           
          }
-        */
-
-    
+           @After
+         public void admin_CriarCategoria_Teste() throws Exception {
+                driver.get("http://localhost:8080/#/admin/categories");
+       //  driver.get("http://brandic.devll.eu:61080/#/admin/categories");
+         driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/form[1]/input")).sendKeys("Teste");
+         driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div/div[1]/form[1]/button")).click();
+          Thread.sleep(1000);
+           WebElement msg= driver.findElement(By.xpath("/html/body/app-root/div/app-categories/div/div/div[1]/strong"));
+         assertEquals("Super categoria criada com sucesso",msg.getText());
+     
+         }    
 }

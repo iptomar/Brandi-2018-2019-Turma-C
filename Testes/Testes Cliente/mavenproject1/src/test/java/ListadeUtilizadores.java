@@ -10,6 +10,7 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -28,8 +29,8 @@ WebDriver driver;
    @Before
      public void home() throws Exception{
              driver = new ChromeDriver();
-           
-         driver.get("http://brandic.devll.eu:61080/");
+           driver.get("http://localhost:8080/#/");
+       //  driver.get("http://brandic.devll.eu:61080/");
          driver.findElement(By.xpath("//*[@id=\"navbar\"]/button")).click();
          Thread.sleep(1000);
   
@@ -46,14 +47,15 @@ WebDriver driver;
      
  @Test 
       public void admin_ListaUtilizadores() throws Exception {
-          driver.get("http://brandic.devll.eu:61080/");
-          driver.findElement(By.xpath("//*[@id=\"navbar\"]/button/span")).click();
-        Thread.sleep(1000);
+          driver.get("http://localhost:8080/#/");
+         //driver.get("http://brandic.devll.eu:61080/");
+         // driver.findElement(By.xpath("//*[@id=\"navbar\"]/button/span")).click();
+    // Thread.sleep(1000);
         driver.findElement(By.id("navbarDropdownAdmin")).click();
        Thread.sleep(1000);
        driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[3]/div/a[1]")).click();
         Thread.sleep(1000);
-        driver.findElement(By.xpath("/html/body/app-root/div/app-user-list/div/div/form/div[2]/table/tbody/tr[4]/td[5]/div/button[1]")).click();
+        driver.findElement(By.xpath("/html/body/app-root/div/app-user-list/div/div/form/div[2]/table/tbody/tr[2]/td[5]/div/button[1]")).click();
          Thread.sleep(1000);
          WebElement name = driver.findElement(By.name("full_name"));
          name.clear();
@@ -82,13 +84,14 @@ WebDriver driver;
          fail("not save");
        
       }
-      
+     
       @After
       public void admin_ListaUtilizadores_Procurar() throws Exception {
-          driver.get("http://brandic.devll.eu:61080/");
-          driver.findElement(By.xpath("//*[@id=\"navbar\"]/button/span")).click();
-        Thread.sleep(1000);
-        driver.findElement(By.id("navbarDropdownAdmin")).click();
+          driver.get("http://localhost:8080/#/");
+         // driver.get("http://brandic.devll.eu:61080/");
+       //  driver.findElement(By.xpath("//*[@id=\"navbar\"]/button/span")).click();
+       // Thread.sleep(1000);
+       driver.findElement(By.id("navbarDropdownAdmin")).click();
        Thread.sleep(1000);
        driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[3]/div/a[1]")).click();
         Thread.sleep(1000);
@@ -112,6 +115,37 @@ WebDriver driver;
          if (!msg.isDisplayed())
          fail("not save");
        
+      }
+      
+            @After
+      public void admin_ListaUtilizadores_Delete() throws Exception {
+          driver.get("http://localhost:8080/#/");
+         // driver.get("http://brandic.devll.eu:61080/");
+       // driver.findElement(By.xpath("//*[@id=\"navbar\"]/button/span")).click();
+      // Thread.sleep(1000);
+       driver.findElement(By.id("navbarDropdownAdmin")).click();
+       Thread.sleep(1000);
+       driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[3]/div/a[1]")).click();
+        Thread.sleep(1000);
+       driver.findElement(By.name("searchBox")).sendKeys("Marcio");
+       WebElement enter = driver.findElement(By.name("searchBox"));
+       enter.sendKeys(Keys.ENTER);
+       
+       
+          Thread.sleep(1000); 
+          
+      driver.findElement(By.xpath("/html/body/app-root/div/app-user-list/div/div/form/div[2]/table/tbody/tr[1]/td[5]/div/button[2]")).click();
+          Thread.sleep(1000);    
+           //pop-up
+          driver.switchTo().alert().accept();
+            Thread.sleep(1000); 
+          String msg = driver.switchTo().alert().getText();
+   
+          //Erro ortografico
+         assertEquals("Eliminido com sucesso",msg);
+          
+         
+         
       }
       
 }

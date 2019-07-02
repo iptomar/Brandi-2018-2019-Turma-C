@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="5" failures="0" name="Categorias_Admin" time="42.795" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="Categorias_Admin" time="19.046" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_152\jre\bin"/>
@@ -62,9 +62,5 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="Categorias_Admin" name="admin_Editar" time="11.611"/>
-  <testcase classname="Categorias_Admin" name="admin_CriarCategoria" time="8.513"/>
-  <testcase classname="Categorias_Admin" name="admin_ProcurarEncontrado" time="7.294"/>
-  <testcase classname="Categorias_Admin" name="Admin_NaoEncontrado" time="7.105"/>
-  <testcase classname="Categorias_Admin" name="admin_CriarCategoria_J\u00E1_Criada" time="8.184"/>
+  <testcase classname="Categorias_Admin" name="admin_CriarCategoria" time="18.898"/>
 </testsuite>
